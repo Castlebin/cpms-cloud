@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cpms-cloud</artifactId>
+        <groupId>com.cpms</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <description>微服务层</description>
+    <version>${cpms.project.version}</version>
+    <artifactId>cpms-service</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>cpms-system</module>
+        <module>cpms-log</module>
+    </modules>
+
+    <dependencies>
+        <!-- 公共模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-common</artifactId>
+            <version>${cpms.project.version}</version>
+        </dependency>
+
+        <!-- spring MVC -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions><!-- 去掉springboot默认配置 -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 引入log4j2依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+    </dependencies>
+</project>

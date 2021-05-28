@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cpms-cloud</artifactId>
+        <groupId>com.cpms</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <description>微服务互相调用接口</description>
+    <artifactId>cpms-service-api</artifactId>
+    <version>${cpms.project.version}</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>cpms-system-api</module>
+        <module>cpms-log-api</module>
+    </modules>
+
+
+</project>

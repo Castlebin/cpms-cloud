@@ -1,0 +1,10 @@
+#服务器端口
+server:
+  port: 6001
+  servlet:
+    context-path: /authService  # 请求接口的前缀
+# Spring
+spring:
+  application:
+    # 应用名称
+    name: cpms-auth-server
