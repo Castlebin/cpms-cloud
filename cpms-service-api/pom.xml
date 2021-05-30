@@ -16,6 +16,4 @@
         <module>cpms-system-api</module>
         <module>cpms-log-api</module>
     </modules>
-
-
 </project>

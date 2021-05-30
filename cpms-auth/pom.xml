@@ -11,7 +11,10 @@
     <artifactId>cpms-auth</artifactId>
     <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
     <description>授权认证微服务</description>
+
+
     <dependencies>
         <!-- 公共模块-->
         <dependency>
@@ -39,15 +42,12 @@
     </dependencies>
 
     <build>
+        <!--定义jar包名称-->
+        <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.0.1.RELEASE</version>
-                <configuration>
-                    <skip>true</skip>
-                    <finalName>11111</finalName>
-                </configuration>
             </plugin>
         </plugins>
     </build>

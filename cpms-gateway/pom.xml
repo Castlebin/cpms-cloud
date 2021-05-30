@@ -11,6 +11,7 @@
     <artifactId>cpms-gateway</artifactId>
     <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
     <description>网关微服务</description>
 
     <dependencies>
@@ -43,6 +44,8 @@
 
     <!-- 插件依赖 -->
     <build>
+        <!--定义jar包名称-->
+        <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -11,7 +11,10 @@
     <artifactId>cpms-common</artifactId>
     <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
     <description>公共代码</description>
+
+
     <dependencies>
         <!-- alibaba JSON 解析器和生成器 -->
         <dependency>
@@ -29,4 +32,16 @@
             <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
+
+    <!-- 插件依赖 -->
+    <build>
+        <!--定义jar包名称-->
+        <finalName>${project.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

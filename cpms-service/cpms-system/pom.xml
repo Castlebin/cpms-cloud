@@ -13,11 +13,21 @@
     <artifactId>cpms-system</artifactId>
     <name>${project.artifactId}</name>
     <dependencies>
-
+        <!-- mybatis-plus依赖，在具体的服务模块下引入-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- 插件依赖 -->
     <build>
+        <!--定义jar包名称-->
+        <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -13,4 +13,19 @@
     <artifactId>cpms-system-api</artifactId>
     <name>${project.artifactId}</name>
 
+
+    <dependencies>
+
+    </dependencies>
+
+    <build>
+        <!--定义jar包名称-->
+        <finalName>${project.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
