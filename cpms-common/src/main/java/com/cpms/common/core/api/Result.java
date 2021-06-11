@@ -9,7 +9,6 @@ import java.io.Serializable;
  * @author: gulang
  * @time: 2021/5/24 17:48
  */
-@Data
 public class  Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     private boolean success = false;
@@ -20,5 +19,49 @@ public class  Result<T> implements Serializable {
 
     public Result(boolean success) {
         this.success = success;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public T getObj() {
+        return obj;
+    }
+
+    public void setObj(T obj) {
+        this.obj = obj;
     }
 }

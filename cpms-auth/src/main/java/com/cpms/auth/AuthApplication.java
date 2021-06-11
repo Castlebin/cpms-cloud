@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author: 01396003
  * @time: 2021/5/20 18:53
  */
-@SpringBootApplication
+@SpringBootApplication()
 public class AuthApplication {
     public static void main(String[] args)
     {
