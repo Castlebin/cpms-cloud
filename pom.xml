@@ -127,9 +127,16 @@
     </repositories>
 
     <build>
+        <!--特别注意：
+        直接在parent的build部分做了插件配置和运行定义。
+        但是实际项目中需要把这些定义具体放到spring boot模块项目（可优化使用pluginManagement形式），避免干扰其他util、common等模块项目
+        -->
         <pluginManagement>
             <plugins>
-                <!--需要在具体的项目下引入相关插件依赖-->
+                <!--
+                spring-boot-maven-plugin该插件会把应用打成一个可执行的jar包，然后把这个jar打到另外一个jar包中，同时把原来的jar增加后缀.original
+                使用这个插件打包方式还是一样，在Lifecycle下点击package打包。在target目录下会看到有两个文件
+                -->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
