@@ -21,6 +21,16 @@
             <groupId>com.cpms</groupId>
             <artifactId>cpms-common</artifactId>
             <version>${cpms.project.version}</version>
+            <exclusions><!--排除重复的依赖-->
+                <exclusion>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-log4j2</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- spring MVC -->
@@ -39,6 +49,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+        <!-- 引入cpms-system-api依赖 -->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-system-api</artifactId>
+            <version>${cpms.project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>cpms-common</artifactId>
+                    <groupId>com.cpms</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <build>
@@ -48,6 +70,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

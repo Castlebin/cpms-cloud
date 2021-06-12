@@ -1,4 +1,4 @@
-package com.cpms.auth.common.enums;
+package com.cpms.system.common.enums;
 
 import com.cpms.common.core.api.IResultCode;
 
@@ -7,26 +7,21 @@ import com.cpms.common.core.api.IResultCode;
  * @author: 01396003
  * @time: 2021/5/25 15:49
  */
-public enum AuthResponseResultEnum implements IResultCode {
-    /** 账号不存在 */
-    ACCOUNT_NOT_EXIST_ERROR(10000, "账号不存在"),
-    PASSWORD_VERIFICATION_ERROR(10001, "密码错误"),
-    ;
+public enum SystemResponseResultEnum implements IResultCode {
+    ACCOUNT_NOT_EXIST_ERROR(50001, "账号不存在"),
+    PASSWORD_VERIFICATION_ERROR(50002, "密码校验错误");
 
     final Integer code;
     final String message;
-
-    @Override
     public Integer getCode() {
         return null;
     }
 
-    @Override
     public String getMessage() {
         return null;
     }
 
-    AuthResponseResultEnum(Integer code, String message) {
+    SystemResponseResultEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

@@ -6,4 +6,5 @@ package com.cpms.common.constant;
  * @time: 2021/5/20 17:01
  */
 public class SysConstant {
+    public static final String APPLICATION_NAME = "Cpms";
 }

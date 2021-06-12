@@ -18,6 +18,13 @@
     </dependencies>
 
     <build>
-
+        <!--定义jar包名称-->
+        <finalName>${project.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 </project>

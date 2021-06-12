@@ -11,6 +11,7 @@
       聚合工程打包，需要在父工程pom下，把modules注释掉，然后运行:
       1.clean
       2.install
+      注：目的是把jar打在本地仓库，如果不这么做其它模块依赖子模块本地仓库没有就会区中央仓库找，这样就会报错
     -->
     <modules>
         <module>cpms-auth</module>
@@ -23,6 +24,8 @@
         <cpms.project.version>1.0.0</cpms.project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
         <spring-boot.version>2.2.7.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
@@ -71,7 +74,7 @@
                 <version>${mybatis-plus.servsion}</version>
             </dependency>
 
-            <!-- mybatis-plus 实现动态数据源切换依赖 -->
+            <!-- mybatis-plus dynamic-datasource实现动态数据源切换依赖 -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
@@ -151,6 +154,14 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
