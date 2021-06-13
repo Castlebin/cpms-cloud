@@ -17,6 +17,9 @@ public class ResultUtil implements Serializable {
      *
      * @return Result<T>
      */
+    public ResultUtil(){
+
+    }
     public static <T> Result<T> success() {
         return success(null);
     }

@@ -2,7 +2,7 @@ package com.cpms.auth.common.enums;
 
 /**
  * @description:
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/6/7 10:49
  */
 public enum UserLoginEnum {

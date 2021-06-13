@@ -14,17 +14,21 @@ public enum GatewayResponseResultEnum implements IResultCode {
     ;
     final Integer code;
     final String message;
-    @Override
-    public Integer getCode() {
-        return null;
-    }
-    @Override
-    public String getMessage() {
-        return null;
-    }
+
+
 
     GatewayResponseResultEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    @Override
+    public Integer getCode() {
+        return null;
+    }
+
+    @Override
+    public String getMessage() {
+        return null;
     }
 }

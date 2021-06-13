@@ -7,4 +7,12 @@ server:
 spring:
   application:
     # 应用名称
-    name: cpms-system-server
+    name: cpms-server-system
+  cloud:
+    nacos:
+      #      config:
+      #        server-addr: 120.0.0.1:8848
+      #        file-extension: yaml
+      #        prefix: nacos
+      discovery: # 服务发现注册
+        server-addr: 127.0.0.1:8858

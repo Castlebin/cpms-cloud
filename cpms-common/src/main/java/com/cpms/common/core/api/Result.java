@@ -16,7 +16,8 @@ public class  Result<T> implements Serializable {
     private String message;
     private String date;
     private T obj;
-
+    public Result() {
+    }
     public Result(boolean success) {
         this.success = success;
     }

@@ -16,7 +16,7 @@ public enum GlobalResponseResultEnum implements IResultCode {
     PARAM_MISS_ERROR(20004, "缺少必要的请求参数"),
     PARAM_VALID_ERROR(20005, "参数校验失败"),
     QUERY_DATA_NOT_EXIST(20006, "查询数据不存在"),
-    INTERNAL_SERVER_ERROR(50000, "服务器异常"),
+    INTERNAL_SERVER_ERROR(50000, "系统异常，请稍后再试！！！"),
     ;
 
 

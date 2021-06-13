@@ -7,4 +7,15 @@ server:
 spring:
   application:
     # 应用名称
-    name: cpms-auth-server
+    name: cpms-server-auth
+  cloud:
+    nacos:
+#      config:
+#        server-addr: 120.0.0.1:8848
+#        file-extension: yaml
+#        prefix: nacos
+      discovery: # 服务发现注册
+        server-addr: 127.0.0.1:8858
+feign:
+  circuitbreaker: # 开启hystrix熔断  circuitbreaker
+      enabled: true

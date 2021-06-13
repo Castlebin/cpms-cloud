@@ -1,6 +1,6 @@
 package com.cpms.common.utils;
 
-import com.cpms.common.constant.SysConstant;
+import com.cpms.common.constant.AppConstant;
 import com.cpms.common.core.secure.TokenInfo;
 import com.google.common.base.Charsets;
 import io.jsonwebtoken.Claims;
@@ -23,7 +23,7 @@ import java.util.UUID;
 public class JwtUtil {
     /**有效期默认2两小时，单位：毫秒**/
     private static final long TOKEN_EXPIRE = 3600*2*1000;
-    private static final String BASE64_SECURITY = Base64.getEncoder().encodeToString(SysConstant.APPLICATION_NAME.getBytes(Charsets.UTF_8));
+    private static final String BASE64_SECURITY = Base64.getEncoder().encodeToString(AppConstant.APPLICATION_NAME.getBytes(Charsets.UTF_8));
     /**指定签名的时候使用的签名算法**/
     private static final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
     /**

@@ -1,14 +1,14 @@
 package com.cpms.system;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.SpringCloudApplication;
 
 /**
  * @description:
  * @author: 01396003
  * @time: 2021/5/19 19:54
  */
-@SpringBootApplication
+@SpringCloudApplication
 public class SystemApplication {
     public static void main(String[] args)
     {

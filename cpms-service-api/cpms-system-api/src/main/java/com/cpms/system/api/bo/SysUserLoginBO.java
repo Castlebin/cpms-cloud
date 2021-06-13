@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @description: 系统用户登录BO类
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/6/8 11:04
  */
 @Data

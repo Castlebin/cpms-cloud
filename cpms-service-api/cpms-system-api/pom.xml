@@ -12,8 +12,6 @@
     <packaging>jar</packaging>
     <artifactId>cpms-system-api</artifactId>
     <name>${project.artifactId}</name>
-
-
     <dependencies>
 
     </dependencies>

@@ -4,7 +4,7 @@ import com.cpms.common.core.api.IResultCode;
 
 /**
  * @description:
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/5/25 15:49
  */
 public enum AuthResponseResultEnum implements IResultCode {
