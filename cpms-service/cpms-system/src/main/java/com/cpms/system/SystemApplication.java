@@ -2,12 +2,15 @@ package com.cpms.system;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @description:
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/5/19 19:54
  */
+
+@EnableTransactionManagement // 开启事务
 @SpringCloudApplication
 public class SystemApplication {
     public static void main(String[] args)

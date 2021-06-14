@@ -24,11 +24,11 @@ public class SysUserClient implements ISysUserClient {
         sysUserLoginBO.setAccount("sysSuperAdmin");
         sysUserLoginBO.setPermissions(Lists.newArrayList("add","delete","edit"));
         sysUserLoginBO.setRoles(Lists.newArrayList("admin","market"));
-        try {
-            Thread.sleep(50000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(50000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return ResultUtil.success(sysUserLoginBO);
     }
 }

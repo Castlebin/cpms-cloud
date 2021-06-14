@@ -1,0 +1,15 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<!DOCTYPE mapper-->
+<!--        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
+<!--        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
+<!--<mapper namespace="com.gxc.modules.college.dao.YearMapper">-->
+<!--    <resultMap id="baseMap"  type="" >-->
+<!--        <id property="id" column="id"/>-->
+<!--        <result property="year" column="year"  />-->
+<!--        <result property="type" column="type"/>-->
+<!--    </resultMap>-->
+<!--    <select id="getYearListByType" resultMap="yearMap">-->
+<!--        SELECT type,year  FROM colg_year where type = #{type} order by year desc-->
+<!--    </select>-->
+
+<!--</mapper>-->

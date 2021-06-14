@@ -96,13 +96,6 @@
                 <version>${guava.version}</version>
             </dependency>
 
-            <!-- 数据库驱动，不指定版本号，默认为spring-boot-dependencies里定义的版本号-->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <scope>runtime</scope>
-            </dependency>
-
             <!-- 实现对 Druid 连接池的自动化配置 -->
             <dependency>
                 <groupId>com.alibaba</groupId>

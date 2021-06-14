@@ -13,12 +13,13 @@ public enum SystemResponseResultEnum implements IResultCode {
 
     final Integer code;
     final String message;
+    @Override
     public Integer getCode() {
-        return null;
+        return code;
     }
-
+    @Override
     public String getMessage() {
-        return null;
+        return message;
     }
 
     SystemResponseResultEnum(Integer code, String message) {
