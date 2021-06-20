@@ -43,7 +43,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        <!--此依赖用于开启hystrix断路器-->
+        <!--此依赖用于开启hystrix断路器,虽然openfeign已经整合了hystrix,否则服务启动会报错，-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>

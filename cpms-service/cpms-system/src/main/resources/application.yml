@@ -16,6 +16,7 @@ spring:
          #        prefix: nacos
          discovery: # 服务发现注册
             server-addr: 127.0.0.1:8858
+
    # 多数据源配置
    datasource:
       dynamic:
