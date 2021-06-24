@@ -69,7 +69,7 @@ public class JwtUtil {
      * @param jsonWebToken
      * @return
      */
-    public static Claims parseJWT(String jsonWebToken) {
+    public static Claims parseJwt(String jsonWebToken) {
         try {
             return (Claims)Jwts.parser().setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY)).parseClaimsJws(jsonWebToken).getBody();
         } catch (Exception var2) {
