@@ -5,6 +5,7 @@ import com.cpms.auth.dto.UserLoginDTO;
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.secure.AuthInfo;
 import com.cpms.common.core.secure.TokenInfo;
+import com.cpms.common.exception.BizException;
 import com.cpms.common.utils.JwtUtil;
 import com.cpms.system.api.bo.SysUserLoginBO;
 import com.cpms.system.api.dto.SysUserLginDTO;
@@ -34,6 +35,9 @@ public class SysAdminAuthen implements IAuthen{
         sysUserLginDTO.setUserName(userLoginDTO.getUserName());
         sysUserLginDTO.setPassword(userLoginDTO.getPassword());
         Result<SysUserLoginBO> sysUserLoginBOResult = sysUserClient.sysUserLogin(sysUserLginDTO);
+        if(!sysUserLoginBOResult.isSuccess()) {
+            throw new BizException(sysUserLoginBOResult.getCode(),sysUserLoginBOResult.getMessage());
+        }
         SysUserLoginBO sysUserLoginBO = sysUserLoginBOResult.getObj();
         sysUserLoginBO.setAvatar(AVATAR);
         AuthInfo authInfo = new AuthInfo();

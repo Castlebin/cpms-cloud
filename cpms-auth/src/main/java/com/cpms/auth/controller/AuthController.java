@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Objects;
-
 
 /**
  * @description: 授权认证接口
@@ -24,7 +22,7 @@ import java.util.Objects;
 @RequestMapping("/auth")
 public class AuthController {
     @PostMapping("/token")
-    public Result<AuthInfo> token(@RequestBody UserLoginDTO userLoginDTO){
+    public Result<AuthInfo> token(@RequestBody UserLoginDTO userLoginDTO) {
         IAuthen authenType = UserAuthenBuilder.getAuthenType(userLoginDTO.getLoginType());
         AuthInfo authInfo = authenType.authentication(userLoginDTO);
         return ResultUtil.success(authInfo);

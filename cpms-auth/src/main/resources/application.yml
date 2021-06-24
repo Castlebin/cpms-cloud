@@ -7,7 +7,7 @@ server:
 spring:
   application:
     # 应用名称
-    name: cpms-server-auth-
+    name: cpms-server-auth
   cloud:
     nacos:
 #      config:
@@ -48,4 +48,4 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 2000  # 这个超时针对具体的接口做超时熔断处理
+            timeoutInMilliseconds: 3000  # 这个超时针对具体的接口做超时熔断处理

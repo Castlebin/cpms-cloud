@@ -1,5 +1,6 @@
 package com.cpms.auth.authen;
 
+import com.cpms.common.exception.BizException;
 import com.cpms.common.utils.SpringUtil;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,6 +21,10 @@ public class UserAuthenBuilder {
     }
 
     public static IAuthen getAuthenType(String authenType){
-        return authenPool.get(authenType);
+        IAuthen iAuthen = authenPool.get(authenType);
+        if(iAuthen == null) {
+            throw new BizException("not authen Type was found");
+        }
+        return iAuthen;
     }
 }

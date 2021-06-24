@@ -23,7 +23,7 @@ public enum GlobalResponseResultEnum implements IResultCode {
     /**
      * 返回编码
      */
-    final int code;
+    final Integer code;
     /**
      * 返回信息
      */

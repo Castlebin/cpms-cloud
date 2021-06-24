@@ -1,6 +1,7 @@
 package com.cpms.system.api.config;
 
-import com.cpms.system.api.feign.ISysUserClientFallback;
+import com.cpms.system.api.feign.fallback.ISysUserClientFallback;
+import com.cpms.system.api.feign.fallback.ISysUserClientFallbackFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -14,9 +15,12 @@ import org.springframework.core.annotation.Order;
 public class FallbackConfiguration {
     public FallbackConfiguration() {
     }
-
     @Bean
-    public ISysUserClientFallback iSysUserClientFallback() {
+    public ISysUserClientFallback sysUserClientFallback() {
         return new ISysUserClientFallback();
+    }
+    @Bean
+    public ISysUserClientFallbackFactory sysUserClientFallbackFactory(){
+        return new ISysUserClientFallbackFactory();
     }
 }
