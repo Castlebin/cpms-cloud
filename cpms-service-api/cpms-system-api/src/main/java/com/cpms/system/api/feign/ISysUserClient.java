@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 @FeignClient(
         value = AppConstant.APPLICATION_SYSTEM_NAME,
-//        fallback = ISysUserClientFallback.class,
         fallbackFactory = ISysUserClientFallbackFactory.class,
         path = AppConstant.SYSTEM_API_PREFIX  // 接口前缀
 )
