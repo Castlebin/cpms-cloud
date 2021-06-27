@@ -8,6 +8,7 @@ import com.cpms.common.core.api.IResultCode;
  * @time: 2021/5/25 15:49
  */
 public enum LogResponseResultEnum implements IResultCode {
+    /**日志服务响应枚举**/
     ACCOUNT_NOT_EXIST_ERROR(30000, "账号不存在"),
     PASSWORD_VERIFICATION_ERROR(30001, "密码校验错误"),
 
@@ -18,12 +19,12 @@ public enum LogResponseResultEnum implements IResultCode {
 
     @Override
     public Integer getCode() {
-        return null;
+        return code;
     }
 
     @Override
     public String getMessage() {
-        return null;
+        return message;
     }
 
     LogResponseResultEnum(Integer code, String message) {

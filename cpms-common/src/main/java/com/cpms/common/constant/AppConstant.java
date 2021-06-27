@@ -2,7 +2,7 @@ package com.cpms.common.constant;
 
 /**
  * @description: 系统常量
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/5/20 17:01
  */
 public interface AppConstant {
@@ -23,7 +23,7 @@ public interface AppConstant {
      * 网关服务
      */
     String APPLICATION_GATEWAY_NAME = APPLICATION_NAME_PREFIX+"gateway";
-    String GATEWAY_API_PREFIX = "/gatewayMicroservice";
+    String GATEWAY_API_PREFIX = "/gatewayService";
     /**
      * 后台日志服务
      */

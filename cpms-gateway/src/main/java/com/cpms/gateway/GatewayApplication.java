@@ -1,15 +1,15 @@
 package com.cpms.gateway;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.SpringCloudApplication;
 
 /**
  * @description:
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/5/20 18:04
  */
 
-@SpringBootApplication
+@SpringCloudApplication
 public class GatewayApplication {
     public static void main(String[] args)
     {

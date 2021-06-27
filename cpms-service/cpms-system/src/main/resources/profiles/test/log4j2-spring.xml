@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出-->
+<!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
+<configuration monitorInterval="30">
+    <!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+
+    <!--变量配置-->
+    <Properties>
+        <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+        <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
+        <!-- %L 表示行号 -->
+        <property name="LOG_PATTERN" value="%date{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36}[line:%L] - %msg%n" />
+        <!-- 定义日志存储的路径，不要配置相对路径 -->
+        <property name="FILE_PATH" value="applogs/" />
+        <!-- 定义项目名 -->
+        <property name="FILE_NAME" value="cpms-logs" />
+        <!--上次压缩日志文件的时间距离当前时间超过N小时，会触发文件压缩，单位：小时-->
+        <Property name="TIME_BASED_INTERVAL" value="1"/>
+        <!-- 日志文件大小，超过这个大小将触发文件压缩 -->
+        <Property name="LOG_MAX_SIZE" value="10MB"/>
+        <!-- 存放的最大压缩文件数 -->
+        <Property name="LOG_FILE_NUM" value="10"/>
+    </Properties>
+
+    <appenders>
+        <!--********文件日志（以下配置的日志规则会打印在指定的日志文件中，细化到每个级别都有专属的日志文件）*********-->
+
+        <!-- 自定义filter日志级别打印规则 （一般用于打印特定的日志信息，比如：打印接口入参和响应信息）  -->
+        <RollingFile name="RollingFileFilter" fileName="${FILE_PATH}/filter/filter.log"
+                     filePattern="${FILE_PATH}/filter/${FILE_NAME}-FILTER-%d{yyyy-MM-dd}_%i.log.gz">
+            <!--
+                【onMatch：该级别及以上级别（包含）   onMismatch：该级别以下级别】
+                onMatch="ACCEPT" 表示匹配该级别及以上
+                onMatch="DENY" 表示不匹配该级别及以上
+                onMatch="NEUTRAL" 表示该级别及以上的，由下一个ThresholdFilter处理，如果当前是最后一个，则表示匹配该级别及以上
+
+                onMismatch="ACCEPT" 表示匹配该级别以下
+                onMismatch="DENY" 表示不匹配该级别以下的
+                onMismatch="NEUTRAL" 表示该级别及以下的，由下一个ThresholdFilter处理，如果当前是最后一个，则不匹配该级别以下的
+            -->
+            <Filters>
+                <!-- 该匹配只会打印info日志-->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <!--interval属性用来指定多久滚动一次，默认是1 hour-->
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <!-- 指定当文件体积大于size指定的值时，触发Rolling。例如，如果当前文件超过了 10MB，但是文件的名字还没有进行翻滚(建立新文件)，那么就会用%i的方式进行翻滚。 -->
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <!-- 当文件个数达到10个的时候会循环覆盖前面已归档的1-10个文件。若不设置该参数，默认为7-->
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}"/>
+        </RollingFile>
+
+        <!-- info日志级别打印规则(一般记录业务代码中打印的info日志，以便查找生产问题提供关键信息)-->
+        <RollingFile name="RollingFileInfo" fileName="${FILE_PATH}/info/info.log"
+                     filePattern="${FILE_PATH}/info/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log.gz">
+            <Filters>
+                <!-- 该匹配只会打印info日志-->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}"/>
+        </RollingFile>
+
+        <!-- warn日志级别打印规则-->
+        <RollingFile name="RollingFileWarn" fileName="${FILE_PATH}/warn/warn.log"
+                     filePattern="${FILE_PATH}/warn/${FILE_NAME}-WARN-%d{yyyy-MM-dd}_%i.log.gz">
+            <Filters>
+                <!-- 该匹配只会打印warn日志-->
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}"/>
+        </RollingFile>
+
+        <!--error日志级别打印规则-->
+        <RollingFile name="RollingFileError" fileName="${FILE_PATH}/error/error.log"
+                     filePattern="${FILE_PATH}/error/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log.gz">
+            <Filters>
+                <!--该匹配会打印 OFF、 FATAL 、 ERROR 三个级别的日志信息 -->
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}"/>
+        </RollingFile>
+    </appenders>
+
+    <!--*************然后定义loggers，只有定义了logger节点/root节点，并引入的appender，appender才会生效**************-->
+    <loggers>
+        <!--************Logger指定不同包的日志级别，以及指定使用哪个日志规则，不指定默认使用root配置的规则***********-->
+        <!--若是additivity设为false，则 子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。-->
+
+        <!--spring和mybatis打印info级别及以上的日志信息-->
+        <logger name="org.mybatis" level="info" additivity="false"/>
+        <Logger name="org.springframework" level="info" additivity="false"/>
+
+
+        <!--************自定义filter日志级别，并指定使用RollingFileFilter日志打印规则***********-->
+        <!--这里的name="filter" 的filter要与 private final Logger log = LoggerFactory.getLogger("filter"); 保持一致-->
+        <logger name="filter" level="info" additivity="false">
+            <AppenderRef ref="RollingFileFilter"/>
+        </logger>
+
+        <!-- 设置根日志级别打印info及更高级别的日志，DEBUG > TRACE > ALL 将不会打印 -->
+        <root level="info">
+            <!-- 将需要打印的根日志级别信息匹配到如下日志规则里 -->
+            <AppenderRef ref="RollingFileInfo"/>
+            <AppenderRef ref="RollingFileWarn"/>
+            <AppenderRef ref="RollingFileError"/>
+        </root>
+    </loggers>
+
+</configuration>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 /**
- * @author gualng
+ * @author gulang
  * @Description:  微服务之间调用的系统用户相关接口
  */
 @FeignClient(

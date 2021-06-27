@@ -4,10 +4,11 @@ import com.cpms.common.core.api.IResultCode;
 
 /**
  * @description:
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/5/25 15:49
  */
 public enum GatewayResponseResultEnum implements IResultCode {
+    /**网关服务响应枚举**/
     ACCOUNT_NOT_EXIST_ERROR(40000, "账号不存在"),
     PASSWORD_VERIFICATION_ERROR(40001, "密码校验错误"),
 
@@ -24,11 +25,11 @@ public enum GatewayResponseResultEnum implements IResultCode {
 
     @Override
     public Integer getCode() {
-        return null;
+        return code;
     }
 
     @Override
     public String getMessage() {
-        return null;
+        return message;
     }
 }

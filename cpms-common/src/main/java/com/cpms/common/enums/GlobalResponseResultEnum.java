@@ -4,7 +4,7 @@ import com.cpms.common.core.api.IResultCode;
 
 /**
  * @description: 全局响应枚举
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/5/24 19:09
  */
 public enum GlobalResponseResultEnum implements IResultCode {
@@ -16,7 +16,7 @@ public enum GlobalResponseResultEnum implements IResultCode {
     PARAM_MISS_ERROR(20004, "缺少必要的请求参数"),
     PARAM_VALID_ERROR(20005, "参数校验失败"),
     QUERY_DATA_NOT_EXIST_ERROR(20006, "查询数据不存在"),
-    INTERNAL_SERVER_ERROR(50000, "系统异常，请稍后再试！！！"),
+    INTERNAL_SERVER_ERROR(50000, "系统繁忙，请稍后再试！！！"),
     ;
 
 

@@ -23,7 +23,18 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-
+        <!-- 引入cpms-system-api依赖 -->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-log-api</artifactId>
+            <version>${cpms.project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>cpms-common</artifactId>
+                    <groupId>com.cpms</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <!-- 插件依赖 -->
@@ -40,5 +51,55 @@
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <!--打包该目录下的配置文件 -->
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>application.yml</include>
+                    <include>mybatis/**</include>
+                </includes>
+                <!-- 启用过滤 即该资源中的变量将会被过滤器中的值替换 -->
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <!-- ${profiles.active}由profile提供,打包的时候只需要打包激活的环境配置文件 -->
+                <directory>src/main/resources/profiles/${profiles.active}</directory>
+                <!--把对应激活的环境目录下所有的以下后缀文件都打包 -->
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+    <profiles>
+        <profile>
+            <!-- 本地开发环境 -->
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <activation> <!-- 默认激活dev环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!-- 测试环境 -->
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 生产环境 -->
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 </project>
