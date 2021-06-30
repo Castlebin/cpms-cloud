@@ -2,7 +2,7 @@
 server:
   port: 7001
   servlet:
-    context-path: /gatewayService  # 请求接口的前缀
+    context-path: /gatewayMicroservice  # 请求接口的前缀
 # Spring
 spring:
   application:
