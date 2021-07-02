@@ -1,13 +1,16 @@
 #服务器端口
 server:
   port: 7001
-  servlet:
-    context-path: /gatewayMicroservice  # 请求接口的前缀
+
 # Spring
 spring:
   application:
     # 应用名称
     name: cpms-server-gateway
+    # gateway 网关本身没有contextPath，所以不能配置添加url前缀，这里只是作为变量，方便路由转发使用
+    # 给网关服务增加一个url前缀后续用nginx转发的时候，可以通过 pathPrefix 来寻址
+    pathPrefix: gw-server  # 请求接口的前缀
+
   cloud:
     nacos:
       #      config:
@@ -16,3 +19,16 @@ spring:
       #        prefix: nacos
       discovery: # 服务发现注册
         server-addr: 127.0.0.1:8858
+    gateway:
+      discovery:
+        locator:
+          enabled: true #让gateway可以发现nacos中的微服务，会从注册中心拉取注册的服务列表
+      routes: # 路由数组  指当请求满足什么样的条件的时候，转发到哪个微服务上,一个微服务对应一组 -id
+        - id: cpms-server-auth #当前路由标识，要求唯一 （可以取微服务应用名称）
+          uri: lb://cpms-server-auth #请求最终要被转发的地址，cpms-server-auth微服务注册名称，lb指的是从nacos中按照名称获取微服务,并遵循负载均衡策略
+          order: 1 #路由优先级，数字越小，优先级越高
+          #### gateway 网关本身没有contextPath,所以不能配置添加url前缀，通过路由过滤器，达到能处理contextPath
+          predicates: #断言 判断条件，返回值是boolean 转发请求要返回的条件 （可以写多个）、
+            - Path=/${spring.application.pathPrefix}/authMicroservice/** #当请求路径满足path指定的规则时，此路由信息才会正常转发
+          filters: #路由过滤器（在请求传递过程中，可以对路径进行重写）
+            - StripPrefix=1 # 在请求转发之前去掉 -Path 参数值的N层路径， /*/*/* ，一个*号表示一层，从左到右
