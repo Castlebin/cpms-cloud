@@ -23,6 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     @PostMapping("/token")
     public Result<AuthInfo> token(@RequestBody UserLoginDTO userLoginDTO) {
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         IAuthen authenType = UserAuthenBuilder.getAuthenType(userLoginDTO.getLoginType());
         AuthInfo authInfo = authenType.authentication(userLoginDTO);
         return ResultUtil.success(authInfo);

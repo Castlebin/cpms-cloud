@@ -9,8 +9,7 @@ import com.cpms.common.core.api.IResultCode;
  */
 public enum GatewayResponseResultEnum implements IResultCode {
     /**网关服务响应枚举**/
-    ACCOUNT_NOT_EXIST_ERROR(40000, "账号不存在"),
-    PASSWORD_VERIFICATION_ERROR(40001, "密码校验错误"),
+    GATEWAY_SERVER__ERROR(40000, "网关服务异常"),
 
     ;
     final Integer code;
