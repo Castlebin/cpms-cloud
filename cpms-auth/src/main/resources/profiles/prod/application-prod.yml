@@ -33,7 +33,8 @@ feign:
 #【注：接口调用时间超过ribbon或者hystrix配置的超时时间都会触发熔断，一般设置ribbon的超时时间需要大于hystrix配置的超时时间，
 #  这样的话我们可以针对具体的接口做超时熔断限制，否则的话所有的接口都会根据ribbon的设置触发熔断】
 
-#ribbon配置
+#ribbon配置 【ribbon超时设置，接口需要通过feign调用才会生效，否则超时配置无效】
+#Ribbon超时和Hystrix超时将会以两个中小的为最终超时时间
 ribbon:
   #对所有操作请求都进行重试,默认false
   OkToRetryOnAllOperations: false  # 默认关闭

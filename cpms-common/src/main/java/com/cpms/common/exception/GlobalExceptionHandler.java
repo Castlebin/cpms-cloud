@@ -28,7 +28,6 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BizException.class)
     public Result<Void> bizExceptionHandler(BizException e) {
-        log.error("捕获BizException异常信息:",e);
         return ResultUtil.error(e.getCode(),e.getMessage());
     }
 }
