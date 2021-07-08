@@ -1,6 +1,9 @@
 package com.cpms.common.core.api;
 import com.cpms.common.enums.GlobalResponseResultEnum;
+import com.cpms.common.utils.SpringUtil;
 import org.apache.commons.lang3.time.FastDateFormat;
+import org.springframework.core.env.Environment;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +14,7 @@ import java.util.Date;
  */
 public class ResultUtil implements Serializable {
     private static final long serialVersionUID = 1L;
+
 
     /**
      * 返回成功，不带输出结果

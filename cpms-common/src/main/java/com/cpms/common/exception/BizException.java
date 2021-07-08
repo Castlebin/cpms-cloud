@@ -4,7 +4,7 @@ import com.cpms.common.core.api.IResultCode;
 import com.cpms.common.enums.GlobalResponseResultEnum;
 
 /**
- * @description: 自定义业务统一异常类
+ * @description: 自定义通用业务异常类
  * @author: gulang
  * @time: 2021/6/23 17:42
  */

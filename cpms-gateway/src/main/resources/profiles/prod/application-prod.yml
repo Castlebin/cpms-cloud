@@ -32,3 +32,20 @@ spring:
             - Path=/${spring.application.pathPrefix}/authMicroservice/** #当请求路径满足path指定的规则时，此路由信息才会正常转发
           filters: #路由过滤器（在请求传递过程中，可以对路径进行重写）
             - StripPrefix=1 # 在请求转发之前去掉 -Path 参数值的N层路径， /*/*/* ，一个*号表示一层，从左到右
+            # 熔断降级配置
+            - name: Hystrix
+              args:
+                name: defaultfallback
+                fallbackUri: 'forward:/defaultfallback'
+
+
+#hystrix降级熔断配置，必须要有熔断回调方法，否则超时配置不会生效,不会触发熔断
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE #切换隔离等级
+          thread:
+            timeoutInMilliseconds: 5000  # 这个超时针对具体的接口做超时熔断处理
+  shareSecurityContext: true  #线程间传递上下文,不开启，切换线程获取不到上下文信息

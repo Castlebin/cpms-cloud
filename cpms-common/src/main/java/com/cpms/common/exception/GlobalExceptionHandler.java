@@ -1,5 +1,4 @@
 package com.cpms.common.exception;
-
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
 import com.cpms.common.enums.GlobalResponseResultEnum;
@@ -12,10 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author: gulang
  * @time: 2021/6/24 9:37
  */
-@RestControllerAdvice
 @Slf4j
+@RestControllerAdvice
 public class GlobalExceptionHandler {
-
     /**
      * 处理其他异常
      */
@@ -26,10 +24,10 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 自定义异常BizException
+     * 自定义通用业务异常BizException
      */
     @ExceptionHandler(BizException.class)
-    public Result<Void> BizExceptionHandler(BizException e) {
+    public Result<Void> bizExceptionHandler(BizException e) {
         log.error("捕获BizException异常信息:",e);
         return ResultUtil.error(e.getCode(),e.getMessage());
     }

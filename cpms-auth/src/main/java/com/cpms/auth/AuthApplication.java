@@ -17,7 +17,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class AuthApplication {
     public static void main(String[] args)
     {
-        SpringApplication.run(AuthApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  Auth服务启动成功   ლ(´ڡ`ლ)ﾞ");
+        try {
+            SpringApplication.run(AuthApplication.class, args);
+            System.out.println("(♥◠‿◠)ﾉﾞ  Auth服务启动成功   ლ(´ڡ`ლ)ﾞ");
+        }catch(Throwable e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -15,7 +15,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class LogApplication {
     public static void main(String[] args)
     {
-        SpringApplication.run(LogApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  Log服务启动成功   ლ(´ڡ`ლ)ﾞ");
+        try {
+            SpringApplication.run(LogApplication.class, args);
+            System.out.println("(♥◠‿◠)ﾉﾞ  Log服务启动成功   ლ(´ڡ`ლ)ﾞ");
+        }catch(Throwable e) {
+            e.printStackTrace();
+        }
     }
 }

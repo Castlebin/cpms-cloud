@@ -8,6 +8,13 @@ spring:
   application:
     # 应用名称
     name: cpms-server-system
+  #********以下配置为了捕获 NoHandlerFoundException 异常信息 start ****#
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  #********以下配置为了捕获 NoHandlerFoundException 异常信息 end ****#
+
   cloud:
     nacos:
       #      config:

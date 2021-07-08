@@ -1,5 +1,9 @@
 package com.cpms.common.core.api;
+import com.cpms.common.utils.PropsUtil;
+import com.cpms.common.utils.SpringUtil;
 import lombok.Data;
+import org.springframework.core.env.Environment;
+
 import java.io.Serializable;
 
 

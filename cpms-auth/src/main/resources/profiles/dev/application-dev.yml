@@ -8,6 +8,13 @@ spring:
   application:
     # 应用名称
     name: cpms-server-auth
+  #********以下配置为了捕获 NoHandlerFoundException 异常信息 start ****#
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  #********以下配置为了捕获 NoHandlerFoundException 异常信息 end ****#
+
   cloud:
     nacos:
 #      config:
@@ -41,11 +48,13 @@ ribbon:
     client:
       enabled: true
 
-#hystrix降级熔断配置
+#hystrix降级熔断配置，必须要有熔断回调方法，否则超时配置不会生效,不会触发熔断
 hystrix:
   command:
     default:
       execution:
         isolation:
+          strategy: SEMAPHORE #切换隔离等级
           thread:
-            timeoutInMilliseconds: 3000  # 这个超时针对具体的接口做超时熔断处理
+            timeoutInMilliseconds: 5000  # 这个超时针对具体的接口做超时熔断处理
+  shareSecurityContext: true  #线程间传递上下文,不开启，切换线程获取不到上下文信息

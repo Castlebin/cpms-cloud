@@ -1,7 +1,6 @@
 package com.cpms.gateway.exception;
 
 import com.alibaba.fastjson.JSON;
-import com.cpms.gateway.common.enums.GatewayResponseResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
@@ -34,12 +33,12 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
         Throwable error = super.getError(request);
         // 为了不破坏网关原有的http status状态码，所以这里继承原来的错误属性方法，过滤出需要显示的字段即可
         Map<String, Object> errorAttributes = super.getErrorAttributes(request, includeStackTrace);
-        log.error("[getErrorAttributes]全局捕获网关服务异常，异常信息={}，error", JSON.toJSONString(errorAttributes),error);
+        log.error("[getErrorAttributes]捕获全局网关服务异常，异常信息={}，error", JSON.toJSONString(errorAttributes),error);
         // 自定义错误属性返回字段
-        Map<String, Object> customErrorAttributes = new LinkedHashMap();
+        Map<String, Object> customErrorAttributes = new LinkedHashMap(16);
         customErrorAttributes.put("success",false);
         customErrorAttributes.put("code", errorAttributes.get("status"));
-        customErrorAttributes.put("message",GatewayResponseResultEnum.GATEWAY_SERVER__ERROR.getMessage());
+        customErrorAttributes.put("message",buildMessage(request,error));
         customErrorAttributes.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
         customErrorAttributes.put("obj",null);
         return customErrorAttributes;
@@ -54,5 +53,25 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
     protected int getHttpStatus(Map<String, Object> errorAttributes) {
         // 这里其实可以根据errorAttributes里面的属性定制HTTP响应码,
         return (int)errorAttributes.get("code");
+    }
+
+    /**
+     * 构建异常信息
+     *
+     * @param request
+     * @param ex
+     * @return
+     */
+    private String buildMessage(ServerRequest request, Throwable ex) {
+        StringBuilder message = new StringBuilder("Failed to handle request [");
+        message.append(request.methodName());
+        message.append(" ");
+        message.append(request.uri());
+        message.append("]");
+        if (ex != null) {
+            message.append(": ");
+            message.append(ex.getMessage());
+        }
+        return message.toString();
     }
 }

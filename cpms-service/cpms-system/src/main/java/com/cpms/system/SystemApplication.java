@@ -18,7 +18,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SystemApplication {
     public static void main(String[] args)
     {
-        SpringApplication.run(SystemApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  System服务启动成功   ლ(´ڡ`ლ)ﾞ");
+        try {
+            SpringApplication.run(SystemApplication.class, args);
+            System.out.println("(♥◠‿◠)ﾉﾞ  System服务启动成功   ლ(´ڡ`ლ)ﾞ");
+        }catch(Throwable e) {
+            e.printStackTrace();
+        }
     }
 }

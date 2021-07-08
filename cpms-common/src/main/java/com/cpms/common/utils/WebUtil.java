@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @description:
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/6/7 19:01
  */
 public class WebUtil {

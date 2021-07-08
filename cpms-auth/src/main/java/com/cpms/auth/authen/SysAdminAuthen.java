@@ -34,11 +34,11 @@ public class SysAdminAuthen implements IAuthen{
         SysUserLginDTO sysUserLginDTO = new SysUserLginDTO();
         sysUserLginDTO.setUserName(userLoginDTO.getUserName());
         sysUserLginDTO.setPassword(userLoginDTO.getPassword());
-        Result<SysUserLoginBO> sysUserLoginBOResult = sysUserClient.sysUserLogin(sysUserLginDTO);
-        if(!sysUserLoginBOResult.isSuccess()) {
-            throw new BizException(sysUserLoginBOResult.getCode(),sysUserLoginBOResult.getMessage());
+        Result<SysUserLoginBO> sysUserLoginBoResult = sysUserClient.sysUserLogin(sysUserLginDTO);
+        if(!sysUserLoginBoResult.isSuccess()) {
+            throw new BizException(sysUserLoginBoResult.getCode(),sysUserLoginBoResult.getMessage());
         }
-        SysUserLoginBO sysUserLoginBO = sysUserLoginBOResult.getObj();
+        SysUserLoginBO sysUserLoginBO = sysUserLoginBoResult.getObj();
         sysUserLoginBO.setAvatar(AVATAR);
         AuthInfo authInfo = new AuthInfo();
         Map<String, Object> claims = Maps.newHashMap();
