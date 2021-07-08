@@ -1,8 +1,4 @@
-# 自定义工具类注入
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.cpms.common.config.ToolConfiguration
 
-# 自定义配置文件加载
-org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.cpms.common.config.MyEnvironmentPostProcessor
 

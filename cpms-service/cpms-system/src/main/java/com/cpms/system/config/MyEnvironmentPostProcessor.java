@@ -1,7 +1,7 @@
-package com.cpms.common.config;
+package com.cpms.system.config;
 
 import com.cpms.common.core.factory.YmlResourceFactory;
-import lombok.extern.slf4j.Slf4j;
+import com.cpms.system.common.constants.SystemConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -9,6 +9,7 @@ import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.EncodedResource;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -18,16 +19,14 @@ import java.util.Objects;
  * @author: gulang
  * @time: 2021/7/6 16:02
  */
-@Slf4j
 public class MyEnvironmentPostProcessor implements EnvironmentPostProcessor {
-    //自定义配置文件，可以动态读取文件名
-    private  String[] profiles = {
-            "system.yml"
-    };
+    /**
+     * 自定义配置文件
+     */
+    private final String[] profiles = SystemConstant.CUSTOM_PROPS_FILE_NAME.split(",");
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-
-//        Resource resource = new ClassPathResource("resource.properties");
+        System.out.println("-----load custom resource file-------");
         //循环添加
         for (String profile : profiles) {
             //从classpath路径下面查找文件

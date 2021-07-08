@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     @PostMapping("/token")
     public Result<AuthInfo> token(@RequestBody UserLoginDTO userLoginDTO) {
+        System.out.println(PropsUtil.getProperty("system.test"));
 //        try {
 //            Thread.sleep(4000);
 //        } catch (InterruptedException e) {

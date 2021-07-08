@@ -14,7 +14,6 @@
     <name>${project.artifactId}</name>
     <description>授权认证微服务</description>
 
-
     <dependencies>
         <!-- 公共模块-->
         <dependency>
@@ -80,6 +79,7 @@
                 <includes>
                     <include>application.yml</include>
                     <include>mybatis/**</include>
+                    <include>META-INF/*</include>
                 </includes>
                 <!-- 启用过滤 即该资源中的变量将会被过滤器中的值替换 -->
                 <filtering>true</filtering>
