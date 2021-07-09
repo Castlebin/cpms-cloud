@@ -28,6 +28,6 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BizException.class)
     public Result<Object> bizExceptionHandler(BizException e) {
-        return ResultUtil.error(e.getCode(),e.getMessage(),e.getApplicatonName(),e.getObj());
+        return ResultUtil.error(e.getCode(),e.getMessage(),e.getApplicationName(),e.getObj());
     }
 }

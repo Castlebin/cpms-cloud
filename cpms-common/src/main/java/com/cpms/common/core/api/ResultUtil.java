@@ -6,6 +6,7 @@ import org.springframework.core.env.Environment;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @description: 返回结果工具类
@@ -68,17 +69,19 @@ public class ResultUtil implements Serializable {
     }
 
     /**
-     *  返回下游服务完整的信息 A->B
+     *  返回下游服务返回的完整信息 A->B
      * @param code
      * @param message
-     * @param applicatonName
+     * @param applicationName
      * @param obj
      * @param <T>
      * @return
      */
-    public static <T> Result<T> error(Integer code,String message,String applicatonName,T obj) {
+    public static <T> Result<T> error(Integer code,String message,String applicationName,T obj) {
         Result<T> result = error(code,message);
-        result.setApplicatonName(applicatonName);
+        if(Objects.nonNull(applicationName)) {
+            result.setApplicationName(applicationName);
+        }
         result.setObj(obj);
         return result;
     }

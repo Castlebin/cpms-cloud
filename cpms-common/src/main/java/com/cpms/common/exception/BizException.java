@@ -9,19 +9,13 @@ import com.cpms.common.enums.GlobalResponseResultEnum;
  * @author: gulang
  * @time: 2021/6/23 17:42
  */
-public class BizException extends RuntimeException{
+public class BizException extends RuntimeException implements IBizException{
     private Integer code;
     private String message;
-    private String applicatonName;
+    private String applicationName;
     private Object obj;
-    public void setCode(Integer code) {
-        this.code = code;
-    }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
+    @Override
     public Integer getCode() {
         return code;
     }
@@ -31,17 +25,29 @@ public class BizException extends RuntimeException{
         return message;
     }
 
-    public String getApplicatonName() {
-        return applicatonName;
+    @Override
+    public String getApplicationName() {
+        return applicationName;
     }
 
-    public void setApplicatonName(String applicatonName) {
-        this.applicatonName = applicatonName;
-    }
-
+    @Override
     public Object getObj() {
         return obj;
     }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
+    }
+
+
 
     public void setObj(Object obj) {
         this.obj = obj;
@@ -81,13 +87,13 @@ public class BizException extends RuntimeException{
     }
 
     /**
-     *  下游服务返回的全部信息
+     *  抛出下游服务返回的完整信息
      * @param result
      */
     public BizException(Result result) {
         this.code=result.getCode();
         this.message=result.getMessage();
-        this.applicatonName=result.getApplicatonName();
+        this.applicationName=result.getApplicationName();
         this.obj=result.getObj();
     }
 }

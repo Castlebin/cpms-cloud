@@ -35,7 +35,6 @@ public class SysAdminAuthen implements IAuthen{
         sysUserLginDTO.setPassword(userLoginDTO.getPassword());
         Result<SysUserLoginBO> sysUserLoginBoResult = sysUserClient.sysUserLogin(sysUserLginDTO);
         if(!sysUserLoginBoResult.isSuccess()) {
-//            throw new BizException(sysUserLoginBoResult.getCode(),sysUserLoginBoResult.getMessage());
             throw new BizException(sysUserLoginBoResult);
         }
         SysUserLoginBO sysUserLoginBO = sysUserLoginBoResult.getObj();
