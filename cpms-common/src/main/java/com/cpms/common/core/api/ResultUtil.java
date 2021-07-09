@@ -68,6 +68,22 @@ public class ResultUtil implements Serializable {
     }
 
     /**
+     *  返回下游服务完整的信息 A->B
+     * @param code
+     * @param message
+     * @param applicatonName
+     * @param obj
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> error(Integer code,String message,String applicatonName,T obj) {
+        Result<T> result = error(code,message);
+        result.setApplicatonName(applicatonName);
+        result.setObj(obj);
+        return result;
+    }
+
+    /**
      * 功能描述: <返回失败，带错误代码和错误消息>
      */
     public static <T> Result<T> error(GlobalResponseResultEnum resultEnum) {

@@ -1,13 +1,13 @@
 package com.cpms.auth.common.enums;
 
-import com.cpms.common.core.api.IResultCode;
+import com.cpms.common.core.api.IResultEnum;
 
 /**
  * @description:
  * @author: gulang
  * @time: 2021/5/25 15:49
  */
-public enum AuthResponseResultEnum implements IResultCode {
+public enum AuthResponseResultEnum implements IResultEnum {
     /** 账号不存在 */
     ACCOUNT_NOT_EXIST_ERROR(10000, "账号不存在"),
     PASSWORD_VERIFICATION_ERROR(10001, "密码错误"),

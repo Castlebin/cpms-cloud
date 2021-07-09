@@ -17,18 +17,16 @@ spring:
 
   cloud:
     nacos:
-#      config:
-#        server-addr: 120.0.0.1:8848
-#        file-extension: yaml
-#        prefix: nacos
+      #      config:
+      #        server-addr: 120.0.0.1:8848
+      #        file-extension: yaml
+      #        prefix: nacos
       discovery: # 服务发现注册
         server-addr: 127.0.0.1:8858
 
-
-# 开启hystrix熔断
 feign:
   hystrix:
-      enabled: true
+    enabled: true # 开启全局hystrix熔断
 
 #【注：接口调用时间超过ribbon或者hystrix配置的超时时间都会触发熔断，一般设置ribbon的超时时间需要大于hystrix配置的超时时间，
 #  这样的话我们可以针对具体的接口做超时熔断限制，否则的话所有的接口都会根据ribbon的设置触发熔断】
@@ -52,10 +50,19 @@ ribbon:
 #hystrix降级熔断配置，必须要有熔断回调方法，否则超时配置不会生效,不会触发熔断
 hystrix:
   command:
-    default:
+    default: # default全局有效
       execution:
         isolation:
           strategy: SEMAPHORE #切换隔离等级
           thread:
-            timeoutInMilliseconds: 5000  # 这个超时针对具体的接口做超时熔断处理
+            timeoutInMilliseconds: 5000  # 这个超时针对所有的接口做超时熔断处理
+    ###配置具体方法超时时间 格式，使用@FeignClient注解的接口名#方法名(参数类型)
+    ISysUserClient#sysUserLogin(SysUserLginDTO):
+      execution:
+        timeout:
+          enabled: true  # 开启关闭指定方法hystrix熔断，如果关闭则不会触发熔断
+        isolation:
+          strategy: SEMAPHORE #切换隔离等级
+          thread:
+            timeoutInMilliseconds: 5000
   shareSecurityContext: true  #线程间传递上下文,不开启，切换线程获取不到上下文信息

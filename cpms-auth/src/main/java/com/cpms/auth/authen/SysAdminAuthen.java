@@ -30,13 +30,13 @@ public class SysAdminAuthen implements IAuthen{
     public static final String AVATAR = "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
     @Override
     public AuthInfo authentication(UserLoginDTO userLoginDTO) {
-        System.out.println("系统后台登录认证");
         SysUserLginDTO sysUserLginDTO = new SysUserLginDTO();
         sysUserLginDTO.setUserName(userLoginDTO.getUserName());
         sysUserLginDTO.setPassword(userLoginDTO.getPassword());
         Result<SysUserLoginBO> sysUserLoginBoResult = sysUserClient.sysUserLogin(sysUserLginDTO);
         if(!sysUserLoginBoResult.isSuccess()) {
-            throw new BizException(sysUserLoginBoResult.getCode(),sysUserLoginBoResult.getMessage());
+//            throw new BizException(sysUserLoginBoResult.getCode(),sysUserLoginBoResult.getMessage());
+            throw new BizException(sysUserLoginBoResult);
         }
         SysUserLoginBO sysUserLoginBO = sysUserLoginBoResult.getObj();
         sysUserLoginBO.setAvatar(AVATAR);

@@ -18,6 +18,7 @@ public class  Result<T> implements Serializable {
     private boolean success = false;
     private Integer code;
     private String message;
+    private String applicatonName = (String)PropsUtil.getProperty("spring.application.name");
     private String date;
     private T obj;
     public Result() {
@@ -44,6 +45,14 @@ public class  Result<T> implements Serializable {
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    public String getApplicatonName() {
+        return applicatonName;
+    }
+
+    public void setApplicatonName(String applicatonName) {
+        this.applicatonName = applicatonName;
     }
 
     public String getMessage() {

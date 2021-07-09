@@ -58,8 +58,10 @@ ribbon:
 #hystrix降级熔断配置，必须要有熔断回调方法，否则超时配置不会生效,不会触发熔断
 hystrix:
   command:
-    default:
+    default: # default全局有效
       execution:
+        timeout:
+          enabled: true  # 开启关闭指定方法hystrix熔断，如果关闭则不会触发熔断
         isolation:
           strategy: SEMAPHORE #切换隔离等级
           thread:

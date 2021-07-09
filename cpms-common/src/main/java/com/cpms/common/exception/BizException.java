@@ -1,6 +1,7 @@
 package com.cpms.common.exception;
 
-import com.cpms.common.core.api.IResultCode;
+import com.cpms.common.core.api.IResultEnum;
+import com.cpms.common.core.api.Result;
 import com.cpms.common.enums.GlobalResponseResultEnum;
 
 /**
@@ -11,7 +12,8 @@ import com.cpms.common.enums.GlobalResponseResultEnum;
 public class BizException extends RuntimeException{
     private Integer code;
     private String message;
-
+    private String applicatonName;
+    private Object obj;
     public void setCode(Integer code) {
         this.code = code;
     }
@@ -29,6 +31,22 @@ public class BizException extends RuntimeException{
         return message;
     }
 
+    public String getApplicatonName() {
+        return applicatonName;
+    }
+
+    public void setApplicatonName(String applicatonName) {
+        this.applicatonName = applicatonName;
+    }
+
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
+
     /**
      * 只有异常信息构造方法
      */
@@ -40,7 +58,7 @@ public class BizException extends RuntimeException{
      * 默认异常信息
      */
     public BizException() {
-        this(GlobalResponseResultEnum.INTERNAL_SERVER_ERROR);
+        this(GlobalResponseResultEnum.INTERNAL_SERVER_BUSY_ERROR);
     }
 
     /**
@@ -57,8 +75,19 @@ public class BizException extends RuntimeException{
      *  枚举自定义异常信息
      * @param error
      */
-    public BizException(IResultCode error) {
+    public BizException(IResultEnum error) {
         this.code=error.getCode();
         this.message=error.getMessage();
+    }
+
+    /**
+     *  下游服务返回的全部信息
+     * @param result
+     */
+    public BizException(Result result) {
+        this.code=result.getCode();
+        this.message=result.getMessage();
+        this.applicatonName=result.getApplicatonName();
+        this.obj=result.getObj();
     }
 }

@@ -23,6 +23,6 @@ public class DefaultHystrixfallback {
     public Result<Void> defaultfallback(ServerWebExchange exchange){
         Exception exception = exchange.getAttribute(ServerWebExchangeUtils.HYSTRIX_EXECUTION_EXCEPTION_ATTR);
         log.error("[defaultfallback]触发网关层熔断降级默认回调方法", exception);
-        return ResultUtil.error(GlobalResponseResultEnum.INTERNAL_SERVER_ERROR);
+        return ResultUtil.error(GlobalResponseResultEnum.INTERNAL_SERVER_BUSY_ERROR);
     }
 }

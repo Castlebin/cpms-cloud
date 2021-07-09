@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author: gulang
  * @time: 2021/5/24 17:48
  */
-public interface IResultCode extends Serializable {
+public interface IResultEnum extends Serializable {
     Integer getCode();
     String getMessage();
 }

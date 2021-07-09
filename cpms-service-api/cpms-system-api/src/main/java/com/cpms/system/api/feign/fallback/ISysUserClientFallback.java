@@ -23,6 +23,6 @@ public class ISysUserClientFallback implements ISysUserClient {
     @Override
     public Result<SysUserLoginBO> sysUserLogin(SysUserLginDTO sysUserLginDTO) {
         log.error("[sysUserLogin]熔断异常信息:",throwable);
-        return  ResultUtil.error(GlobalResponseResultEnum.INTERNAL_SERVER_ERROR);
+        return  ResultUtil.error(GlobalResponseResultEnum.INTERNAL_SERVER_BUSY_ERROR);
     }
 }

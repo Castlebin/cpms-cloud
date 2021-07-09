@@ -20,14 +20,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value =Exception.class)
     public Result<Void> exceptionHandler( Exception e){
         log.error("捕获Exception异常信息:",e);
-        return ResultUtil.error(GlobalResponseResultEnum.INTERNAL_SERVER_ERROR);
+        return ResultUtil.error(GlobalResponseResultEnum.INTERNAL_SERVER_EXCEPTION_ERROR);
     }
 
     /**
      * 自定义通用业务异常BizException
      */
     @ExceptionHandler(BizException.class)
-    public Result<Void> bizExceptionHandler(BizException e) {
-        return ResultUtil.error(e.getCode(),e.getMessage());
+    public Result<Object> bizExceptionHandler(BizException e) {
+        return ResultUtil.error(e.getCode(),e.getMessage(),e.getApplicatonName(),e.getObj());
     }
 }
