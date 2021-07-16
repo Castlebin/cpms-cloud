@@ -30,7 +30,7 @@
         <spring-boot.version>2.2.7.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
-        <mybatis-plus.servsion>3.3.2</mybatis-plus.servsion>
+        <mybatis-plus.servsion>3.4.3</mybatis-plus.servsion>
         <dynamic-datasource.servsion>3.3.2</dynamic-datasource.servsion>
         <druid.version>1.2.4</druid.version>
         <fastjson.version>1.2.75</fastjson.version>
