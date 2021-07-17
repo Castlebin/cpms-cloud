@@ -89,7 +89,7 @@ public class ResultUtil implements Serializable {
     /**
      * 功能描述: <返回失败，带错误代码和错误消息>
      */
-    public static <T> Result<T> error(GlobalResponseResultEnum resultEnum) {
+    public static <T> Result<T> error(IResultEnum resultEnum) {
         Result<T> result = new Result(false);
         result.setDate(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
         result.setCode(resultEnum.getCode());

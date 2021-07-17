@@ -6,16 +6,16 @@ package com.cpms.common.core.base;
  * @time: 2021/7/16 17:41
  */
 public class TenantEntity extends BaseEntity{
-    private String tenantId;
+    private Long tenantId;
 
     public TenantEntity() {
     }
 
-    public String getTenantId() {
+    public Long getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
 }

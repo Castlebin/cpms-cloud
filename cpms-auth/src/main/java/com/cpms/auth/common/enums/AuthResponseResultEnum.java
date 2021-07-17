@@ -8,9 +8,9 @@ import com.cpms.common.core.api.IResultEnum;
  * @time: 2021/5/25 15:49
  */
 public enum AuthResponseResultEnum implements IResultEnum {
-    /** 账号不存在 */
-    ACCOUNT_NOT_EXIST_ERROR(10000, "账号不存在"),
-    PASSWORD_VERIFICATION_ERROR(10001, "密码错误"),
+    /** 授权服务响应枚举类 */
+    ACCOUNT_NOT_EXIST_ERROR(10000, "授权异常"),
+    PASSWORD_VERIFICATION_ERROR(10001, "****"),
     ;
 
     final Integer code;

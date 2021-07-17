@@ -9,8 +9,7 @@ import com.cpms.common.core.api.IResultEnum;
  */
 public enum SystemResponseResultEnum implements IResultEnum {
     /**系统服务响应枚举类**/
-    ACCOUNT_NOT_EXIST_ERROR(50001, "账号不存在"),
-    PASSWORD_VERIFICATION_ERROR(50002, "密码校验错误"),
+    ACCOUNT_OR_PASSWORD_CHECK_FAILED_ERROR(50002, "账号或密码不正确！！！"),
     ;
 
     final Integer code;
