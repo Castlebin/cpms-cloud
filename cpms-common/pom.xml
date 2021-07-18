@@ -54,13 +54,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
-        <!-- mybatis-plus注解依赖 -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-            <version>3.4.1</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <!-- 插件依赖 -->

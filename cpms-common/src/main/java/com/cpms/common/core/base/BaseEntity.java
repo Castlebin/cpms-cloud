@@ -1,6 +1,4 @@
 package com.cpms.common.core.base;
-
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
@@ -24,7 +22,6 @@ public class BaseEntity implements Serializable {
     private LocalDateTime createTime;
     private Long updateBy;
     private Long createBy;
-    @TableLogic
     private Integer delFlag;
 
     public LocalDateTime getUpdateTime() {

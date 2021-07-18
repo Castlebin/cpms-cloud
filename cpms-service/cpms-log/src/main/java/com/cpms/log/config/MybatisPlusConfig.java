@@ -1,7 +1,6 @@
-package com.cpms.system.config;
+package com.cpms.log.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -19,6 +18,7 @@ import java.time.LocalDateTime;
  * @author: gulang
  * @time: 2021/7/16 16:53
  */
+
 /**
  * 开启事务
  */

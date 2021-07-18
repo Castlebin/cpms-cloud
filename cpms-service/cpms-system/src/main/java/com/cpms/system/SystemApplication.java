@@ -1,11 +1,9 @@
 package com.cpms.system;
 
 import com.cpms.common.constant.AppConstant;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @description:
@@ -13,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @time: 2021/5/19 19:54
  */
 
-@EnableTransactionManagement // 开启事务
+
 @EnableFeignClients(AppConstant.BASE_PACKAGES)
 @SpringCloudApplication
 public class SystemApplication {

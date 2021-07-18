@@ -9,6 +9,8 @@
         <setting name="localCacheScope" value="STATEMENT"/>
         <!-- 二级缓存，针对的是mapper,缓存数据是共享的，需要手动开启-->
         <setting name="cacheEnabled" value="true"/>
+        <!--sql语句输出到控制台-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
 
     <!-- 定义别名，方便开发（返回、输出类型写成全类名路径 不方便开发） -->

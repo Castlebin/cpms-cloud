@@ -19,7 +19,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     public SysUserEntity queryUserInfo(SysUserLginDTO sysUserLginDTO) {
         return baseMapper.selectOne(
                 Wrappers.<SysUserEntity>query().lambda().eq(SysUserEntity::getUserName, sysUserLginDTO.getUserName())
-                .eq(SysUserEntity::getUserPassword, sysUserLginDTO.getPassword()));
+                .eq(SysUserEntity::getUserPassword, sysUserLginDTO.getPassword()).eq(SysUserEntity::getDelFlag,0));
     }
 
     @Override
