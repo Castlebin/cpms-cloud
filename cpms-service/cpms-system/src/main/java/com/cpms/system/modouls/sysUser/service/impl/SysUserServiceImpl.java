@@ -1,5 +1,6 @@
 package com.cpms.system.modouls.sysUser.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.system.api.dto.SysUserLginDTO;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
  * @time: 2021/7/16 19:36
  */
 @Service
+@DS("cpmsCloud")
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements ISysUserService {
     @Override
     public SysUserEntity queryUserInfo(SysUserLginDTO sysUserLginDTO) {
