@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @time: 2021/7/16 19:36
  */
 @Service
-@DS("cpmsCloud")
+@DS("master")
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements ISysUserService {
     @Override
     public SysUserEntity queryUserInfo(SysUserLginDTO sysUserLginDTO) {
