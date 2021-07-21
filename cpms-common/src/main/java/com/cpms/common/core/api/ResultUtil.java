@@ -30,6 +30,24 @@ public class ResultUtil implements Serializable {
     }
 
     /**
+     * 根据boolean值返回
+     * @param flag
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> status(boolean flag) {
+        return flag ? success(GlobalResponseResultEnum.HANDEL_SUCCESS) : error(GlobalResponseResultEnum.HANDEL_FAIL);
+    }
+
+    public static <T> Result<T> success(IResultEnum resultEnum) {
+        Result<T> result = new Result(false);
+        result.setDate(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        result.setCode(resultEnum.getCode());
+        result.setMessage(resultEnum.getMessage());
+        return result;
+    }
+
+    /**
      * 返回成功，带输出结果
      *
      * @param obj

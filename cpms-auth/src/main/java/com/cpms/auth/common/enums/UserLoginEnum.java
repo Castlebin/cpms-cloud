@@ -7,9 +7,9 @@ package com.cpms.auth.common.enums;
  */
 public enum UserLoginEnum {
     /**
-     * 后台管理系统登录
+     * 账号密码授权
      */
-    SYS_ADMIN("sys-admin", 1),
+    PASSWORD_AUTHEN("password", 1),
 
     /**
      * 微信小程序、公众号登录

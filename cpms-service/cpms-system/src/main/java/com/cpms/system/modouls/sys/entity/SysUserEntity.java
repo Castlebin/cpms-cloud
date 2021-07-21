@@ -1,4 +1,4 @@
-package com.cpms.system.modouls.sysUser.entity;
+package com.cpms.system.modouls.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -30,4 +30,21 @@ public class SysUserEntity extends TenantEntity {
     private String userPassword;
     private String userLoginIp;
     private LocalDateTime lastLoginTime;
+    /**
+     * 用户账号
+     */
+    private String userAccount;
+    /**
+     * 用户头像
+     */
+    private String userAvatar;
+
+    /**
+     * 用户手机号
+     */
+    private String userMobile;
+    /**
+     * 用户性别：0-未知，1-男，2-女
+     */
+    private Integer  userSex;
 }

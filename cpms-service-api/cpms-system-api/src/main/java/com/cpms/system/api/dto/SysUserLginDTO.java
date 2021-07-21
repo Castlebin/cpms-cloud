@@ -9,11 +9,11 @@ import lombok.Data;
 @Data
 public class SysUserLginDTO {
     /**
-     * 登录用户名
+     * 登录用户账号
      */
-    private String userName;
+    private String userAccount;
     /**
      * 登录用户密码
      */
-    private String password;
+    private String userPassword;
 }

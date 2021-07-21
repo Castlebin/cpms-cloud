@@ -1,8 +1,9 @@
-package com.cpms.system.modouls.sysUser.service;
+package com.cpms.system.modouls.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cpms.system.api.bo.SysUserLoginBO;
 import com.cpms.system.api.dto.SysUserLginDTO;
-import com.cpms.system.modouls.sysUser.entity.SysUserEntity;
+import com.cpms.system.modouls.sys.entity.SysUserEntity;
 
 /**
  * @description:
@@ -15,7 +16,7 @@ public interface ISysUserService extends IService<SysUserEntity> {
      * @param sysUserLginDTO
      * @return
      */
-    SysUserEntity queryUserInfo(SysUserLginDTO sysUserLginDTO);
+    SysUserLoginBO querySysUserInfo(SysUserLginDTO sysUserLginDTO);
 
     /**
      *  新增或修改用户

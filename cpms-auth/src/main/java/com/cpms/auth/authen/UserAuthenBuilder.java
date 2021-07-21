@@ -16,14 +16,14 @@ public class UserAuthenBuilder {
      */
     private static Map<String, IAuthen> authenPool = new ConcurrentHashMap<>();
     static {
-        authenPool.put(SysAdminAuthen.AUTHEN_TYPE, SpringUtil.getBean(SysAdminAuthen.class));
-        authenPool.put(WxMiniAuthen.AUTHEN_TYPE, SpringUtil.getBean(WxMiniAuthen.class));
+        authenPool.put(PasswordAuthen.GRANT_TYPE, SpringUtil.getBean(PasswordAuthen.class));
+        authenPool.put(RefreshTokenAuthen.GRANT_TYPE, SpringUtil.getBean(RefreshTokenAuthen.class));
     }
 
-    public static IAuthen getAuthenType(String authenType){
-        IAuthen iAuthen = authenPool.get(authenType);
+    public static IAuthen getGrantType(String grantType){
+        IAuthen iAuthen = authenPool.get(grantType);
         if(iAuthen == null) {
-            throw new BizException("not authen Type was found");
+            throw new BizException("not grant Type was found");
         }
         return iAuthen;
     }

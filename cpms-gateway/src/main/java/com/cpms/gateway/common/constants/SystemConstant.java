@@ -8,4 +8,6 @@ package com.cpms.gateway.common.constants;
 public class SystemConstant {
    /** 自定义配置文件名 **/
    public static final String CUSTOM_PROPS_FILE_NAME = "system.yml";
+   public static String TARGET = "/**";
+   public static String REPLACEMENT = "";
 }

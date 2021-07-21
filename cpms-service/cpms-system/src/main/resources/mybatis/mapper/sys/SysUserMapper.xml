@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cpms.system.modouls.sys.mapper.SysUserMapper">
+<!--    <resultMap id="sysUserBoMap"  type="com.cpms.system.api.bo.SysUserLoginBO" >-->
+<!--        <id property="userId" column="userId"/>-->
+<!--        <result property="userName" column="year"  />-->
+<!--        <result property="userStarus" column="type"/>-->
+<!--    </resultMap>-->
+
+    <select id="querySysUserInfo" parameterType="com.cpms.system.api.dto.SysUserLginDTO" resultType="com.cpms.system.api.bo.SysUserLoginBO">
+        SELECT
+          u.user_id,
+          u.user_account,
+          u.user_name,
+          u.user_login_ip,
+          u.last_login_time,
+          u.user_avatar,
+          u.user_sex,
+          u.user_mobile,
+          u.user_status,
+          u.dept_id,
+          t.tenant_id,
+          t.tenant_name,
+          t.tenant_status
+        FROM
+        cpms_system_user u,
+        cpms_system_tenant t
+        WHERE
+         u.user_account = #{userAccount}
+         AND u.user_password= #{userPassword}
+         AND u.tenant_id= t.tenant_id
+         AND u.del_flag = 0
+         AND t.del_flag = 0
+    </select>
+
+</mapper>

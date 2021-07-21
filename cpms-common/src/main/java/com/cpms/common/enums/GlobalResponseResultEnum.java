@@ -17,6 +17,8 @@ public enum GlobalResponseResultEnum implements IResultEnum {
     PARAM_VALID_ERROR(20005, "参数校验失败"),
     QUERY_DATA_NOT_EXIST_ERROR(20006, "查询数据不存在"),
     NO_HANDLER_FOUND_ERROR(20007, "请求资源没有被发现"),
+    HANDEL_SUCCESS(20008, "操作成功！！！"),
+    HANDEL_FAIL(20009, "操作失败！！！"),
     INTERNAL_SERVER_BUSY_ERROR(50000, "系统繁忙，请稍后再试！！！"),
     INTERNAL_SERVER_EXCEPTION_ERROR(50001, "系统异常！！！"),
     ;

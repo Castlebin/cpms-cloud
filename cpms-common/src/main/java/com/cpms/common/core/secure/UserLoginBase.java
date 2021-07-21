@@ -1,17 +1,22 @@
 package com.cpms.common.core.secure;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @description: 登录用户信息基础类
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/6/7 19:30
  */
 public class UserLoginBase implements Serializable{
     /**
      * 用户userId
      */
-    private String userId;
+    private Long userId;
 
     /**
      * 用户名
@@ -21,37 +26,40 @@ public class UserLoginBase implements Serializable{
     /**
      * 用户账号
      */
-    private String account;
+    private String userAccount;
 
     /**
      * 用户登录ip
      */
-    private String loginIp;
+    private String userLoginIp;
 
     /**
-     * 用户登录时间
+     * 用户上次登录时间
      */
-    private String loginTime;
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
+    private LocalDateTime lastLoginTime;
 
     /**
      * 用户头像
      */
-    private String avatar;
+    private String userAvatar;
 
-    public String getUserId() {
+    /**
+     * 用户手机号
+     */
+    private String userMobile;
+    /**
+     * 用户性别：0-未知，1-男，2-女
+     */
+    private int  userSex;
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
     }
 
     public String getUserName() {
@@ -62,28 +70,51 @@ public class UserLoginBase implements Serializable{
         this.userName = userName;
     }
 
-
-    public String getLoginIp() {
-        return loginIp;
+    public String getUserAccount() {
+        return userAccount;
     }
 
-    public void setLoginIp(String loginIp) {
-        this.loginIp = loginIp;
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
     }
 
-    public String getLoginTime() {
-        return loginTime;
+    public String getUserLoginIp() {
+        return userLoginIp;
     }
 
-    public void setLoginTime(String loginTime) {
-        this.loginTime = loginTime;
+    public void setUserLoginIp(String userLoginIp) {
+        this.userLoginIp = userLoginIp;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public LocalDateTime getLastLoginTime() {
+        return lastLoginTime;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setLastLoginTime(LocalDateTime lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
+
+    public int getUserSex() {
+        return userSex;
+    }
+
+    public void setUserSex(int userSex) {
+        this.userSex = userSex;
     }
 }

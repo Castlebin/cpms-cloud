@@ -2,6 +2,8 @@ package com.cpms.auth.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @description:
  * @author: gulang
@@ -10,16 +12,17 @@ import lombok.Data;
 @Data
 public class UserLoginDTO {
     /**
-     * 登录用户名
+     * 登录用户账号
      */
-    private String userName;
+    private String account;
     /**
      * 登录用户密码
      */
     private String password;
 
     /**
-     * 登录类型
+     * 授权类型
      */
-    private String loginType;
+    @NotBlank(message="grantType授权类型不能为空")
+    private String grantType;
 }

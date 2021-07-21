@@ -6,6 +6,7 @@ import com.cpms.common.enums.GlobalResponseResultEnum;
 import com.cpms.system.api.bo.SysUserLoginBO;
 import com.cpms.system.api.dto.SysUserLginDTO;
 import com.cpms.system.api.feign.ISysUserClient;
+import com.cpms.system.api.vo.SysUserLoginVO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class ISysUserClientFallback implements ISysUserClient {
     private Throwable throwable;
 
     @Override
-    public Result<SysUserLoginBO> sysUserLogin(SysUserLginDTO sysUserLginDTO) {
+    public Result<SysUserLoginVO> sysUserLogin(SysUserLginDTO sysUserLginDTO) {
         log.error("[sysUserLogin]熔断异常信息:",throwable);
         return  ResultUtil.error(GlobalResponseResultEnum.INTERNAL_SERVER_BUSY_ERROR);
     }

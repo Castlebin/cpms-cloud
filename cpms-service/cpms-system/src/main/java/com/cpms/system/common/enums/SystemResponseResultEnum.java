@@ -10,6 +10,8 @@ import com.cpms.common.core.api.IResultEnum;
 public enum SystemResponseResultEnum implements IResultEnum {
     /**系统服务响应枚举类**/
     ACCOUNT_OR_PASSWORD_CHECK_FAILED_ERROR(50002, "账号或密码不正确！！！"),
+    ACCOUNT_FORBIDDEN_ERROR(50003, "账号已禁用！！！"),
+    TENANT_FORBIDDEN_ERROR(50004, "账号所属租户已禁用！！！"),
     ;
 
     final Integer code;

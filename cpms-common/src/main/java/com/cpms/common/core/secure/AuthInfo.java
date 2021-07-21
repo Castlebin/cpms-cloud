@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @description: 授权用户信息
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/6/8 14:56
  */
 public class AuthInfo implements Serializable {

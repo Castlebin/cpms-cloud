@@ -1,4 +1,6 @@
 # 自定义业务属性
 system:
-    # 测试属性
-    test: biz-test-gateway
+  url:
+    # 放行API集合
+    skipUrl:
+      - "authMicroservice/auth/token"

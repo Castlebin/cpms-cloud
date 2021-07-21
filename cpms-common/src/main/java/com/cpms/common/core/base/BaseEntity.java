@@ -1,5 +1,7 @@
 package com.cpms.common.core.base;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,16 +14,14 @@ import java.time.LocalDateTime;
 public class BaseEntity implements Serializable {
     public BaseEntity() {
     }
-    @JsonFormat(
-            pattern = "yyyy-MM-dd HH:mm:ss"
-    )
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
     private LocalDateTime updateTime;
-    @JsonFormat(
-            pattern = "yyyy-MM-dd HH:mm:ss"
-    )
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
     private LocalDateTime createTime;
-    private Long updateBy;
-    private Long createBy;
+    private String updateBy;
+    private String createBy;
     private Integer delFlag;
 
     public LocalDateTime getUpdateTime() {
@@ -40,19 +40,19 @@ public class BaseEntity implements Serializable {
         this.createTime = createTime;
     }
 
-    public Long getUpdateBy() {
+    public String getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(Long updateBy) {
+    public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }
 
-    public Long getCreateBy() {
+    public String getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(Long createBy) {
+    public void setCreateBy(String createBy) {
         this.createBy = createBy;
     }
 

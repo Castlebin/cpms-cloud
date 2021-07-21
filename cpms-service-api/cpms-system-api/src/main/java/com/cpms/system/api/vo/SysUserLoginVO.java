@@ -1,4 +1,4 @@
-package com.cpms.system.api.bo;
+package com.cpms.system.api.vo;
 
 import com.cpms.common.core.secure.UserLoginBase;
 import lombok.Data;
@@ -7,15 +7,13 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @description: 系统用户登录BO类
+ * @description:
  * @author: gulang
- * @time: 2021/6/8 11:04
+ * @time: 2021/7/21 10:41
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SysUserLoginBO extends UserLoginBase {
-    private static final long serialVersionUID = 1L;
-
+public class SysUserLoginVO extends UserLoginBase {
     /**
      * 权限标识集合
      */
@@ -25,15 +23,6 @@ public class SysUserLoginBO extends UserLoginBase {
      * 角色集合
      */
     private List<String> roles;
-    /**
-     * 用户状态： 0-正常，1-已禁用
-     */
-    private int userStarus;
-
-    /**
-     * 租户状态：0-正常，1-已禁用
-     */
-    private int tenantStatus;
 
     /**
      * 部门ID
@@ -54,5 +43,4 @@ public class SysUserLoginBO extends UserLoginBase {
      * 租户名称
      */
     private String tenantName;
-
 }
