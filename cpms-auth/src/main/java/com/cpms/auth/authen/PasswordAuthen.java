@@ -41,7 +41,7 @@ public class PasswordAuthen implements IAuthen{
         Map<String, Object> claims = buildJwtClaims(sysUserLoginVO);
         TokenInfo tokenInfo = JwtUtil.createJwt(claims);
         authInfo.setAccessToken(tokenInfo.getToken());
-        authInfo.setExpireIn(tokenInfo.getExpire());
+        authInfo.setExpire(tokenInfo.getExpire());
         authInfo.setUserInfo(sysUserLoginVO);
         return authInfo;
     }
@@ -49,10 +49,14 @@ public class PasswordAuthen implements IAuthen{
     private Map<String,Object> buildJwtClaims(SysUserLoginVO sysUserLoginVO){
         Map<String, Object> claims = Maps.newHashMap();
         claims.put("userAccount",sysUserLoginVO.getUserAccount());
+        claims.put("userName",sysUserLoginVO.getUserName());
         claims.put("userId",sysUserLoginVO.getUserId());
         claims.put("mobile",sysUserLoginVO.getUserMobile());
         claims.put("deptId",sysUserLoginVO.getDeptId());
+        claims.put("deptName",sysUserLoginVO.getDeptName());
         claims.put("tenantId",sysUserLoginVO.getTenantId());
+        claims.put("tenantName",sysUserLoginVO.getTenantName());
+        claims.put("userSex",sysUserLoginVO.getUserSex());
         return claims;
     }
 }

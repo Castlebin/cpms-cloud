@@ -15,16 +15,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class SysUserLoginVO extends UserLoginBase {
     /**
-     * 权限标识集合
-     */
-    private List<String> permissions;
-
-    /**
-     * 角色集合
-     */
-    private List<String> roles;
-
-    /**
      * 部门ID
      */
     private Long deptId;

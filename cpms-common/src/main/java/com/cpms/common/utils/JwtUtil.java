@@ -2,11 +2,10 @@ package com.cpms.common.utils;
 
 import com.cpms.common.constant.AppConstant;
 import com.cpms.common.core.secure.TokenInfo;
+import com.cpms.common.enums.GlobalResponseResultEnum;
+import com.cpms.common.exception.BizException;
 import com.google.common.base.Charsets;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
@@ -71,10 +70,11 @@ public class JwtUtil {
      */
     public static Claims parseJwt(String jsonWebToken) {
         try {
-            return (Claims)Jwts.parser().setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY)).parseClaimsJws(jsonWebToken).getBody();
-        } catch (Exception var2) {
-            return null;
+            return Jwts.parser().setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY)).parseClaimsJws(jsonWebToken).getBody();
+        }catch (ExpiredJwtException expired){
+            throw new BizException(GlobalResponseResultEnum.TOKEN_EXPIRED_ERROR);
+        }catch (Exception e){
+            throw new BizException(GlobalResponseResultEnum.TOKEN_CHECK_INVALID_ERROR);
         }
     }
-
 }

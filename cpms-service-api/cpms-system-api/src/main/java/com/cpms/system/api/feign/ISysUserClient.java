@@ -1,5 +1,6 @@
 package com.cpms.system.api.feign;
 
+
 import com.cpms.common.constant.AppConstant;
 import com.cpms.common.core.api.Result;
 import com.cpms.system.api.bo.SysUserLoginBO;

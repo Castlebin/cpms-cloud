@@ -3,7 +3,6 @@ package com.cpms.system.api.feign.fallback;
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
 import com.cpms.common.enums.GlobalResponseResultEnum;
-import com.cpms.system.api.bo.SysUserLoginBO;
 import com.cpms.system.api.dto.SysUserLginDTO;
 import com.cpms.system.api.feign.ISysUserClient;
 import com.cpms.system.api.vo.SysUserLoginVO;
