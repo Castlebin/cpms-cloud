@@ -19,6 +19,7 @@
         <module>cpms-gateway</module>
         <module>cpms-service</module>
         <module>cpms-service-api</module>
+        <module>cpms-core-framework</module>
     </modules>
     <properties>
         <cpms.project.version>1.0.0</cpms.project.version>
