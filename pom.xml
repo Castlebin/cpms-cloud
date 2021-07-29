@@ -33,9 +33,10 @@
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
         <mybatis-plus.servsion>3.4.3</mybatis-plus.servsion>
         <dynamic-datasource.servsion>3.3.2</dynamic-datasource.servsion>
-        <druid.version>1.2.4</druid.version>
         <fastjson.version>1.2.75</fastjson.version>
         <guava.version>30.1.1-jre</guava.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -95,13 +96,6 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
-            </dependency>
-
-            <!-- 实现对 Druid 连接池的自动化配置 -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,6 +1,6 @@
 package com.cpms.auth.authen;
 
-import com.cpms.auth.common.enums.UserLoginEnum;
+
 import com.cpms.auth.dto.UserLoginDTO;
 import com.cpms.system.api.vo.SysUserLoginVO;
 import com.cpms.common.core.api.Result;
@@ -11,9 +11,8 @@ import com.cpms.common.utils.JwtUtil;
 import com.cpms.system.api.dto.SysUserLginDTO;
 import com.cpms.system.api.feign.ISysUserClient;
 import com.google.common.collect.Maps;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -23,7 +22,7 @@ import java.util.Map;
  */
 @Component
 public class PasswordAuthen implements IAuthen{
-    @Autowired
+    @Resource
     private ISysUserClient sysUserClient;
 
     public static final String GRANT_TYPE = "password";
@@ -51,7 +50,7 @@ public class PasswordAuthen implements IAuthen{
         claims.put("userAccount",sysUserLoginVO.getUserAccount());
         claims.put("userName",sysUserLoginVO.getUserName());
         claims.put("userId",sysUserLoginVO.getUserId());
-        claims.put("mobile",sysUserLoginVO.getUserMobile());
+        claims.put("userMobile",sysUserLoginVO.getUserMobile());
         claims.put("deptId",sysUserLoginVO.getDeptId());
         claims.put("deptName",sysUserLoginVO.getDeptName());
         claims.put("tenantId",sysUserLoginVO.getTenantId());

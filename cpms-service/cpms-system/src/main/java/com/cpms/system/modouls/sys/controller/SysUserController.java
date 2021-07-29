@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
+import com.cpms.common.core.secure.TokenUserInfo;
+import com.cpms.common.utils.SecureUtil;
 import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.modouls.sys.dto.UserDTO;
 import com.cpms.system.modouls.sys.entity.SysUserEntity;
@@ -27,6 +29,7 @@ public class SysUserController {
 
     @PostMapping("/deleteUser")
     public Result<Void> deleteUser(@RequestBody UserDTO userDTO){
+        TokenUserInfo user = SecureUtil.getUser();
         SysUserEntity sysUserEntity = new SysUserEntity();
         sysUserEntity.setDelFlag(SystemConstant.DEL_FLAG_DELETED);
         QueryWrapper<SysUserEntity> query = Wrappers.query();
