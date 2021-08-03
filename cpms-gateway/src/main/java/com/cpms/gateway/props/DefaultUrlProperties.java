@@ -11,8 +11,9 @@ import java.util.List;
 public class DefaultUrlProperties {
     private static List<String> defaultSkipUrl = new ArrayList<>();
 
-//    static {
-//    }
+    static {
+        defaultSkipUrl.add("authMicroservice/auth/**");
+    }
 
     /**
      * 默认无需鉴权的API

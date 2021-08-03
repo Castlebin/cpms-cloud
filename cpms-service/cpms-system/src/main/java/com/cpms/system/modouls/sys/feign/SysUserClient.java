@@ -14,10 +14,10 @@ import com.cpms.system.modouls.sys.entity.SysDeptEntity;
 import com.cpms.system.modouls.sys.service.ISysDeptService;
 import com.cpms.system.modouls.sys.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
@@ -26,9 +26,9 @@ import java.util.Objects;
  */
 @RestController
 public class SysUserClient implements ISysUserClient {
-    @Autowired
+    @Resource
     private ISysUserService sysUserService;
-    @Autowired
+    @Resource
     private ISysDeptService sysDeptService;
     @Override
     @PostMapping(API_PREFIX+"/login")

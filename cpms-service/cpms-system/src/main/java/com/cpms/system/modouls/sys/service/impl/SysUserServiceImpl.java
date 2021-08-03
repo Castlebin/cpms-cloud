@@ -10,6 +10,8 @@ import com.cpms.system.modouls.sys.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @description:
  * @author: gulang
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 @DS("master")
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements ISysUserService {
-    @Autowired
+    @Resource
     private  SysUserMapper sysUserMapper;
     @Override
     public SysUserLoginBO querySysUserInfo(SysUserLginDTO sysUserLginDTO) {

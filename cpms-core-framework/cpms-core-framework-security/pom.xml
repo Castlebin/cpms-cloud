@@ -14,19 +14,22 @@
     <name>${project.artifactId}</name>
     <description>授权核心模块</description>
     <dependencies>
-        <!-- spring MVC -->
+        <!--spring aop支持-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions><!-- 排除掉Logback日志框架的依赖 -->
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <exclusions>
                 <exclusion>
+                    <artifactId>spring-boot-starter</artifactId>
                     <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- 公共模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-common</artifactId>
+            <version>${cpms.project.version}</version>
+        </dependency>
     </dependencies>
-
-
-
 </project>

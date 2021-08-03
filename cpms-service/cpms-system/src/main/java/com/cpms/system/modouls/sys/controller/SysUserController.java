@@ -6,6 +6,7 @@ import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
 import com.cpms.common.core.secure.TokenUserInfo;
 import com.cpms.common.utils.SecureUtil;
+import com.cpms.framework.security.annotations.PreAuth;
 import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.modouls.sys.dto.UserDTO;
 import com.cpms.system.modouls.sys.entity.SysUserEntity;
@@ -16,18 +17,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
  * @description:
  * @author: gulang
  * @time: 2021/7/21 14:22
  */
 @RestController
-@RequestMapping("/sysUser")
+@RequestMapping("/sys-user")
 public class SysUserController {
-    @Autowired
+    @Resource
     private ISysUserService sysUserService;
 
-    @PostMapping("/deleteUser")
+    @PostMapping("/delete")
+    @PreAuth("sys_user_delete")
     public Result<Void> deleteUser(@RequestBody UserDTO userDTO){
         TokenUserInfo user = SecureUtil.getUser();
         SysUserEntity sysUserEntity = new SysUserEntity();

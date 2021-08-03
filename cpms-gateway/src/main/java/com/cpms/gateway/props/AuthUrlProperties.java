@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @description: url配置
+ * @description: 动态配置放行URL
  * @author: gulang
  * @time: 2021/7/21 17:05
  */
