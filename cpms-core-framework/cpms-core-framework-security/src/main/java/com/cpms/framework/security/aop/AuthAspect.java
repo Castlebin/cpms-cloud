@@ -1,9 +1,12 @@
 package com.cpms.framework.security.aop;
 
+import com.cpms.common.core.secure.TokenUserInfo;
 import com.cpms.common.enums.GlobalResponseResultEnum;
 import com.cpms.common.exception.BizException;
+import com.cpms.common.utils.SecureUtil;
 import com.cpms.framework.security.annotations.PreAuth;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -22,13 +25,8 @@ import java.lang.reflect.Method;
  */
 @Aspect
 @Configuration
-@Component
 @Slf4j
 public class AuthAspect {
-    @Bean
-    public AuthAspect authAspect() {
-        return new AuthAspect();
-    }
     /**
      *  定义切点
      * （1）@annotation：用来拦截所有被某个注解修饰的方法
@@ -39,7 +37,7 @@ public class AuthAspect {
     public void authAspectPoint(){}
 
     @Before("authAspectPoint()")
-    public void around(JoinPoint point) throws NoSuchMethodException {
+    public void handelBefore(JoinPoint point) throws NoSuchMethodException {
         Class<?> target1 = point.getTarget().getClass();
         MethodSignature signature = (MethodSignature) point.getSignature();
         resolveAuth(target1, signature.getMethod());
@@ -53,7 +51,6 @@ public class AuthAspect {
      * @param method
      */
     private void resolveAuth(Class<?> clazz, Method method) throws NoSuchMethodException {
-        String promission;
         PreAuth auth= null;
         Class<?>[] types = method.getParameterTypes();
         // 默认使用类型注解-也就是使用类上面的注解
@@ -69,8 +66,7 @@ public class AuthAspect {
         if(auth == null) {
             throw new BizException(GlobalResponseResultEnum.INTERNAL_SERVER_EXCEPTION_ERROR);
         }
-        promission = auth.value();
-        if(!"delete-sys".equals(promission)) {
+        if(!hasPermission(auth.value())) {
             throw new BizException(GlobalResponseResultEnum.REQ_UNAUTHORIZED_ERROR);
         }
     }
@@ -81,8 +77,11 @@ public class AuthAspect {
      * @return
      */
     public boolean hasPermission(String permission){
-
-        return true;
+        if(StringUtils.isBlank(permission)) {
+            return false;
+        }
+        TokenUserInfo tokenInfo = SecureUtil.getUser();
+        return tokenInfo.getPermissions().stream().anyMatch(permission::equals);
     }
 
 }

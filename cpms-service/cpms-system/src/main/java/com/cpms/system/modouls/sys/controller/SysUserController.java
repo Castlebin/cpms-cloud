@@ -4,14 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
-import com.cpms.common.core.secure.TokenUserInfo;
-import com.cpms.common.utils.SecureUtil;
 import com.cpms.framework.security.annotations.PreAuth;
 import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.modouls.sys.dto.UserDTO;
 import com.cpms.system.modouls.sys.entity.SysUserEntity;
 import com.cpms.system.modouls.sys.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +30,6 @@ public class SysUserController {
     @PostMapping("/delete")
     @PreAuth("sys_user_delete")
     public Result<Void> deleteUser(@RequestBody UserDTO userDTO){
-        TokenUserInfo user = SecureUtil.getUser();
         SysUserEntity sysUserEntity = new SysUserEntity();
         sysUserEntity.setDelFlag(SystemConstant.DEL_FLAG_DELETED);
         QueryWrapper<SysUserEntity> query = Wrappers.query();
