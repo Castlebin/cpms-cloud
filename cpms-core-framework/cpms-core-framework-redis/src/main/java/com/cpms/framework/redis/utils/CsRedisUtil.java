@@ -73,9 +73,19 @@ public class CsRedisUtil {
      * @param key 键
      * @return 值
      */
-    public static Object get(String key) {
-        return key == null ? null : REDISTEMPLATE.opsForValue().get(key);
+    public static String get(String key) {
+        return (String)REDISTEMPLATE.opsForValue().get(key);
     }
+
+    /**
+     * 普通缓存获取
+     * @param key 键
+     * @return 值
+     */
+//    public <T> T getBean(final String key, Class<T> beanClass) {
+//        return (beanClass)REDISTEMPLATE.opsForValue().get(key);
+//    }
+
     /**
      * 普通缓存放入
      * @param key 键

@@ -17,15 +17,6 @@ public class SysUserLoginBO extends UserLoginBase {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 权限标识集合
-     */
-    private List<String> permissions;
-
-    /**
-     * 角色集合
-     */
-    private List<String> roles;
-    /**
      * 用户状态： 0-正常，1-已禁用
      */
     private int userStarus;

@@ -51,22 +51,12 @@
                     <artifactId>cpms-common</artifactId>
                     <groupId>com.cpms</groupId>
                 </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!--redis模块-->
-        <dependency>
-            <groupId>com.cpms</groupId>
-            <artifactId>cpms-core-framework-redis</artifactId>
-            <version>${cpms.project.version}</version>
-            <exclusions>
                 <exclusion>
-                    <artifactId>spring-boot-starter-web</artifactId>
+                    <artifactId>spring-boot-starter-aop</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
-
     </dependencies>
 
     <!-- 插件依赖 -->

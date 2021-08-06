@@ -19,7 +19,6 @@ public class TokenUserInfo implements Serializable {
     private Long tenantId;
     private String tenantName;
     private int userSex;
-    private List<String> permissions;
 
     public String getUserAccount() {
         return userAccount;
@@ -91,13 +90,5 @@ public class TokenUserInfo implements Serializable {
 
     public void setUserSex(int userSex) {
         this.userSex = userSex;
-    }
-
-    public List<String> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<String> permissions) {
-        this.permissions = permissions;
     }
 }

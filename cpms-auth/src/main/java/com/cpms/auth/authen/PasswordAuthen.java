@@ -37,7 +37,6 @@ public class PasswordAuthen implements IAuthen{
             throw new BizException(sysUserLoginBoResult);
         }
         SysUserLoginVO sysUserLoginVO = sysUserLoginBoResult.getObj();
-        sysUserLoginVO.setPermissions(Lists.newArrayList("sys_user_delete1"));
         AuthInfo authInfo = new AuthInfo();
         Map<String, Object> claims = buildJwtClaims(sysUserLoginVO);
         TokenInfo tokenInfo = CsJwtUtil.createJwt(claims);
@@ -58,7 +57,6 @@ public class PasswordAuthen implements IAuthen{
         claims.put("tenantId",sysUserLoginVO.getTenantId());
         claims.put("tenantName",sysUserLoginVO.getTenantName());
         claims.put("userSex",sysUserLoginVO.getUserSex());
-        claims.put("permissions",sysUserLoginVO.getPermissions());
         return claims;
     }
 }

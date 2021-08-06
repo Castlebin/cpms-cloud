@@ -28,8 +28,7 @@ import java.util.Objects;
 public class SysUserClient implements ISysUserClient {
     @Resource
     private ISysUserService sysUserService;
-    @Resource
-    private ISysDeptService sysDeptService;
+
     @Override
     @PostMapping(API_PREFIX+"/login")
     public Result<SysUserLoginVO> sysUserLogin(SysUserLginDTO sysUserLginDTO) {
@@ -42,13 +41,6 @@ public class SysUserClient implements ISysUserClient {
         }
         if(sysUserLoginBO.getTenantStatus() == SystemConstant.DATA_STATUS_FORBIDDEN){
             return ResultUtil.error(SystemResponseResultEnum.TENANT_FORBIDDEN_ERROR);
-        }
-        QueryWrapper<SysDeptEntity> query = Wrappers.query();
-        query.eq("dept_id",sysUserLoginBO.getDeptId());
-        query.eq("del_flag",SystemConstant.DEL_FLAG_NOT_DELETED);
-        SysDeptEntity sysDeptEntity = sysDeptService.getOne(query);
-        if(Objects.nonNull(sysDeptEntity)){
-            sysUserLoginBO.setDeptName(sysDeptEntity.getDeptName());
         }
         SysUserLoginVO sysUserLoginVO = new SysUserLoginVO();
         BeanUtils.copyProperties(sysUserLoginBO,sysUserLoginVO);

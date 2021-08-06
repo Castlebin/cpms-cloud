@@ -27,8 +27,4 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         return sysUserMapper.querySysUserInfo(sysUserLginDTO);
     }
 
-    @Override
-    public boolean saveOrUpdateSysUser() {
-        return false;
-    }
 }

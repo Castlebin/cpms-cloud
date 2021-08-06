@@ -23,10 +23,12 @@
           u.dept_id,
           t.tenant_id,
           t.tenant_name,
-          t.tenant_status
+          t.tenant_status,
+          d.dept_name
         FROM
-        cpms_system_user u,
-        cpms_system_tenant t
+        ( cpms_system_user u,
+        cpms_system_tenant t)
+        LEFT JOIN cpms_system_dept d ON d.dept_id = u.dept_id
         WHERE
          u.user_account = #{userAccount}
          AND u.user_password= #{userPassword}

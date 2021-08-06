@@ -18,9 +18,4 @@ public interface ISysUserService extends IService<SysUserEntity> {
      */
     SysUserLoginBO querySysUserInfo(SysUserLginDTO sysUserLginDTO);
 
-    /**
-     *  新增或修改用户
-     * @return
-     */
-    boolean  saveOrUpdateSysUser();
 }

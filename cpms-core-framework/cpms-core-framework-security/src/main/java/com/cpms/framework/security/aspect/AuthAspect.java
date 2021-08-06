@@ -1,9 +1,11 @@
 package com.cpms.framework.security.aspect;
 
+import com.cpms.common.constant.TokenConstant;
 import com.cpms.common.core.secure.TokenUserInfo;
 import com.cpms.common.enums.GlobalResponseResultEnum;
 import com.cpms.common.exception.BizException;
 import com.cpms.common.utils.CsSecureUtil;
+import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.framework.security.annotations.PreAuth;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -13,8 +15,10 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * @description: 授权注解拦截切面
@@ -24,7 +28,7 @@ import java.lang.reflect.Method;
 @Aspect
 @Configuration
 @Slf4j
-public class AuthAspect {
+public class AuthAspect implements Ordered {
     /**
      *  定义切点
      * （1）@annotation：用来拦截所有被某个注解修饰的方法
@@ -78,7 +82,16 @@ public class AuthAspect {
             return false;
         }
         TokenUserInfo tokenInfo = CsSecureUtil.getUser();
-        return tokenInfo.getPermissions().stream().anyMatch(permission::equals);
+        String permissions = CsRedisUtil.get(TokenConstant.CACHE_USER_PERMISSION + tokenInfo.getUserId());
+        if(StringUtils.isBlank(permissions)) {
+            return false;
+        }
+        return Arrays.asList(permissions.split(",")).contains(permission);
     }
 
+    @Override
+    public int getOrder() {
+        // 数值越小越先执行
+        return HIGHEST_PRECEDENCE+1;
+    }
 }

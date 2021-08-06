@@ -15,6 +15,11 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class SysUserLoginVO extends UserLoginBase {
     /**
+     * 角色集合
+     */
+    private List<String> roles;
+
+    /**
      * 部门ID
      */
     private Long deptId;
@@ -33,8 +38,4 @@ public class SysUserLoginVO extends UserLoginBase {
      * 租户名称
      */
     private String tenantName;
-    /**
-     * 权限列表
-     */
-    private List<String> permissions;
 }
