@@ -1,8 +1,5 @@
 package com.cpms.common.core.api;
-import com.cpms.common.utils.PropsUtil;
-import com.cpms.common.utils.SpringUtil;
-import lombok.Data;
-import org.springframework.core.env.Environment;
+import com.cpms.common.utils.CsPropsUtil;
 
 import java.io.Serializable;
 
@@ -18,7 +15,7 @@ public class  Result<T> implements Serializable {
     private boolean success = false;
     private Integer code;
     private String message;
-    private String applicationName = (String)PropsUtil.getProperty("spring.application.name");
+    private String applicationName = (String) CsPropsUtil.getProperty("spring.application.name");
     private String date;
     private T obj;
     public Result() {

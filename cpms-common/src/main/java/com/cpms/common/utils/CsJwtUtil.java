@@ -19,7 +19,7 @@ import java.util.UUID;
  * @author: gulang
  * @time: 2021/6/7 10:28
  */
-public class JwtUtil {
+public class CsJwtUtil {
     /**有效期默认2两小时，单位：毫秒**/
     private static final long TOKEN_EXPIRE = 3600*2*1000;
     private static final String BASE64_SECURITY = Base64.getEncoder().encodeToString(AppConstant.APPLICATION_NAME.getBytes(Charsets.UTF_8));

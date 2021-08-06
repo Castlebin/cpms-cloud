@@ -1,9 +1,9 @@
-package com.cpms.framework.security.aop;
+package com.cpms.framework.security.aspect;
 
 import com.cpms.common.core.secure.TokenUserInfo;
 import com.cpms.common.enums.GlobalResponseResultEnum;
 import com.cpms.common.exception.BizException;
-import com.cpms.common.utils.SecureUtil;
+import com.cpms.common.utils.CsSecureUtil;
 import com.cpms.framework.security.annotations.PreAuth;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -12,9 +12,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
@@ -62,7 +60,6 @@ public class AuthAspect {
         if (m.isAnnotationPresent(PreAuth.class)) {
             auth = m.getAnnotation(PreAuth.class);
         }
-
         if(auth == null) {
             throw new BizException(GlobalResponseResultEnum.INTERNAL_SERVER_EXCEPTION_ERROR);
         }
@@ -80,7 +77,7 @@ public class AuthAspect {
         if(StringUtils.isBlank(permission)) {
             return false;
         }
-        TokenUserInfo tokenInfo = SecureUtil.getUser();
+        TokenUserInfo tokenInfo = CsSecureUtil.getUser();
         return tokenInfo.getPermissions().stream().anyMatch(permission::equals);
     }
 

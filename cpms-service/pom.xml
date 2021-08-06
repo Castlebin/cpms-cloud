@@ -31,18 +31,6 @@
             </exclusions>
         </dependency>
 
-        <!-- 公共security模块-->
-        <dependency>
-            <groupId>com.cpms</groupId>
-            <artifactId>cpms-core-framework-security</artifactId>
-            <version>${cpms.project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>cpms-common</artifactId>
-                    <groupId>com.cpms</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
         <!-- spring MVC -->
         <dependency>

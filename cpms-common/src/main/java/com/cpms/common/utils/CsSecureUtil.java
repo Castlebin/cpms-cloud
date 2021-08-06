@@ -17,10 +17,10 @@ import java.util.Objects;
  * @time: 2021/7/28 19:01
  */
 @Slf4j
-public class SecureUtil {
+public class CsSecureUtil {
     public static TokenUserInfo getUser(){
         TokenUserInfo tokenUserInfo = new TokenUserInfo();
-        HttpServletRequest request = WebUtil.getRequest();
+        HttpServletRequest request = CsWebUtil.getRequest();
         if(Objects.isNull(request)) {
             return tokenUserInfo;
         }

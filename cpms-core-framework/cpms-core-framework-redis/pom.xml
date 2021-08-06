@@ -9,12 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <version>${cpms.project.version}</version>
-    <packaging>jar</packaging>
-    <artifactId>cpms-core-framework-security</artifactId>
+    <artifactId>cpms-core-framework-redis</artifactId>
     <name>${project.artifactId}</name>
-    <description>授权核心模块</description>
+    <description>redis模块</description>
     <properties>
-        <spring-aop.version>2.2.7.RELEASE</spring-aop.version>
+        <redisson.version>3.16.0</redisson.version>
         <file_encoding>UTF-8</file_encoding>
         <project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${file_encoding}</project.reporting.outputEncoding>
@@ -22,14 +21,14 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
-        <!--spring aop支持-->
+        <!-- redisson使用，该依赖包含有spring-boot-starter-data-redis -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-            <version>${spring-aop.version}</version>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>${redisson.version}</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>spring-boot-starter</artifactId>
+                    <artifactId>spring-boot-starter-actuator</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
@@ -41,6 +40,7 @@
             <version>${cpms.project.version}</version>
         </dependency>
     </dependencies>
+
 
     <!-- 插件依赖 -->
     <build>

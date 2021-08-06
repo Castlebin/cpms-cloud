@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author: gulang
  * @time: 2021/6/7 19:01
  */
-public class WebUtil {
+public class CsWebUtil {
 
     public static HttpServletRequest getRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();

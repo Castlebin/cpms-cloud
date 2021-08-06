@@ -15,5 +15,6 @@
     <description>公共核心模块</description>
     <modules>
         <module>cpms-core-framework-security</module>
+        <module>cpms-core-framework-redis</module>
     </modules>
 </project>

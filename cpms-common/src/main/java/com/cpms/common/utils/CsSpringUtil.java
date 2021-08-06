@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
  * @time: 2021/6/7 19:52
  */
 @Component
-public class SpringUtil implements ApplicationContextAware {
-    private static final Logger log = LoggerFactory.getLogger(SpringUtil.class);
+public class CsSpringUtil implements ApplicationContextAware {
+    private static final Logger log = LoggerFactory.getLogger(CsSpringUtil.class);
     private static ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if(SpringUtil.applicationContext == null) {
-            SpringUtil.applicationContext = applicationContext;
+        if(CsSpringUtil.applicationContext == null) {
+            CsSpringUtil.applicationContext = applicationContext;
         }
     }
 

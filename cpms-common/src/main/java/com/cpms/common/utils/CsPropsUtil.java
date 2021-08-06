@@ -7,9 +7,9 @@ import org.springframework.core.env.Environment;
  * @author: gulang
  * @time: 2021/7/7 15:16
  */
-public class PropsUtil {
+public class CsPropsUtil {
     // 凡是能通过@Value注解获取的配置属性，都能被Environment获取
-    private static final Environment ENVIRONMENT =  SpringUtil.getBean(Environment.class);
+    private static final Environment ENVIRONMENT =  CsSpringUtil.getBean(Environment.class);
 
     /**
      *  通过key获取配置文件属性

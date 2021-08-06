@@ -6,7 +6,7 @@ package com.cpms.system.common.constants;
  * @time: 2021/7/8 10:51
  */
 public class SystemConstant {
-   /** 自定义配置文件名 **/
+   /** 自定义配置文件名,使用英文逗号分隔 **/
    public static final String CUSTOM_PROPS_FILE_NAME = "system.yml";
    /** 数据状态:已禁用 **/
    public static final int DATA_STATUS_FORBIDDEN = 1;

@@ -7,7 +7,7 @@ import com.cpms.common.core.api.Result;
 import com.cpms.common.core.secure.AuthInfo;
 import com.cpms.common.core.secure.TokenInfo;
 import com.cpms.common.exception.BizException;
-import com.cpms.common.utils.JwtUtil;
+import com.cpms.common.utils.CsJwtUtil;
 import com.cpms.system.api.dto.SysUserLginDTO;
 import com.cpms.system.api.feign.ISysUserClient;
 import com.google.common.collect.Lists;
@@ -40,7 +40,7 @@ public class PasswordAuthen implements IAuthen{
         sysUserLoginVO.setPermissions(Lists.newArrayList("sys_user_delete1"));
         AuthInfo authInfo = new AuthInfo();
         Map<String, Object> claims = buildJwtClaims(sysUserLoginVO);
-        TokenInfo tokenInfo = JwtUtil.createJwt(claims);
+        TokenInfo tokenInfo = CsJwtUtil.createJwt(claims);
         authInfo.setAccessToken(tokenInfo.getToken());
         authInfo.setExpire(tokenInfo.getExpire());
         authInfo.setUserInfo(sysUserLoginVO);

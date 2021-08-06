@@ -5,7 +5,7 @@ import com.cpms.common.constant.TokenConstant;
 import com.cpms.common.core.api.ResultUtil;
 import com.cpms.common.enums.GlobalResponseResultEnum;
 import com.cpms.common.exception.BizException;
-import com.cpms.common.utils.JwtUtil;
+import com.cpms.common.utils.CsJwtUtil;
 import com.cpms.gateway.common.constants.SystemConstant;
 import com.cpms.gateway.props.AuthUrlProperties;
 import com.cpms.gateway.props.DefaultUrlProperties;
@@ -59,7 +59,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         String token = StringUtils.isBlank(headerToken) ? paramToken : headerToken;
         Claims claims;
         try{
-            claims = JwtUtil.parseJwt(token);
+            claims = CsJwtUtil.parseJwt(token);
         }catch (BizException e){
             return unAuth(resp, e.getCode(),e.getMessage());
         }

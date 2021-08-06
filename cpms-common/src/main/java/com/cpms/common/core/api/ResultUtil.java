@@ -1,8 +1,6 @@
 package com.cpms.common.core.api;
 import com.cpms.common.enums.GlobalResponseResultEnum;
-import com.cpms.common.utils.SpringUtil;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.springframework.core.env.Environment;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,7 +1,7 @@
 package com.cpms.auth.authen;
 
 import com.cpms.common.exception.BizException;
-import com.cpms.common.utils.SpringUtil;
+import com.cpms.common.utils.CsSpringUtil;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,8 +16,8 @@ public class UserAuthenBuilder {
      */
     private static Map<String, IAuthen> authenPool = new ConcurrentHashMap<>();
     static {
-        authenPool.put(PasswordAuthen.GRANT_TYPE, SpringUtil.getBean(PasswordAuthen.class));
-        authenPool.put(RefreshTokenAuthen.GRANT_TYPE, SpringUtil.getBean(RefreshTokenAuthen.class));
+        authenPool.put(PasswordAuthen.GRANT_TYPE, CsSpringUtil.getBean(PasswordAuthen.class));
+        authenPool.put(RefreshTokenAuthen.GRANT_TYPE, CsSpringUtil.getBean(RefreshTokenAuthen.class));
     }
 
     public static IAuthen getGrantType(String grantType){
