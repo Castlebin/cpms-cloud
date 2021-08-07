@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @MapperScan(AppConstant.BASE_PACKAGES+".**.modouls.**.mapper") //扫描mapper包 避免在每个mapper类上加@Mapper注解
 public class MybatisPlusConfig implements MetaObjectHandler {
 
-    /** +
+    /**
      * 分页插件配置
      * @return
      */
