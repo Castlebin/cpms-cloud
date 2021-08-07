@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @description: 授权用户信息
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/6/8 14:56
  */
 public class AuthInfo implements Serializable {
@@ -16,7 +16,7 @@ public class AuthInfo implements Serializable {
     /**
      * 过期时间，单位：秒
      */
-    private long expireIn;
+    private long expire;
 
     private UserLoginBase userInfo;
 
@@ -29,12 +29,12 @@ public class AuthInfo implements Serializable {
         this.accessToken = accessToken;
     }
 
-    public long getExpireIn() {
-        return expireIn;
+    public long getExpire() {
+        return expire;
     }
 
-    public void setExpireIn(long expireIn) {
-        this.expireIn = expireIn;
+    public void setExpire(long expire) {
+        this.expire = expire;
     }
 
     public UserLoginBase getUserInfo() {

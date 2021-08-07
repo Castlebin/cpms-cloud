@@ -6,6 +6,8 @@ package com.cpms.gateway.common.constants;
  * @time: 2021/7/8 10:51
  */
 public class SystemConstant {
-   /** 自定义配置文件名 **/
+   /** 自定义配置文件名,使用英文逗号分隔 **/
    public static final String CUSTOM_PROPS_FILE_NAME = "system.yml";
+   public static String TARGET = "/**";
+   public static String REPLACEMENT = "";
 }

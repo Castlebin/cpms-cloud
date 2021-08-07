@@ -1,7 +1,7 @@
 package com.cpms.auth.authen;
 
 import com.cpms.common.exception.BizException;
-import com.cpms.common.utils.SpringUtil;
+import com.cpms.common.utils.CsSpringUtil;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,14 +16,14 @@ public class UserAuthenBuilder {
      */
     private static Map<String, IAuthen> authenPool = new ConcurrentHashMap<>();
     static {
-        authenPool.put(SysAdminAuthen.AUTHEN_TYPE, SpringUtil.getBean(SysAdminAuthen.class));
-        authenPool.put(WxMiniAuthen.AUTHEN_TYPE, SpringUtil.getBean(WxMiniAuthen.class));
+        authenPool.put(PasswordAuthen.GRANT_TYPE, CsSpringUtil.getBean(PasswordAuthen.class));
+        authenPool.put(RefreshTokenAuthen.GRANT_TYPE, CsSpringUtil.getBean(RefreshTokenAuthen.class));
     }
 
-    public static IAuthen getAuthenType(String authenType){
-        IAuthen iAuthen = authenPool.get(authenType);
+    public static IAuthen getGrantType(String grantType){
+        IAuthen iAuthen = authenPool.get(grantType);
         if(iAuthen == null) {
-            throw new BizException("not authen Type was found");
+            throw new BizException("not grant Type was found");
         }
         return iAuthen;
     }

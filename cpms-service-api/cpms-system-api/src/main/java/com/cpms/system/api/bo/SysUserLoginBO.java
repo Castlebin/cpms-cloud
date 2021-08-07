@@ -17,12 +17,33 @@ public class SysUserLoginBO extends UserLoginBase {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 权限标识集合
+     * 用户状态： 0-正常，1-已禁用
      */
-    private List<String> permissions;
+    private int userStarus;
 
     /**
-     * 角色集合
+     * 租户状态：0-正常，1-已禁用
      */
-    private List<String> roles;
+    private int tenantStatus;
+
+    /**
+     * 部门ID
+     */
+    private Long deptId;
+
+    /**
+     * 部门ID
+     */
+    private String deptName;
+
+    /**
+     * 租户ID
+     */
+    private Long tenantId;
+
+    /**
+     * 租户名称
+     */
+    private String tenantName;
+
 }

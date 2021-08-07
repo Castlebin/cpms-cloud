@@ -1,7 +1,7 @@
 package com.cpms.common.config;
 
 import com.cpms.common.exception.GlobalExceptionHandler;
-import com.cpms.common.utils.SpringUtil;
+import com.cpms.common.utils.CsSpringUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -19,8 +19,8 @@ public class ToolConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringUtil springUtil() {
-        return new SpringUtil();
+    public CsSpringUtil springUtil() {
+        return new CsSpringUtil();
     }
 
     @Bean

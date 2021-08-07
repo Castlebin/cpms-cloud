@@ -1,11 +1,14 @@
 package com.cpms.common.core.secure;
 
+import java.io.Serializable;
+
 /**
  * @description:
  * @author: 01396003
  * @time: 2021/6/7 17:24
  */
-public class TokenInfo {
+public class TokenInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 生成的token字符串
      */

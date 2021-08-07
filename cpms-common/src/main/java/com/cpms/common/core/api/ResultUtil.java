@@ -1,8 +1,6 @@
 package com.cpms.common.core.api;
 import com.cpms.common.enums.GlobalResponseResultEnum;
-import com.cpms.common.utils.SpringUtil;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.springframework.core.env.Environment;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -27,6 +25,24 @@ public class ResultUtil implements Serializable {
     }
     public static <T> Result<T> success() {
         return success(null);
+    }
+
+    /**
+     * 根据boolean值返回
+     * @param flag
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> status(boolean flag) {
+        return flag ? success(GlobalResponseResultEnum.HANDEL_SUCCESS) : error(GlobalResponseResultEnum.HANDEL_FAIL);
+    }
+
+    public static <T> Result<T> success(IResultEnum resultEnum) {
+        Result<T> result = new Result(false);
+        result.setDate(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        result.setCode(resultEnum.getCode());
+        result.setMessage(resultEnum.getMessage());
+        return result;
     }
 
     /**
