@@ -17,7 +17,7 @@ public class SysUserLoginVO extends UserLoginBase {
     /**
      * 角色集合
      */
-    private List<String> roles;
+    private List<SysRoleVO> roles;
 
     /**
      * 部门ID

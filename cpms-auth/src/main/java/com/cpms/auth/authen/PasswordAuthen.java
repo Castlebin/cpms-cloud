@@ -2,6 +2,7 @@ package com.cpms.auth.authen;
 
 
 import com.cpms.auth.dto.UserLoginDTO;
+import com.cpms.system.api.vo.SysRoleVO;
 import com.cpms.system.api.vo.SysUserLoginVO;
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.secure.AuthInfo;
@@ -15,6 +16,7 @@ import com.google.common.collect.Maps;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @description: 账号密码授权
@@ -57,6 +59,7 @@ public class PasswordAuthen implements IAuthen{
         claims.put("tenantId",sysUserLoginVO.getTenantId());
         claims.put("tenantName",sysUserLoginVO.getTenantName());
         claims.put("userSex",sysUserLoginVO.getUserSex());
+        claims.put("roleCodes",sysUserLoginVO.getRoles().stream().map(SysRoleVO::getRoleCode).collect(Collectors.toList()));
         return claims;
     }
 }

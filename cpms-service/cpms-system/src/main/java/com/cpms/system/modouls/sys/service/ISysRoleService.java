@@ -12,5 +12,5 @@ import java.util.List;
  * @time: 2021/8/6 17:50
  */
 public interface ISysRoleService extends IService<SysRoleEntity> {
-    List<SysRoleEntity> queryRoleByUserId(@Param("userId") String userId);
+    List<SysRoleEntity> queryRoleByUserId(@Param("userId") Long userId);
 }

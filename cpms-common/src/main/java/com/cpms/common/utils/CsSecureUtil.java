@@ -5,6 +5,7 @@ import com.cpms.common.constant.TokenConstant;
 import com.cpms.common.core.secure.TokenUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -33,5 +34,23 @@ public class CsSecureUtil {
             }
         }
         return tokenUserInfo;
+    }
+
+    /**
+     *  判断是否是超级管理员（拥有所有权限）
+     * @return
+     */
+    public static boolean isSuperAdmin(){
+        TokenUserInfo tokenInfo =getUser();
+        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(TokenConstant.SUPER_ADMINISTRATOR));
+    }
+
+    /**
+     *  判断所属租户用户是否是管理员（拥有租户所有权限）
+     * @return
+     */
+    public static boolean isAdmin(){
+        TokenUserInfo tokenInfo =getUser();
+        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(TokenConstant.ADMINISTRATOR));
     }
 }

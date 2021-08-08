@@ -16,6 +16,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -82,11 +83,14 @@ public class AuthAspect implements Ordered {
             return false;
         }
         TokenUserInfo tokenInfo = CsSecureUtil.getUser();
-        String permissions = CsRedisUtil.get(TokenConstant.CACHE_USER_PERMISSION + tokenInfo.getUserId());
-        if(StringUtils.isBlank(permissions)) {
+        if(CsSecureUtil.isSuperAdmin()) {
+            return  true;
+        }
+        String cachePermissions = CsRedisUtil.get(TokenConstant.CACHE_USER_PERMISSION + tokenInfo.getUserId());
+        if(StringUtils.isBlank(cachePermissions)) {
             return false;
         }
-        return Arrays.asList(permissions.split(",")).contains(permission);
+        return Arrays.asList(cachePermissions.split(",")).contains(permission);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     private SysRoleMapper sysRoleMapper;
 
     @Override
-    public List<SysRoleEntity> queryRoleByUserId(String userId) {
+    public List<SysRoleEntity> queryRoleByUserId(Long userId) {
         return sysRoleMapper.queryRoleByUserId(userId);
     }
 }

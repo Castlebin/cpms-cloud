@@ -34,14 +34,15 @@ public class ResultUtil implements Serializable {
      * @return
      */
     public static <T> Result<T> status(boolean flag) {
-        return flag ? success(GlobalResponseResultEnum.HANDEL_SUCCESS) : error(GlobalResponseResultEnum.HANDEL_FAIL);
+        return flag ? success(GlobalResponseResultEnum.HANDEL_SUCCESS.getCode(),GlobalResponseResultEnum.HANDEL_SUCCESS.getMessage())
+                : error(GlobalResponseResultEnum.HANDEL_FAIL.getCode(),GlobalResponseResultEnum.HANDEL_FAIL.getMessage());
     }
 
-    public static <T> Result<T> success(IResultEnum resultEnum) {
+    public static <T> Result<T> success(Integer code,String message) {
         Result<T> result = new Result(false);
         result.setDate(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
-        result.setCode(resultEnum.getCode());
-        result.setMessage(resultEnum.getMessage());
+        result.setCode(code);
+        result.setMessage(message);
         return result;
     }
 
