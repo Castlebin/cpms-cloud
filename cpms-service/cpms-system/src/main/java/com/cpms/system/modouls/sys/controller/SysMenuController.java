@@ -26,11 +26,13 @@ public class SysMenuController {
      * @param topMenuId
      * @return
      */
-    @PostMapping("/routes")
-    @PreAuth("sys_menu_view")
+    @GetMapping("/routes")
     public Result<List<SysMenuVO>> querySysMenuRoutes(@RequestParam(name = "topMenuId",required=false) Long topMenuId){
-        List<SysMenuVO> sysMenuVOS = sysMenuService.querySysMenuRoutes(topMenuId);
-        System.out.println(sysMenuVOS);
-        return ResultUtil.success();
+        return ResultUtil.success(sysMenuService.querySysMenuRoutes(topMenuId));
+    }
+
+    @GetMapping("/buttons")
+    public Result<List<String>> queryRoleButtons(){
+        return ResultUtil.success(sysMenuService.queryRoleButtons());
     }
 }

@@ -21,7 +21,7 @@ public class SysMenuEntity extends BaseEntity {
      */
     @TableId(value = "menu_id",type = IdType.ASSIGN_ID)
     private Long menuId;
-    private Integer parentId;
+    private Long parentId;
     private String name;
     private String code;
     private String alias;
@@ -30,5 +30,6 @@ public class SysMenuEntity extends BaseEntity {
     private String component;
     private Integer sort;
     private Integer type;
+    private Integer openFlag;
 
 }

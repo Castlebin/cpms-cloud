@@ -20,6 +20,10 @@ public class TokenUserInfo implements Serializable {
     private String tenantName;
     private int userSex;
     private List<String> roleCodes;
+    private List<Long> roleIds;
+
+    public TokenUserInfo() {
+    }
 
     public String getUserAccount() {
         return userAccount;
@@ -99,5 +103,13 @@ public class TokenUserInfo implements Serializable {
 
     public void setRoleCodes(List<String> roleCodes) {
         this.roleCodes = roleCodes;
+    }
+
+    public List<Long> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<Long> roleIds) {
+        this.roleIds = roleIds;
     }
 }

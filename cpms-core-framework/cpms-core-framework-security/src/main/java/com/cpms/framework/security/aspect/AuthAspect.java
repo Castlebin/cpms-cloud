@@ -16,7 +16,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -41,6 +40,7 @@ public class AuthAspect implements Ordered {
 
     @Before("authAspectPoint()")
     public void handelBefore(JoinPoint point) throws NoSuchMethodException {
+        System.out.println("---AuthAspect start---");
         Class<?> target1 = point.getTarget().getClass();
         MethodSignature signature = (MethodSignature) point.getSignature();
         resolveAuth(target1, signature.getMethod());
@@ -86,7 +86,7 @@ public class AuthAspect implements Ordered {
         if(CsSecureUtil.isSuperAdmin()) {
             return  true;
         }
-        String cachePermissions = CsRedisUtil.get(TokenConstant.CACHE_USER_PERMISSION + tokenInfo.getUserId());
+        String cachePermissions = (String)CsRedisUtil.hget(TokenConstant.CACHE_LOGIN_USER_INFO_KEY + tokenInfo.getUserId(), TokenConstant.PERMISSION_KEY);
         if(StringUtils.isBlank(cachePermissions)) {
             return false;
         }
@@ -96,6 +96,6 @@ public class AuthAspect implements Ordered {
     @Override
     public int getOrder() {
         // 数值越小越先执行
-        return HIGHEST_PRECEDENCE+1;
+        return LOWEST_PRECEDENCE;
     }
 }

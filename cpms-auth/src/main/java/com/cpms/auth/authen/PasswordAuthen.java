@@ -60,6 +60,7 @@ public class PasswordAuthen implements IAuthen{
         claims.put("tenantName",sysUserLoginVO.getTenantName());
         claims.put("userSex",sysUserLoginVO.getUserSex());
         claims.put("roleCodes",sysUserLoginVO.getRoles().stream().map(SysRoleVO::getRoleCode).collect(Collectors.toList()));
+        claims.put("roleIds",sysUserLoginVO.getRoles().stream().map(SysRoleVO::getRoleId).collect(Collectors.toList()));
         return claims;
     }
 }

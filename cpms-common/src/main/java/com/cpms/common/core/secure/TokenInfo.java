@@ -18,6 +18,9 @@ public class TokenInfo implements Serializable {
      */
     private long expire;
 
+    public TokenInfo() {
+    }
+
     public String getToken() {
         return token;
     }

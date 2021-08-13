@@ -54,6 +54,9 @@ public class UserLoginBase implements Serializable{
      */
     private int  userSex;
 
+    public UserLoginBase() {
+    }
+
     public Long getUserId() {
         return userId;
     }

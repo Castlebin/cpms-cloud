@@ -3,6 +3,7 @@ package com.cpms.system.modouls.sys.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cpms.system.modouls.sys.entity.SysMenuEntity;
 import com.cpms.system.modouls.sys.vo.SysMenuVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ import java.util.List;
  */
 public interface SysMenuService extends IService<SysMenuEntity> {
     List<SysMenuVO> querySysMenuRoutes(Long topMenuId);
+    List<String> queryRoleButtons();
 }

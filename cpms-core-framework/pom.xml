@@ -16,5 +16,6 @@
     <modules>
         <module>cpms-core-framework-security</module>
         <module>cpms-core-framework-redis</module>
+        <module>cpms-core-framework-log</module>
     </modules>
 </project>

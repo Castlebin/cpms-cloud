@@ -34,6 +34,9 @@ public class CsJwtUtil {
         return createJwt(claims, TOKEN_EXPIRE);
     }
 
+    public static long getTokenExpire(){
+        return TOKEN_EXPIRE;
+    }
     /**
      *
      * @param claims 根据业务需要保存在token中的信息,比如用户userId、userName

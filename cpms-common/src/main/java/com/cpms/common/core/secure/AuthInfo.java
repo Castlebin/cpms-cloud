@@ -20,6 +20,8 @@ public class AuthInfo implements Serializable {
 
     private UserLoginBase userInfo;
 
+    public AuthInfo() {
+    }
 
     public String getAccessToken() {
         return accessToken;

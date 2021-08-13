@@ -75,4 +75,16 @@ public class  Result<T> implements Serializable {
     public void setObj(T obj) {
         this.obj = obj;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "success=" + success +
+                ", code=" + code +
+                ", message='" + message + '\'' +
+                ", applicationName='" + applicationName + '\'' +
+                ", date='" + date + '\'' +
+                ", obj=" + obj +
+                '}';
+    }
 }

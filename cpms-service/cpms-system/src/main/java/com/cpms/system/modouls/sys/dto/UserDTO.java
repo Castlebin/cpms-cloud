@@ -31,5 +31,5 @@ public class UserDTO {
     /**
      * 用户性别：0-未知，1-男，2-女
      */
-    private int  userSex;
+    private Integer  userSex;
 }

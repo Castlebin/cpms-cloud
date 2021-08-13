@@ -51,6 +51,7 @@ public class SysUserClient implements ISysUserClient {
             SysRoleVO sysRoleVO = new SysRoleVO();
             sysRoleVO.setRoleCode(e.getRoleCode());
             sysRoleVO.setRoleName(e.getRoleName());
+            sysRoleVO.setRoleId(e.getRoleId());
             return sysRoleVO;
         }).collect(Collectors.toList());
         BeanUtils.copyProperties(sysUserLoginBO,sysUserLoginVO);

@@ -2,6 +2,7 @@ package com.cpms.system.modouls.sys.vo;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
 @Data
 public class SysMenuVO {
     private Long menuId;
-    private Integer parentId;
+    private Long parentId;
     private List<SysMenuVO> children;
     private String name;
     private String code;
@@ -22,5 +23,6 @@ public class SysMenuVO {
     private String component;
     private Integer sort;
     private Integer type;
+    private Integer openFlag;
 
 }

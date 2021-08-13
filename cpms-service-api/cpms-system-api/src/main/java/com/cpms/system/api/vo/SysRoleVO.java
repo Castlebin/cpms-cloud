@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class SysRoleVO {
+    private Long roleId;
     private String roleName;
     private String roleCode;
 }

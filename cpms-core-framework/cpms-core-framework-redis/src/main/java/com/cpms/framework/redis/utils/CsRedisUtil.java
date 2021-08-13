@@ -77,14 +77,6 @@ public class CsRedisUtil {
         return (String)REDISTEMPLATE.opsForValue().get(key);
     }
 
-    /**
-     * 普通缓存获取
-     * @param key 键
-     * @return 值
-     */
-//    public <T> T getBean(final String key, Class<T> beanClass) {
-//        return (beanClass)REDISTEMPLATE.opsForValue().get(key);
-//    }
 
     /**
      * 普通缓存放入
@@ -104,9 +96,8 @@ public class CsRedisUtil {
      * @param seconds 时间(秒) time要大于0 如果time小于等于0 将设置无限期
      */
     @SuppressWarnings("unchecked")
-    public static boolean set(String key, Object value, long seconds) {
+    public static void set(String key, Object value, long seconds) {
         REDISTEMPLATE.opsForValue().set(key, value, seconds, TimeUnit.SECONDS);
-        return true;
     }
 
     /**
@@ -151,12 +142,12 @@ public class CsRedisUtil {
     /**
      * HashGet
      * @param key 键 不能为null
-     * @param item 项 不能为null
+     * @param field 项 不能为null
      * @return 值
      */
     @SuppressWarnings("unchecked")
-    public static Object hget(String key, String item) {
-        return REDISTEMPLATE.opsForHash().get(key, item);
+    public static Object hget(String key, String field) {
+        return REDISTEMPLATE.opsForHash().get(key, field);
     }
     /**
      * 获取hashKey对应的所有键值
@@ -168,7 +159,7 @@ public class CsRedisUtil {
         return REDISTEMPLATE.opsForHash().entries(key);
     }
     /**
-     * HashSet
+     * 存放一张Hash表
      * @param key 键
      * @param map 对应多个键值
      * @return true 成功 false 失败
@@ -179,7 +170,7 @@ public class CsRedisUtil {
         return true;
     }
     /**
-     * HashSet 并设置时间
+     * 存放一张Hash表 并设置时间
      * @param key 键
      * @param map 对应多个键值
      * @param time 时间(秒)
@@ -196,26 +187,26 @@ public class CsRedisUtil {
     /**
      * 向一张hash表中放入数据,如果不存在将创建
      * @param key 键
-     * @param item 项
+     * @param field 项
      * @param value 值
      * @return true 成功 false失败
      */
     @SuppressWarnings("unchecked")
-    public static boolean hset(String key, String item, Object value) {
-        REDISTEMPLATE.opsForHash().put(key, item, value);
+    public static boolean hset(String key, String field, Object value) {
+        REDISTEMPLATE.opsForHash().put(key, field, value);
         return true;
     }
     /**
      * 向一张hash表中放入数据,如果不存在将创建
      * @param key 键
-     * @param item 项
+     * @param field 项
      * @param value 值
      * @param time 时间(秒) 注意:如果已存在的hash表有时间,这里将会替换原有的时间
      * @return true 成功 false失败
      */
     @SuppressWarnings("unchecked")
-    public static boolean hset(String key, String item, Object value, long time) {
-        REDISTEMPLATE.opsForHash().put(key, item, value);
+    public static boolean hset(String key, String field, Object value, long time) {
+        REDISTEMPLATE.opsForHash().put(key, field, value);
         if (time > 0) {
             expire(key, time);
         }
@@ -224,43 +215,43 @@ public class CsRedisUtil {
     /**
      * 删除hash表中的值
      * @param key 键 不能为null
-     * @param item 项 可以使多个 不能为null
+     * @param field 项 可以使多个 不能为null
      */
     @SuppressWarnings("unchecked")
-    public static void hdel(String key, Object... item) {
-        REDISTEMPLATE.opsForHash().delete(key, item);
+    public static void hdel(String key, Object... field) {
+        REDISTEMPLATE.opsForHash().delete(key, field);
     }
     /**
      * 判断hash表中是否有该项的值
      * @param key 键 不能为null
-     * @param item 项 不能为null
+     * @param field 项 不能为null
      * @return true 存在 false不存在
      */
     @SuppressWarnings("unchecked")
-    public static boolean hHasKey(String key, String item) {
-        return REDISTEMPLATE.opsForHash().hasKey(key, item);
+    public static boolean hHasKey(String key, String field) {
+        return REDISTEMPLATE.opsForHash().hasKey(key, field);
     }
     /**
      * hash递增 如果不存在,就会创建一个 并把新增后的值返回
      * @param key 键
-     * @param item 项
+     * @param field 项
      * @param by 要增加几(大于0)
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static double hincr(String key, String item, double by) {
-        return REDISTEMPLATE.opsForHash().increment(key, item, by);
+    public static double hincr(String key, String field, double by) {
+        return REDISTEMPLATE.opsForHash().increment(key, field, by);
     }
     /**
      * hash递减
      * @param key 键
-     * @param item 项
+     * @param field 项
      * @param by 要减少记(小于0)
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static double hdecr(String key, String item, double by) {
-        return REDISTEMPLATE.opsForHash().increment(key, item, -by);
+    public static double hdecr(String key, String field, double by) {
+        return REDISTEMPLATE.opsForHash().increment(key, field, -by);
     }
     // ============================set=============================
     /**
@@ -313,7 +304,7 @@ public class CsRedisUtil {
      * @return
      */
     @SuppressWarnings("all")
-    public static Long sGetSetSize(String key) {
+    public static Long setSize(String key) {
         return REDISTEMPLATE.opsForSet().size(key);
     }
     /**

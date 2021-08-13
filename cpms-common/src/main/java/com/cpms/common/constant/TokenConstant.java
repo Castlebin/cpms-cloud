@@ -9,7 +9,8 @@ public interface TokenConstant {
     String SIGN_KEY = "Cpms";
     String TOKEN_KEY = "auth-token";
     String USER_INFO = "user_info";
-    String CACHE_USER_PERMISSION = "user:permission:";
+    String CACHE_LOGIN_USER_INFO_KEY = "login:user:info:";
+    String PERMISSION_KEY = "permission";
     String SUPER_ADMINISTRATOR = "SUPER_ADMINISTRATOR";
     String ADMINISTRATOR = "ADMINISTRATOR";
     String ACCESS_TOKEN = "access_token";
