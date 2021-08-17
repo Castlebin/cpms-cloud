@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cpms.system.modouls.sys.mapper.SysUserMapper">
+<mapper namespace="com.cpms.system.modules.sys.mapper.SysUserMapper">
 <!--    <resultMap id="sysUserBoMap"  type="com.cpms.system.api.bo.SysUserLoginBO" >-->
 <!--        <id property="userId" column="userId"/>-->
 <!--        <result property="userName" column="year"  />-->
