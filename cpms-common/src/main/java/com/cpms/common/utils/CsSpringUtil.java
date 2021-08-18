@@ -1,7 +1,6 @@
 package com.cpms.common.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -14,11 +13,12 @@ import org.springframework.stereotype.Component;
  * @time: 2021/6/7 19:52
  */
 @Component
+@Slf4j
 public class CsSpringUtil implements ApplicationContextAware {
-    private static final Logger log = LoggerFactory.getLogger(CsSpringUtil.class);
     private static ApplicationContext applicationContext;
 
     @Override
+    @SuppressWarnings("all")
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         if(CsSpringUtil.applicationContext == null) {
             CsSpringUtil.applicationContext = applicationContext;
@@ -54,15 +54,15 @@ public class CsSpringUtil implements ApplicationContextAware {
     }
 
     /**
-     *  spring异步事件
+     *  spring事件发布方法
      * @param event
      */
     public static void publishEvent(ApplicationEvent event) {
         if (applicationContext != null) {
             try {
                 applicationContext.publishEvent(event);
-            } catch (Exception var2) {
-                log.error(var2.getMessage());
+            } catch (Exception ex) {
+                log.error("[publishEvent]，spring事件发布异常",ex);
             }
         }
     }

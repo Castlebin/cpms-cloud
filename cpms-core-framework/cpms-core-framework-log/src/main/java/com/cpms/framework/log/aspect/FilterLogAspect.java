@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.cpms.common.core.api.Result;
 import com.cpms.common.utils.CsPropsUtil;
 import com.cpms.common.utils.CsSecureUtil;
+import com.cpms.common.utils.CsSpringUtil;
 import com.cpms.common.utils.CsWebUtil;
 import com.cpms.framework.log.annotations.OperLog;
-import com.google.common.collect.Maps;
+import com.cpms.framework.log.dto.LogDTO;
+import com.cpms.framework.log.event.LogEvent;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -110,18 +111,19 @@ public class FilterLogAspect{
         Class<?>[] types = signature.getParameterTypes();
         Method m = target.getMethod(signature.getName(), types);
         if (m.isAnnotationPresent(OperLog.class)) {
-            Map<String,Object> operLogMsg = Maps.newHashMap();
             OperLog operLog = m.getAnnotation(OperLog.class);
-            operLogMsg.put("title",operLog.desc());
-            operLogMsg.put("serviceName", CsPropsUtil.getProperty("spring.application.name"));
-            operLogMsg.put("handleIp",CsWebUtil.getIpAddr());
-            operLogMsg.put("reqUrl",request.getRequestURI());
-            operLogMsg.put("reqMethod", request.getMethod().toUpperCase());
-            operLogMsg.put("reqParams",args);
-            operLogMsg.put("createBy", CsSecureUtil.userAccount());
-            operLogMsg.put("exeTime",exeTime);
-            operLogMsg.put("resultMsg",result);
-            System.out.println(operLogMsg);
+            LogDTO logDTO = new LogDTO();
+            logDTO.setTitle(operLog.desc());
+            logDTO.setServiceName((String)CsPropsUtil.getProperty("spring.application.name"));
+            logDTO.setHandleIp(CsWebUtil.getIpAddr());
+            logDTO.setReqMethod(request.getMethod().toUpperCase());
+            logDTO.setReqParams(args);
+            logDTO.setCreateBy(CsSecureUtil.userAccount());
+            logDTO.setResultMsg(result);
+            logDTO.setReqUrl(request.getRequestURI());
+            logDTO.setExeTime(exeTime);
+            // 发布操作日志事件，异步执行
+            CsSpringUtil.publishEvent(new LogEvent(this,logDTO));
         }
     }
 }
