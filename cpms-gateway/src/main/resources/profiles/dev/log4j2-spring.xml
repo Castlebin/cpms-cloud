@@ -115,12 +115,18 @@
         <!--若是additivity设为false，则 子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。-->
 
         <!--spring和mybatis打印info级别及以上的日志信息-->
-        <logger name="org.mybatis" level="info" additivity="false"/>
-        <Logger name="org.springframework" level="info" additivity="false"/>
+        <logger name="org.mybatis" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
+        <Logger name="org.springframework" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
 
         <!--************自定义filter日志级别，并指定使用RollingFileFilter日志打印规则***********-->
         <!--这里的name="filter" 的filter要与 private final Logger log = LoggerFactory.getLogger("filter"); 保持一致-->
-        <logger name="filter" level="info" additivity="false"/>
+        <logger name="filter" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
 
         <!-- 设置根日志级别打印info及更高级别的日志，DEBUG > TRACE > ALL 将不会打印 -->
         <root level="info">

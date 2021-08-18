@@ -30,4 +30,5 @@ public class GlobalExceptionHandler {
     public Result<Object> bizExceptionHandler(BizException e) {
         return ResultUtil.error(e.getCode(),e.getMessage(),e.getApplicationName(),e.getObj());
     }
+
 }

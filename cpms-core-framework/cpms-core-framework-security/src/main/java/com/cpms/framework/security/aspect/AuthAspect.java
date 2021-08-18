@@ -15,7 +15,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -28,7 +27,7 @@ import java.util.Arrays;
 @Aspect
 @Configuration
 @Slf4j
-public class AuthAspect implements Ordered {
+public class AuthAspect{
     /**
      *  定义切点
      * （1）@annotation：用来拦截所有被某个注解修饰的方法
@@ -40,7 +39,6 @@ public class AuthAspect implements Ordered {
 
     @Before("authAspectPoint()")
     public void handelBefore(JoinPoint point) throws NoSuchMethodException {
-        System.out.println("---AuthAspect start---");
         Class<?> target1 = point.getTarget().getClass();
         MethodSignature signature = (MethodSignature) point.getSignature();
         resolveAuth(target1, signature.getMethod());
@@ -60,7 +58,7 @@ public class AuthAspect implements Ordered {
         if (clazz.isAnnotationPresent(PreAuth.class)) {
             auth = clazz.getAnnotation(PreAuth.class);
         }
-        // 方法注解可以覆盖类型注解-也就是使用方法上的注解去替换类上面的注解
+        // 方法注解可以覆盖类型注解-方法注解优先级大于类注解
         Method m = clazz.getMethod(method.getName(), types);
         if (m.isAnnotationPresent(PreAuth.class)) {
             auth = m.getAnnotation(PreAuth.class);
@@ -91,11 +89,5 @@ public class AuthAspect implements Ordered {
             return false;
         }
         return Arrays.asList(cachePermissions.split(",")).contains(permission);
-    }
-
-    @Override
-    public int getOrder() {
-        // 数值越小越先执行
-        return LOWEST_PRECEDENCE;
     }
 }

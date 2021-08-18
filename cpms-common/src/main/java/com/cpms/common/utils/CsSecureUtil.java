@@ -53,4 +53,12 @@ public class CsSecureUtil {
         TokenUserInfo tokenInfo =getUser();
         return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(TokenConstant.ADMINISTRATOR));
     }
+
+    /**
+     * 获取用户账号
+     * @return
+     */
+    public static String userAccount(){
+        return getUser().getUserAccount();
+    }
 }

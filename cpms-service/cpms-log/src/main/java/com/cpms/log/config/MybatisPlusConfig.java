@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
  */
 @EnableTransactionManagement
 @Configuration
-@MapperScan(AppConstant.BASE_PACKAGES+".**.modouls.**.mapper") //扫描mapper包 避免在每个mapper类上加@Mapper注解
+@MapperScan(AppConstant.BASE_PACKAGES+".**.modules.**.mapper") //扫描mapper包 避免在每个mapper类上加@Mapper注解
 public class MybatisPlusConfig implements MetaObjectHandler {
 
     /**

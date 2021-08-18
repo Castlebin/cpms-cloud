@@ -51,8 +51,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
         ServerHttpResponse resp = exchange.getResponse();
-        String headerToken = exchange.getRequest().getHeaders().getFirst(TokenConstant.TOKEN_KEY);
-        String paramToken = exchange.getRequest().getQueryParams().getFirst(TokenConstant.TOKEN_KEY);
+        String headerToken = exchange.getRequest().getHeaders().getFirst(TokenConstant.H_TOKEN_KEY);
+        String paramToken = exchange.getRequest().getQueryParams().getFirst(TokenConstant.H_TOKEN_KEY);
         if (StringUtils.isAllBlank(headerToken, paramToken)) {
             return unAuth(resp, GlobalResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getCode(),GlobalResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getMessage());
         }

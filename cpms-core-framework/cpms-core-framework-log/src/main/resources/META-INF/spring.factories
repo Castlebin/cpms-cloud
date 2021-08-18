@@ -1,4 +1,5 @@
-#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-#com.cpms.system.config.FilterLogAspect
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.cpms.framework.log.aspect.FilterLogAspect
+# com.cpms.framework.log.config.RequestWebMvcConfig,\
 
 

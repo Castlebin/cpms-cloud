@@ -1,5 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.cpms.framework.security.aspect.AuthAspect
-# com.cpms.framework.security.config.RequestWebMvcConfig,\
+
 
 

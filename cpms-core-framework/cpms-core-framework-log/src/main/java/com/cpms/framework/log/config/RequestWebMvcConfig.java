@@ -1,6 +1,6 @@
-//package com.cpms.framework.security.config;
+//package com.cpms.framework.log.config;
 //
-//import com.cpms.framework.security.handler.RequestHandlerInterceptor;
+//import com.cpms.framework.log.handler.RequestHandlerInterceptor;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -8,7 +8,7 @@
 //
 //
 ///**
-// * @description: webMvc 配置
+// * @description: webMvc 拦截器配置
 // * @author: gulang
 // * @time: 2021/7/28 11:23
 // */
