@@ -1,7 +1,7 @@
 package com.cpms.system.api.config;
 
-import com.cpms.system.api.feign.fallback.ISysUserClientFallback;
-import com.cpms.system.api.feign.fallback.ISysUserClientFallbackFactory;
+import com.cpms.system.api.modules.sys.feign.fallback.ISysUserClientFallback;
+import com.cpms.system.api.modules.sys.feign.fallback.ISysUserClientFallbackFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

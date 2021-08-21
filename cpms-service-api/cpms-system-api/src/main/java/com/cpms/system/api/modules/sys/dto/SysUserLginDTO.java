@@ -1,4 +1,4 @@
-package com.cpms.system.api.dto;
+package com.cpms.system.api.modules.sys.dto;
 
 import lombok.Data;
 

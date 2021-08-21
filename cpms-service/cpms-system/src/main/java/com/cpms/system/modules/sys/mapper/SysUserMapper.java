@@ -1,8 +1,8 @@
 package com.cpms.system.modules.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cpms.system.api.bo.SysUserLoginBO;
-import com.cpms.system.api.dto.SysUserLginDTO;
+import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
+import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
 
 /**

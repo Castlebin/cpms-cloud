@@ -2,8 +2,8 @@ package com.cpms.system.modules.sys.service.impl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cpms.system.api.bo.SysUserLoginBO;
-import com.cpms.system.api.dto.SysUserLginDTO;
+import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
+import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
 import com.cpms.system.modules.sys.mapper.SysUserMapper;
 import com.cpms.system.modules.sys.service.ISysUserService;

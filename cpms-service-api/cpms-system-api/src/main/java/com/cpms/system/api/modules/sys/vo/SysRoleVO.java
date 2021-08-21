@@ -1,4 +1,4 @@
-package com.cpms.system.api.vo;
+package com.cpms.system.api.modules.sys.vo;
 
 import lombok.Data;
 

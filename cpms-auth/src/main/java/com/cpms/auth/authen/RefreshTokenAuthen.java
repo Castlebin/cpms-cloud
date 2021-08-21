@@ -1,6 +1,5 @@
 package com.cpms.auth.authen;
 
-import com.cpms.auth.common.enums.UserLoginEnum;
 import com.cpms.auth.dto.UserLoginDTO;
 import com.cpms.common.core.secure.AuthInfo;
 import org.springframework.stereotype.Component;

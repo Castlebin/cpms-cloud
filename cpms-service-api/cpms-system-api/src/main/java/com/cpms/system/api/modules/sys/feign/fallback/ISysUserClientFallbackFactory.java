@@ -1,4 +1,4 @@
-package com.cpms.system.api.feign.fallback;
+package com.cpms.system.api.modules.sys.feign.fallback;
 
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;

@@ -1,10 +1,8 @@
-package com.cpms.system.api.bo;
+package com.cpms.system.api.modules.sys.bo;
 
 import com.cpms.common.core.secure.UserLoginBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.List;
 
 /**
  * @description: 系统用户登录BO类

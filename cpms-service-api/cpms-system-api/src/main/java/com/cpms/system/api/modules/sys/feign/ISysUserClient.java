@@ -1,12 +1,11 @@
-package com.cpms.system.api.feign;
+package com.cpms.system.api.modules.sys.feign;
 
 
 import com.cpms.common.constant.AppConstant;
 import com.cpms.common.core.api.Result;
-import com.cpms.system.api.bo.SysUserLoginBO;
-import com.cpms.system.api.dto.SysUserLginDTO;
-import com.cpms.system.api.feign.fallback.ISysUserClientFallbackFactory;
-import com.cpms.system.api.vo.SysUserLoginVO;
+import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
+import com.cpms.system.api.modules.sys.feign.fallback.ISysUserClientFallbackFactory;
+import com.cpms.system.api.modules.sys.vo.SysUserLoginVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

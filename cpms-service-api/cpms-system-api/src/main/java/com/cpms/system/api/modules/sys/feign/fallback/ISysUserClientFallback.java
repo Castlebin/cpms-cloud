@@ -1,11 +1,12 @@
-package com.cpms.system.api.feign.fallback;
+package com.cpms.system.api.modules.sys.feign.fallback;
 
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
 import com.cpms.common.enums.GlobalResponseResultEnum;
-import com.cpms.system.api.dto.SysUserLginDTO;
-import com.cpms.system.api.feign.ISysUserClient;
-import com.cpms.system.api.vo.SysUserLoginVO;
+import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
+import com.cpms.system.api.modules.sys.feign.ISysUserClient;
+
+import com.cpms.system.api.modules.sys.vo.SysUserLoginVO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

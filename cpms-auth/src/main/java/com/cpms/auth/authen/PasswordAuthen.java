@@ -2,16 +2,15 @@ package com.cpms.auth.authen;
 
 
 import com.cpms.auth.dto.UserLoginDTO;
-import com.cpms.system.api.vo.SysRoleVO;
-import com.cpms.system.api.vo.SysUserLoginVO;
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.secure.AuthInfo;
 import com.cpms.common.core.secure.TokenInfo;
 import com.cpms.common.exception.BizException;
 import com.cpms.common.utils.CsJwtUtil;
-import com.cpms.system.api.dto.SysUserLginDTO;
-import com.cpms.system.api.feign.ISysUserClient;
-import com.google.common.collect.Lists;
+import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
+import com.cpms.system.api.modules.sys.feign.ISysUserClient;
+import com.cpms.system.api.modules.sys.vo.SysRoleVO;
+import com.cpms.system.api.modules.sys.vo.SysUserLoginVO;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
