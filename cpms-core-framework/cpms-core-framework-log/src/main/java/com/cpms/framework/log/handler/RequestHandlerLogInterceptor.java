@@ -1,5 +1,7 @@
 package com.cpms.framework.log.handler;
 
+import com.alibaba.fastjson.JSON;
+import com.cpms.common.core.api.Result;
 import com.cpms.common.utils.CsPropsUtil;
 import com.cpms.common.utils.CsSecureUtil;
 import com.cpms.common.utils.CsSpringUtil;
@@ -75,10 +77,13 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
      * @param ex
      */
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws IOException {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         System.out.println("请求拦截结束..........");
         LogDTO logDTO = (LogDTO)request.getAttribute(LOGGER_ENTITY);
-        logDTO.setResultMsg(String.valueOf(request.getAttribute(ResponseIntercept.RESPONSE_JSON)));
+        String resultJson = String.valueOf(request.getAttribute(ResponseIntercept.RESPONSE_JSON));
+        Result resultVO = JSON.parseObject(resultJson, Result.class);
+        resultVO.setObj(null);
+        logDTO.setResultMsg(JSON.toJSONString(resultVO));
         StringBuilder builderFilterLog = new StringBuilder();
         //结束时间
         long endTime = System.currentTimeMillis();
