@@ -2,6 +2,7 @@ package com.cpms.system.modules.sys.feign;
 
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
+import com.cpms.common.utils.CsSecureUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.ISysUserClient;

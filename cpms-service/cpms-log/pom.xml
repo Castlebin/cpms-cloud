@@ -23,7 +23,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <!-- 引入cpms-system-api依赖 -->
+        <!-- 引入cpms-log-api依赖 -->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-log-api</artifactId>
@@ -32,6 +32,22 @@
                 <exclusion>
                     <artifactId>cpms-common</artifactId>
                     <groupId>com.cpms</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- log框架模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-core-framework-log</artifactId>
+            <version>${cpms.project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>cpms-common</artifactId>
+                    <groupId>com.cpms</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-aop</artifactId>
+                    <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

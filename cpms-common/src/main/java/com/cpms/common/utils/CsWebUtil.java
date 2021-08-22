@@ -22,6 +22,7 @@ public class CsWebUtil {
         return requestAttributes == null ? null : ((ServletRequestAttributes)requestAttributes).getRequest();
     }
 
+
     public static String getIpAddr() {
         return getIpAddr(getRequest());
     }

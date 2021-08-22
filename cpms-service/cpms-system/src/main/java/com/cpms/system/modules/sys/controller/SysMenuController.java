@@ -2,7 +2,7 @@ package com.cpms.system.modules.sys.controller;
 
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
-import com.cpms.system.modules.sys.service.SysMenuService;
+import com.cpms.system.modules.sys.service.ISysMenuService;
 import com.cpms.system.modules.sys.vo.SysMenuVO;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/sys-menu")
 public class SysMenuController {
     @Resource
-    private SysMenuService sysMenuService;
+    private ISysMenuService sysMenuService;
 
     /**
      *  获取菜单路由

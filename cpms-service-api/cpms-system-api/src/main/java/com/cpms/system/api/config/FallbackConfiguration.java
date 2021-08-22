@@ -11,7 +11,7 @@ import org.springframework.core.annotation.Order;
  * @Description:
  */
 @Configuration
-@Order(-2147483648)
+@Order(-2147483638)
 public class FallbackConfiguration {
     public FallbackConfiguration() {
     }

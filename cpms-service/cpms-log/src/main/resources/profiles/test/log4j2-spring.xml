@@ -147,7 +147,7 @@
     <!--*************然后定义loggers，只有定义了logger节点/root节点，并引入的appender，appender才会生效**************-->
     <loggers>
         <!--************Logger指定不同包的日志级别，以及指定使用哪个日志规则，不指定默认使用root配置的规则***********-->
-        <!--生产环境要求屏蔽  在looger中配置了additivity="false"，就不会反馈到root中 -->
+        <!--生产环境要求屏蔽  在looger中配置了additivity="false"，就不会反馈到root中 ,否则会打印两份日志-->
 
         <!--,includeLocation="true" 才会输出行号和类名 -->
         <AsyncLogger additivity="false" name="com.mybatis" level="DEBUG" includeLocation="true">

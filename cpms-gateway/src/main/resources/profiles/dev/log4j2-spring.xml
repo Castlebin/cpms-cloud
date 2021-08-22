@@ -151,20 +151,20 @@
         <!--生产环境要求屏蔽  在looger中配置了additivity="false"，就不会反馈到root中 -->
 
         <!--,includeLocation="true" 才会输出行号和类名 -->
-        <AsyncLogger additivity="true" name="com.mybatis" level="DEBUG" includeLocation="true">
+        <AsyncLogger additivity="false" name="com.mybatis" level="DEBUG" includeLocation="true">
         </AsyncLogger>
-        <AsyncLogger additivity="true" name="java.sql.Connection" level="DEBUG" includeLocation="true">
+        <AsyncLogger additivity="false" name="java.sql.Connection" level="DEBUG" includeLocation="true">
         </AsyncLogger>
-        <AsyncLogger additivity="true" name="java.sql.Statement" level="DEBUG" includeLocation="true">
+        <AsyncLogger additivity="false" name="java.sql.Statement" level="DEBUG" includeLocation="true">
         </AsyncLogger>
-        <AsyncLogger additivity="true" name="java.sql.PreparedStatement" level="DEBUG" includeLocation="true">
+        <AsyncLogger additivity="false" name="java.sql.PreparedStatement" level="DEBUG" includeLocation="true">
         </AsyncLogger>
-        <AsyncLogger additivity="true" name="java.sql.ResultSet" level="DEBUG" includeLocation="true">
+        <AsyncLogger additivity="false" name="java.sql.ResultSet" level="DEBUG" includeLocation="true">
         </AsyncLogger>
 
         <!--************自定义filter日志级别，并指定使用RollingFileFilter日志打印规则***********-->
         <!--这里的name="filter" 的filter要与 private final Logger log = LoggerFactory.getLogger("filter"); 保持一致-->
-        <AsyncLogger name="filter" level="info" additivity="true" includeLocation="true">
+        <AsyncLogger name="filter" level="info" additivity="false" includeLocation="true">
             <AppenderRef ref="Console"/>
         </AsyncLogger>
 

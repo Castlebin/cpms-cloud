@@ -10,26 +10,33 @@
     <modelVersion>4.0.0</modelVersion>
     <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
-    <artifactId>cpms-core-framework-log</artifactId>
+    <artifactId>cpms-core-framework-feign</artifactId>
     <name>${project.artifactId}</name>
     <description>日志模块</description>
-    <properties>
-        <spring-aop.version>2.2.7.RELEASE</spring-aop.version>
-        <file_encoding>UTF-8</file_encoding>
-        <project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${file_encoding}</project.reporting.outputEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
     <dependencies>
         <!-- 公共模块-->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-common</artifactId>
             <version>${cpms.project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--此依赖用于开启@EnableCircuitBreaker断路器,虽然openfeign已经整合了hystrix,否则服务启动会报错，-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
     </dependencies>
+
     <!-- 插件依赖 -->
     <build>
         <!--定义jar包名称-->

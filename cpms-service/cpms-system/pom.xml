@@ -69,7 +69,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- log模块-->
+        <!-- log框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-log</artifactId>

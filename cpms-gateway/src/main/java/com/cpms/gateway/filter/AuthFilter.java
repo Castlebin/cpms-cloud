@@ -11,7 +11,6 @@ import com.cpms.gateway.props.AuthUrlProperties;
 import com.cpms.gateway.props.DefaultUrlProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.deploy.net.URLEncoder;
 import io.jsonwebtoken.Claims;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +27,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -64,7 +65,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return unAuth(resp, e.getCode(),e.getMessage());
         }
         // 设置用户信息到请求头，传递到下游微服务
-        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(TokenConstant.USER_INFO,URLEncoder.encode(JSON.toJSONString(claims), "UTF-8")).build();
+        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(TokenConstant.USER_INFO, URLEncoder.encode(JSON.toJSONString(claims), "UTF-8")).build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);
     }

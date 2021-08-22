@@ -10,7 +10,7 @@ import com.cpms.common.utils.CsSecureUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
 import com.cpms.system.modules.sys.mapper.SysMenuMapper;
-import com.cpms.system.modules.sys.service.SysMenuService;
+import com.cpms.system.modules.sys.service.ISysMenuService;
 import com.cpms.system.modules.sys.vo.SysMenuVO;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +26,7 @@ import java.util.*;
  */
 @Service
 @DS("master")
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements SysMenuService {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements ISysMenuService {
     @Resource
     private SysMenuMapper sysMenuMapper;
 

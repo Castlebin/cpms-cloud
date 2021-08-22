@@ -14,7 +14,6 @@
     <name>${project.artifactId}</name>
     <description>授权核心模块</description>
     <properties>
-        <spring-aop.version>2.2.7.RELEASE</spring-aop.version>
         <file_encoding>UTF-8</file_encoding>
         <project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${file_encoding}</project.reporting.outputEncoding>
@@ -22,18 +21,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
-        <!--spring aop支持-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-            <version>${spring-aop.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <!-- 公共模块-->
         <dependency>
             <groupId>com.cpms</groupId>

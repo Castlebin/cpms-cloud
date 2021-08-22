@@ -11,7 +11,7 @@ import java.util.List;
  * @Description:
  * @time: 2021/8/7 20:51
  */
-public interface SysMenuService extends IService<SysMenuEntity> {
+public interface ISysMenuService extends IService<SysMenuEntity> {
     List<SysMenuVO> querySysMenuRoutes(Long topMenuId);
     List<String> queryRoleButtons();
 }

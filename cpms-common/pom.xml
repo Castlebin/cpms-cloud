@@ -14,6 +14,9 @@
     <name>${project.artifactId}</name>
     <description>公共代码</description>
 
+    <properties>
+        <spring-aop.version>2.2.7.RELEASE</spring-aop.version>
+    </properties>
 
     <dependencies>
         <!-- spring MVC -->
@@ -24,6 +27,18 @@
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--spring aop支持-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>${spring-aop.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter</artifactId>
+                    <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
