@@ -1,5 +1,6 @@
 package com.cpms.common.core.api;
 import com.cpms.common.enums.GlobalResponseResultEnum;
+import com.cpms.common.utils.CsDateUtil;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.Serializable;
@@ -40,7 +41,7 @@ public class ResultUtil implements Serializable {
 
     public static <T> Result<T> success(Integer code,String message) {
         Result<T> result = new Result(false);
-        result.setDate(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        result.setDate(CsDateUtil.dateFormat(new Date()));
         result.setCode(code);
         result.setMessage(message);
         return result;
@@ -55,7 +56,7 @@ public class ResultUtil implements Serializable {
      */
     public static <T> Result<T> success(T obj) {
         Result<T> result = new Result(true);
-        result.setDate(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        result.setDate(CsDateUtil.dateFormat(new Date()));
         result.setObj(obj);
         result.setCode(GlobalResponseResultEnum.SUCCESS.getCode());
         result.setMessage(GlobalResponseResultEnum.SUCCESS.getMessage());
@@ -73,7 +74,7 @@ public class ResultUtil implements Serializable {
      */
     public static <T> Result<T> error(Integer code,String message) {
         Result<T> result = new Result(false);
-        result.setDate(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        result.setDate(CsDateUtil.dateFormat(new Date()));
         result.setCode(code);
         result.setMessage(message);
         return result;
@@ -108,7 +109,7 @@ public class ResultUtil implements Serializable {
      */
     public static <T> Result<T> error(IResultEnum resultEnum) {
         Result<T> result = new Result(false);
-        result.setDate(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        result.setDate(CsDateUtil.dateFormat(new Date()));
         result.setCode(resultEnum.getCode());
         result.setMessage(resultEnum.getMessage());
         return result;

@@ -23,6 +23,6 @@ public class LogDTO implements Serializable {
     private String createBy;
     private Long   exeTime;
     private String resultMsg;
-    private String controllerName;
+    private String className;
     private String methodName;
 }

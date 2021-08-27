@@ -160,7 +160,8 @@
         </AsyncLogger>
         <AsyncLogger additivity="false" name="java.sql.ResultSet" level="DEBUG" includeLocation="true">
         </AsyncLogger>
-
+        <AsyncLogger additivity="false" name="org.redisson.connection" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
         <!--************自定义filter日志级别，并指定使用RollingFileFilter日志打印规则***********-->
         <!--这里的name="filter" 的filter要与 private final Logger log = LoggerFactory.getLogger("filter"); 保持一致-->
         <AsyncLogger name="filter" level="info" additivity="false" includeLocation="true">

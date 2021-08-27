@@ -9,16 +9,14 @@ import com.cpms.common.utils.CsWebUtil;
 import com.cpms.framework.log.annotations.OperLog;
 import com.cpms.framework.log.dto.LogDTO;
 import com.cpms.framework.log.event.LogEvent;
+import com.cpms.framework.log.wrapper.RequestWrapper;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
@@ -29,7 +27,6 @@ import java.util.Objects;
  * @time: 2021/7/27 19:21
  */
 public class RequestHandlerLogInterceptor implements HandlerInterceptor {
-    private static final String METHOD_GET = "GET";
     public static final String FILTER = "filter";
     private final Logger filterLog = LoggerFactory.getLogger(FILTER);
     /**
@@ -49,12 +46,11 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
      * @return
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        System.out.println("请求拦截开始.........");
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         //设置请求开始时间
         request.setAttribute(LOGGER_SEND_TIME,System.currentTimeMillis());
-        //获取控制器名
-        String controllerName = ((HandlerMethod) handler).getBean().getClass().getTypeName();
+        //获取类名
+        Class<?> aClass = ((HandlerMethod) handler).getBean().getClass();
         //获取方法名
         String methodName = ((HandlerMethod) handler).getMethod().getName();
         LogDTO logDTO = new LogDTO();
@@ -62,7 +58,7 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         logDTO.setHandleIp(CsWebUtil.getIpAddr());
         logDTO.setReqMethod(request.getMethod().toUpperCase());
         logDTO.setReqParams(getArgs(request));
-        logDTO.setControllerName(controllerName);
+        logDTO.setClassName(aClass.getName());
         logDTO.setMethodName(methodName);
         logDTO.setReqUrl(request.getRequestURI());
         request.setAttribute(LOGGER_ENTITY,logDTO);
@@ -77,8 +73,8 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
      * @param ex
      */
     @Override
+    @SuppressWarnings("all")
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        System.out.println("请求拦截结束..........");
         LogDTO logDTO = (LogDTO)request.getAttribute(LOGGER_ENTITY);
         String resultJson = String.valueOf(request.getAttribute(ResponseIntercept.RESPONSE_JSON));
         Result resultVO = JSON.parseObject(resultJson, Result.class);
@@ -104,7 +100,7 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         builderLog.append("【请求日志】-> ");
         builderLog.append("接口URI: ").append(logDTO.getReqUrl());
         builderLog.append("，请求方式 : ").append(logDTO.getReqMethod());
-        builderLog.append("，控制器名称 : ").append(logDTO.getControllerName());
+        builderLog.append("，类名称 : ").append(logDTO.getClassName());
         builderLog.append("，方法名称 : ").append(logDTO.getMethodName());
         builderLog.append("，入参 : ").append(logDTO.getReqParams());
         builderLog.append("，响应结果=").append(logDTO.getResultMsg());
@@ -132,9 +128,12 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
      * @param request
      * @return
      */
-    private String getArgs(HttpServletRequest request) throws IOException {
-        String param ="";
-        param = request.getQueryString();
-        return  param;
+    private String getArgs(HttpServletRequest request){
+        // 获取 url 参数
+        String queryParam = request.getQueryString();
+        // 获取 body json 参数
+        String bodyJson  = new RequestWrapper(request).getBody();
+        // !NOTE:日志打印 body参数覆盖url参数
+        return StringUtils.isNotBlank(bodyJson) ? JSON.parse(bodyJson).toString() : queryParam;
     }
 }

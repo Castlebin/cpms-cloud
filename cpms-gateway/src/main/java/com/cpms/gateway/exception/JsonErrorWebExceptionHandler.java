@@ -1,6 +1,7 @@
 package com.cpms.gateway.exception;
 
 import com.alibaba.fastjson.JSON;
+import com.cpms.common.utils.CsDateUtil;
 import com.cpms.common.utils.CsPropsUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -41,7 +42,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
         customErrorAttributes.put("code", errorAttributes.get("status"));
         customErrorAttributes.put("applicationName", CsPropsUtil.getProperty("spring.application.name"));
         customErrorAttributes.put("message",buildMessage(request,error));
-        customErrorAttributes.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        customErrorAttributes.put("date", CsDateUtil.dateFormat(new Date()));
         customErrorAttributes.put("obj",null);
         return customErrorAttributes;
     }

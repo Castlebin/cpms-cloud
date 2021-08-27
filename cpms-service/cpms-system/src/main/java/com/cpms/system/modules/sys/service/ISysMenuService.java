@@ -3,6 +3,7 @@ package com.cpms.system.modules.sys.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
 import com.cpms.system.modules.sys.vo.SysMenuVO;
+import com.cpms.system.modules.sys.vo.SysRouteVO;
 
 import java.util.List;
 
@@ -12,6 +13,5 @@ import java.util.List;
  * @time: 2021/8/7 20:51
  */
 public interface ISysMenuService extends IService<SysMenuEntity> {
-    List<SysMenuVO> querySysMenuRoutes(Long topMenuId);
-    List<String> queryRoleButtons();
+    SysRouteVO querySysMenuRoutes(Long topMenuId);
 }

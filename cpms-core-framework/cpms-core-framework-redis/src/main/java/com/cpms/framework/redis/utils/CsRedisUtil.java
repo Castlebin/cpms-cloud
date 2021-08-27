@@ -32,7 +32,7 @@ public class CsRedisUtil {
      * 功能：设置过期(设置为<=0 key立即失效)
      */
     @SuppressWarnings("all")
-    public boolean expire(final String key, long expireTime, TimeUnit unit) {
+    public static boolean expire(final String key, long expireTime, TimeUnit unit) {
         return REDISTEMPLATE.expire(key, expireTime, unit);
     }
     /**

@@ -21,4 +21,6 @@ public class HandlerLogDTO {
     private String createBy;
     private Long   exeTime;
     private String resultMsg;
+    private String className;
+    private String methodName;
 }

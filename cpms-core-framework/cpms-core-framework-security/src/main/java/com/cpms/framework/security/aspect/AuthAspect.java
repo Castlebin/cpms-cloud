@@ -29,6 +29,18 @@ import java.util.Arrays;
 @Slf4j
 public class AuthAspect{
     /**
+     *  execution表达式
+      * @Pointcut(value = "execution(* com.cpms..controller..*.*(..)) || execution(* com.cpms..feign..*.*(..))")
+      * execution（）	表达式的主体；
+      * 第一个”*“符号：表示返回值的类型任意；
+      * ”..“：表示当前包及子孙包
+      * ”..*“：表示当前包及子孙包所有的类
+      * .*(..)：表示类中任何方法名，括号表示参数，两个点表示任何参数类型
+      *
+      *  !Note:服务内部通过feign远程调用接口时也会被拦截
+     */
+
+    /**
      *  定义切点
      * （1）@annotation：用来拦截所有被某个注解修饰的方法
      * （2）@within：用来拦截所有被某个注解修饰的类

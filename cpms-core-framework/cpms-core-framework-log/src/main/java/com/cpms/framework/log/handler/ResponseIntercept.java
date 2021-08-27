@@ -43,7 +43,7 @@ public class ResponseIntercept implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         ServletServerHttpRequest req=(ServletServerHttpRequest)request;
         HttpServletRequest servletRequest = req.getServletRequest();
-        servletRequest.setAttribute(RESPONSE_JSON, JSON.toJSON(body));
+        servletRequest.setAttribute(RESPONSE_JSON, JSON.toJSONString(body));
         return body;
     }
 }

@@ -21,6 +21,10 @@ public class TokenUserInfo implements Serializable {
     private int userSex;
     private List<String> roleCodes;
     private List<Long> roleIds;
+    /**
+     *  token过期截止时间，单位：秒
+     */
+    private Long tokenExpire;
 
     public TokenUserInfo() {
     }
@@ -111,5 +115,13 @@ public class TokenUserInfo implements Serializable {
 
     public void setRoleIds(List<Long> roleIds) {
         this.roleIds = roleIds;
+    }
+
+    public Long getTokenExpire() {
+        return tokenExpire;
+    }
+
+    public void setTokenExpire(Long tokenExpire) {
+        this.tokenExpire = tokenExpire;
     }
 }

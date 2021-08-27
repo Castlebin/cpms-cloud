@@ -14,7 +14,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * @description:
+ * @description: redis配置
  * @author: gulang
  * @time: 2021/8/5 13:56
  */
@@ -25,7 +25,7 @@ public class RedisConfig {
      * @param connectionFactory
      * @return
      */
-    @Bean
+    @Bean // 默认情况下，使用 @Bean声明一个bean，bean的名称由方法名决定。此外，可以通过@Bean注解里面的name属性主动设置bean的名称。
     @Primary  // 当有多个符合条件的bean时，@Primary注解的bean将被默认注入,防止RedisTemplate注入多个
     @SuppressWarnings("all")
     @ConditionalOnMissingBean(name = "redisTemplate")

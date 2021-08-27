@@ -42,20 +42,6 @@ spring:
                driver-class-name: com.mysql.cj.jdbc.Driver
    #redis配置
    redis:
-      database: 0
-      ##redis【单机环境配置】
-      host: 127.0.0.1
-      # redis【cluster集群】
-#      cluster:
-#         nodes:
-#            - 127.0.0.1:6379
-#            - 127.0.0.1:6380
-#            - 127.0.0.1:6381
-#            - 127.0.0.1:6382
-#      password:
-      port: 6379
-      #链接超时时间 单位 ms（毫秒）
-      timeout: 3000
       lettuce:
          # Redis 线程池设置
          pool:
@@ -67,7 +53,28 @@ spring:
             max-wait: -1
             #连接池中的最小空闲连接 默认 0
             min-idle: 0
-      file: classpath:redisson.yml
+   #redisson配置
+   redisson:
+      server-mode: "single" # single(单机模式)、cluster（集群模式）、sentinel（哨兵模式）
+      clientName:  # 客户端名称
+      password:
+      single:
+         address: 127.0.0.1:6379
+      cluster:
+         node-hosts:
+            - Ma1873Gq-1.cachesit.sfcloud.local:8080
+            - Ma1873Gq-2.cachesit.sfcloud.local:8080
+            - Ma1873Gq-3.cachesit.sfcloud.local:8080
+            - Ma1873Gq-4.cachesit.sfcloud.local:8080
+            - Ma1873Gq-5.cachesit.sfcloud.local:8080
+            - Ma1873Gq-6.cachesit.sfcloud.local:8080
+      sentinel:
+         master-name: ESG_CEMP_CORE_REDIS_Af82B47j_01
+         node-hosts:
+            - Af82B47j-1.cachesit.sfcloud.local:8001
+            - Af82B47j-2.cachesit.sfcloud.local:8001
+            - Af82B47j-3.cachesit.sfcloud.local:8001
+
 
 #【加载mybatis的xml映射文件】
 mybatis-plus:

@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.cpms.framework.redis.config.RedisConfig
+com.cpms.framework.redis.config.RedisConfig,\
+com.cpms.framework.redis.redisson.config.RedissonConfig
 

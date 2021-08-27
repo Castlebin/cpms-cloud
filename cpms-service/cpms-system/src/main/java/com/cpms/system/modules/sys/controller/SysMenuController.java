@@ -2,12 +2,13 @@ package com.cpms.system.modules.sys.controller;
 
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
+import com.cpms.framework.redis.utils.CsRedissonUtil;
 import com.cpms.system.modules.sys.service.ISysMenuService;
-import com.cpms.system.modules.sys.vo.SysMenuVO;
+import com.cpms.system.modules.sys.vo.SysRouteVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description:
@@ -26,12 +27,26 @@ public class SysMenuController {
      * @return
      */
     @GetMapping("/routes")
-    public Result<List<SysMenuVO>> querySysMenuRoutes(@RequestParam(name = "topMenuId",required=false) Long topMenuId){
+    public Result<SysRouteVO> querySysMenuRoutes(@RequestParam(name = "topMenuId",required=false) Long topMenuId){
         return ResultUtil.success(sysMenuService.querySysMenuRoutes(topMenuId));
     }
 
-    @GetMapping("/buttons")
-    public Result<List<String>> queryRoleButtons(){
-        return ResultUtil.success(sysMenuService.queryRoleButtons());
+    /**
+     * redisson锁测试
+     * @return
+     */
+    @GetMapping("/redissonLock")
+    public Result<Void> redissonLock(){
+        if(!CsRedissonUtil.isLocked("test-lock")) {
+            CsRedissonUtil.lock("test-lock");
+        }else{
+            return ResultUtil.error(123,"锁已被占用！！！");
+        }
+        try {
+            TimeUnit.SECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return ResultUtil.success();
     }
 }

@@ -1,5 +1,6 @@
 package com.cpms.common.utils;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -62,7 +63,7 @@ public class CsSpringUtil implements ApplicationContextAware {
             try {
                 applicationContext.publishEvent(event);
             } catch (Exception ex) {
-                log.error("[publishEvent]，spring事件发布异常",ex);
+                log.error("[publishEvent]，spring事件发布异常,event={}", JSON.toJSONString(event),ex);
             }
         }
     }

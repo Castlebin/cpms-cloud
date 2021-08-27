@@ -5,6 +5,7 @@ import com.cpms.common.constant.TokenConstant;
 import com.cpms.common.core.api.ResultUtil;
 import com.cpms.common.enums.GlobalResponseResultEnum;
 import com.cpms.common.exception.BizException;
+import com.cpms.common.utils.CsDateUtil;
 import com.cpms.common.utils.CsJwtUtil;
 import com.cpms.gateway.common.constants.SystemConstant;
 import com.cpms.gateway.props.AuthUrlProperties;
@@ -64,6 +65,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }catch (BizException e){
             return unAuth(resp, e.getCode(),e.getMessage());
         }
+        claims.put("tokenExpire",claims.get("exp"));
         // 设置用户信息到请求头，传递到下游微服务
         ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(TokenConstant.USER_INFO, URLEncoder.encode(JSON.toJSONString(claims), "UTF-8")).build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
