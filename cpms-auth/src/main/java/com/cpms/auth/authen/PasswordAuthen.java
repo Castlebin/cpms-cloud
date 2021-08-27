@@ -2,6 +2,7 @@ package com.cpms.auth.authen;
 
 
 import com.cpms.auth.dto.UserLoginDTO;
+import com.cpms.common.constant.TokenConstant;
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.secure.AuthInfo;
 import com.cpms.common.core.secure.TokenInfo;
@@ -12,6 +13,7 @@ import com.cpms.system.api.modules.sys.feign.ISysUserClient;
 import com.cpms.system.api.modules.sys.vo.SysRoleVO;
 import com.cpms.system.api.modules.sys.vo.SysUserLoginVO;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Map;
@@ -38,6 +40,9 @@ public class PasswordAuthen implements IAuthen{
             throw new BizException(sysUserLoginBoResult);
         }
         SysUserLoginVO sysUserLoginVO = sysUserLoginBoResult.getObj();
+        if(StringUtils.isBlank(sysUserLoginVO.getUserAvatar())) {
+            sysUserLoginVO.setUserAvatar(TokenConstant.DEFAULT_AVATAR);
+        }
         AuthInfo authInfo = new AuthInfo();
         Map<String, Object> claims = buildJwtClaims(sysUserLoginVO);
         TokenInfo tokenInfo = CsJwtUtil.createJwt(claims);

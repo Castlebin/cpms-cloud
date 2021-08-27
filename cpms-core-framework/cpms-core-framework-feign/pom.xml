@@ -12,7 +12,7 @@
     <packaging>jar</packaging>
     <artifactId>cpms-core-framework-feign</artifactId>
     <name>${project.artifactId}</name>
-    <description>日志模块</description>
+    <description>feign模块</description>
     <dependencies>
         <!-- 公共模块-->
         <dependency>

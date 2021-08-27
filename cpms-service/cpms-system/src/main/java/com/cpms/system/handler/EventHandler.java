@@ -26,7 +26,7 @@ public class EventHandler {
     @Resource
     private ILogClient logClient;
     /**
-     * 一般监听的事件常常采用异步执行方式 但是入口类必须要加 @EnableAsync 注解开启异步处理
+     * 一般监听的事件常常采用异步执行方式,必须加上@Async注解，入口类必须要加 @EnableAsync 注解开启异步处理
      * @param event
      */
     @Async
