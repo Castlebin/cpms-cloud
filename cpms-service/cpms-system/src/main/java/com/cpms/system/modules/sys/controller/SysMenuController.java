@@ -26,7 +26,7 @@ public class SysMenuController {
      * @param topMenuId
      * @return
      */
-    @GetMapping("/routes")
+    @GetMapping("/getMenu")
     public Result<SysRouteVO> querySysMenuRoutes(@RequestParam(name = "topMenuId",required=false) Long topMenuId){
         return ResultUtil.success(sysMenuService.querySysMenuRoutes(topMenuId));
     }
