@@ -13,6 +13,7 @@ import lombok.ToString;
 public class HandlerLogDTO {
     private static final long serialVersionUID = 1L;
     private String title;
+    private Long   tenantId;
     private String serviceName;
     private String handleIp;
     private String reqUrl;

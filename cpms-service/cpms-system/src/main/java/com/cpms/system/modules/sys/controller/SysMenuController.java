@@ -4,10 +4,13 @@ import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
 import com.cpms.framework.redis.utils.CsRedissonUtil;
 import com.cpms.system.modules.sys.service.ISysMenuService;
+import com.cpms.system.modules.sys.service.ISysTopMenuService;
 import com.cpms.system.modules.sys.vo.SysRouteVO;
+import com.cpms.system.modules.sys.vo.SysTopMenuVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,9 +23,11 @@ import java.util.concurrent.TimeUnit;
 public class SysMenuController {
     @Resource
     private ISysMenuService sysMenuService;
+    @Resource
+    private ISysTopMenuService sysTopMenuService;
 
     /**
-     *  获取菜单路由
+     *  获取左侧菜单路由
      * @param topMenuId
      * @return
      */
@@ -32,21 +37,15 @@ public class SysMenuController {
     }
 
     /**
-     * redisson锁测试
+     *  获取顶部菜单路由
      * @return
      */
-    @GetMapping("/redissonLock")
-    public Result<Void> redissonLock(){
-        if(!CsRedissonUtil.isLocked("test-lock")) {
-            CsRedissonUtil.lock("test-lock");
-        }else{
-            return ResultUtil.error(123,"锁已被占用！！！");
-        }
-        try {
-            TimeUnit.SECONDS.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return ResultUtil.success();
+    @GetMapping("/top-menu")
+    public Result<List<SysTopMenuVO>> getTopMenu(){
+        return ResultUtil.success(sysTopMenuService.getTopMenu());
     }
+
+
+
+
 }

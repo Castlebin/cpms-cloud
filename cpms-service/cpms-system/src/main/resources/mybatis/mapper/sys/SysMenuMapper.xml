@@ -24,7 +24,7 @@
         from cpms_system_menu
         where del_flag = 0 and type =#{type}
         and menu_id IN
-        ( SELECT menu_id FROM cpms_system_role_menu WHERE role_id IN
+        ( SELECT menu_id FROM cpms_system_role_menu WHERE type = 0 and  role_id IN
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
@@ -61,7 +61,7 @@
         WHERE del_flag = 0 AND  TYPE = 1
         AND menu_id
         IN (
-        SELECT menu_id FROM cpms_system_role_menu WHERE role_id IN
+        SELECT menu_id FROM cpms_system_role_menu WHERE type = 0 and role_id IN
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>

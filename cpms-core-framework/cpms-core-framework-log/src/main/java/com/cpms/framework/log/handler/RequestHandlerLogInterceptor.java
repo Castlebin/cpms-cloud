@@ -118,6 +118,7 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         if (Objects.nonNull(operLog)) {
             logDTO.setTitle(operLog.desc());
             logDTO.setCreateBy(CsSecureUtil.userAccount());
+            logDTO.setTenantId(CsSecureUtil.getUser().getTenantId());
             // 发布操作日志事件，异步执行
             CsSpringUtil.publishEvent(new LogEvent(this,logDTO));
         }

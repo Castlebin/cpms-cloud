@@ -10,16 +10,20 @@ import com.cpms.common.utils.CsJwtUtil;
 import com.cpms.common.utils.CsSecureUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
+import com.cpms.system.modules.sys.entity.SysTopMenuEntity;
 import com.cpms.system.modules.sys.mapper.SysMenuMapper;
 import com.cpms.system.modules.sys.service.ISysMenuService;
+import com.cpms.system.modules.sys.service.ISysTopMenuService;
 import com.cpms.system.modules.sys.vo.SysMenuVO;
 import com.cpms.system.modules.sys.vo.SysRouteVO;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author gulang
@@ -31,16 +35,18 @@ import java.util.*;
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements ISysMenuService {
     @Resource
     private SysMenuMapper sysMenuMapper;
+    @Resource
+    private ISysTopMenuService sysTopMenuService;
 
     @Override
     public SysRouteVO querySysMenuRoutes(Long topMenuId) {
          List<SysMenuEntity> menus;
         SysRouteVO sysRouteVO = new SysRouteVO();
-        if( Objects.isNull(topMenuId)) {
+        if( Objects.isNull(topMenuId) || topMenuId == 0) {
               menus = getHomePageMenuRoutes();
          }else{
-             // todo 根据顶部菜单ID获取对应的菜单显示
-             menus = null;
+             // 根据顶部菜单ID获取对应的菜单显示
+            menus = queryMenuByTopMenuId(topMenuId);
          }
         sysRouteVO.setMenus(parseMenuTree(menus));
         sysRouteVO.setButtons(queryRoleButtons());
@@ -58,6 +64,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         return buttons;
     }
 
+    public List<SysMenuEntity> queryMenuByTopMenuId(Long topMenuId){
+        SysTopMenuEntity sysTopMenuEntity = sysTopMenuService.getBaseMapper().selectById(topMenuId);
+        if(!Objects.isNull(sysTopMenuEntity)) {
+            String[] idArr = sysTopMenuEntity.getRelationMenuIds().split(",");
+            List<Long> idList = Arrays.stream(idArr).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
+            return sysMenuMapper.selectBatchIds(idList);
+        }
+        return Lists.newArrayList();
+    }
     /**
      * 超级管理员路由
      */

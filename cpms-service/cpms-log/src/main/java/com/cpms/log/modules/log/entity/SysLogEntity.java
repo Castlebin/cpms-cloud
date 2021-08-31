@@ -3,7 +3,7 @@ package com.cpms.log.modules.log.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.cpms.common.core.base.BaseEntity;
+import com.cpms.common.core.base.TenantEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("cpms_system_log")
-public class SysLogEntity extends BaseEntity {
+public class SysLogEntity extends TenantEntity {
     private static final long serialVersionUID = 1L;
     /**
      *  指定自增策略
