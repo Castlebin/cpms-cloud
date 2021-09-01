@@ -13,7 +13,7 @@ public class CsEncryptUtil {
 
 
     /**
-     *  MD5加密方法 （32byte）
+     *  MD5加密方法 转大写 （32bite）
      * @param s
      * @return
      */

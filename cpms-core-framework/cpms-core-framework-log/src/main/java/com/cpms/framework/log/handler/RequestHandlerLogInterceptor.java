@@ -1,6 +1,7 @@
 package com.cpms.framework.log.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.cpms.common.constant.LogTypeConstant;
 import com.cpms.common.core.api.Result;
 import com.cpms.common.utils.CsPropsUtil;
 import com.cpms.common.utils.CsSecureUtil;
@@ -27,8 +28,7 @@ import java.util.Objects;
  * @time: 2021/7/27 19:21
  */
 public class RequestHandlerLogInterceptor implements HandlerInterceptor {
-    public static final String FILTER = "filter";
-    private final Logger filterLog = LoggerFactory.getLogger(FILTER);
+    private final Logger filterLog = LoggerFactory.getLogger(LogTypeConstant.FILTER);
     /**
      * 请求开始时间标识
      */
@@ -58,7 +58,7 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         logDTO.setHandleIp(CsWebUtil.getIpAddr());
         logDTO.setReqMethod(request.getMethod().toUpperCase());
         logDTO.setReqParams(getArgs(request));
-        logDTO.setClassName(aClass.getName());
+        logDTO.setClassName(aClass.getSimpleName());
         logDTO.setMethodName(methodName);
         logDTO.setReqUrl(request.getRequestURI());
         request.setAttribute(LOGGER_ENTITY,logDTO);

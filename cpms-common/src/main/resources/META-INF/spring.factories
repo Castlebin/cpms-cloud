@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.cpms.common.config.ToolConfiguration
+  com.cpms.common.config.CommonConfiguration
 
 

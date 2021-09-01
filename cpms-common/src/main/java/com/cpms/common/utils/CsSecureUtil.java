@@ -22,15 +22,14 @@ public class CsSecureUtil {
     public static TokenUserInfo getUser(){
         TokenUserInfo tokenUserInfo = new TokenUserInfo();
         HttpServletRequest request = CsWebUtil.getRequest();
-        if(Objects.isNull(request)) {
-            return tokenUserInfo;
-        }
-        String header = request.getHeader(TokenConstant.USER_INFO);
-        if(StringUtils.isNotBlank(header)){
-            try {
-                tokenUserInfo = JSON.parseObject(URLDecoder.decode(header, "UTF-8"), TokenUserInfo.class);
-            }catch (UnsupportedEncodingException un) {
-                log.error("token user info parse error",un);
+        if(!Objects.isNull(request)) {
+            String header = request.getHeader(TokenConstant.USER_INFO);
+            if(StringUtils.isNotBlank(header)){
+                try {
+                    tokenUserInfo = JSON.parseObject(URLDecoder.decode(header, "UTF-8"), TokenUserInfo.class);
+                }catch (UnsupportedEncodingException un) {
+                    log.error("token user info parse error",un);
+                }
             }
         }
         return tokenUserInfo;

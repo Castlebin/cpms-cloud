@@ -2,7 +2,9 @@ package com.cpms.system.modules.sys.controller;
 
 import com.cpms.common.core.api.Result;
 import com.cpms.common.core.api.ResultUtil;
+import com.cpms.common.thread.ThreadPoolBuilder;
 import com.cpms.framework.redis.utils.CsRedissonUtil;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,12 +32,30 @@ public class TestController {
         try {
             TimeUnit.SECONDS.sleep(4);
             a++;
-            System.out.println("=============a=="+a);
+            System.out.println("------a="+a);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
             CsRedissonUtil.unlock("redisson-lock");
         }
         return ResultUtil.success(a);
+    }
+
+    /**
+     *  线程池测试
+     * @return
+     */
+    @GetMapping("/thread")
+    public Result<Void> thread(){
+        ThreadPoolTaskExecutor executor = ThreadPoolBuilder.buildThreadPool(32);
+        executor.execute(()-> {
+            try {
+                TimeUnit.SECONDS.sleep(4);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("测试------"+Thread.currentThread().getName());
+        });
+        return ResultUtil.success();
     }
 }
