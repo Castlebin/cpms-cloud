@@ -14,6 +14,8 @@ MySQL - 5.7.26 : Database - cpms-cloud
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 /*Table structure for table `cpms_system_dept` */
 
+DROP TABLE IF EXISTS `cpms_system_dept`;
+
 CREATE TABLE `cpms_system_dept` (
   `dept_id` bigint(64) unsigned NOT NULL COMMENT '部门ID',
   `tenant_id` bigint(64) NOT NULL COMMENT '所属租户ID',
@@ -36,26 +38,32 @@ insert  into `cpms_system_dept`(`dept_id`,`tenant_id`,`dept_name`,`parent_id`,`d
 
 /*Table structure for table `cpms_system_log` */
 
+DROP TABLE IF EXISTS `cpms_system_log`;
+
 CREATE TABLE `cpms_system_log` (
   `log_id` bigint(64) NOT NULL COMMENT '日志ID',
-  `type` tinyint(3) DEFAULT '0' COMMENT '日志类型(0-正常 1-异常)',
+  `tenant_id` bigint(64) NOT NULL COMMENT '租户ID',
   `title` varchar(255) DEFAULT '' COMMENT '日志标题',
   `service_name` varchar(50) DEFAULT NULL COMMENT '服务ID',
   `handle_ip` varchar(255) DEFAULT NULL COMMENT '操作人IP地址',
-  `request_url` varchar(255) DEFAULT NULL COMMENT '请求URI',
-  `method` varchar(10) DEFAULT NULL COMMENT '操作方式',
-  `params` text COMMENT '操作提交的参数',
-  `exe_time` varchar(100) DEFAULT NULL COMMENT '执行时间(毫秒)',
-  `exception_msg` text COMMENT '异常信息',
+  `req_url` varchar(255) DEFAULT NULL COMMENT '请求URI',
+  `req_method` varchar(10) DEFAULT NULL COMMENT '请求方式',
+  `req_params` text COMMENT '操作提交的入参',
+  `exe_time` int(11) DEFAULT NULL COMMENT '执行时间(毫秒)',
+  `result_msg` text COMMENT '结果信息',
   `del_flag` tinyint(3) DEFAULT '0' COMMENT '0-未删除，1-已删除',
   `create_by` varchar(50) DEFAULT NULL COMMENT '操作人',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '操作时间',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '操作时间',
+  `update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台系统操作日志表';
 
 /*Data for the table `cpms_system_log` */
 
 /*Table structure for table `cpms_system_menu` */
+
+DROP TABLE IF EXISTS `cpms_system_menu`;
 
 CREATE TABLE `cpms_system_menu` (
   `menu_id` bigint(64) NOT NULL COMMENT '菜单ID',
@@ -80,19 +88,21 @@ CREATE TABLE `cpms_system_menu` (
 /*Data for the table `cpms_system_menu` */
 
 insert  into `cpms_system_menu`(`menu_id`,`parent_id`,`name`,`code`,`alias`,`path`,`icon`,`component`,`sort`,`type`,`open_flag`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
-(1,0,'系统管理','system_manage','menu',NULL,NULL,NULL,1,0,0,0,'2021-08-07 15:42:40','2021-08-07 15:53:39','000001','000001'),
-(2,1,'用户管理','user_manage','menu',NULL,NULL,NULL,2,0,0,0,'2021-08-07 15:45:10','2021-08-07 15:53:34','000001','000001'),
+(1,0,'系统管理','system_manage','menu','/system',NULL,NULL,1,0,0,0,'2021-08-07 15:42:40','2021-08-30 18:04:16','000001','000001'),
+(2,1,'用户管理','user_manage','menu','/system/user',NULL,NULL,2,0,0,0,'2021-08-07 15:45:10','2021-08-30 18:04:27','000001','000001'),
 (3,2,'查看','sys_user_view','view',NULL,NULL,NULL,3,1,0,0,'2021-08-07 15:46:57','2021-08-07 15:53:33','000001','000001'),
 (4,2,'删除','sys_user_delete','delete',NULL,NULL,NULL,4,1,0,0,'2021-08-07 15:47:41','2021-08-07 15:53:32','000001','000001'),
 (5,2,'添加','sys_user_add','add',NULL,NULL,NULL,5,1,0,0,'2021-08-07 18:15:39','2021-08-07 18:16:53','000001','000001'),
 (6,2,'编辑','sys_user_edit','edit',NULL,NULL,NULL,6,1,0,0,'2021-08-07 18:18:10','2021-08-07 18:19:35','000001','000001'),
-(7,1,'菜单管理','menu_manage','menu',NULL,NULL,NULL,3,0,0,0,'2021-08-08 11:52:10','2021-08-08 11:53:31','000001','000001'),
+(7,1,'菜单管理','menu_manage','menu','/system/menu',NULL,NULL,3,0,0,0,'2021-08-08 11:52:10','2021-08-30 18:04:35','000001','000001'),
 (8,7,'查看','sys_menu_view','view',NULL,NULL,NULL,1,1,0,0,'2021-08-08 11:53:55','2021-08-08 11:54:56','000001','000001'),
 (9,7,'删除','sys_menu_delete','delete',NULL,NULL,NULL,2,1,0,0,'2021-08-08 11:55:17','2021-08-08 11:57:26','000001','000001'),
 (10,7,'添加','sys_menu_add','add',NULL,NULL,NULL,3,1,0,0,'2021-08-08 11:56:54','2021-08-08 11:57:48','000001','000001'),
 (11,7,'编辑','sys_menu_edit','edit',NULL,NULL,NULL,4,1,0,0,'2021-08-08 11:58:31','2021-08-08 11:59:16','000001','000001');
 
 /*Table structure for table `cpms_system_role` */
+
+DROP TABLE IF EXISTS `cpms_system_role`;
 
 CREATE TABLE `cpms_system_role` (
   `role_id` bigint(64) unsigned NOT NULL COMMENT '角色id',
@@ -117,22 +127,29 @@ insert  into `cpms_system_role`(`role_id`,`tenant_id`,`role_name`,`role_code`,`r
 
 /*Table structure for table `cpms_system_role_menu` */
 
+DROP TABLE IF EXISTS `cpms_system_role_menu`;
+
 CREATE TABLE `cpms_system_role_menu` (
   `role_id` bigint(64) NOT NULL COMMENT '角色ID',
-  `menu_id` bigint(64) NOT NULL COMMENT '菜单ID'
+  `menu_id` bigint(64) NOT NULL COMMENT '菜单ID',
+  `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '菜单类型:0-侧栏菜单，1-顶部菜单'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `cpms_system_role_menu` */
 
-insert  into `cpms_system_role_menu`(`role_id`,`menu_id`) values 
-(2,7),
-(2,1),
-(2,8),
-(2,9),
-(2,5),
-(2,6);
+insert  into `cpms_system_role_menu`(`role_id`,`menu_id`,`type`) values 
+(2,7,0),
+(2,1,0),
+(2,8,0),
+(2,9,0),
+(2,5,0),
+(2,6,0),
+(2,4,0),
+(2,2,1);
 
 /*Table structure for table `cpms_system_role_user` */
+
+DROP TABLE IF EXISTS `cpms_system_role_user`;
 
 CREATE TABLE `cpms_system_role_user` (
   `user_id` bigint(64) NOT NULL COMMENT '用户ID',
@@ -144,9 +161,11 @@ CREATE TABLE `cpms_system_role_user` (
 insert  into `cpms_system_role_user`(`user_id`,`role_id`) values 
 (1,1),
 (2,2),
-(1,3);
+(2,3);
 
 /*Table structure for table `cpms_system_tenant` */
+
+DROP TABLE IF EXISTS `cpms_system_tenant`;
 
 CREATE TABLE `cpms_system_tenant` (
   `tenant_id` bigint(64) unsigned NOT NULL COMMENT '租户ID，所有的用户都会涉及到这个id',
@@ -166,7 +185,34 @@ insert  into `cpms_system_tenant`(`tenant_id`,`tenant_name`,`tenant_status`,`del
 (1,'深圳巨人科技服务有限公司',0,0,'2021-06-13 16:11:43','2021-08-06 16:00:11','1','1'),
 (2,'深圳梦想科技有限公司',0,0,'2021-06-13 16:11:43','2021-06-13 16:12:07','1','1');
 
+/*Table structure for table `cpms_system_top_menu` */
+
+DROP TABLE IF EXISTS `cpms_system_top_menu`;
+
+CREATE TABLE `cpms_system_top_menu` (
+  `top_menu_id` bigint(64) unsigned NOT NULL,
+  `tenant_id` bigint(64) NOT NULL COMMENT '租户ID',
+  `top_menu_name` varchar(50) NOT NULL DEFAULT '' COMMENT '顶部菜单名称',
+  `path` varchar(100) NOT NULL DEFAULT '' COMMENT 'url路径',
+  `relation_menu_ids` text COMMENT '关联菜单ID',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `del_flag` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0-未删除，1-已删除',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_by` varchar(50) NOT NULL COMMENT '创建人工号',
+  `update_by` varchar(50) NOT NULL COMMENT '更新人工号',
+  PRIMARY KEY (`top_menu_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `cpms_system_top_menu` */
+
+insert  into `cpms_system_top_menu`(`top_menu_id`,`tenant_id`,`top_menu_name`,`path`,`relation_menu_ids`,`sort`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
+(1,1,'监控系统','','1,7',0,0,'2021-08-30 11:29:38','2021-08-31 14:22:39','000002','000002'),
+(2,2,'工作台','','1,2,7',1,0,'2021-08-30 11:32:23','2021-08-31 14:22:42','000002','000002');
+
 /*Table structure for table `cpms_system_user` */
+
+DROP TABLE IF EXISTS `cpms_system_user`;
 
 CREATE TABLE `cpms_system_user` (
   `user_id` bigint(64) unsigned NOT NULL,

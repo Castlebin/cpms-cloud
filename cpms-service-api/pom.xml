@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
     <description>微服务互相调用接口</description>
     <artifactId>cpms-service-api</artifactId>
-    <version>${cpms.project.version}</version>
     <packaging>pom</packaging>
     <!--
       聚合工程打包，需要在父工程pom下，把modules注释掉，然后运行:
@@ -26,7 +25,7 @@
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-feign</artifactId>
-            <version>${cpms.project.version}</version>
+            <version>${cpms.core.framework.version}</version>
         </dependency>
     </dependencies>
 </project>

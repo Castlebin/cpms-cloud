@@ -8,7 +8,7 @@ package com.cpms.common.constant;
 public interface TokenConstant {
     String SIGN_KEY = "Cpms";
     String H_TOKEN_KEY = "H-Auth-Token";
-    String USER_INFO = "user_info";
+    String USER_INFO = "_user_info";
     String CACHE_LOGIN_USER_INFO_KEY = "login:user:info:";
     String PERMISSION_KEY = "permission";
     String SUPER_ADMINISTRATOR = "SUPER_ADMINISTRATOR";

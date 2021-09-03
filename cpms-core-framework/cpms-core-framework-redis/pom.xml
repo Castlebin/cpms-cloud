@@ -8,17 +8,11 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>${cpms.project.version}</version>
     <artifactId>cpms-core-framework-redis</artifactId>
     <name>${project.artifactId}</name>
     <description>redis模块</description>
     <properties>
         <redisson.version>3.16.0</redisson.version>
-        <file_encoding>UTF-8</file_encoding>
-        <project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${file_encoding}</project.reporting.outputEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
         <!-- redisson使用，该依赖包含有spring-boot-starter-data-redis -->

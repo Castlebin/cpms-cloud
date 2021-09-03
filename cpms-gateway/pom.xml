@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cpms-gateway</artifactId>
-    <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>网关微服务</description>

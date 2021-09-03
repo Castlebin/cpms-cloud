@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cpms-core-framework</artifactId>
+        <groupId>com.cpms</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>cpms-core-framework-mybatis</artifactId>
+    <name>${project.artifactId}</name>
+    <description>mybatis模块</description>
+    <properties>
+        <mybatis-plus.servsion>3.4.3</mybatis-plus.servsion>
+        <dynamic-datasource.servsion>3.3.2</dynamic-datasource.servsion>
+        <mysql-connector.version>8.0.20</mysql-connector.version>
+        <jackson-annotations.version>2.10.4</jackson-annotations.version>
+    </properties>
+    <dependencies>
+        <!-- 公共模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-common</artifactId>
+            <version>${cpms.project.version}</version>
+        </dependency>
+        <!-- 数据库驱动，不指定版本号，默认为spring-boot-dependencies里定义的版本号-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
+        </dependency>
+        <!-- mybatis-plus依赖-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.servsion}</version>
+        </dependency>
+
+        <!-- mybatis-plus dynamic-datasource实现动态多数据源切换依赖 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <version>${dynamic-datasource.servsion}</version>
+        </dependency>
+        <!-- 字段日期格式化依赖-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-annotations.version}</version>
+        </dependency>
+    </dependencies>
+    <!-- 插件依赖 -->
+    <build>
+        <!--定义jar包名称-->
+        <finalName>${project.name}</finalName>
+        <plugins>
+            <!--java编译插件，告诉maven在编译Java文件时使用什么版本的jre-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

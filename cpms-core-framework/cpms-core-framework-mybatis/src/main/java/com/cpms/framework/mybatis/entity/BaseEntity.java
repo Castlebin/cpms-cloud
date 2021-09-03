@@ -1,6 +1,7 @@
-package com.cpms.common.core.base;
+package com.cpms.framework.mybatis.entity;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -16,12 +17,20 @@ public class BaseEntity implements Serializable {
     }
     @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+
     @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
+
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
+
     private Integer delFlag;
 
     public LocalDateTime getUpdateTime() {

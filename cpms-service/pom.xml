@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>微服务层</description>
-    <version>${cpms.project.version}</version>
     <artifactId>cpms-service</artifactId>
     <packaging>pom</packaging>
     <modules>
@@ -30,7 +29,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
 
         <!-- spring MVC -->
         <dependency>

@@ -8,27 +8,11 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
     <artifactId>cpms-system</artifactId>
     <name>${project.artifactId}</name>
     <description>system微服务提供后台菜单、权限、管理员操作功能</description>
     <dependencies>
-        <!-- mybatis-plus依赖，在具体的服务模块下引入-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <!-- 数据库驱动，不指定版本号，默认为spring-boot-dependencies里定义的版本号-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <!--多数据源配置-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-        </dependency>
         <!-- 引入cpms-system-api依赖 -->
         <dependency>
             <groupId>com.cpms</groupId>
@@ -57,7 +41,7 @@
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-security</artifactId>
-            <version>${cpms.project.version}</version>
+            <version>${cpms.core.framework.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>cpms-common</artifactId>
@@ -73,7 +57,7 @@
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-log</artifactId>
-            <version>${cpms.project.version}</version>
+            <version>${cpms.core.framework.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>cpms-common</artifactId>
@@ -82,6 +66,18 @@
                 <exclusion>
                     <artifactId>spring-boot-starter-aop</artifactId>
                     <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- mybatis框架模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-core-framework-mybatis</artifactId>
+            <version>${cpms.core.framework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>cpms-common</artifactId>
+                    <groupId>com.cpms</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

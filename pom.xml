@@ -23,6 +23,7 @@
     </modules>
     <properties>
         <cpms.project.version>1.0.0</cpms.project.version>
+        <cpms.core.framework.version>1.0.0</cpms.core.framework.version>
         <file_encoding>UTF-8</file_encoding>
         <project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${file_encoding}</project.reporting.outputEncoding>
@@ -32,8 +33,6 @@
         <spring-boot.version>2.2.7.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
-        <mybatis-plus.servsion>3.4.3</mybatis-plus.servsion>
-        <dynamic-datasource.servsion>3.3.2</dynamic-datasource.servsion>
         <fastjson.version>1.2.75</fastjson.version>
         <guava.version>30.1.1-jre</guava.version>
         <jjwt.version>0.9.1</jjwt.version>
@@ -68,20 +67,6 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-            <!-- mybatis-plus依赖-->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.servsion}</version>
-            </dependency>
-
-            <!-- mybatis-plus dynamic-datasource实现动态数据源切换依赖 -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                <version>${dynamic-datasource.servsion}</version>
             </dependency>
 
 

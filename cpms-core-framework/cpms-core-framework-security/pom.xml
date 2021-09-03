@@ -8,18 +8,11 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
     <artifactId>cpms-core-framework-security</artifactId>
     <name>${project.artifactId}</name>
     <description>授权核心模块</description>
-    <properties>
-        <file_encoding>UTF-8</file_encoding>
-        <project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${file_encoding}</project.reporting.outputEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+
     <dependencies>
         <!-- 公共模块-->
         <dependency>
@@ -32,7 +25,7 @@
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-redis</artifactId>
-            <version>${cpms.project.version}</version>
+            <version>${cpms.core.framework.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.cpms</groupId>

@@ -3,7 +3,7 @@ package com.cpms.log.modules.log.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.cpms.common.core.base.TenantEntity;
+import com.cpms.framework.mybatis.entity.TenantEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

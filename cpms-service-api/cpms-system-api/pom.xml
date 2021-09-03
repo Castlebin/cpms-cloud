@@ -8,7 +8,6 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
     <artifactId>cpms-system-api</artifactId>
     <name>${project.artifactId}</name>

@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cpms-auth</artifactId>
-    <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>授权认证微服务</description>
@@ -60,7 +59,7 @@
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-log</artifactId>
-            <version>${cpms.project.version}</version>
+            <version>${cpms.core.framework.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>cpms-common</artifactId>

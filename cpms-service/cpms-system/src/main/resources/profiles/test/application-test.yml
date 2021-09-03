@@ -35,11 +35,6 @@ spring:
           username: root
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
-        db1:
-          url: jdbc:mysql://localhost:3306/cpms-cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-          username: root
-          password: root
-          driver-class-name: com.mysql.cj.jdbc.Driver
 
   #redis配置
   redis:

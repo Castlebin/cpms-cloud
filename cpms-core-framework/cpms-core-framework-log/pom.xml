@@ -8,18 +8,12 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
     <artifactId>cpms-core-framework-log</artifactId>
     <name>${project.artifactId}</name>
     <description>日志模块</description>
     <properties>
         <spring-aop.version>2.2.7.RELEASE</spring-aop.version>
-        <file_encoding>UTF-8</file_encoding>
-        <project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${file_encoding}</project.reporting.outputEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>

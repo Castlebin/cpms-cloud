@@ -8,21 +8,10 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>${cpms.project.version}</version>
     <packaging>jar</packaging>
     <artifactId>cpms-log</artifactId>
     <name>${project.artifactId}</name>
     <dependencies>
-        <!-- mybatis-plus依赖-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <!-- 数据库驱动，不指定版本号，默认为spring-boot-dependencies里定义的版本号-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
         <!-- 引入cpms-log-api依赖 -->
         <dependency>
             <groupId>com.cpms</groupId>
@@ -39,7 +28,7 @@
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-log</artifactId>
-            <version>${cpms.project.version}</version>
+            <version>${cpms.core.framework.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>cpms-common</artifactId>
@@ -48,6 +37,18 @@
                 <exclusion>
                     <artifactId>spring-boot-starter-aop</artifactId>
                     <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- mybatis框架模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-core-framework-mybatis</artifactId>
+            <version>${cpms.core.framework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>cpms-common</artifactId>
+                    <groupId>com.cpms</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

@@ -1,10 +1,10 @@
-package com.cpms.log.config;
+package com.cpms.framework.mybatis.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.cpms.common.constant.AppConstant;
+import com.cpms.common.utils.CsSecureUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -18,16 +18,12 @@ import java.time.LocalDateTime;
  * @author: gulang
  * @time: 2021/7/16 16:53
  */
-
-/**
- * 开启事务
- */
-@EnableTransactionManagement
+@EnableTransactionManagement // 开启事务
 @Configuration
-@MapperScan(AppConstant.BASE_PACKAGES+".**.modules.**.mapper") //扫描mapper包 避免在每个mapper类上加@Mapper注解
+@MapperScan("**.mapper") //扫描mapper包 避免在每个mapper类上加@Mapper注解
 public class MybatisPlusConfig implements MetaObjectHandler {
 
-    /**
+    /** +
      * 分页插件配置
      * @return
      */
@@ -46,6 +42,8 @@ public class MybatisPlusConfig implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
+        this.setFieldValByName("createBy", CsSecureUtil.userAccount(),metaObject);
+        this.setFieldValByName("updateBy", CsSecureUtil.userAccount(),metaObject);
     }
 
     /**
@@ -55,5 +53,6 @@ public class MybatisPlusConfig implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
+        this.setFieldValByName("updateBy", CsSecureUtil.userAccount(),metaObject);
     }
 }

@@ -1,4 +1,4 @@
-package com.cpms.common.core.base;
+package com.cpms.framework.mybatis.entity;
 
 /**
  * @description:
