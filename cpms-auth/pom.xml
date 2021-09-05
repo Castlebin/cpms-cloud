@@ -34,6 +34,19 @@
             <version>${cpms.project.version}</version>
         </dependency>
 
+        <!-- log框架模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-core-framework-log</artifactId>
+            <version>${cpms.core.framework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>cpms-core-framework-common</artifactId>
+                    <groupId>com.cpms</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- spring MVC -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
