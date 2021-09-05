@@ -1,17 +1,14 @@
 package com.cpms.system.modules.sys.controller;
 
-import com.cpms.common.core.api.Result;
-import com.cpms.common.core.api.ResultUtil;
-import com.cpms.framework.redis.utils.CsRedissonUtil;
+import com.cpms.framework.common.core.api.Result;
+import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.system.modules.sys.service.ISysMenuService;
 import com.cpms.system.modules.sys.service.ISysTopMenuService;
 import com.cpms.system.modules.sys.vo.SysRouteVO;
 import com.cpms.system.modules.sys.vo.SysTopMenuVO;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @description:

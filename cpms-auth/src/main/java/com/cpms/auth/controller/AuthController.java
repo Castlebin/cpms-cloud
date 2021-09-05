@@ -2,10 +2,10 @@ package com.cpms.auth.controller;
 
 import com.cpms.auth.authen.IAuthen;
 import com.cpms.auth.authen.UserAuthenBuilder;
-import com.cpms.common.core.secure.AuthInfo;
 import com.cpms.auth.dto.UserLoginDTO;
-import com.cpms.common.core.api.Result;
-import com.cpms.common.core.api.ResultUtil;
+import com.cpms.framework.common.core.api.Result;
+import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.core.secure.AuthInfo;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

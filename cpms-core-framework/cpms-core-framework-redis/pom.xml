@@ -10,11 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cpms-core-framework-redis</artifactId>
     <name>${project.artifactId}</name>
-    <description>redis模块</description>
-    <properties>
-        <redisson.version>3.16.0</redisson.version>
-    </properties>
+    <description>redis核心框架模块</description>
     <dependencies>
+        <!-- common核心框架模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-core-framework-common</artifactId>
+            <version>${cpms.core.framework.version}</version>
+        </dependency>
+
         <!-- redisson使用，该依赖包含有spring-boot-starter-data-redis -->
         <dependency>
             <groupId>org.redisson</groupId>
@@ -25,16 +29,45 @@
                     <artifactId>spring-boot-starter-actuator</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>snakeyaml</artifactId>
+                    <groupId>org.yaml</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jackson-core</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jackson-databind</artifactId>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-tx</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-aop</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
-        <!-- 公共模块-->
-        <dependency>
-            <groupId>com.cpms</groupId>
-            <artifactId>cpms-common</artifactId>
-            <version>${cpms.project.version}</version>
-        </dependency>
     </dependencies>
-
 
     <!-- 插件依赖 -->
     <build>

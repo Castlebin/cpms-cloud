@@ -11,19 +11,13 @@
     <packaging>jar</packaging>
     <artifactId>cpms-core-framework-feign</artifactId>
     <name>${project.artifactId}</name>
-    <description>feign模块</description>
+    <description>feign核心框架模块</description>
     <dependencies>
-        <!-- 公共模块-->
+        <!-- common核心框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
-            <artifactId>cpms-common</artifactId>
-            <version>${cpms.project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
+            <artifactId>cpms-core-framework-common</artifactId>
+            <version>${cpms.core.framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

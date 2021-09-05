@@ -1,7 +1,8 @@
 package com.cpms.auth.authen;
 
-import com.cpms.common.exception.BizException;
-import com.cpms.common.utils.CsSpringUtil;
+import com.cpms.framework.common.exception.BizException;
+import com.cpms.framework.common.utils.CsSpringUtil;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

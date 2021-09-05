@@ -14,17 +14,24 @@
     <description>授权认证微服务</description>
 
     <dependencies>
-        <!-- 公共模块-->
+        <!-- common核心框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
-            <artifactId>cpms-common</artifactId>
-            <version>${cpms.project.version}</version>
-            <exclusions><!--排除重复的依赖-->
+            <artifactId>cpms-core-framework-common</artifactId>
+            <version>${cpms.core.framework.version}</version>
+            <exclusions>
                 <exclusion>
                     <artifactId>spring-boot-starter-web</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- 公共模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-common</artifactId>
+            <version>${cpms.project.version}</version>
         </dependency>
 
         <!-- spring MVC -->
@@ -48,28 +55,16 @@
                     <artifactId>cpms-common</artifactId>
                     <groupId>com.cpms</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>cpms-core-framework-common</artifactId>
+                    <groupId>com.cpms</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!--nacos服务注册发现-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!-- log框架模块-->
-        <dependency>
-            <groupId>com.cpms</groupId>
-            <artifactId>cpms-core-framework-log</artifactId>
-            <version>${cpms.core.framework.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>cpms-common</artifactId>
-                    <groupId>com.cpms</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-boot-starter-aop</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

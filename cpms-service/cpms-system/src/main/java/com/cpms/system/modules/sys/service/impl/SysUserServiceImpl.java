@@ -1,6 +1,5 @@
 package com.cpms.system.modules.sys.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
@@ -17,7 +16,6 @@ import javax.annotation.Resource;
  * @time: 2021/7/16 19:36
  */
 @Service
-@DS("master")
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements ISysUserService {
     @Resource
     private  SysUserMapper sysUserMapper;

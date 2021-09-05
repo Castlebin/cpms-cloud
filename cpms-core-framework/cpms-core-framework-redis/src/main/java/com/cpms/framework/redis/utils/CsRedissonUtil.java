@@ -1,6 +1,6 @@
 package com.cpms.framework.redis.utils;
 
-import com.cpms.common.utils.CsSpringUtil;
+import com.cpms.framework.common.utils.CsSpringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;

@@ -1,6 +1,5 @@
 package com.cpms.system.modules.sys.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.system.modules.sys.entity.SysRoleEntity;
 import com.cpms.system.modules.sys.mapper.SysRoleMapper;
@@ -16,7 +15,6 @@ import java.util.List;
  * @time: 2021/8/6 17:51
  */
 @Service
-@DS("master")
 public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntity> implements ISysRoleService {
     @Resource
     private SysRoleMapper sysRoleMapper;

@@ -1,8 +1,8 @@
 package com.cpms.system.modules.sys.controller;
 
-import com.cpms.common.core.api.Result;
-import com.cpms.common.core.api.ResultUtil;
-import com.cpms.common.thread.ThreadPoolBuilder;
+import com.cpms.framework.common.core.api.Result;
+import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.utils.thread.ThreadPoolBuilder;
 import com.cpms.framework.redis.utils.CsRedissonUtil;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.GetMapping;

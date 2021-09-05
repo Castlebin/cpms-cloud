@@ -1,7 +1,7 @@
 package com.cpms.log.api.modules.log.feign;
 
 import com.cpms.common.constant.AppConstant;
-import com.cpms.common.core.api.Result;
+import com.cpms.framework.common.core.api.Result;
 import com.cpms.log.api.modules.log.dto.HandlerLogDTO;
 import com.cpms.log.api.modules.log.feign.fallback.ILogClientFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;

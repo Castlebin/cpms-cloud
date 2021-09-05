@@ -2,7 +2,7 @@ package com.cpms.system.api.modules.sys.feign;
 
 
 import com.cpms.common.constant.AppConstant;
-import com.cpms.common.core.api.Result;
+import com.cpms.framework.common.core.api.Result;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.fallback.ISysUserClientFallbackFactory;
 import com.cpms.system.api.modules.sys.vo.SysUserLoginVO;

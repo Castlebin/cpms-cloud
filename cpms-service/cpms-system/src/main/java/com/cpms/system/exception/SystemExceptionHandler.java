@@ -1,9 +1,9 @@
 package com.cpms.system.exception;
 
-import com.cpms.common.core.api.Result;
-import com.cpms.common.core.api.ResultUtil;
-import com.cpms.common.enums.GlobalResponseResultEnum;
-import com.cpms.common.exception.GlobalExceptionHandler;
+import com.cpms.framework.common.core.api.Result;
+import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.enums.GlobalResponseResultEnum;
+import com.cpms.framework.common.exception.GlobalExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

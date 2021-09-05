@@ -14,17 +14,23 @@
     <description>网关微服务</description>
 
     <dependencies>
-        <!-- 公共模块-->
+        <!-- common核心框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
-            <artifactId>cpms-common</artifactId>
-            <version>${cpms.project.version}</version>
-            <exclusions><!--排除重复的依赖-->
+            <artifactId>cpms-core-framework-common</artifactId>
+            <version>${cpms.core.framework.version}</version>
+            <exclusions>
                 <exclusion>
                     <artifactId>spring-boot-starter-web</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- 公共模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-common</artifactId>
+            <version>${cpms.project.version}</version>
         </dependency>
 
         <!-- SpringCloud Gateway -->
@@ -50,6 +56,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
+
         <!--spring-cloud Hoxton.SR5版本，gateway需要引入spring-webmvc，要不然启动会报错-->
         <dependency>
             <groupId>org.springframework</groupId>

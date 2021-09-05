@@ -1,13 +1,11 @@
 package com.cpms.system.modules.sys.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.TokenConstant;
-import com.cpms.common.core.secure.TokenUserInfo;
-import com.cpms.common.utils.CsDateUtil;
-import com.cpms.common.utils.CsJwtUtil;
-import com.cpms.common.utils.CsSecureUtil;
+import com.cpms.framework.common.core.secure.TokenUserInfo;
+import com.cpms.framework.common.utils.CsDateUtil;
+import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
 import com.cpms.system.modules.sys.entity.SysTopMenuEntity;
@@ -31,7 +29,6 @@ import java.util.stream.Collectors;
  * @time: 2021/8/7 20:53
  */
 @Service
-@DS("master")
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements ISysMenuService {
     @Resource
     private SysMenuMapper sysMenuMapper;

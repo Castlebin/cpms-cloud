@@ -1,8 +1,8 @@
 package com.cpms.gateway.fallback;
 
-import com.cpms.common.core.api.Result;
-import com.cpms.common.core.api.ResultUtil;
-import com.cpms.common.enums.GlobalResponseResultEnum;
+import com.cpms.framework.common.core.api.Result;
+import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,6 +1,6 @@
 package com.cpms.framework.redis.utils;
 
-import com.cpms.common.utils.CsSpringUtil;
+import com.cpms.framework.common.utils.CsSpringUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 

@@ -1,6 +1,7 @@
 package com.cpms.gateway.common.enums;
 
-import com.cpms.common.core.api.IResultEnum;
+
+import com.cpms.framework.common.core.api.IResultEnum;
 
 /**
  * @description:

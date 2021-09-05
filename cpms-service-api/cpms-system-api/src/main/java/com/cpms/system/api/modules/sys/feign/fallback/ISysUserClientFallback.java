@@ -1,8 +1,8 @@
 package com.cpms.system.api.modules.sys.feign.fallback;
 
-import com.cpms.common.core.api.Result;
-import com.cpms.common.core.api.ResultUtil;
-import com.cpms.common.enums.GlobalResponseResultEnum;
+import com.cpms.framework.common.core.api.Result;
+import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.ISysUserClient;
 

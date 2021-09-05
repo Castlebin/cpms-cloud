@@ -3,11 +3,11 @@ package com.cpms.auth.authen;
 
 import com.cpms.auth.dto.UserLoginDTO;
 import com.cpms.common.constant.TokenConstant;
-import com.cpms.common.core.api.Result;
-import com.cpms.common.core.secure.AuthInfo;
-import com.cpms.common.core.secure.TokenInfo;
-import com.cpms.common.exception.BizException;
-import com.cpms.common.utils.CsJwtUtil;
+import com.cpms.framework.common.core.api.Result;
+import com.cpms.framework.common.core.secure.AuthInfo;
+import com.cpms.framework.common.core.secure.TokenInfo;
+import com.cpms.framework.common.exception.BizException;
+import com.cpms.framework.common.utils.CsJwtUtil;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.ISysUserClient;
 import com.cpms.system.api.modules.sys.vo.SysRoleVO;

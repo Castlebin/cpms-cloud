@@ -1,7 +1,7 @@
 package com.cpms.auth.config;
 
 import com.cpms.auth.common.constants.SystemConstant;
-import com.cpms.common.core.factory.YmlResourceFactory;
+import com.cpms.framework.common.core.factory.YmlResourceFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.env.ConfigurableEnvironment;

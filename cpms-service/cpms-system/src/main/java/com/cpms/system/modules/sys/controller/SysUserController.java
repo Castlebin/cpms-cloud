@@ -2,10 +2,10 @@ package com.cpms.system.modules.sys.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.cpms.common.core.api.Result;
-import com.cpms.common.core.api.ResultUtil;
+import com.cpms.framework.common.core.api.Result;
+import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.log.annotations.OperLog;
-import com.cpms.framework.security.annotations.PreAuth;
+import com.cpms.framework.secure.annotations.PreAuth;
 import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.modules.sys.dto.UserDTO;
 import com.cpms.system.modules.sys.entity.SysUserEntity;

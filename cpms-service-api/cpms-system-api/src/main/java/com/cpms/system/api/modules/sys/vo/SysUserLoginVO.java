@@ -1,6 +1,6 @@
 package com.cpms.system.api.modules.sys.vo;
 
-import com.cpms.common.core.secure.UserLoginBase;
+import com.cpms.framework.common.core.secure.UserLoginBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -10,20 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cpms-core-framework-mybatis</artifactId>
     <name>${project.artifactId}</name>
-    <description>mybatis模块</description>
-    <properties>
-        <mybatis-plus.servsion>3.4.3</mybatis-plus.servsion>
-        <dynamic-datasource.servsion>3.3.2</dynamic-datasource.servsion>
-        <mysql-connector.version>8.0.20</mysql-connector.version>
-        <jackson-annotations.version>2.10.4</jackson-annotations.version>
-    </properties>
+    <description>mybatis核心框架模块</description>
     <dependencies>
-        <!-- 公共模块-->
+        <!-- common核心框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
-            <artifactId>cpms-common</artifactId>
-            <version>${cpms.project.version}</version>
+            <artifactId>cpms-core-framework-common</artifactId>
+            <version>${cpms.core.framework.version}</version>
         </dependency>
+
         <!-- 数据库驱动，不指定版本号，默认为spring-boot-dependencies里定义的版本号-->
         <dependency>
             <groupId>mysql</groupId>
@@ -35,6 +30,28 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.servsion}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-core</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- mybatis-plus dynamic-datasource实现动态多数据源切换依赖 -->
@@ -42,12 +59,16 @@
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
             <version>${dynamic-datasource.servsion}</version>
-        </dependency>
-        <!-- 字段日期格式化依赖-->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-annotations.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-aop</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-jdbc</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <!-- 插件依赖 -->

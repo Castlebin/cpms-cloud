@@ -1,7 +1,6 @@
 package com.cpms.system.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.cpms.common.utils.CsWebUtil;
 import com.cpms.framework.log.dto.LogDTO;
 import com.cpms.framework.log.event.LogEvent;
 import com.cpms.log.api.modules.log.dto.HandlerLogDTO;
@@ -11,9 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @description: 事件监听处理类

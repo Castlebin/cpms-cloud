@@ -1,6 +1,6 @@
 package com.cpms.system.config;
 
-import com.cpms.common.core.factory.YmlResourceFactory;
+import com.cpms.framework.common.core.factory.YmlResourceFactory;
 import com.cpms.system.common.constants.SystemConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
