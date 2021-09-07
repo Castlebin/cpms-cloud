@@ -1,15 +1,16 @@
 package com.cpms.framework.log.handler;
 
 import com.alibaba.fastjson.JSON;
+
 import com.cpms.framework.common.core.api.Result;
-import com.cpms.framework.log.annotations.OperLog;
-import com.cpms.framework.log.dto.LogDTO;
-import com.cpms.framework.log.event.LogEvent;
-import com.cpms.framework.log.wrapper.RequestWrapper;
 import com.cpms.framework.common.utils.CsPropsUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.common.utils.CsSpringUtil;
 import com.cpms.framework.common.utils.CsWebUtil;
+import com.cpms.framework.log.annotations.OperLog;
+import com.cpms.framework.log.dto.LogDTO;
+import com.cpms.framework.log.event.LogEvent;
+import com.cpms.framework.log.wrapper.RequestWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

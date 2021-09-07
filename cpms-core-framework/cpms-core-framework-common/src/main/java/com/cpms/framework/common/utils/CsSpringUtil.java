@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
  * @author: gulang
  * @time: 2021/6/7 19:52
  */
-@Component
 @Slf4j
 public class CsSpringUtil implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
