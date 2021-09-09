@@ -124,4 +124,22 @@ public class TokenUserInfo implements Serializable {
     public void setTokenExpire(Long tokenExpire) {
         this.tokenExpire = tokenExpire;
     }
+
+    @Override
+    public String toString() {
+        return "TokenUserInfo{" +
+                "userAccount='" + userAccount + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userId=" + userId +
+                ", userMobile='" + userMobile + '\'' +
+                ", deptId=" + deptId +
+                ", deptName='" + deptName + '\'' +
+                ", tenantId=" + tenantId +
+                ", tenantName='" + tenantName + '\'' +
+                ", userSex=" + userSex +
+                ", roleCodes=" + roleCodes +
+                ", roleIds=" + roleIds +
+                ", tokenExpire=" + tokenExpire +
+                '}';
+    }
 }

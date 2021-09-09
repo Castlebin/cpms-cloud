@@ -26,7 +26,7 @@ spring:
 
 feign:
   hystrix:
-      enabled: true # 开启全局hystrix熔断
+    enabled: true # 开启全局hystrix熔断
 
 #【注：接口调用时间超过ribbon或者hystrix配置的超时时间都会触发熔断，一般设置ribbon的超时时间需要大于hystrix配置的超时时间，
 #  这样的话我们可以针对具体的接口做超时熔断限制，否则的话所有的接口都会根据ribbon的设置触发熔断】

@@ -2,6 +2,7 @@ package com.cpms.framework.log.handler;
 
 import com.alibaba.fastjson.JSON;
 
+import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.utils.CsPropsUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
@@ -14,6 +15,7 @@ import com.cpms.framework.log.wrapper.RequestWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Objects;
+import java.util.UUID;
 
 
 /**
@@ -34,7 +37,6 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
      * 请求开始时间标识
      */
     private static final String LOGGER_SEND_TIME = "_send_time";
-
     /**
      * 请求日志实体类
      */
@@ -63,6 +65,7 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         logDTO.setMethodName(methodName);
         logDTO.setReqUrl(request.getRequestURI());
         request.setAttribute(LOGGER_ENTITY,logDTO);
+        setMDC(request);
         return  true;
     }
 
@@ -91,6 +94,7 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         builderFilterLog(logDTO,builderFilterLog);
         // 操作日志记录 异步执行
         builderOperLog(handler,logDTO);
+        MDC.clear();
     }
 
     /**
@@ -137,5 +141,20 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         String bodyJson  = new RequestWrapper(request).getBody();
         // !NOTE:日志打印 body参数覆盖url参数
         return StringUtils.isNotBlank(bodyJson) ? JSON.parse(bodyJson).toString() : queryParam;
+    }
+
+    /**
+     * 设置MDC
+     *
+     * @param req HttpServletRequest
+     */
+    private void setMDC(HttpServletRequest req) {
+        String traceId = req.getHeader(CoreCommonConstant.TRACE_ID);
+        if (StringUtils.isBlank(traceId)) {
+            traceId = UUID.randomUUID().toString().replace("-", "");
+        }
+        MDC.put(CoreCommonConstant.TRACE_ID, traceId);
+        // 设置用户信息
+        MDC.put(CoreCommonConstant.USER_INFO,req.getHeader(CoreCommonConstant.USER_INFO));
     }
 }

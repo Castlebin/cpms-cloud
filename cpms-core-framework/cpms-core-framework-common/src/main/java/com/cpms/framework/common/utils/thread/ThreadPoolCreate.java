@@ -1,9 +1,16 @@
 package com.cpms.framework.common.utils.thread;
 
+import com.cpms.framework.common.constants.CoreCommonConstant;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.Assert;
+import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.Objects;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -11,7 +18,12 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author: gulang
  * @time: 2021/9/1 16:10
  */
+@Slf4j
 public class ThreadPoolCreate {
+    /**
+     * traceId常量
+     */
+    private static final String TRACE_ID = CoreCommonConstant.TRACE_ID;
     private final ThreadPoolProperties poolProperties;
     private static final int QUEUE_CAPACITY = 65535;
     private static final int WAIT_SECONDS = 60;
@@ -48,7 +60,50 @@ public class ThreadPoolCreate {
      * @return
      */
     public ThreadPoolTaskExecutor buildThreadPoolExecutor(Integer nThreads) {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor(){
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void execute(Runnable task) {
+                super.execute(wrap(task, MDC.get(TRACE_ID),MDC.get(CoreCommonConstant.USER_INFO)));
+            }
+
+            @Override
+            public void execute(Runnable task, long startTimeout) {
+                super.execute(wrap(task, MDC.get(TRACE_ID),MDC.get(CoreCommonConstant.USER_INFO)), startTimeout);
+            }
+
+            @Override
+            public <T> Future<T> submit(Callable<T> task) {
+                return super.submit(wrap(task, MDC.get(TRACE_ID),MDC.get(CoreCommonConstant.USER_INFO)));
+            }
+
+            @Override
+            public Future<?> submit(Runnable task) {
+                return super.submit(wrap(task, MDC.get(TRACE_ID),MDC.get(CoreCommonConstant.USER_INFO)));
+            }
+
+            @Override
+            public ListenableFuture<?> submitListenable(Runnable task) {
+                return super.submitListenable(wrap(task, MDC.get(TRACE_ID),MDC.get(CoreCommonConstant.USER_INFO)));
+            }
+
+            @Override
+            public <T> ListenableFuture<T> submitListenable(Callable<T> task) {
+                return super.submitListenable(wrap(task, MDC.get(TRACE_ID),MDC.get(CoreCommonConstant.USER_INFO)));
+            }
+        };
+        setProperties(nThreads,executor);
+        executor.initialize();
+        return  executor;
+    }
+
+    /**
+     * 设置线程池属性
+     * @param nThreads
+     * @param executor
+     */
+    private void setProperties(Integer nThreads, ThreadPoolTaskExecutor executor) {
         if (Objects.isNull(nThreads)) {
             // 设置核心线程数
             executor.setCorePoolSize(poolProperties.getCorePoolSize());
@@ -73,8 +128,6 @@ public class ThreadPoolCreate {
         // 线程名称前缀
         executor.setThreadNamePrefix(poolProperties.getThreadNamePrefix() == null ?
                 THREAD_NAME_PREFIX : poolProperties.getThreadNamePrefix());
-        executor.initialize();
-        return  executor;
     }
 
     public static class ThreadPoolProperties {
@@ -163,5 +216,41 @@ public class ThreadPoolCreate {
         public void setThreadNamePrefix(String threadNamePrefix) {
             this.threadNamePrefix = threadNamePrefix;
         }
+    }
+
+
+    /**
+     * 子线程继承父线程traceId
+     */
+    public static <T> Callable<T> wrap(final Callable<T> callable, final String traceId, final String userInfo) {
+        return () -> {
+            if (StringUtils.isNotBlank(traceId)) {
+                MDC.put(TRACE_ID, traceId);
+            }
+            MDC.put(CoreCommonConstant.USER_INFO,userInfo);
+            try {
+                return callable.call();
+            } finally {
+                MDC.clear();
+            }
+        };
+    }
+
+
+    /**
+     * 子线程继承父线程traceId
+     */
+    public static Runnable wrap(final Runnable runnable, final String traceId, final String userInfo) {
+        return () -> {
+            if (StringUtils.isNotBlank(traceId)) {
+                MDC.put(TRACE_ID, traceId);
+            }
+            MDC.put(CoreCommonConstant.USER_INFO,userInfo);
+            try {
+                runnable.run();
+            } finally {
+                MDC.clear();
+            }
+        };
     }
 }

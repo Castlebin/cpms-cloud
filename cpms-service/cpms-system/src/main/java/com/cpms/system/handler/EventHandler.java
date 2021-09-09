@@ -6,6 +6,7 @@ import com.cpms.framework.log.event.LogEvent;
 import com.cpms.log.api.modules.log.dto.HandlerLogDTO;
 import com.cpms.log.api.modules.log.feign.ILogClient;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -24,6 +25,7 @@ public class EventHandler {
     private ILogClient logClient;
     /**
      * 一般监听的事件常常采用异步执行方式,必须加上@Async注解，入口类必须要加 @EnableAsync 注解开启异步处理
+     *  defaultAsyncTaskPool 指定线程池
      * @param event
      */
     @Async("defaultAsyncTaskPool")

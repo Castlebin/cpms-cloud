@@ -109,3 +109,4 @@ hystrix:
           strategy: SEMAPHORE #切换隔离等级，避免上下文丢失
           thread:
             timeoutInMilliseconds: 5000  # 这个超时针对所有的接口做超时熔断处理
+  shareSecurityContext: true  #线程间传递上下文,不开启，切换线程获取不到上下文信息

@@ -1,6 +1,7 @@
 package com.cpms.framework.common.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -18,15 +19,11 @@ import java.util.Objects;
  */
 @Slf4j
 public class CsSecureUtil {
-    private static final String USER_INFO = "_user_info";
-    private static final String SUPER_ADMINISTRATOR = "SUPER_ADMINISTRATOR";
-    private static final String ADMINISTRATOR = "ADMINISTRATOR";
-
     public static TokenUserInfo getUser(){
         TokenUserInfo tokenUserInfo = new TokenUserInfo();
         HttpServletRequest request = CsWebUtil.getRequest();
         if(!Objects.isNull(request)) {
-            String header = request.getHeader(USER_INFO);
+            String header = request.getHeader(CoreCommonConstant.USER_INFO);
             if(StringUtils.isNotBlank(header)){
                 try {
                     tokenUserInfo = JSON.parseObject(URLDecoder.decode(header, "UTF-8"), TokenUserInfo.class);
@@ -44,7 +41,7 @@ public class CsSecureUtil {
      */
     public static boolean isSuperAdmin(){
         TokenUserInfo tokenInfo =getUser();
-        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(SUPER_ADMINISTRATOR));
+        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(CoreCommonConstant.SUPER_ADMINISTRATOR));
     }
 
     /**
@@ -53,7 +50,7 @@ public class CsSecureUtil {
      */
     public static boolean isAdmin(){
         TokenUserInfo tokenInfo =getUser();
-        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(ADMINISTRATOR));
+        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(CoreCommonConstant.ADMINISTRATOR));
     }
 
     /**

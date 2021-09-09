@@ -2,6 +2,8 @@ package com.cpms.log.modules.log.feign;
 
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.core.secure.TokenUserInfo;
+import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.log.api.modules.log.dto.HandlerLogDTO;
 import com.cpms.log.api.modules.log.feign.ILogClient;
 import com.cpms.log.modules.log.entity.SysLogEntity;
