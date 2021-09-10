@@ -15,7 +15,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableFeignClients(AppConstant.BASE_PACKAGES)
 @SpringCloudApplication
-@EnableAsync
 public class SystemApplication {
     public static void main(String[] args)
     {

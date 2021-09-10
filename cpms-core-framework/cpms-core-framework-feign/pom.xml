@@ -19,6 +19,8 @@
             <artifactId>cpms-core-framework-common</artifactId>
             <version>${cpms.core.framework.version}</version>
         </dependency>
+
+        <!-- openfeign微服务调用依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>

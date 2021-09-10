@@ -10,6 +10,7 @@ import org.slf4j.MDC;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
@@ -18,8 +19,9 @@ import javax.annotation.Resource;
  * @author: gulang
  * @time: 2021/8/18 17:39
  */
-@Component
 @Slf4j
+@Component
+@EnableAsync
 public class EventHandler {
     @Resource
     private ILogClient logClient;
