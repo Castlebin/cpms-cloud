@@ -21,6 +21,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate template) {
         try {
+            // feign调用下游服务，传递traceId 和 当前登录用户信息
             template.header(CoreCommonConstant.TRACE_ID, MDC.get(CoreCommonConstant.TRACE_ID));
             template.header(CoreCommonConstant.USER_INFO, MDC.get(CoreCommonConstant.USER_INFO));
         } catch (Exception e) {
