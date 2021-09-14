@@ -14,7 +14,7 @@ import java.util.List;
  * @time: 2021/8/24 17:20
  */
 @Data
-@ConfigurationProperties(prefix = "spring.redisson")
+@ConfigurationProperties(prefix = "spring.redis.server")
 public class RedissonProperty {
     private String serverMode;
     private String password;

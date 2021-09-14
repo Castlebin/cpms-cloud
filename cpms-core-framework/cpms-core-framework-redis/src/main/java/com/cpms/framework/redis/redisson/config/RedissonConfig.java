@@ -88,7 +88,7 @@ public class RedissonConfig {
     /**
      * 条件注解，当name指定的属性值与havingValue相等时，则会对指定对象进行IOC注入，反之则不会，如果matchIfMissing为true，不相等也会
      */
-    @ConditionalOnProperty(name = "spring.redisson.server-mode", havingValue = "single")
+    @ConditionalOnProperty(name = "spring.redis.server.server-mode", havingValue = "single")
     public RedissonClient singleRedisson() {
         log.info("======================RedissonClient连接模式[single]=========================");
         Config config = new Config();
@@ -111,7 +111,7 @@ public class RedissonConfig {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "spring.redisson.server-mode", havingValue = "cluster")
+    @ConditionalOnProperty(name = "spring.redis.server.server-mode", havingValue = "cluster")
     public RedissonClient clusterRedisson() {
         log.info("======================RedissonClient连接模式[cluster]=========================");
         Config config = new Config();
@@ -135,7 +135,7 @@ public class RedissonConfig {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "spring.redisson.server-mode", havingValue = "sentinel")
+    @ConditionalOnProperty(name = "spring.redis.server.server-mode", havingValue = "sentinel")
     public RedissonClient sentinelRedisson() {
         log.info("======================RedissonClient连接模式[sentinel]=========================");
         Config config = new Config();
