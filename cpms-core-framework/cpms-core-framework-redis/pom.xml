@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cpms-core-framework-redis</artifactId>
     <name>${project.artifactId}</name>
-    <description>redis核心框架模块</description>
+    <description>核心框架redis模块</description>
     <dependencies>
         <!-- common核心框架模块-->
         <dependency>

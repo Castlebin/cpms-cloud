@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cpms-core-framework-secure</artifactId>
     <name>${project.artifactId}</name>
-    <description>secure授权核心框架模块</description>
+    <description>核心框架secure授权模块</description>
 
     <dependencies>
         <!-- common核心框架模块-->

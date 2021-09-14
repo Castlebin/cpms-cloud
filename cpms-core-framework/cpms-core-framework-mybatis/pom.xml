@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cpms-core-framework-mybatis</artifactId>
     <name>${project.artifactId}</name>
-    <description>mybatis核心框架模块</description>
+    <description>核心框架mybatis模块</description>
     <dependencies>
         <!-- common核心框架模块-->
         <dependency>

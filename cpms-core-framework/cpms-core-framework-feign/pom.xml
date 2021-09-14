@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <artifactId>cpms-core-framework-feign</artifactId>
     <name>${project.artifactId}</name>
-    <description>feign核心框架模块</description>
+    <description>核心框架feign模块</description>
     <dependencies>
         <!-- common核心框架模块-->
         <dependency>

@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <artifactId>cpms-core-framework-common</artifactId>
     <name>${project.artifactId}</name>
-    <description>公共核心框架模块</description>
+    <description>核心框架公共模块</description>
 
     <dependencies>
         <!-- spring MVC -->

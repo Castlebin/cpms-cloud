@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cpms-core-framework-log</artifactId>
     <name>${project.artifactId}</name>
-    <description>log日志核心框架模块</description>
+    <description>l核心框架og日志模块</description>
 
     <dependencies>
         <!-- common核心框架模块-->
