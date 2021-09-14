@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 /**
- * @description: fein调用之前请求头处理拦截器
+ * @description: feign调用之前请求头处理拦截器
  * @author: gulang
  * @time: 2021/9/8 17:12
  */
