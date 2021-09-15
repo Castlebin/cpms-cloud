@@ -8,11 +8,11 @@ import java.util.List;
  * @author gulang
  * @date 2021/03/31 16:17
  */
-public class BasePageVO<T> extends BasePageDTO {
+public class BasePageVO<T> {
     /**
      * 总记录数
      */
-    private Integer total = 0;
+    private Integer total;
     /**
      * 数据列表
      */
@@ -31,10 +31,6 @@ public class BasePageVO<T> extends BasePageDTO {
         this.total = total;
     }
 
-    public Integer getCount() {
-        return total;
-    }
-
     public List<T> getList() {
         return list;
     }
@@ -51,13 +47,12 @@ public class BasePageVO<T> extends BasePageDTO {
         this.otherObj = otherObj;
     }
 
-    public BasePageVO() {
-        super();
-    }
-
-    public BasePageVO(Integer pageNo, Integer pageSize, Integer total, List<T> list) {
-        super(pageNo, pageSize);
-        this.list = list;
-        this.total = total;
+    @Override
+    public String toString() {
+        return "BasePageVO{" +
+                "total=" + total +
+                ", list=" + list +
+                ", otherObj=" + otherObj +
+                '}';
     }
 }

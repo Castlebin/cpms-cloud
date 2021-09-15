@@ -13,6 +13,7 @@ import com.cpms.system.modules.sys.entity.SysRoleEntity;
 import com.cpms.system.modules.sys.service.ISysRoleService;
 import com.cpms.system.modules.sys.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,8 +37,12 @@ public class SysUserClient implements ISysUserClient {
     @PostMapping(API_PREFIX+"/login")
     public Result<SysUserLoginVO> sysUserLogin(SysUserLginDTO sysUserLginDTO) {
         SysUserLoginVO sysUserLoginVO = new SysUserLoginVO();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         SysUserLoginBO sysUserLoginBO = sysUserService.querySysUserInfo(sysUserLginDTO);
         if(Objects.isNull(sysUserLoginBO)) {
+            return ResultUtil.error(SystemResponseResultEnum.ACCOUNT_OR_PASSWORD_CHECK_FAILED_ERROR);
+        }
+        if(!bCryptPasswordEncoder.matches(sysUserLginDTO.getUserPassword(),sysUserLoginBO.getUserPassword())) {
             return ResultUtil.error(SystemResponseResultEnum.ACCOUNT_OR_PASSWORD_CHECK_FAILED_ERROR);
         }
         if(sysUserLoginBO.getUserStarus() == SystemConstant.DATA_STATUS_FORBIDDEN){

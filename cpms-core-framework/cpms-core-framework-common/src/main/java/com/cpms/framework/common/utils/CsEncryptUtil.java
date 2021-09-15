@@ -42,13 +42,4 @@ public class CsEncryptUtil {
         }
     }
 
-    /**
-     * 密码加密
-     * @param password 明文密码
-     * @return 加密字符串
-     */
-    public static String  passwordEncrypt(String password){
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return  bCryptPasswordEncoder.encode(password);
-    }
 }

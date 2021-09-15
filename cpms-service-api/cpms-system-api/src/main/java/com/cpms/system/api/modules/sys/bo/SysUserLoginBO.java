@@ -44,4 +44,8 @@ public class SysUserLoginBO extends UserLoginBase {
      */
     private String tenantName;
 
+    /**
+     * 用户密码
+     */
+    private String userPassword;
 }

@@ -1,5 +1,8 @@
 package com.cpms.framework.mybatis.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+
 /**
  * @description:
  * @author: gulang
@@ -7,6 +10,7 @@ package com.cpms.framework.mybatis.entity;
  */
 
 public class TenantEntity extends BaseEntity{
+    @TableField(fill = FieldFill.INSERT)
     private Long tenantId;
 
     public TenantEntity() {

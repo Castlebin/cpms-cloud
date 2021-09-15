@@ -59,4 +59,12 @@ public class BasePageDTO implements Serializable {
         this.pageNo = pageNo;
         this.pageSize = pageSize;
     }
+
+    @Override
+    public String toString() {
+        return "BasePageDTO{" +
+                "pageNo=" + pageNo +
+                ", pageSize=" + pageSize +
+                '}';
+    }
 }

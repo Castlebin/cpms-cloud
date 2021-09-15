@@ -13,6 +13,8 @@ public enum SystemResponseResultEnum implements IResultEnum {
     ACCOUNT_OR_PASSWORD_CHECK_FAILED_ERROR(50002, "账号或密码不正确！！！"),
     ACCOUNT_FORBIDDEN_ERROR(50003, "账号已禁用！！！"),
     TENANT_FORBIDDEN_ERROR(50004, "账号所属租户已禁用！！！"),
+    USER_ALREADY_EXISTS_ERROR(50005, "该账号已存在！！！"),
+    ORIGINAL_PASSWORD_NOT_MATCH_ERROR(50006,"原始密码不正确！！！"),
     ;
 
     final Integer code;

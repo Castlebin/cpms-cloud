@@ -3,11 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cpms.system.modules.sys.mapper.SysUserMapper">
-<!--    <resultMap id="sysUserBoMap"  type="com.cpms.system.api.bo.SysUserLoginBO" >-->
-<!--        <id property="userId" column="userId"/>-->
-<!--        <result property="userName" column="year"  />-->
-<!--        <result property="userStarus" column="type"/>-->
-<!--    </resultMap>-->
 
     <select id="querySysUserInfo" parameterType="com.cpms.system.api.modules.sys.dto.SysUserLginDTO" resultType="com.cpms.system.api.modules.sys.bo.SysUserLoginBO">
         SELECT
@@ -21,6 +16,7 @@
           u.user_mobile,
           u.user_status,
           u.dept_id,
+          u.user_password,
           t.tenant_id,
           t.tenant_name,
           t.tenant_status,
@@ -31,7 +27,6 @@
         LEFT JOIN cpms_system_dept d ON d.dept_id = u.dept_id
         WHERE
          u.user_account = #{userAccount}
-         AND u.user_password= #{userPassword}
          AND u.tenant_id= t.tenant_id
          AND u.del_flag = 0
          AND t.del_flag = 0

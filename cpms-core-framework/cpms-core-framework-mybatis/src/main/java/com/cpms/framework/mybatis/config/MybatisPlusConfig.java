@@ -44,6 +44,10 @@ public class MybatisPlusConfig implements MetaObjectHandler {
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
         this.setFieldValByName("createBy", CsSecureUtil.userAccount(),metaObject);
         this.setFieldValByName("updateBy", CsSecureUtil.userAccount(),metaObject);
+        String tenantId = "tenantId";
+        if(hasProperty(metaObject, tenantId)){
+            this.setFieldValByName(tenantId, CsSecureUtil.getUser().getTenantId(),metaObject);
+        }
     }
 
     /**
@@ -54,5 +58,12 @@ public class MybatisPlusConfig implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
         this.setFieldValByName("updateBy", CsSecureUtil.userAccount(),metaObject);
+    }
+
+    /**
+     * 判断属性是否存在
+     */
+    private boolean hasProperty(MetaObject metaObject, String fieldName) {
+        return metaObject.hasGetter(fieldName) || metaObject.hasGetter("et." + fieldName);
     }
 }

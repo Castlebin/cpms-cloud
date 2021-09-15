@@ -24,7 +24,6 @@ public class SysUserEntity extends TenantEntity {
      */
     @TableId(value = "user_id",type = IdType.ASSIGN_ID)
     private Long userId;
-    private Long tenantId;
     private Long deptId;
     private String userName;
     private String userPassword;
