@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
+
 
 /**
  * @description:
@@ -33,6 +33,11 @@ public class SysUserController {
     @Resource
     private ISysUserService sysUserService;
 
+    /**
+     * 用户列表
+     * @param listUserDTO
+     * @return
+     */
     @PostMapping("/list")
     public Result<BasePageVO<SysUserVO>> listUser(@RequestBody ListUserDTO listUserDTO){
         return ResultUtil.success(sysUserService.listUser(listUserDTO));
