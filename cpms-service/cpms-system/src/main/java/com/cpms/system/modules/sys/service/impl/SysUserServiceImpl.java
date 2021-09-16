@@ -19,6 +19,7 @@ import com.cpms.system.modules.sys.mapper.SysUserMapper;
 import com.cpms.system.modules.sys.service.ISysUserService;
 import com.cpms.system.modules.sys.service.SysRoleUserService;
 import com.cpms.system.modules.sys.vo.SysUserVO;
+import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -44,8 +46,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     @Override
     public BasePageVO<SysUserVO> listUser(ListUserDTO listUserDTO) {
         BasePageVO<SysUserVO> listUserVO = new BasePageVO();
-
-//        ;sysUserMapper.selectList();
+        List<SysUserVO> sysUserVoList;
+        listUserDTO.setTenantId(CsSecureUtil.getUser().getTenantId());
+        int count = sysUserMapper.listUserCount(listUserDTO);
+        if(count == 0 ){
+            sysUserVoList = Lists.newArrayList();
+        }else {
+            sysUserVoList = sysUserMapper.listUser(listUserDTO);
+        }
+        listUserVO.setTotal(count);
+        listUserVO.setList(sysUserVoList);
         return listUserVO;
     }
 
@@ -105,6 +115,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Override
     public boolean resetPassword(ResetPasswordDTO resetPasswordDTO) {
+        if(!Objects.equals(resetPasswordDTO.getUserId(),CsSecureUtil.getUser().getUserId())) {
+            throw new BizException(SystemResponseResultEnum.FORBIDDEN_CHANGE_OTHER_PEOPLE_PASSWORD_ERROR);
+        }
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         SysUserEntity sysUserEntity = sysUserMapper.selectOne(Wrappers.<SysUserEntity>query().lambda().eq(SysUserEntity::getUserId, resetPasswordDTO.getUserId()));
         if(!bCryptPasswordEncoder.matches(resetPasswordDTO.getOldPassword(),sysUserEntity.getUserPassword())) {

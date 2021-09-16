@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author gulang
  * @date 2021/03/31 16:08
  */
-public class BasePageDTO implements Serializable {
+public class BasePageDTO  implements Serializable {
     /**
      * 默认分页大小
      */

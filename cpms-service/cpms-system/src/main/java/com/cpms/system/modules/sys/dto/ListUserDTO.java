@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ListUserDTO extends BasePageDTO {
+public class ListUserDTO  extends BasePageDTO {
     /**
      * 用户 id
      */
@@ -34,5 +34,9 @@ public class ListUserDTO extends BasePageDTO {
      * 部门ID
      */
     private Long deptId;
+    /**
+     * 租户ID
+     */
+    private Long tenantId;
 
 }

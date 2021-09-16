@@ -65,8 +65,6 @@ public class SysUserController {
     }
 
     @PostMapping("/resetPassword")
-    @PreAuth("sys_user_reset_password")
-    @OperLog(desc = "修改用户密码")
     public Result<Void> resetPassword(@Validated(UpdateGroup.class) @RequestBody ResetPasswordDTO resetPasswordDTO){
         return ResultUtil.status(sysUserService.resetPassword(resetPasswordDTO));
     }

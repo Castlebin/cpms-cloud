@@ -17,4 +17,9 @@ public class SystemConstant {
    public static final int DEL_FLAG_DELETED = 1;
    /** 数据状态:未删除 **/
    public static final int DEL_FLAG_NOT_DELETED = 0;
+
+   /** 类型：菜单 **/
+   public static final int TYPE_MENU = 0;
+   /** 类型：按钮 **/
+   public static final int TYPE_BUTTON = 1;
 }

@@ -2,10 +2,15 @@ package com.cpms.system.modules.sys.controller;
 
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.mybatis.groups.AddGroup;
+import com.cpms.framework.mybatis.groups.DeleteGroup;
+import com.cpms.framework.mybatis.groups.UpdateGroup;
+import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.service.ISysMenuService;
 import com.cpms.system.modules.sys.service.ISysTopMenuService;
 import com.cpms.system.modules.sys.vo.SysRouteVO;
 import com.cpms.system.modules.sys.vo.SysTopMenuVO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
@@ -42,7 +47,33 @@ public class SysMenuController {
         return ResultUtil.success(sysTopMenuService.getTopMenu());
     }
 
+    /**
+     *  添加菜单
+     * @return
+     */
+    @GetMapping("/addMenu")
+    public Result<Void> addMenu(@Validated(AddGroup.class) @RequestBody SysMenuDTO sysMenuDTO){
+        return ResultUtil.status(sysMenuService.addMenu(sysMenuDTO));
+    }
 
+    /**
+     *  更新操作
+     * @param sysMenuDTO
+     * @return
+     */
+    @GetMapping("/updateMenu")
+    public Result<Void> updateMenu(@Validated(UpdateGroup.class) @RequestBody SysMenuDTO sysMenuDTO){
+        return ResultUtil.status(sysMenuService.updateMenu(sysMenuDTO));
+    }
 
+    /**
+     *  删除操作
+     * @param sysMenuDTO
+     * @return
+     */
+    @GetMapping("/deleteMenu")
+    public Result<Void> deleteMenu(@Validated(DeleteGroup.class) @RequestBody SysMenuDTO sysMenuDTO){
+        return ResultUtil.status(sysMenuService.deleteMenu(sysMenuDTO));
+    }
 
 }

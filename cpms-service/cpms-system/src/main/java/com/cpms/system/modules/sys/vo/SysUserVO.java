@@ -1,8 +1,9 @@
 package com.cpms.system.modules.sys.vo;
 
-import com.cpms.framework.mybatis.entity.TenantEntity;
+import com.cpms.framework.common.core.base.BaseVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +12,11 @@ import java.time.LocalDateTime;
  * @author: gulang
  * @time: 2021/9/15 16:40
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class SysUserVO extends TenantEntity {
+public class SysUserVO extends BaseVO {
     private Long userId;
-    private Long deptId;
+    private String deptName;
     private String userName;
     private String userLoginIp;
 
@@ -37,4 +39,8 @@ public class SysUserVO extends TenantEntity {
      * 用户性别：0-未知，1-男，2-女
      */
     private Integer  userSex;
+    /**
+     * 0-正常，1-已禁用
+     */
+    private Integer userStatus;
 }

@@ -123,7 +123,8 @@ CREATE TABLE `cpms_system_role` (
 insert  into `cpms_system_role`(`role_id`,`tenant_id`,`role_name`,`role_code`,`role_desc`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
 (1,1,'系统超级管理员','SUPER_ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-08-08 11:32:44','000001','000001'),
 (2,2,'管理员','ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-08-08 11:32:49','000001','000001'),
-(3,1,'推广专员','TUI_GUANG',NULL,0,'2021-08-06 17:34:20','2021-08-08 11:32:46','000001','000001');
+(3,1,'推广专员','TUI_GUANG',NULL,0,'2021-08-06 17:34:20','2021-08-08 11:32:46','000001','000001'),
+(4,1,'市场运营','YUN_YING',NULL,0,'2021-09-15 11:33:29','2021-09-15 11:33:36','000001','000001');
 
 /*Table structure for table `cpms_system_role_menu` */
 
@@ -161,7 +162,11 @@ CREATE TABLE `cpms_system_role_user` (
 insert  into `cpms_system_role_user`(`user_id`,`role_id`) values 
 (1,1),
 (2,2),
-(2,3);
+(2,3),
+(1438021853006004225,1),
+(1438021853006004225,4),
+(1438055567887011842,1),
+(1438055567887011842,4);
 
 /*Table structure for table `cpms_system_tenant` */
 
@@ -220,7 +225,7 @@ CREATE TABLE `cpms_system_user` (
   `dept_id` bigint(64) NOT NULL COMMENT '所属部门ID',
   `user_account` varchar(50) NOT NULL COMMENT '用户账号',
   `user_password` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户密码',
-  `user_name` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '用户名',
+  `user_name` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户名',
   `user_status` tinyint(3) DEFAULT '0' COMMENT '0-正常，1-已禁用',
   `user_login_ip` varchar(20) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '登录IP地址',
   `last_login_time` datetime DEFAULT NULL COMMENT '最后一次登录时间',
@@ -232,14 +237,20 @@ CREATE TABLE `cpms_system_user` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
   `update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_account` (`user_account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统管理用户表';
 
 /*Data for the table `cpms_system_user` */
 
 insert  into `cpms_system_user`(`user_id`,`tenant_id`,`dept_id`,`user_account`,`user_password`,`user_name`,`user_status`,`user_login_ip`,`last_login_time`,`user_avatar`,`user_sex`,`user_mobile`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
-(1,1,2,'000001','123456','superAdmin',0,'127.0.0.1','2020-05-17 14:27:19','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-06-13 16:15:34','2021-08-07 15:55:28','000001','000001'),
-(2,2,3,'000002','123456','Mr.Liu',0,'127.0.0.1','2020-05-15 14:27:50','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',0,'15889745719',0,'2021-06-13 16:15:34','2021-08-11 11:25:47','000001','000001');
+(1,1,2,'000001','$2a$10$/IgTGoZ91/umYFdLLhnFEumn6Bd9B7JCMBcmbjQ0EAIxRngScEFvS','superAdmin',0,'127.0.0.1','2020-05-17 14:27:19','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-06-13 16:15:34','2021-09-14 16:57:12','000001','000001'),
+(2,2,3,'000002','$2a$10$/IgTGoZ91/umYFdLLhnFEumn6Bd9B7JCMBcmbjQ0EAIxRngScEFvS','Mr.Liu',0,'127.0.0.1','2020-05-15 14:27:50','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',0,'15889745719',0,'2021-06-13 16:15:34','2021-09-14 16:57:17','000001','000001'),
+(1437695137926684674,2,2,'test001','$2a$10$/IgTGoZ91/umYFdLLhnFEumn6Bd9B7JCMBcmbjQ0EAIxRngScEFvS','test001',0,NULL,'2021-09-15 19:35:07','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-14 16:30:07','2021-09-15 19:35:09','000001','000001'),
+(1437696509359235073,1,2,'test002','$2a$10$6DOwEXYOWCTQzyrezO2BlOQqbEN648S66qhh0xZPuSB1eLg4tLrY2','6666',0,NULL,'2021-09-15 19:35:04','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-14 16:35:34','2021-09-15 19:35:06','000001','000001'),
+(1437698974959869953,1,2,'test003','$2a$10$AYAhHljph7h8om9EPP.X8.gUgRPNkoi55MwTh7zS/6hVBHkaPoNs.','test001',0,NULL,'2021-09-21 19:35:42','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-14 16:45:21','2021-09-15 19:35:48','000001','000001'),
+(1438021853006004225,1,2,'test00225','$2a$10$pNh5tZW7B5Ljx1Y5bXu4LugI5.6dK9HwoObw4YSi.NlAnX6vGbDrq','test001',0,NULL,'2021-09-15 19:35:09','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-15 14:08:22','2021-09-15 19:35:11','000001','000001'),
+(1438055567887011842,1,2,'TTTT','$2a$10$9JtVQQ7NZfDfY12s.7mvIewWptl2OIwghmHrGxLDZdlQrekKE52Gu','999',0,NULL,'2021-09-24 19:35:37','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-15 16:22:20','2021-09-15 19:35:41','000001','000001');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
