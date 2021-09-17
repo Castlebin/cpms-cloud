@@ -61,13 +61,20 @@ CREATE TABLE `cpms_system_log` (
 
 /*Data for the table `cpms_system_log` */
 
+insert  into `cpms_system_log`(`log_id`,`tenant_id`,`title`,`service_name`,`handle_ip`,`req_url`,`req_method`,`req_params`,`exe_time`,`result_msg`,`del_flag`,`create_by`,`create_time`,`update_by`,`update_time`) values 
+(1438780330590658562,1,'添加角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/addRole','POST','{\"roleDesc\":\"role_Code\",\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色\"}',306,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:22:14\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-17 16:22:17','000001','2021-09-17 16:22:17'),
+(1438780616554110978,1,'更新角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/updateRole','POST','{\"roleDesc\":\"role_Code\",\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色\"}',18,'{\"applicationName\":\"cpms-server-system\",\"code\":20005,\"date\":\"2021-09-17 16:23:24\",\"message\":\"roleId不能为空\",\"success\":false}',0,'000001','2021-09-17 16:23:25','000001','2021-09-17 16:23:25'),
+(1438780851447717890,1,'更新角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/updateRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',170,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:24:20\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-17 16:24:21','000001','2021-09-17 16:24:21'),
+(1438780948025761793,1,'删除角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/deleteRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',93,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:24:43\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-17 16:24:44','000001','2021-09-17 16:24:44'),
+(1438781038538842113,1,'删除角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/deleteRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',5,'{\"applicationName\":\"cpms-server-system\",\"code\":20009,\"date\":\"2021-09-17 16:25:05\",\"message\":\"操作失败！！！\",\"success\":false}',0,'000001','2021-09-17 16:25:06','000001','2021-09-17 16:25:06');
+
 /*Table structure for table `cpms_system_menu` */
 
 DROP TABLE IF EXISTS `cpms_system_menu`;
 
 CREATE TABLE `cpms_system_menu` (
   `menu_id` bigint(64) NOT NULL COMMENT '菜单ID',
-  `parent_id` int(11) DEFAULT '0' COMMENT '父菜单ID',
+  `parent_id` bigint(64) DEFAULT '0' COMMENT '父菜单ID',
   `name` varchar(32) NOT NULL COMMENT '菜单|按钮名称',
   `code` varchar(50) DEFAULT NULL COMMENT '编码',
   `alias` varchar(50) DEFAULT NULL COMMENT '别名',
@@ -107,8 +114,9 @@ DROP TABLE IF EXISTS `cpms_system_role`;
 CREATE TABLE `cpms_system_role` (
   `role_id` bigint(64) unsigned NOT NULL COMMENT '角色id',
   `tenant_id` bigint(64) NOT NULL COMMENT '租户ID',
+  `dept_id` bigint(64) NOT NULL COMMENT '部门ID',
   `role_name` varchar(50) NOT NULL DEFAULT '' COMMENT '角色名称',
-  `role_code` varchar(50) DEFAULT NULL COMMENT '角色编码',
+  `role_code` varchar(50) NOT NULL COMMENT '角色编码',
   `role_desc` varchar(100) DEFAULT NULL COMMENT '角色描述',
   `del_flag` tinyint(3) DEFAULT '0' COMMENT '0-未删除，1-已删除',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -120,11 +128,12 @@ CREATE TABLE `cpms_system_role` (
 
 /*Data for the table `cpms_system_role` */
 
-insert  into `cpms_system_role`(`role_id`,`tenant_id`,`role_name`,`role_code`,`role_desc`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
-(1,1,'系统超级管理员','SUPER_ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-08-08 11:32:44','000001','000001'),
-(2,2,'管理员','ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-08-08 11:32:49','000001','000001'),
-(3,1,'推广专员','TUI_GUANG',NULL,0,'2021-08-06 17:34:20','2021-08-08 11:32:46','000001','000001'),
-(4,1,'市场运营','YUN_YING',NULL,0,'2021-09-15 11:33:29','2021-09-15 11:33:36','000001','000001');
+insert  into `cpms_system_role`(`role_id`,`tenant_id`,`dept_id`,`role_name`,`role_code`,`role_desc`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
+(1,1,2,'系统超级管理员','SUPER_ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-09-17 11:15:46','000001','000001'),
+(2,2,3,'管理员','ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-09-17 11:16:08','000001','000001'),
+(3,1,2,'推广专员','TUI_GUANG',NULL,0,'2021-08-06 17:34:20','2021-09-17 11:15:48','000001','000001'),
+(4,1,2,'市场运营','YUN_YING',NULL,0,'2021-09-15 11:33:29','2021-09-17 11:15:51','000001','000001'),
+(1438780321619030018,1,2,'测试角色222','role_Code','role_Code',0,'2021-09-17 16:22:15','2021-09-17 16:25:16','000001','000001');
 
 /*Table structure for table `cpms_system_role_menu` */
 
@@ -174,7 +183,12 @@ DROP TABLE IF EXISTS `cpms_system_tenant`;
 
 CREATE TABLE `cpms_system_tenant` (
   `tenant_id` bigint(64) unsigned NOT NULL COMMENT '租户ID，所有的用户都会涉及到这个id',
-  `tenant_name` varchar(50) NOT NULL COMMENT '租户名称',
+  `tenant_name` varchar(50) NOT NULL DEFAULT '' COMMENT '租户名称',
+  `contacts` varchar(20) NOT NULL DEFAULT '' COMMENT '联系人',
+  `contact_number` varchar(20) NOT NULL DEFAULT '' COMMENT '联系电话',
+  `address` varchar(500) NOT NULL DEFAULT '' COMMENT '地址',
+  `lease_time_start` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '租赁开始时间',
+  `lease_time_end` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '租赁结束时间',
   `tenant_status` tinyint(3) DEFAULT '0' COMMENT '0-正常，1-已禁用',
   `del_flag` tinyint(3) DEFAULT '0' COMMENT '0:未删除，1-已删除',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -186,9 +200,9 @@ CREATE TABLE `cpms_system_tenant` (
 
 /*Data for the table `cpms_system_tenant` */
 
-insert  into `cpms_system_tenant`(`tenant_id`,`tenant_name`,`tenant_status`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
-(1,'深圳巨人科技服务有限公司',0,0,'2021-06-13 16:11:43','2021-08-06 16:00:11','1','1'),
-(2,'深圳梦想科技有限公司',0,0,'2021-06-13 16:11:43','2021-06-13 16:12:07','1','1');
+insert  into `cpms_system_tenant`(`tenant_id`,`tenant_name`,`contacts`,`contact_number`,`address`,`lease_time_start`,`lease_time_end`,`tenant_status`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
+(1,'深圳巨人科技服务有限公司','刘先生','15889745718','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53',0,0,'2021-06-13 16:11:43','2021-09-17 16:48:41','1','1'),
+(2,'深圳梦想科技有限公司','赵先生','15589745664','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53',0,0,'2021-06-13 16:11:43','2021-09-17 16:49:23','1','1');
 
 /*Table structure for table `cpms_system_top_menu` */
 

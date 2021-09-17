@@ -24,9 +24,15 @@ public class BasePageDTO  implements Serializable {
     private Integer pageNo;
 
     /**
-     * 分页大小
+     * 每页显示数量
      */
     private Integer pageSize;
+
+    /**
+     *  limit 分页索引
+     */
+    private Integer startIndex;
+
 
     public Integer getPageNo(){
         if(pageNo == null || pageNo <=0) {
@@ -60,11 +66,12 @@ public class BasePageDTO  implements Serializable {
         this.pageSize = pageSize;
     }
 
-    @Override
-    public String toString() {
-        return "BasePageDTO{" +
-                "pageNo=" + pageNo +
-                ", pageSize=" + pageSize +
-                '}';
+    public Integer getStartIndex() {
+        startIndex = (getPageNo() - 1)*getPageSize();
+        return startIndex;
+    }
+
+    public void setStartIndex(Integer startIndex) {
+        this.startIndex = startIndex;
     }
 }

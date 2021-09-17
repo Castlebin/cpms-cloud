@@ -10,4 +10,49 @@
         WHERE ru.role_id= r.role_id AND r.del_flag=0 AND ru.user_id = #{userId};
     </select>
 
+    <select id="listRoleCount" parameterType="com.cpms.system.modules.sys.dto.ListRoleDTO" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM  cpms_system_role r
+        LEFT JOIN
+        cpms_system_dept d
+        ON d.dept_id = r.dept_id
+        <where>
+            r.del_flag = 0
+            <if test="deptId !=null">
+                and r.dept_id = #{deptId}
+            </if>
+            <if test="tenantId !=null">
+                and r.tenant_id = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+    <select id="listRole" parameterType="com.cpms.system.modules.sys.dto.ListRoleDTO" resultType="com.cpms.system.modules.sys.vo.SysRoleVO">
+         SELECT
+         r.role_name,
+         r.role_id,
+         r.role_code,
+         r.role_desc,
+         r.dept_id,
+         r.create_time,
+         r.update_time,
+         r.create_by,
+         r.update_by,
+         d.dept_name
+         FROM  cpms_system_role r
+         LEFT JOIN
+         cpms_system_dept d
+         ON d.dept_id = r.dept_id
+         <where>
+             r.del_flag = 0
+             <if test="deptId !=null">
+                 and r.dept_id = #{deptId}
+             </if>
+             <if test="tenantId !=null">
+                 and r.tenant_id = #{tenantId}
+             </if>
+         </where>
+         limit #{startIndex},#{pageSize}
+    </select>
 </mapper>

@@ -31,30 +31,6 @@
          )
     </select>
 
-<!--    <select id="queryRoleButtonsTree" resultMap="menuResultMap">-->
-<!--        SELECT *-->
-<!--        FROM cpms_system_menu-->
-<!--        WHERE del_flag = 0 AND menu_id-->
-<!--        IN(SELECT parent_id FROM cpms_system_menu WHERE TYPE=1 AND menu_id IN-->
-<!--           (-->
-<!--           SELECT menu_id FROM cpms_system_role_user WHERE role_id IN-->
-<!--            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">-->
-<!--                #{item}-->
-<!--            </foreach>-->
-<!--           )-->
-<!--        )-->
-<!--        UNION ALL-->
-<!--        SELECT *-->
-<!--        FROM cpms_system_menu-->
-<!--        WHERE del_flag = 0 AND  TYPE=1 AND menu_id-->
-<!--        IN (-->
-<!--           SELECT menu_id FROM cpms_system_role_user WHERE role_id IN-->
-<!--            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">-->
-<!--                #{item}-->
-<!--            </foreach>-->
-<!--        )-->
-<!--    </select>-->
-
     <select id="queryRoleButtons" resultType="java.lang.String">
         SELECT code
         FROM cpms_system_menu

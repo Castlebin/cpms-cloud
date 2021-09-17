@@ -1,6 +1,8 @@
 package com.cpms.system.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.framework.common.core.base.BasePageVO;
@@ -66,12 +68,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Override
     public boolean deleteUser(UserDTO userDTO) {
-        SysUserEntity sysUserEntity = new SysUserEntity();
-        sysUserEntity.setDelFlag(SystemConstant.DEL_FLAG_DELETED);
-        QueryWrapper<SysUserEntity> query = Wrappers.query();
-        query.eq("user_id",userDTO.getUserId());
-        query.eq("tenant_id", CsSecureUtil.getUser().getTenantId());
-        return this.update(sysUserEntity,query);
+        LambdaUpdateWrapper<SysUserEntity> updateWrapper = Wrappers.<SysUserEntity>lambdaUpdate()
+                .set(SysUserEntity::getDelFlag, SystemConstant.DEL_FLAG_DELETED)
+                .eq(SysUserEntity::getUserId, userDTO.getUserId())
+                .eq(SysUserEntity::getTenantId, CsSecureUtil.getUser().getTenantId());
+        return this.update(updateWrapper);
     }
 
     @Override
@@ -106,10 +107,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         sysUserEntity.setUserName(userDTO.getUserName());
         sysUserEntity.setUserSex(userDTO.getUserSex());
         sysUserEntity.setUserMobile(userDTO.getUserMobile());
-        QueryWrapper<SysUserEntity> query = Wrappers.query();
-        query.eq("user_id",userDTO.getUserId());
-        query.eq("tenant_id", CsSecureUtil.getUser().getTenantId());
-        return this.update(sysUserEntity,query);
+        UpdateWrapper<SysUserEntity> updateWrapper = Wrappers.update();
+        updateWrapper.eq("user_id",userDTO.getUserId());
+        updateWrapper.eq("tenant_id", CsSecureUtil.getUser().getTenantId());
+        return this.update(sysUserEntity,updateWrapper);
     }
 
 
@@ -123,12 +124,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         if(!bCryptPasswordEncoder.matches(resetPasswordDTO.getOldPassword(),sysUserEntity.getUserPassword())) {
             throw new BizException(SystemResponseResultEnum.ORIGINAL_PASSWORD_NOT_MATCH_ERROR);
         }
-        SysUserEntity entity = new SysUserEntity();
-        entity.setUserPassword(bCryptPasswordEncoder.encode(resetPasswordDTO.getNewPassword()));
-        QueryWrapper<SysUserEntity> query = Wrappers.query();
-        query.eq("user_id",resetPasswordDTO.getUserId());
-        query.eq("tenant_id",CsSecureUtil.getUser().getTenantId());
-        return this.update(entity,query);
+        LambdaUpdateWrapper<SysUserEntity> updateWrapper = Wrappers.<SysUserEntity>lambdaUpdate()
+                .set(SysUserEntity::getUserPassword, bCryptPasswordEncoder.encode(resetPasswordDTO.getNewPassword()))
+                .eq(SysUserEntity::getUserId, resetPasswordDTO.getUserId())
+                .eq(SysUserEntity::getTenantId, CsSecureUtil.getUser().getTenantId());
+        return this.update(updateWrapper);
     }
 
 
