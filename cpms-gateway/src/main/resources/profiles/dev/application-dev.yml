@@ -48,6 +48,17 @@ spring:
               args:
                 name: defaultfallback
                 fallbackUri: 'forward:/defaultfallback'
+        - id: cpms-server-log
+          uri: lb://cpms-server-log
+          order: 3
+          predicates:
+            - Path=/${spring.application.pathPrefix}/logMicroservice/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: defaultfallback
+                fallbackUri: 'forward:/defaultfallback'
 
 #ribbon配置 【ribbon超时设置，接口需要通过feign调用才会生效，否则超时配置无效】
 #Ribbon超时和Hystrix超时将会以两个中小的为最终超时时间

@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
-import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.ListUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
@@ -68,7 +68,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     @Override
     public boolean deleteUser(SysUserDTO userDTO) {
         LambdaUpdateWrapper<SysUserEntity> updateWrapper = Wrappers.<SysUserEntity>lambdaUpdate()
-                .set(SysUserEntity::getDelFlag, SystemConstant.DEL_FLAG_DELETED)
+                .set(SysUserEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
                 .eq(SysUserEntity::getUserId, userDTO.getUserId())
                 .eq(SysUserEntity::getTenantId, CsSecureUtil.userTenantId());
         return this.update(updateWrapper);

@@ -3,6 +3,7 @@ package com.cpms.system.modules.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cpms.common.constant.CommonConstant;
 import com.cpms.common.constant.TokenConstant;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import com.cpms.framework.common.exception.BizException;
@@ -10,7 +11,6 @@ import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsDateUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
-import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
@@ -74,13 +74,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     public boolean deleteMenu(SysMenuDTO sysMenuDTO) {
         QueryWrapper<SysMenuEntity> query = Wrappers.query();
         query.eq("parent_id",sysMenuDTO.getMenuId());
-        query.eq("del_flag", SystemConstant.DEL_FLAG_NOT_DELETED);
+        query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
         Integer count = sysMenuMapper.selectCount(query);
         if(count > 0){
             throw new BizException(SystemResponseResultEnum.THERE_ARE_CHILD_NODES_ERROR);
         }
         SysMenuEntity sysMenuEntity = new SysMenuEntity();
-        sysMenuEntity.setDelFlag(SystemConstant.DEL_FLAG_DELETED);
+        sysMenuEntity.setDelFlag(CommonConstant.DEL_FLAG_DELETED);
         sysMenuEntity.setMenuId(sysMenuDTO.getMenuId());
         return this.updateById(sysMenuEntity);
     }
@@ -110,8 +110,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
      */
     private  List<SysMenuEntity> superAdminRoutes(){
         QueryWrapper<SysMenuEntity> wrapper=new QueryWrapper<>();
-        wrapper.eq("del_flag",SystemConstant.DEL_FLAG_NOT_DELETED);
-        wrapper.eq("type",SystemConstant.TYPE_MENU);
+        wrapper.eq("del_flag",CommonConstant.DEL_FLAG_NOT_DELETED);
+        wrapper.eq("type",CommonConstant.TYPE_MENU);
         return sysMenuMapper.selectList(wrapper);
     }
 
@@ -125,7 +125,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         }else{
             TokenUserInfo user = CsSecureUtil.getUser();
             List<Long> roleIds = user.getRoleIds();
-            menus = sysMenuMapper.queryRoleMenus(roleIds,SystemConstant.TYPE_MENU);
+            menus = sysMenuMapper.queryRoleMenus(roleIds,CommonConstant.TYPE_MENU);
         }
         return menus;
     }

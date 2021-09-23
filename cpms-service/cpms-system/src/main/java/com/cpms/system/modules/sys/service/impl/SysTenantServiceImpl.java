@@ -3,6 +3,7 @@ package com.cpms.system.modules.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.system.common.constants.SystemConstant;
@@ -58,7 +59,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Override
     public boolean deleteTenant(SysTenantDTO tenantDTO) {
         LambdaUpdateWrapper<SysTenantEntity> updateWrapper = Wrappers.<SysTenantEntity>lambdaUpdate()
-                .set(SysTenantEntity::getDelFlag, SystemConstant.DEL_FLAG_DELETED)
+                .set(SysTenantEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
                 .eq(SysTenantEntity::getTenantId,tenantDTO.getTenantId());
         return this.update(updateWrapper);
     }

@@ -1,5 +1,6 @@
 package com.cpms.system.modules.sys.feign;
 
+import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
@@ -7,7 +8,6 @@ import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.ISysUserClient;
 import com.cpms.system.api.modules.sys.vo.SysRoleVO;
 import com.cpms.system.api.modules.sys.vo.SysUserLoginVO;
-import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.entity.SysRoleEntity;
 import com.cpms.system.modules.sys.service.ISysRoleService;
@@ -45,10 +45,10 @@ public class SysUserClient implements ISysUserClient {
         if(!bCryptPasswordEncoder.matches(sysUserLginDTO.getUserPassword(),sysUserLoginBO.getUserPassword())) {
             return ResultUtil.error(SystemResponseResultEnum.ACCOUNT_OR_PASSWORD_CHECK_FAILED_ERROR);
         }
-        if(sysUserLoginBO.getUserStarus() == SystemConstant.DATA_STATUS_FORBIDDEN){
+        if(sysUserLoginBO.getUserStarus() == CommonConstant.DATA_STATUS_FORBIDDEN){
             return ResultUtil.error(SystemResponseResultEnum.ACCOUNT_FORBIDDEN_ERROR);
         }
-        if(sysUserLoginBO.getTenantStatus() == SystemConstant.DATA_STATUS_FORBIDDEN){
+        if(sysUserLoginBO.getTenantStatus() == CommonConstant.DATA_STATUS_FORBIDDEN){
             return ResultUtil.error(SystemResponseResultEnum.TENANT_FORBIDDEN_ERROR);
         }
         List<SysRoleEntity> sysRoleEntities = sysRoleService.queryRoleByUserId(sysUserLoginBO.getUserId());

@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
-import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.modules.sys.dto.SysTopMenuDTO;
 import com.cpms.system.modules.sys.entity.SysTopMenuEntity;
 import com.cpms.system.modules.sys.mapper.SysTopMenuMapper;
@@ -35,7 +35,7 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
         List<SysTopMenuEntity> sysTopMenuEntities;
         if(CsSecureUtil.isSuperAdmin()) {
             QueryWrapper<SysTopMenuEntity> wrapper=new QueryWrapper<>();
-            wrapper.eq("del_flag", SystemConstant.DEL_FLAG_NOT_DELETED);
+            wrapper.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
             wrapper.eq("tenant_id",CsSecureUtil.userTenantId());
             sysTopMenuEntities = sysTopMenuMapper.selectList(wrapper);
         }else{
@@ -49,7 +49,7 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
     @Override
     public boolean deleteTopMenu(SysTopMenuDTO sysTopMenuDTO) {
         LambdaUpdateWrapper<SysTopMenuEntity> updateWrapper = Wrappers.<SysTopMenuEntity>lambdaUpdate()
-                .set(SysTopMenuEntity::getDelFlag, SystemConstant.DEL_FLAG_DELETED)
+                .set(SysTopMenuEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
                 .eq(SysTopMenuEntity::getTenantId,CsSecureUtil.userTenantId())
                 .eq(SysTopMenuEntity::getTopMenuId,sysTopMenuDTO.getTopMenuId());
         return this.update(updateWrapper);
@@ -78,7 +78,7 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
     @Override
     public List<SysTopMenuVO> listTopMenu() {
         QueryWrapper<SysTopMenuEntity> wrapper=new QueryWrapper<>();
-        wrapper.eq("del_flag", SystemConstant.DEL_FLAG_NOT_DELETED);
+        wrapper.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
         wrapper.eq("tenant_id",CsSecureUtil.userTenantId());
         List<SysTopMenuEntity> sysTopMenuEntities = sysTopMenuMapper.selectList(wrapper);
         return convertTopMenuToVo(sysTopMenuEntities);

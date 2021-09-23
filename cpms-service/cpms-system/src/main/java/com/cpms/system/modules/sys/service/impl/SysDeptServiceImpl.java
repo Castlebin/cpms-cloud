@@ -3,10 +3,10 @@ package com.cpms.system.modules.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
-import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.modules.sys.dto.ListDeptDTO;
 import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
@@ -65,7 +65,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     @Override
     public boolean deleteDept(SysDeptDTO deptDTO) {
         LambdaUpdateWrapper<SysDeptEntity> updateWrapper = Wrappers.<SysDeptEntity>lambdaUpdate()
-                .set(SysDeptEntity::getDelFlag, SystemConstant.DEL_FLAG_DELETED)
+                .set(SysDeptEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
                 .eq(SysDeptEntity::getDeptId,deptDTO.getDeptId())
                 .eq(SysDeptEntity::getTenantId,CsSecureUtil.userTenantId());
         return this.update(updateWrapper);

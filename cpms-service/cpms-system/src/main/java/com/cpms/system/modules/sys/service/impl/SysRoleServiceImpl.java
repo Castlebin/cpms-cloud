@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
-import com.cpms.system.common.constants.SystemConstant;
 import com.cpms.system.modules.sys.dto.ListRoleDTO;
 import com.cpms.system.modules.sys.dto.SysRoleDTO;
 import com.cpms.system.modules.sys.entity.SysRoleEntity;
@@ -72,7 +72,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     @Override
     public boolean deleteRole(SysRoleDTO sysRoleDTO) {
         LambdaUpdateWrapper<SysRoleEntity> updateWrapper = Wrappers.<SysRoleEntity>lambdaUpdate()
-                .set(SysRoleEntity::getDelFlag, SystemConstant.DEL_FLAG_DELETED)
+                .set(SysRoleEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
                 .eq(SysRoleEntity::getTenantId, CsSecureUtil.userTenantId())
                 .eq(SysRoleEntity::getRoleId, sysRoleDTO.getRoleId());
         return this.update(updateWrapper);
