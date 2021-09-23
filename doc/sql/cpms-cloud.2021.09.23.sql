@@ -20,7 +20,7 @@ CREATE TABLE `cpms_system_dept` (
   `dept_id` bigint(64) unsigned NOT NULL COMMENT '部门ID',
   `tenant_id` bigint(64) NOT NULL COMMENT '所属租户ID',
   `dept_name` varchar(50) NOT NULL COMMENT '部门名称',
-  `parent_id` int(11) DEFAULT NULL COMMENT '树形结构，父节点id',
+  `parent_id` bigint(64) NOT NULL DEFAULT '0' COMMENT '树形结构，父节点id',
   `del_flag` tinyint(3) DEFAULT '0' COMMENT '0-未删除，1-已删除',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -62,11 +62,18 @@ CREATE TABLE `cpms_system_log` (
 /*Data for the table `cpms_system_log` */
 
 insert  into `cpms_system_log`(`log_id`,`tenant_id`,`title`,`service_name`,`handle_ip`,`req_url`,`req_method`,`req_params`,`exe_time`,`result_msg`,`del_flag`,`create_by`,`create_time`,`update_by`,`update_time`) values 
-(1438780330590658562,1,'添加角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/addRole','POST','{\"roleDesc\":\"role_Code\",\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色\"}',306,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:22:14\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-17 16:22:17','000001','2021-09-17 16:22:17'),
+(1438780330590658562,1,'添加角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/addRole','POST','{\"roleDesc\":\"role_Code\",\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色\"}',306,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:22:14\",\"message\":\"操作成功！！！\",\"success\":false}',1,'000001','2021-09-17 16:22:17','000001','2021-09-23 17:54:58'),
 (1438780616554110978,1,'更新角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/updateRole','POST','{\"roleDesc\":\"role_Code\",\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色\"}',18,'{\"applicationName\":\"cpms-server-system\",\"code\":20005,\"date\":\"2021-09-17 16:23:24\",\"message\":\"roleId不能为空\",\"success\":false}',0,'000001','2021-09-17 16:23:25','000001','2021-09-17 16:23:25'),
 (1438780851447717890,1,'更新角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/updateRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',170,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:24:20\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-17 16:24:21','000001','2021-09-17 16:24:21'),
 (1438780948025761793,1,'删除角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/deleteRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',93,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:24:43\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-17 16:24:44','000001','2021-09-17 16:24:44'),
-(1438781038538842113,1,'删除角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/deleteRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',5,'{\"applicationName\":\"cpms-server-system\",\"code\":20009,\"date\":\"2021-09-17 16:25:05\",\"message\":\"操作失败！！！\",\"success\":false}',0,'000001','2021-09-17 16:25:06','000001','2021-09-17 16:25:06');
+(1438781038538842113,1,'删除角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/deleteRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',5,'{\"applicationName\":\"cpms-server-system\",\"code\":20009,\"date\":\"2021-09-17 16:25:05\",\"message\":\"操作失败！！！\",\"success\":false}',0,'000001','2021-09-17 16:25:06','000001','2021-09-17 16:25:06'),
+(1440608706959826945,1,'删除角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/deleteRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',194,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-22 17:27:32\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-22 17:27:36','000001','2021-09-22 17:27:36'),
+(1440924070679752705,1,'部门列表','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/list','POST','{}',173,'{\"applicationName\":\"cpms-server-system\",\"code\":20000,\"date\":\"2021-09-23 14:20:37\",\"message\":\"响应成功\",\"success\":true}',0,'000001','2021-09-23 14:20:44','000001','2021-09-23 14:20:44'),
+(1440924982357864450,1,'新增部门','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/add','POST','{\"deptName\":\"ceshi\",\"parentId\":1}',212,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-23 14:24:21\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-23 14:24:22','000001','2021-09-23 14:24:22'),
+(1440925761672130562,1,'修改部门','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/update','POST','{\"deptName\":\"ceshi888\",\"deptId\":1440924981833555970,\"parentId\":1}',99,'{\"applicationName\":\"cpms-server-system\",\"code\":20009,\"date\":\"2021-09-23 14:27:27\",\"message\":\"操作失败！！！\",\"success\":false}',0,'000001','2021-09-23 14:27:27','000001','2021-09-23 14:27:27'),
+(1440925817691254786,1,'修改部门','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/update','POST','{\"deptName\":\"ceshi888\",\"deptId\":1440924981833555970,\"parentId\":1}',54,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-23 14:27:40\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-23 14:27:41','000001','2021-09-23 14:27:41'),
+(1440925878605131778,1,'删除部门','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/delete','POST','{\"deptName\":\"ceshi888\",\"deptId\":1440924981833555970,\"parentId\":1}',83,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-23 14:27:55\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-23 14:27:55','000001','2021-09-23 14:27:55'),
+(1440929641667571714,1,'新增租户','cpms-server-system','127.0.0.1','/systemMicroservice/sys-tenant/add','POST','{\"address\":\"深为圳\",\"tenantName\":\"ce8883\",\"contactNumber\":\"1589545645\",\"leaseTimeStart\":\"2021-06-13 16:11:43\",\"contacts\":\"王先生\",\"leaseTimeEnd\":\"2022-06-13 16:11:43\"}',634,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-23 14:42:50\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-23 14:42:52','000001','2021-09-23 14:42:52');
 
 /*Table structure for table `cpms_system_menu` */
 
@@ -132,8 +139,7 @@ insert  into `cpms_system_role`(`role_id`,`tenant_id`,`dept_id`,`role_name`,`rol
 (1,1,2,'系统超级管理员','SUPER_ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-09-17 11:15:46','000001','000001'),
 (2,2,3,'管理员','ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-09-17 11:16:08','000001','000001'),
 (3,1,2,'推广专员','TUI_GUANG',NULL,0,'2021-08-06 17:34:20','2021-09-17 11:15:48','000001','000001'),
-(4,1,2,'市场运营','YUN_YING',NULL,0,'2021-09-15 11:33:29','2021-09-17 11:15:51','000001','000001'),
-(1438780321619030018,1,2,'测试角色222','role_Code','role_Code',0,'2021-09-17 16:22:15','2021-09-17 16:25:16','000001','000001');
+(4,1,2,'市场运营','YUN_YING',NULL,0,'2021-09-15 11:33:29','2021-09-17 11:15:51','000001','000001');
 
 /*Table structure for table `cpms_system_role_menu` */
 
@@ -201,8 +207,8 @@ CREATE TABLE `cpms_system_tenant` (
 /*Data for the table `cpms_system_tenant` */
 
 insert  into `cpms_system_tenant`(`tenant_id`,`tenant_name`,`contacts`,`contact_number`,`address`,`lease_time_start`,`lease_time_end`,`tenant_status`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
-(1,'深圳巨人科技服务有限公司','刘先生','15889745718','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53',0,0,'2021-06-13 16:11:43','2021-09-17 16:48:41','1','1'),
-(2,'深圳梦想科技有限公司','赵先生','15589745664','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53',0,0,'2021-06-13 16:11:43','2021-09-17 16:49:23','1','1');
+(1,'深圳巨人科技服务有限公司','刘先生','15889745718','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53',0,0,'2021-06-13 16:11:43','2021-09-22 17:46:04','1','1'),
+(2,'深圳梦想科技有限公司','赵先生','15589745664','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53',0,0,'2021-06-13 16:11:43','2021-09-22 17:46:09','1','1');
 
 /*Table structure for table `cpms_system_top_menu` */
 
@@ -227,7 +233,8 @@ CREATE TABLE `cpms_system_top_menu` (
 
 insert  into `cpms_system_top_menu`(`top_menu_id`,`tenant_id`,`top_menu_name`,`path`,`relation_menu_ids`,`sort`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
 (1,1,'监控系统','','1,7',0,0,'2021-08-30 11:29:38','2021-08-31 14:22:39','000002','000002'),
-(2,2,'工作台','','1,2,7',1,0,'2021-08-30 11:32:23','2021-08-31 14:22:42','000002','000002');
+(2,2,'工作台','','1,2,7',1,0,'2021-08-30 11:32:23','2021-08-31 14:22:42','000002','000002'),
+(1440949970288861186,1,'测试2300002','33333','1,6',0,0,'2021-09-23 16:03:39','2021-09-23 16:05:58','000001','000001');
 
 /*Table structure for table `cpms_system_user` */
 
