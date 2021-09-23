@@ -8,13 +8,10 @@ import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.service.ISysMenuService;
-import com.cpms.system.modules.sys.service.ISysTopMenuService;
 import com.cpms.system.modules.sys.vo.SysRouteVO;
-import com.cpms.system.modules.sys.vo.SysTopMenuVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @description:
@@ -26,8 +23,6 @@ import java.util.List;
 public class SysMenuController {
     @Resource
     private ISysMenuService sysMenuService;
-    @Resource
-    private ISysTopMenuService sysTopMenuService;
 
     /**
      *  获取左侧菜单路由
@@ -39,14 +34,7 @@ public class SysMenuController {
         return ResultUtil.success(sysMenuService.querySysMenuRoutes(topMenuId));
     }
 
-    /**
-     *  获取顶部菜单路由
-     * @return
-     */
-    @GetMapping("/top-menu")
-    public Result<List<SysTopMenuVO>> getTopMenu(){
-        return ResultUtil.success(sysTopMenuService.getTopMenu());
-    }
+
 
     /**
      *  添加菜单

@@ -60,4 +60,12 @@ public class CsSecureUtil {
     public static String userAccount(){
         return getUser().getUserAccount();
     }
+
+    /**
+     * 获取用户所属租户ID
+     * @return
+     */
+    public static Long userTenantId(){
+        return getUser().getTenantId();
+    }
 }

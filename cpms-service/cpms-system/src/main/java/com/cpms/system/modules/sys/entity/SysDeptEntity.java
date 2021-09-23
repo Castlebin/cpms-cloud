@@ -22,5 +22,5 @@ public class SysDeptEntity extends TenantEntity {
     @TableId(value = "dept_id",type = IdType.ASSIGN_ID)
     private Long deptId;
     private String deptName;
-    private Integer parentId;
+    private Long parentId;
 }

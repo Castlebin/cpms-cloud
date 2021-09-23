@@ -2,7 +2,11 @@ package com.cpms.system.modules.sys.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cpms.system.modules.sys.dto.ListDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
+import com.cpms.system.modules.sys.vo.SysDeptVO;
+
+import java.util.List;
 
 /**
  * @description:
@@ -11,4 +15,7 @@ import com.cpms.system.modules.sys.entity.SysDeptEntity;
  */
 @DS("master")
 public interface SysDeptMapper extends BaseMapper<SysDeptEntity> {
+    int listDeptCount(ListDeptDTO listDeptDTO);
+
+    List<SysDeptVO> listDept(ListDeptDTO listDeptDTO);
 }

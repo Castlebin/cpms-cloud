@@ -35,6 +35,8 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("/list")
+    @PreAuth("sys_role_list")
+    @OperLog(desc = "角色列表")
     public Result<BasePageVO<SysRoleVO>> listRole(@RequestBody ListRoleDTO listRoleDTO){
         return ResultUtil.success(sysRoleService.listRole(listRoleDTO));
     }

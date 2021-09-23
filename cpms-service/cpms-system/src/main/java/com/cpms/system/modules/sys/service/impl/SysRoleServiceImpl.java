@@ -1,6 +1,5 @@
 package com.cpms.system.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -40,7 +39,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     public BasePageVO<SysRoleVO> listRole(ListRoleDTO listRoleDTO) {
         BasePageVO<SysRoleVO> listRoleVO = new BasePageVO();
         List<SysRoleVO> sysRoleVoList;
-        listRoleDTO.setTenantId(CsSecureUtil.getUser().getTenantId());
+        listRoleDTO.setTenantId(CsSecureUtil.userTenantId());
         int count = sysRoleMapper.listRoleCount(listRoleDTO);
         if(count ==0){
             sysRoleVoList = Lists.newArrayList();
@@ -56,6 +55,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     public boolean addRole(SysRoleDTO sysRoleDTO) {
         SysRoleEntity sysRoleEntity = new SysRoleEntity();
         CsBeanUtil.copyProperties(sysRoleDTO,sysRoleEntity);
+        sysRoleEntity.setTenantId(CsSecureUtil.userTenantId());
         return this.save(sysRoleEntity);
     }
 
@@ -65,7 +65,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
         CsBeanUtil.copyProperties(sysRoleDTO,sysRoleEntity);
         UpdateWrapper<SysRoleEntity> updateWrapper = Wrappers.update();
         updateWrapper.eq("role_id",sysRoleDTO.getRoleId());
-        updateWrapper.eq("tenant_id", CsSecureUtil.getUser().getTenantId());
+        updateWrapper.eq("tenant_id", CsSecureUtil.userTenantId());
         return this.update(sysRoleEntity,updateWrapper);
     }
 
@@ -73,7 +73,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     public boolean deleteRole(SysRoleDTO sysRoleDTO) {
         LambdaUpdateWrapper<SysRoleEntity> updateWrapper = Wrappers.<SysRoleEntity>lambdaUpdate()
                 .set(SysRoleEntity::getDelFlag, SystemConstant.DEL_FLAG_DELETED)
-                .eq(SysRoleEntity::getTenantId, CsSecureUtil.getUser().getTenantId())
+                .eq(SysRoleEntity::getTenantId, CsSecureUtil.userTenantId())
                 .eq(SysRoleEntity::getRoleId, sysRoleDTO.getRoleId());
         return this.update(updateWrapper);
     }

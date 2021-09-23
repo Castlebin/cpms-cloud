@@ -6,11 +6,9 @@ import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.modules.sys.dto.ListUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
-import com.cpms.system.modules.sys.dto.UserDTO;
+import com.cpms.system.modules.sys.dto.SysUserDTO;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
 import com.cpms.system.modules.sys.vo.SysUserVO;
-
-import java.util.List;
 
 /**
  * @description:
@@ -36,21 +34,21 @@ public interface ISysUserService extends IService<SysUserEntity> {
      * @param userDTO
      * @return
      */
-    boolean deleteUser(UserDTO userDTO);
+    boolean deleteUser(SysUserDTO userDTO);
 
     /**
      * 新增用户
      * @param userDTO
      * @return
      */
-    boolean addUser(UserDTO userDTO);
+    boolean addUser(SysUserDTO userDTO);
 
     /**
      * 更新用户
      * @param userDTO
      * @return
      */
-    boolean updateUser(UserDTO userDTO);
+    boolean updateUser(SysUserDTO userDTO);
 
     /**
      * 修改密码

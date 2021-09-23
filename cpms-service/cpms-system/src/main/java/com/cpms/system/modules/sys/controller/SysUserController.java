@@ -10,7 +10,7 @@ import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
 import com.cpms.system.modules.sys.dto.ListUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
-import com.cpms.system.modules.sys.dto.UserDTO;
+import com.cpms.system.modules.sys.dto.SysUserDTO;
 import com.cpms.system.modules.sys.service.ISysUserService;
 import com.cpms.system.modules.sys.vo.SysUserVO;
 import org.springframework.validation.annotation.Validated;
@@ -39,6 +39,8 @@ public class SysUserController {
      * @return
      */
     @PostMapping("/list")
+    @PreAuth("sys_user_list")
+    @OperLog(desc = "管理员列表")
     public Result<BasePageVO<SysUserVO>> listUser(@RequestBody ListUserDTO listUserDTO){
         return ResultUtil.success(sysUserService.listUser(listUserDTO));
     }
@@ -46,21 +48,21 @@ public class SysUserController {
     @PostMapping("/delete")
     @PreAuth("sys_user_delete")
     @OperLog(desc = "删除用户")
-    public Result<Void> deleteUser(@Validated(DeleteGroup.class)@RequestBody UserDTO userDTO){
+    public Result<Void> deleteUser(@Validated(DeleteGroup.class)@RequestBody SysUserDTO userDTO){
         return ResultUtil.status(sysUserService.deleteUser(userDTO));
     }
 
     @PostMapping("/add")
     @PreAuth("sys_user_add")
     @OperLog(desc = "添加用户")
-    public Result<Void> addUser(@Validated(AddGroup.class) @RequestBody UserDTO userDTO){
+    public Result<Void> addUser(@Validated(AddGroup.class) @RequestBody SysUserDTO userDTO){
         return ResultUtil.status(sysUserService.addUser(userDTO));
     }
 
     @PostMapping("/update")
     @PreAuth("sys_user_update")
     @OperLog(desc = "更新用户")
-    public Result<Void> updateUser(@Validated(UpdateGroup.class) @RequestBody UserDTO userDTO){
+    public Result<Void> updateUser(@Validated(UpdateGroup.class) @RequestBody SysUserDTO userDTO){
         return ResultUtil.status(sysUserService.updateUser(userDTO));
     }
 

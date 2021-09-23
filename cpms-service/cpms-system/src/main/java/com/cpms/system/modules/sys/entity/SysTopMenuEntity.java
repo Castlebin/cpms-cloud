@@ -3,7 +3,7 @@ package com.cpms.system.modules.sys.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.cpms.framework.mybatis.entity.BaseEntity;
+import com.cpms.framework.mybatis.entity.TenantEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("cpms_system_top_menu")
-public class SysTopMenuEntity extends BaseEntity {
+public class SysTopMenuEntity extends TenantEntity {
     /**
      *  指定自增策略
      */

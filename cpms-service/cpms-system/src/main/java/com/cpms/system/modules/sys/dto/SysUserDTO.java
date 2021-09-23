@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * @time: 2021/7/21 14:43
  */
 @Data
-public class UserDTO {
+public class SysUserDTO {
     /**
      * 用户userId
      */
