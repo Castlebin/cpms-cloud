@@ -35,8 +35,6 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("/list")
-    @PreAuth("sys_role_list")
-    @OperLog(desc = "角色列表")
     public Result<BasePageVO<SysRoleVO>> listRole(@RequestBody ListRoleDTO listRoleDTO){
         return ResultUtil.success(sysRoleService.listRole(listRoleDTO));
     }
@@ -48,7 +46,6 @@ public class SysRoleController {
      */
     @PostMapping("/addRole")
     @PreAuth("sys_role_add")
-    @OperLog(desc = "添加角色")
     public Result<Void> addRole(@Validated(AddGroup.class) @RequestBody SysRoleDTO sysRoleDTO){
         return ResultUtil.status(sysRoleService.addRole(sysRoleDTO));
     }
@@ -60,7 +57,6 @@ public class SysRoleController {
      */
     @PostMapping("/updateRole")
     @PreAuth("sys_role_update")
-    @OperLog(desc = "更新角色")
     public Result<Void> updateRole(@Validated(UpdateGroup.class) @RequestBody SysRoleDTO sysRoleDTO){
         return ResultUtil.status(sysRoleService.updateRole(sysRoleDTO));
     }
@@ -72,7 +68,6 @@ public class SysRoleController {
      */
     @PostMapping("/deleteRole")
     @PreAuth("sys_role_delete")
-    @OperLog(desc = "删除角色")
     public Result<Void> deleteRole(@Validated(DeleteGroup.class) @RequestBody SysRoleDTO sysRoleDTO){
         return ResultUtil.status(sysRoleService.deleteRole(sysRoleDTO));
     }

@@ -27,7 +27,7 @@ public class SysTopMenuController {
     private ISysTopMenuService sysTopMenuService;
 
     /**
-     *  获取顶部菜单路由
+     *  顶部菜单列表
      * @return
      */
     @PostMapping("/list")

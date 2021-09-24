@@ -38,7 +38,6 @@ public class SysTenantController {
      */
     @PostMapping("/list")
     @PreAuth("sys_tenant_list")
-    @OperLog(desc = "租户列表")
     public Result<BasePageVO<SysTenantVO>> listTenant(@RequestBody ListTenantDTO listTenantDTO){
         return ResultUtil.success(sysTenantService.listTenant(listTenantDTO));
     }

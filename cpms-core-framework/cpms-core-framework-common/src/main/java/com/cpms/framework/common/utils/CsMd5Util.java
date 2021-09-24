@@ -5,11 +5,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.security.MessageDigest;
 
 /**
- * @description: 加密工具类
+ * @description: md5加密工具类
  * @author: gulang
  * @time: 2021/8/31 17:17
  */
-public class CsEncryptUtil {
+public class CsMd5Util {
 
 
     /**

@@ -31,20 +31,18 @@ public class SysDeptController {
     @Resource
     private ISysDeptService sysDeptService;
     /**
-     *  添加租户
+     *  部门列表
      * @param listDeptDTO
      * @return
      */
     @PostMapping("/list")
-    @PreAuth("sys_dept_list")
-    @OperLog(desc = "部门列表")
     public Result<BasePageVO<SysDeptVO>> listDept(@RequestBody ListDeptDTO  listDeptDTO){
         return ResultUtil.success(sysDeptService.listDept(listDeptDTO));
     }
 
 
     /**
-     *  添加租户
+     *  添加操作
      * @param deptDTO
      * @return
      */
@@ -56,7 +54,7 @@ public class SysDeptController {
     }
 
     /**
-     *  修改租户
+     *  修改操作
      * @param deptDTO
      * @return
      */
@@ -68,7 +66,7 @@ public class SysDeptController {
     }
 
     /**
-     *  修改租户
+     *  删除操作
      * @param deptDTO
      * @return
      */

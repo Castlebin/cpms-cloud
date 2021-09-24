@@ -39,8 +39,6 @@ public class SysUserController {
      * @return
      */
     @PostMapping("/list")
-    @PreAuth("sys_user_list")
-    @OperLog(desc = "管理员列表")
     public Result<BasePageVO<SysUserVO>> listUser(@RequestBody ListUserDTO listUserDTO){
         return ResultUtil.success(sysUserService.listUser(listUserDTO));
     }
@@ -61,7 +59,7 @@ public class SysUserController {
 
     @PostMapping("/update")
     @PreAuth("sys_user_update")
-    @OperLog(desc = "更新用户")
+    @OperLog(desc = "修改用户")
     public Result<Void> updateUser(@Validated(UpdateGroup.class) @RequestBody SysUserDTO userDTO){
         return ResultUtil.status(sysUserService.updateUser(userDTO));
     }
