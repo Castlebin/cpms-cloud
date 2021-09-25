@@ -97,6 +97,8 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
             sysTopMenuVO.setCreateBy(e.getCreateBy());
             sysTopMenuVO.setUpdateBy(e.getUpdateBy());
             sysTopMenuVO.setRelationMenuIds(e.getRelationMenuIds());
+            sysTopMenuVO.setType(e.getType());
+            sysTopMenuVO.setIcon(e.getIcon());
             return  sysTopMenuVO;
         }).sorted(Comparator.comparing(SysTopMenuVO::getSort)).collect(Collectors.toList());
         return topMenuList;

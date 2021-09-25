@@ -98,7 +98,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
 
     public List<SysMenuEntity> queryMenuByTopMenuId(Long topMenuId){
         SysTopMenuEntity sysTopMenuEntity = sysTopMenuService.getBaseMapper().selectById(topMenuId);
-        if(!Objects.isNull(sysTopMenuEntity)) {
+        if(!Objects.isNull(sysTopMenuEntity) && !StringUtils.isBlank(sysTopMenuEntity.getRelationMenuIds())) {
             String[] idArr = sysTopMenuEntity.getRelationMenuIds().split(",");
             List<Long> idList = Arrays.stream(idArr).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
             return sysMenuMapper.selectBatchIds(idList);

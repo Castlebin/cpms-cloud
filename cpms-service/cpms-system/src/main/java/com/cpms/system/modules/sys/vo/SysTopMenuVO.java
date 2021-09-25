@@ -17,4 +17,6 @@ public class SysTopMenuVO extends BaseVO {
     private Integer sort;
     private String path;
     private String relationMenuIds;
+    private Integer type;
+    private String icon;
 }

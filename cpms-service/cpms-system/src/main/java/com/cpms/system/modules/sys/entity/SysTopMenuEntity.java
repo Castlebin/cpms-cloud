@@ -25,4 +25,6 @@ public class SysTopMenuEntity extends TenantEntity {
     private String relationMenuIds;
     private String path;
     private Integer sort;
+    private Integer type;
+    private String icon;
 }
