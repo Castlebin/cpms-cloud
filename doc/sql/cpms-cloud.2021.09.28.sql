@@ -27,14 +27,17 @@ CREATE TABLE `cpms_system_dept` (
   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
   `update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='租户部门关系表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门表';
 
 /*Data for the table `cpms_system_dept` */
 
 insert  into `cpms_system_dept`(`dept_id`,`tenant_id`,`dept_name`,`parent_id`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
 (1,1,'深圳巨人科技软件服务有限公司',0,0,'2021-06-13 16:13:50','2021-08-08 14:10:22','1','1'),
 (2,1,'Cpms系统研发部',1,0,'2021-06-13 16:13:50','2021-08-06 16:03:28','1','1'),
-(3,2,'深圳梦想科技有限公司',0,0,'2021-06-13 16:13:50','2021-06-13 16:15:56','1','1');
+(3,2,'深圳梦想科技有限公司',0,0,'2021-06-13 16:13:50','2021-06-13 16:15:56','1','1'),
+(1442414898812084225,1442414898631729154,'深圳爱美造型时尚有限公司',0,0,'2021-09-27 17:04:45','2021-09-27 17:04:45','000001','000001'),
+(1442429609511301122,1442429609494523905,'深圳美容资讯有限公司',0,0,'2021-09-27 18:03:13','2021-09-27 18:03:13','000001','000001'),
+(1442702604972666882,1442702604909752321,'深圳发型改造有限公司',0,0,'2021-09-28 12:08:00','2021-09-28 12:08:00','000001','000001');
 
 /*Table structure for table `cpms_system_log` */
 
@@ -60,20 +63,6 @@ CREATE TABLE `cpms_system_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台系统操作日志表';
 
 /*Data for the table `cpms_system_log` */
-
-insert  into `cpms_system_log`(`log_id`,`tenant_id`,`title`,`service_name`,`handle_ip`,`req_url`,`req_method`,`req_params`,`exe_time`,`result_msg`,`del_flag`,`create_by`,`create_time`,`update_by`,`update_time`) values 
-(1438780330590658562,1,'添加角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/addRole','POST','{\"roleDesc\":\"role_Code\",\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色\"}',306,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:22:14\",\"message\":\"操作成功！！！\",\"success\":false}',1,'000001','2021-09-17 16:22:17','000001','2021-09-23 17:54:58'),
-(1438780616554110978,1,'更新角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/updateRole','POST','{\"roleDesc\":\"role_Code\",\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色\"}',18,'{\"applicationName\":\"cpms-server-system\",\"code\":20005,\"date\":\"2021-09-17 16:23:24\",\"message\":\"roleId不能为空\",\"success\":false}',0,'000001','2021-09-17 16:23:25','000001','2021-09-17 16:23:25'),
-(1438780851447717890,1,'更新角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/updateRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',170,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:24:20\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-17 16:24:21','000001','2021-09-17 16:24:21'),
-(1438780948025761793,1,'删除角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/deleteRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',93,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-17 16:24:43\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-17 16:24:44','000001','2021-09-17 16:24:44'),
-(1438781038538842113,1,'删除角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/deleteRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',5,'{\"applicationName\":\"cpms-server-system\",\"code\":20009,\"date\":\"2021-09-17 16:25:05\",\"message\":\"操作失败！！！\",\"success\":false}',0,'000001','2021-09-17 16:25:06','000001','2021-09-17 16:25:06'),
-(1440608706959826945,1,'删除角色','cpms-server-system','127.0.0.1','/systemMicroservice/sys-role/deleteRole','POST','{\"roleDesc\":\"role_Code\",\"roleId\":1438780321619030018,\"roleCode\":\"role_Code\",\"deptId\":2,\"roleName\":\"测试角色222\"}',194,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-22 17:27:32\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-22 17:27:36','000001','2021-09-22 17:27:36'),
-(1440924070679752705,1,'部门列表','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/list','POST','{}',173,'{\"applicationName\":\"cpms-server-system\",\"code\":20000,\"date\":\"2021-09-23 14:20:37\",\"message\":\"响应成功\",\"success\":true}',0,'000001','2021-09-23 14:20:44','000001','2021-09-23 14:20:44'),
-(1440924982357864450,1,'新增部门','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/add','POST','{\"deptName\":\"ceshi\",\"parentId\":1}',212,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-23 14:24:21\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-23 14:24:22','000001','2021-09-23 14:24:22'),
-(1440925761672130562,1,'修改部门','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/update','POST','{\"deptName\":\"ceshi888\",\"deptId\":1440924981833555970,\"parentId\":1}',99,'{\"applicationName\":\"cpms-server-system\",\"code\":20009,\"date\":\"2021-09-23 14:27:27\",\"message\":\"操作失败！！！\",\"success\":false}',0,'000001','2021-09-23 14:27:27','000001','2021-09-23 14:27:27'),
-(1440925817691254786,1,'修改部门','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/update','POST','{\"deptName\":\"ceshi888\",\"deptId\":1440924981833555970,\"parentId\":1}',54,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-23 14:27:40\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-23 14:27:41','000001','2021-09-23 14:27:41'),
-(1440925878605131778,1,'删除部门','cpms-server-system','127.0.0.1','/systemMicroservice/sys-dept/delete','POST','{\"deptName\":\"ceshi888\",\"deptId\":1440924981833555970,\"parentId\":1}',83,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-23 14:27:55\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-23 14:27:55','000001','2021-09-23 14:27:55'),
-(1440929641667571714,1,'新增租户','cpms-server-system','127.0.0.1','/systemMicroservice/sys-tenant/add','POST','{\"address\":\"深为圳\",\"tenantName\":\"ce8883\",\"contactNumber\":\"1589545645\",\"leaseTimeStart\":\"2021-06-13 16:11:43\",\"contacts\":\"王先生\",\"leaseTimeEnd\":\"2022-06-13 16:11:43\"}',634,'{\"applicationName\":\"cpms-server-system\",\"code\":20008,\"date\":\"2021-09-23 14:42:50\",\"message\":\"操作成功！！！\",\"success\":false}',0,'000001','2021-09-23 14:42:52','000001','2021-09-23 14:42:52');
 
 /*Table structure for table `cpms_system_menu` */
 
@@ -114,6 +103,29 @@ insert  into `cpms_system_menu`(`menu_id`,`parent_id`,`name`,`code`,`alias`,`pat
 (10,7,'添加','sys_menu_add','add',NULL,NULL,NULL,3,1,0,0,'2021-08-08 11:56:54','2021-08-08 11:57:48','000001','000001'),
 (11,7,'编辑','sys_menu_edit','edit',NULL,NULL,NULL,4,1,0,0,'2021-08-08 11:58:31','2021-08-08 11:59:16','000001','000001');
 
+/*Table structure for table `cpms_system_post` */
+
+DROP TABLE IF EXISTS `cpms_system_post`;
+
+CREATE TABLE `cpms_system_post` (
+  `post_id` bigint(64) NOT NULL COMMENT '岗位ID',
+  `dept_id` bigint(64) NOT NULL COMMENT '部门ID',
+  `post_name` varchar(50) NOT NULL COMMENT '岗位名称',
+  `del_flag` tinyint(3) DEFAULT '0' COMMENT '0-未删除，1-已删除',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`post_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='岗位表';
+
+/*Data for the table `cpms_system_post` */
+
+insert  into `cpms_system_post`(`post_id`,`dept_id`,`post_name`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
+(1,2,'后端开发工程师',0,'2021-09-27 10:09:31','2021-09-27 10:09:31','000001','000001'),
+(2,2,'后端开发高级工程师',0,'2021-09-27 10:13:09','2021-09-27 10:13:09','000001','000001'),
+(3,3,'测试',0,'2021-09-27 15:30:33','2021-09-27 15:30:41','000001','000001');
+
 /*Table structure for table `cpms_system_role` */
 
 DROP TABLE IF EXISTS `cpms_system_role`;
@@ -137,9 +149,12 @@ CREATE TABLE `cpms_system_role` (
 
 insert  into `cpms_system_role`(`role_id`,`tenant_id`,`dept_id`,`role_name`,`role_code`,`role_desc`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
 (1,1,2,'系统超级管理员','SUPER_ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-09-17 11:15:46','000001','000001'),
-(2,2,3,'管理员','ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-09-17 11:16:08','000001','000001'),
+(2,2,3,'管理员','TENANT_ADMINISTRATOR',NULL,0,'2021-06-13 16:08:23','2021-09-27 16:36:30','000001','000001'),
 (3,1,2,'推广专员','TUI_GUANG',NULL,0,'2021-08-06 17:34:20','2021-09-17 11:15:48','000001','000001'),
-(4,1,2,'市场运营','YUN_YING',NULL,0,'2021-09-15 11:33:29','2021-09-17 11:15:51','000001','000001');
+(4,1,2,'市场运营','YUN_YING',NULL,0,'2021-09-15 11:33:29','2021-09-17 11:15:51','000001','000001'),
+(1442414898837250049,1442414898631729154,1442414898812084225,'管理员','TENANT_ADMINISTRATOR','租户管理员角色',0,'2021-09-27 17:04:45','2021-09-27 17:04:45','000001','000001'),
+(1442429609519689729,1442429609494523905,1442429609511301122,'管理员','TENANT_ADMINISTRATOR','租户管理员角色',0,'2021-09-27 18:03:13','2021-09-27 18:03:13','000001','000001'),
+(1442702604997832705,1442702604909752321,1442702604972666882,'管理员','TENANT_ADMINISTRATOR','租户管理员角色',0,'2021-09-28 12:08:00','2021-09-28 12:08:00','000001','000001');
 
 /*Table structure for table `cpms_system_role_menu` */
 
@@ -149,7 +164,7 @@ CREATE TABLE `cpms_system_role_menu` (
   `role_id` bigint(64) NOT NULL COMMENT '角色ID',
   `menu_id` bigint(64) NOT NULL COMMENT '菜单ID',
   `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '菜单类型:0-侧栏菜单，1-顶部菜单'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色菜单关系表';
 
 /*Data for the table `cpms_system_role_menu` */
 
@@ -181,7 +196,9 @@ insert  into `cpms_system_role_user`(`user_id`,`role_id`) values
 (1438021853006004225,1),
 (1438021853006004225,4),
 (1438055567887011842,1),
-(1438055567887011842,4);
+(1438055567887011842,4),
+(1442429609800708097,1442429609519689729),
+(1442702605840887809,1442702604997832705);
 
 /*Table structure for table `cpms_system_tenant` */
 
@@ -195,6 +212,7 @@ CREATE TABLE `cpms_system_tenant` (
   `address` varchar(500) NOT NULL DEFAULT '' COMMENT '地址',
   `lease_time_start` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '租赁开始时间',
   `lease_time_end` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '租赁结束时间',
+  `account_prefix` varchar(5) DEFAULT NULL COMMENT '账号前缀限制两个大写字母',
   `tenant_status` tinyint(3) DEFAULT '0' COMMENT '0-正常，1-已禁用',
   `del_flag` tinyint(3) DEFAULT '0' COMMENT '0:未删除，1-已删除',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -206,9 +224,12 @@ CREATE TABLE `cpms_system_tenant` (
 
 /*Data for the table `cpms_system_tenant` */
 
-insert  into `cpms_system_tenant`(`tenant_id`,`tenant_name`,`contacts`,`contact_number`,`address`,`lease_time_start`,`lease_time_end`,`tenant_status`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
-(1,'深圳巨人科技服务有限公司','刘先生','15889745718','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53',0,0,'2021-06-13 16:11:43','2021-09-22 17:46:04','1','1'),
-(2,'深圳梦想科技有限公司','赵先生','15589745664','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53',0,0,'2021-06-13 16:11:43','2021-09-22 17:46:09','1','1');
+insert  into `cpms_system_tenant`(`tenant_id`,`tenant_name`,`contacts`,`contact_number`,`address`,`lease_time_start`,`lease_time_end`,`account_prefix`,`tenant_status`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
+(1,'深圳巨人科技服务有限公司','刘先生','15889745718','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53','CS',0,0,'2021-06-13 16:11:43','2021-09-28 12:06:49','1','1'),
+(2,'深圳梦想科技有限公司','赵先生','15589745664','深圳','2021-09-17 16:41:53','2022-12-17 16:41:53','MX',0,0,'2021-06-13 16:11:43','2021-09-28 12:06:53','1','1'),
+(1442414898631729154,'深圳爱美造型时尚有限公司','王先生','1589545645','深圳南山区','2021-06-13 16:11:43','2022-06-13 16:11:43','AM',0,0,'2021-09-27 17:04:45','2021-09-28 12:07:01','000001','000001'),
+(1442429609494523905,'深圳美容资讯有限公司','王先生','1589545645','深圳南山区','2021-06-13 16:11:43','2022-06-13 16:11:43','ZX',0,0,'2021-09-27 18:03:13','2021-09-28 12:07:09','000001','000001'),
+(1442702604909752321,'深圳发型改造有限公司','王先生','1589545645','深圳南山区','2021-06-13 16:11:43','2022-06-13 16:11:43','FX',0,0,'2021-09-28 12:08:00','2021-09-28 12:08:00','000001','000001');
 
 /*Table structure for table `cpms_system_top_menu` */
 
@@ -227,14 +248,13 @@ CREATE TABLE `cpms_system_top_menu` (
   `create_by` varchar(50) NOT NULL COMMENT '创建人工号',
   `update_by` varchar(50) NOT NULL COMMENT '更新人工号',
   PRIMARY KEY (`top_menu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='顶部菜单表';
 
 /*Data for the table `cpms_system_top_menu` */
 
 insert  into `cpms_system_top_menu`(`top_menu_id`,`tenant_id`,`top_menu_name`,`path`,`relation_menu_ids`,`sort`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
 (1,1,'监控系统','','1,7',0,0,'2021-08-30 11:29:38','2021-08-31 14:22:39','000002','000002'),
-(2,2,'工作台','','1,2,7',1,0,'2021-08-30 11:32:23','2021-08-31 14:22:42','000002','000002'),
-(1440949970288861186,1,'测试2300002','33333','1,6',0,0,'2021-09-23 16:03:39','2021-09-23 16:05:58','000001','000001');
+(2,2,'工作台','','1,2,7',1,0,'2021-08-30 11:32:23','2021-08-31 14:22:42','000002','000002');
 
 /*Table structure for table `cpms_system_user` */
 
@@ -244,16 +264,17 @@ CREATE TABLE `cpms_system_user` (
   `user_id` bigint(64) unsigned NOT NULL,
   `tenant_id` bigint(64) NOT NULL COMMENT '所属租户ID',
   `dept_id` bigint(64) NOT NULL COMMENT '所属部门ID',
+  `post_id` bigint(64) DEFAULT NULL COMMENT '所属岗位ID',
   `user_account` varchar(50) NOT NULL COMMENT '用户账号',
   `user_password` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户密码',
   `user_name` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户名',
   `user_status` tinyint(3) DEFAULT '0' COMMENT '0-正常，1-已禁用',
-  `user_login_ip` varchar(20) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '登录IP地址',
-  `last_login_time` datetime DEFAULT NULL COMMENT '最后一次登录时间',
   `user_avatar` varchar(2000) DEFAULT NULL COMMENT '用户头像',
   `user_sex` tinyint(3) DEFAULT '0' COMMENT '用户性别：0-未知，1-男，2-女',
   `user_mobile` varchar(50) DEFAULT NULL COMMENT '用户手机号',
   `del_flag` tinyint(3) DEFAULT '0' COMMENT '0-未删除，1-已删除',
+  `user_login_ip` varchar(20) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '登录IP地址',
+  `last_login_time` datetime DEFAULT NULL COMMENT '最后一次登录时间',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
@@ -264,14 +285,16 @@ CREATE TABLE `cpms_system_user` (
 
 /*Data for the table `cpms_system_user` */
 
-insert  into `cpms_system_user`(`user_id`,`tenant_id`,`dept_id`,`user_account`,`user_password`,`user_name`,`user_status`,`user_login_ip`,`last_login_time`,`user_avatar`,`user_sex`,`user_mobile`,`del_flag`,`create_time`,`update_time`,`create_by`,`update_by`) values 
-(1,1,2,'000001','$2a$10$/IgTGoZ91/umYFdLLhnFEumn6Bd9B7JCMBcmbjQ0EAIxRngScEFvS','superAdmin',0,'127.0.0.1','2020-05-17 14:27:19','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-06-13 16:15:34','2021-09-14 16:57:12','000001','000001'),
-(2,2,3,'000002','$2a$10$/IgTGoZ91/umYFdLLhnFEumn6Bd9B7JCMBcmbjQ0EAIxRngScEFvS','Mr.Liu',0,'127.0.0.1','2020-05-15 14:27:50','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',0,'15889745719',0,'2021-06-13 16:15:34','2021-09-14 16:57:17','000001','000001'),
-(1437695137926684674,2,2,'test001','$2a$10$/IgTGoZ91/umYFdLLhnFEumn6Bd9B7JCMBcmbjQ0EAIxRngScEFvS','test001',0,NULL,'2021-09-15 19:35:07','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-14 16:30:07','2021-09-15 19:35:09','000001','000001'),
-(1437696509359235073,1,2,'test002','$2a$10$6DOwEXYOWCTQzyrezO2BlOQqbEN648S66qhh0xZPuSB1eLg4tLrY2','6666',0,NULL,'2021-09-15 19:35:04','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-14 16:35:34','2021-09-15 19:35:06','000001','000001'),
-(1437698974959869953,1,2,'test003','$2a$10$AYAhHljph7h8om9EPP.X8.gUgRPNkoi55MwTh7zS/6hVBHkaPoNs.','test001',0,NULL,'2021-09-21 19:35:42','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-14 16:45:21','2021-09-15 19:35:48','000001','000001'),
-(1438021853006004225,1,2,'test00225','$2a$10$pNh5tZW7B5Ljx1Y5bXu4LugI5.6dK9HwoObw4YSi.NlAnX6vGbDrq','test001',0,NULL,'2021-09-15 19:35:09','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-15 14:08:22','2021-09-15 19:35:11','000001','000001'),
-(1438055567887011842,1,2,'TTTT','$2a$10$9JtVQQ7NZfDfY12s.7mvIewWptl2OIwghmHrGxLDZdlQrekKE52Gu','999',0,NULL,'2021-09-24 19:35:37','https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'2021-09-15 16:22:20','2021-09-15 19:35:41','000001','000001');
+insert  into `cpms_system_user`(`user_id`,`tenant_id`,`dept_id`,`post_id`,`user_account`,`user_password`,`user_name`,`user_status`,`user_avatar`,`user_sex`,`user_mobile`,`del_flag`,`user_login_ip`,`last_login_time`,`create_time`,`update_time`,`create_by`,`update_by`) values 
+(1,1,2,2,'000001','$2a$10$/IgTGoZ91/umYFdLLhnFEumn6Bd9B7JCMBcmbjQ0EAIxRngScEFvS','superAdmin',0,'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,'127.0.0.1','2020-05-17 14:27:19','2021-06-13 16:15:34','2021-09-27 10:54:12','000001','000001'),
+(2,2,3,0,'000002','$2a$10$/IgTGoZ91/umYFdLLhnFEumn6Bd9B7JCMBcmbjQ0EAIxRngScEFvS','Mr.Liu',0,'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',0,'15889745719',0,'127.0.0.1','2020-05-15 14:27:50','2021-06-13 16:15:34','2021-09-14 16:57:17','000001','000001'),
+(1437695137926684674,2,2,0,'test001','$2a$10$/IgTGoZ91/umYFdLLhnFEumn6Bd9B7JCMBcmbjQ0EAIxRngScEFvS','test001',0,'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,NULL,'2021-09-15 19:35:07','2021-09-14 16:30:07','2021-09-15 19:35:09','000001','000001'),
+(1437696509359235073,1,2,2,'test002','$2a$10$6DOwEXYOWCTQzyrezO2BlOQqbEN648S66qhh0xZPuSB1eLg4tLrY2','6666',0,'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,NULL,'2021-09-15 19:35:04','2021-09-14 16:35:34','2021-09-27 10:54:20','000001','000001'),
+(1437698974959869953,1,2,1,'test003','$2a$10$AYAhHljph7h8om9EPP.X8.gUgRPNkoi55MwTh7zS/6hVBHkaPoNs.','test001',0,'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,NULL,'2021-09-21 19:35:42','2021-09-14 16:45:21','2021-09-27 10:14:16','000001','000001'),
+(1438021853006004225,1,2,1,'test00225','$2a$10$pNh5tZW7B5Ljx1Y5bXu4LugI5.6dK9HwoObw4YSi.NlAnX6vGbDrq','test001',0,'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,NULL,'2021-09-15 19:35:09','2021-09-15 14:08:22','2021-09-27 10:14:18','000001','000001'),
+(1438055567887011842,1,2,1,'TTTT','$2a$10$9JtVQQ7NZfDfY12s.7mvIewWptl2OIwghmHrGxLDZdlQrekKE52Gu','999',0,'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',1,'15889745718',0,NULL,'2021-09-24 19:35:37','2021-09-15 16:22:20','2021-09-27 10:14:23','000001','000001'),
+(1442429609800708097,1442429609494523905,1442429609511301122,NULL,'admin','$2a$10$OCTcvriWiqhIXUFEzVuRe.JUYWR30Bdu8BnXuLxQUMul3Y9nIci86','王先生',0,NULL,0,'1589545645',0,NULL,NULL,'2021-09-27 18:03:13','2021-09-27 18:03:13','000001','000001'),
+(1442702605840887809,1442702604909752321,1442702604972666882,NULL,'FX000001','$2a$10$48vhg0DKnMc.Jfs0jAT2ouHgab3Ce0/O7QTRSK8BAB3KiFbIY.mla','王先生',0,NULL,0,'1589545645',0,NULL,NULL,'2021-09-28 12:08:00','2021-09-28 12:08:00','000001','000001');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
