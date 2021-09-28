@@ -43,4 +43,6 @@ public class SysUserVO extends BaseVO {
      * 0-正常，1-已禁用
      */
     private Integer userStatus;
+    private Long postId;
+    private String postName;
 }

@@ -39,4 +39,9 @@ public class ListUserDTO  extends BasePageDTO {
      */
     private Long tenantId;
 
+    /**
+     * 岗位ID
+     */
+    private Long postId;
+
 }

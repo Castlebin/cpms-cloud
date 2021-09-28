@@ -46,4 +46,8 @@ public class SysUserEntity extends TenantEntity {
      * 用户性别：0-未知，1-男，2-女
      */
     private Integer  userSex;
+    /**
+     * 岗位ID
+     */
+    private Long postId;
 }

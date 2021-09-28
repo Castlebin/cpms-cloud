@@ -20,11 +20,14 @@
           t.tenant_id,
           t.tenant_name,
           t.tenant_status,
-          d.dept_name
+          d.dept_name,
+          p.post_name,
+          p.post_id
         FROM
         ( cpms_system_user u,
         cpms_system_tenant t)
         LEFT JOIN cpms_system_dept d ON d.dept_id = u.dept_id
+        LEFT JOIN cpms_system_post p ON u.post_id = p.post_id
         WHERE
          u.user_account = #{userAccount}
          AND u.tenant_id= t.tenant_id
@@ -57,6 +60,9 @@
             <if test="deptId !=null">
                 and u.dept_id = #{deptId}
             </if>
+            <if test="postId !=null">
+                and u.post_id = #{postId}
+            </if>
         </where>
     </select>
 
@@ -75,10 +81,13 @@
         u.update_time,
         u.create_by,
         u.update_by,
-        d.dept_name
+        d.dept_name,
+        p.post_name,
+        p.post_id
         from
         cpms_system_user u
         LEFT JOIN cpms_system_dept d ON d.dept_id = u.dept_id
+        LEFT JOIN cpms_system_post p ON u.post_id = p.post_id
         <where>
             and u.del_flag = 0
             <if test="tenantId !=null">
@@ -98,6 +107,9 @@
             </if>
             <if test="deptId !=null">
                 and u.dept_id = #{deptId}
+            </if>
+            <if test="postId !=null">
+                and u.post_id = #{postId}
             </if>
         </where>
         limit #{startIndex},#{pageSize}

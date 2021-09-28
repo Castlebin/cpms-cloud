@@ -25,6 +25,8 @@ public class TokenUserInfo implements Serializable {
      *  token过期截止时间，单位：秒
      */
     private Long tokenExpire;
+    private String postName;
+    private Long postId;
 
     public TokenUserInfo() {
     }
@@ -125,6 +127,22 @@ public class TokenUserInfo implements Serializable {
         this.tokenExpire = tokenExpire;
     }
 
+    public String getPostName() {
+        return postName;
+    }
+
+    public void setPostName(String postName) {
+        this.postName = postName;
+    }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
     @Override
     public String toString() {
         return "TokenUserInfo{" +
@@ -140,6 +158,8 @@ public class TokenUserInfo implements Serializable {
                 ", roleCodes=" + roleCodes +
                 ", roleIds=" + roleIds +
                 ", tokenExpire=" + tokenExpire +
+                ", postName='" + postName + '\'' +
+                ", postId=" + postId +
                 '}';
     }
 }

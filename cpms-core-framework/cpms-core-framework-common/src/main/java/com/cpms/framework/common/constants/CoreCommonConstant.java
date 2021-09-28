@@ -12,5 +12,5 @@ public class CoreCommonConstant {
     public static final String PERMISSION_KEY = "permission";
     public static final String TRACE_ID  = "traceId";
     public static final String SUPER_ADMINISTRATOR = "SUPER_ADMINISTRATOR";
-    public static final String ADMINISTRATOR = "ADMINISTRATOR";
+    public static final String TENANT_ADMINISTRATOR = "TENANT_ADMINISTRATOR";
 }

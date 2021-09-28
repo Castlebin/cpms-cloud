@@ -50,7 +50,7 @@ public class CsSecureUtil {
      */
     public static boolean isAdmin(){
         TokenUserInfo tokenInfo =getUser();
-        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(CoreCommonConstant.ADMINISTRATOR));
+        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(CoreCommonConstant.TENANT_ADMINISTRATOR));
     }
 
     /**

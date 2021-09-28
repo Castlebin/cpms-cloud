@@ -57,4 +57,8 @@ public interface ISysUserService extends IService<SysUserEntity> {
      */
     boolean resetPassword(ResetPasswordDTO resetPasswordDTO);
 
+    int userCount(Long tenantId);
+
+    String generateAccount();
+
 }

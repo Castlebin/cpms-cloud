@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
  */
 
 public class TenantEntity extends BaseEntity{
-    @TableField(fill = FieldFill.INSERT)
     private Long tenantId;
 
     public TenantEntity() {

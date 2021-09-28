@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cpms-core-framework</artifactId>
+        <groupId>com.cpms</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>cpms-core-framework-xxl-job</artifactId>
+    <name>${project.artifactId}</name>
+    <description>核心框架xxl-job分布式定时任务模块</description>
+
+    <dependencies>
+        <!-- xxl-job 依赖 -->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>${xxl-job.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <!-- 插件依赖 -->
+    <build>
+        <!--定义jar包名称-->
+        <finalName>${project.name}</finalName>
+        <plugins>
+            <!--java编译插件，告诉maven在编译Java文件时使用什么版本的jre-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${file_encoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

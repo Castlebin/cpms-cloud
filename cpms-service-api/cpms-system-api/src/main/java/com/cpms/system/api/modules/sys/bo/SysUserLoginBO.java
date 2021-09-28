@@ -48,4 +48,13 @@ public class SysUserLoginBO extends UserLoginBase {
      * 用户密码
      */
     private String userPassword;
+    /**
+     * 岗位名称
+     */
+    private String postName;
+
+    /**
+     * 岗位ID
+     */
+    private Long postId;
 }

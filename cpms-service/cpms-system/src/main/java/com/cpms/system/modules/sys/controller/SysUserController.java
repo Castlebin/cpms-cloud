@@ -69,5 +69,8 @@ public class SysUserController {
         return ResultUtil.status(sysUserService.resetPassword(resetPasswordDTO));
     }
 
-
+    @PostMapping("/generateAccount")
+    public Result<String> generateAccount(){
+        return ResultUtil.success(sysUserService.generateAccount());
+    }
 }

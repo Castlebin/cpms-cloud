@@ -56,6 +56,12 @@ public class SysUserDTO {
     private String roleIds;
 
     /**
+     * 岗位ID
+     */
+    @NotNull(message="postId不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private Long postId;
+
+    /**
      * 用户手机号
      */
     private String userMobile;

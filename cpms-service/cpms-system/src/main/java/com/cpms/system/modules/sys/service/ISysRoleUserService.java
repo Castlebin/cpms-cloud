@@ -8,5 +8,5 @@ import com.cpms.system.modules.sys.entity.SysRoleUserEntity;
  * @author: gulang
  * @time: 2021/9/15 11:50
  */
-public interface SysRoleUserService extends IService<SysRoleUserEntity> {
+public interface ISysRoleUserService extends IService<SysRoleUserEntity> {
 }

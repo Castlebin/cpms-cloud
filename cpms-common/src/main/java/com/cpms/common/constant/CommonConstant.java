@@ -6,6 +6,16 @@ package com.cpms.common.constant;
  * @time: 2021/9/23 17:14
  */
 public class CommonConstant {
+
+    /** 默认角色名称 **/
+    public static final String DEFAULT_ROLE_NAME = "管理员";
+
+    /** 默认角色编码 **/
+    public static final String DEFAULT_ROLE_CODE = "TENANT_ADMINISTRATOR";
+
+    /** 默认角色描述 **/
+    public static final String DEFAULT_ROLE_DESC = "租户管理员角色";
+
     /** 数据状态:已禁用 **/
     public static final int DATA_STATUS_FORBIDDEN = 1;
     /** 数据状态:正常 **/

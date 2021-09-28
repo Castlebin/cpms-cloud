@@ -5,6 +5,7 @@ import com.cpms.framework.mybatis.groups.DeleteGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
@@ -46,4 +47,9 @@ public class SysTenantDTO {
     @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
     private LocalDateTime leaseTimeEnd;
+
+    @NotBlank(message="accountPrefix不能为空",groups = {AddGroup.class})
+    @NotNull(message="accountPrefix不能为空",groups = {AddGroup.class})
+    @Length(min =2,max=2,message="accountPrefix前缀必须为两个字母",groups = {AddGroup.class})
+    private String accountPrefix;
 }

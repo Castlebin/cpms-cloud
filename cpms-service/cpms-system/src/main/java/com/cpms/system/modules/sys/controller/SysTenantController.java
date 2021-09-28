@@ -11,6 +11,7 @@ import com.cpms.framework.secure.annotations.PreAuth;
 import com.cpms.system.modules.sys.dto.ListTenantDTO;
 import com.cpms.system.modules.sys.dto.SysTenantDTO;
 import com.cpms.system.modules.sys.service.ISysTenantService;
+import com.cpms.system.modules.sys.vo.InitTenantAccountVO;
 import com.cpms.system.modules.sys.vo.SysTenantVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,8 +52,8 @@ public class SysTenantController {
     @PostMapping("/add")
     @PreAuth("sys_tenant_add")
     @OperLog(desc = "新增租户")
-    public Result<Void> addTenant(@Validated(AddGroup.class)@RequestBody SysTenantDTO tenantDTO){
-        return ResultUtil.status(sysTenantService.addTenant(tenantDTO));
+    public Result<InitTenantAccountVO> addTenant(@Validated(AddGroup.class)@RequestBody SysTenantDTO tenantDTO){
+        return ResultUtil.success(sysTenantService.addTenant(tenantDTO));
     }
 
     /**

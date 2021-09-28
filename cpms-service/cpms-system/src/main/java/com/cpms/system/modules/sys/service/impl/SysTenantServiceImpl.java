@@ -5,17 +5,21 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
+import com.cpms.framework.common.enums.RandomTypeEnum;
+import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
-import com.cpms.system.common.constants.SystemConstant;
+import com.cpms.framework.common.utils.CsGenerateIdUtil;
+import com.cpms.framework.common.utils.CsRandomUtil;
+import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.ListTenantDTO;
 import com.cpms.system.modules.sys.dto.SysTenantDTO;
-import com.cpms.system.modules.sys.entity.SysDeptEntity;
-import com.cpms.system.modules.sys.entity.SysTenantEntity;
+import com.cpms.system.modules.sys.entity.*;
 import com.cpms.system.modules.sys.mapper.SysTenantMapper;
-import com.cpms.system.modules.sys.service.ISysDeptService;
-import com.cpms.system.modules.sys.service.ISysTenantService;
+import com.cpms.system.modules.sys.service.*;
+import com.cpms.system.modules.sys.vo.InitTenantAccountVO;
 import com.cpms.system.modules.sys.vo.SysTenantVO;
 import com.google.common.collect.Lists;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,28 +35,52 @@ import java.util.List;
 public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenantEntity> implements ISysTenantService {
     @Resource
     private SysTenantMapper sysTenantMapper;
-
     @Resource
     private ISysDeptService sysDeptService;
+    @Resource
+    private ISysRoleService sysRoleService;
+    @Resource
+    private ISysRoleUserService sysRoleUserService;
+    @Resource
+    private ISysUserService sysUserService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean addTenant(SysTenantDTO tenantDTO) {
+    public InitTenantAccountVO addTenant(SysTenantDTO tenantDTO) {
+        // 校验前缀是否存在
+        int count = sysTenantMapper.selectCount(
+                Wrappers.<SysTenantEntity>lambdaQuery().
+                        eq(SysTenantEntity::getAccountPrefix,
+                                tenantDTO.getAccountPrefix()));
+        if(count > 0){
+            throw new BizException(SystemResponseResultEnum.ACCOUNT_PREFIX_EXISTS_ERROR);
+        }
         SysTenantEntity sysTenantEntity = new SysTenantEntity();
         CsBeanUtil.copyProperties(tenantDTO,sysTenantEntity);
+        // 添加租户信息
         this.save(sysTenantEntity);
         SysDeptEntity sysDeptEntity = new SysDeptEntity();
         sysDeptEntity.setTenantId(sysTenantEntity.getTenantId());
         sysDeptEntity.setDeptName(tenantDTO.getTenantName());
         sysDeptEntity.setParentId(0L);
+        // 添加部门信息
         sysDeptService.save(sysDeptEntity);
-        return true;
+        // 添加角色信息
+        SysRoleEntity sysRoleEntity = new SysRoleEntity();
+        sysRoleEntity.setTenantId(sysTenantEntity.getTenantId());
+        sysRoleEntity.setDeptId(sysDeptEntity.getDeptId());
+        sysRoleEntity.setRoleName(CommonConstant.DEFAULT_ROLE_NAME);
+        sysRoleEntity.setRoleCode(CommonConstant.DEFAULT_ROLE_CODE);
+        sysRoleEntity.setRoleDesc(CommonConstant.DEFAULT_ROLE_DESC);
+        sysRoleService.save(sysRoleEntity);
+        // 初始化一个租户管理员账号
+        return initAccount(sysTenantEntity,sysDeptEntity.getDeptId(),sysRoleEntity.getRoleId());
     }
 
     @Override
     public boolean updateTenant(SysTenantDTO tenantDTO) {
         SysTenantEntity sysTenantEntity = new SysTenantEntity();
-        CsBeanUtil.copyProperties(tenantDTO,sysTenantEntity);
+        CsBeanUtil.copyProperties(tenantDTO,sysTenantEntity,"accountPrefix");
         return this.updateById(sysTenantEntity);
     }
 
@@ -79,5 +107,28 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         return basePageVO;
     }
 
-
+   private InitTenantAccountVO initAccount(SysTenantEntity sysTenantEntity,Long deptId,Long roleId){
+       InitTenantAccountVO initTenantAccountVO = new InitTenantAccountVO();
+       SysUserEntity sysUserEntity = new SysUserEntity();
+       sysUserEntity.setTenantId(sysTenantEntity.getTenantId());
+       sysUserEntity.setDeptId(deptId);
+       sysUserEntity.setUserMobile(sysTenantEntity.getContactNumber());
+       sysUserEntity.setUserName(sysTenantEntity.getContacts());
+       BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+       String initPassword = CsRandomUtil.random(6, RandomTypeEnum.ALL);
+       sysUserEntity.setUserPassword(bCryptPasswordEncoder.encode(initPassword));
+       int count = sysUserService.userCount(sysTenantEntity.getTenantId());
+       sysUserEntity.setUserAccount(CsGenerateIdUtil.userAccount(sysTenantEntity.getAccountPrefix(),6,count+1));
+       sysUserService.save(sysUserEntity);
+       // 用户角色关联关系
+       SysRoleUserEntity sysRoleUserEntity = new SysRoleUserEntity();
+       sysRoleUserEntity.setUserId(sysUserEntity.getUserId());
+       sysRoleUserEntity.setRoleId(roleId);
+       sysRoleUserService.save(sysRoleUserEntity);
+       // 返回给应用层信息
+       initTenantAccountVO.setUserAccount(sysUserEntity.getUserAccount());
+       initTenantAccountVO.setUserName(sysUserEntity.getUserName());
+       initTenantAccountVO.setUserPassword(initPassword);
+       return initTenantAccountVO;
+   }
 }

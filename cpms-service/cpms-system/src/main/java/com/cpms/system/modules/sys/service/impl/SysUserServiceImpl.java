@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.exception.BizException;
+import com.cpms.framework.common.utils.CsGenerateIdUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
@@ -15,10 +16,12 @@ import com.cpms.system.modules.sys.dto.ListUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
 import com.cpms.system.modules.sys.dto.SysUserDTO;
 import com.cpms.system.modules.sys.entity.SysRoleUserEntity;
+import com.cpms.system.modules.sys.entity.SysTenantEntity;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
+import com.cpms.system.modules.sys.mapper.SysTenantMapper;
 import com.cpms.system.modules.sys.mapper.SysUserMapper;
 import com.cpms.system.modules.sys.service.ISysUserService;
-import com.cpms.system.modules.sys.service.SysRoleUserService;
+import com.cpms.system.modules.sys.service.ISysRoleUserService;
 import com.cpms.system.modules.sys.vo.SysUserVO;
 import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
@@ -42,7 +45,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     @Resource
     private  SysUserMapper sysUserMapper;
     @Resource
-    private SysRoleUserService sysRoleUserService;
+    private SysTenantMapper sysTenantMapper;
+    @Resource
+    private ISysRoleUserService sysRoleUserService;
 
     @Override
     public BasePageVO<SysUserVO> listUser(ListUserDTO listUserDTO) {
@@ -107,6 +112,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         sysUserEntity.setUserName(userDTO.getUserName());
         sysUserEntity.setUserSex(userDTO.getUserSex());
         sysUserEntity.setUserMobile(userDTO.getUserMobile());
+        sysUserEntity.setPostId(userDTO.getPostId());
         UpdateWrapper<SysUserEntity> updateWrapper = Wrappers.update();
         updateWrapper.eq("user_id",userDTO.getUserId());
         updateWrapper.eq("tenant_id", CsSecureUtil.userTenantId());
@@ -131,6 +137,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         return this.update(updateWrapper);
     }
 
+    @Override
+    public int userCount(Long tenantId) {
+        return sysUserMapper.selectCount(Wrappers.<SysUserEntity>query().lambda().eq(SysUserEntity::getTenantId, tenantId));
+    }
 
-
+    @Override
+    public String generateAccount() {
+        int count = userCount(CsSecureUtil.userTenantId());
+        SysTenantEntity sysTenantEntity = sysTenantMapper.selectById(CsSecureUtil.userTenantId());
+        return CsGenerateIdUtil.userAccount(sysTenantEntity.getAccountPrefix(),6,count+1);
+    }
 }

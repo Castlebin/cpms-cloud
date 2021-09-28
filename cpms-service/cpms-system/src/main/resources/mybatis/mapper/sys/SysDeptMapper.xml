@@ -13,6 +13,9 @@
             <if test="deptName !=null and deptName !=''">
                 and d.dept_name like CONCAT('%',#{deptName},'%' )
             </if>
+            <if test="tenantId !=null ">
+                and d.tenant_id = #{tenantId}
+            </if>
         </where>
     </select>
 
@@ -30,6 +33,9 @@
             d.del_flag = 0
             <if test="deptName !=null and deptName !=''">
                 and d.dept_name like CONCAT('%',#{deptName},'%' )
+            </if>
+            <if test="tenantId !=null ">
+                and d.tenant_id = #{tenantId}
             </if>
         </where>
         limit #{startIndex},#{pageSize}
