@@ -1,3 +1,3 @@
-org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.cpms.gateway.config.MyEnvironmentPostProcessor
+#org.springframework.boot.env.EnvironmentPostProcessor=\
+#  com.cpms.gateway.config.MyEnvironmentPostProcessor
 

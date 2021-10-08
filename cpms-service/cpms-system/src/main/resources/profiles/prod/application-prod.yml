@@ -15,6 +15,10 @@ spring:
     add-mappings: false
   #********以下配置为了捕获 NoHandlerFoundException 异常信息 end ****#
 
+  #******** 激活自定义配置文件 ****#
+  profiles:
+    include: redis,system,mysql
+
   cloud:
     nacos:
       #      config:
@@ -24,58 +28,6 @@ spring:
       discovery: # 服务发现注册
         server-addr: 127.0.0.1:8858
 
-  # 多数据源配置
-  datasource:
-    dynamic:
-      primary: master #设置默认的数据源或者数据源组,默认值即为master
-      strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候回抛出异常,不启动会使用默认数据源.
-      datasource:
-        master:
-          url: jdbc:mysql://localhost:3306/cpms-cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-          username: root
-          password: root
-          driver-class-name: com.mysql.cj.jdbc.Driver
-
-  #redis配置
-  redis:
-    lettuce:
-      # Redis 线程池设置
-      pool:
-        #连接池最大连接数（使用负值表示没有限制） 默认 8
-        max-active: 8
-        #连接池中的最大空闲连接 默认 8
-        max-idle: 8
-        #连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
-        max-wait: -1
-        #连接池中的最小空闲连接 默认 0
-        min-idle: 0
-    #服务配置
-    server:
-      server-mode: "single" # single(单机模式)、cluster（集群模式）、sentinel（哨兵模式）
-      clientName:  # 客户端名称
-      password:
-      single:
-        address: 127.0.0.1:6379
-      cluster:
-        node-hosts:
-          - Ma1873Gq-1.cachesit.sfcloud.local:8080
-          - Ma1873Gq-2.cachesit.sfcloud.local:8080
-          - Ma1873Gq-3.cachesit.sfcloud.local:8080
-          - Ma1873Gq-4.cachesit.sfcloud.local:8080
-          - Ma1873Gq-5.cachesit.sfcloud.local:8080
-          - Ma1873Gq-6.cachesit.sfcloud.local:8080
-      sentinel:
-        master-name: ESG_CEMP_CORE_REDIS_Af82B47j_01
-        node-hosts:
-          - Af82B47j-1.cachesit.sfcloud.local:8001
-          - Af82B47j-2.cachesit.sfcloud.local:8001
-          - Af82B47j-3.cachesit.sfcloud.local:8001
-
-
-#【加载mybatis的xml映射文件】
-mybatis-plus:
-  mapper-locations: classpath:mybatis/mapper/**/*.xml  # 指定sql映射文件位置
-  config-location: classpath:mybatis/mybatis-config.xml  # 指定全局配置文件位置
 
 feign:
   hystrix:
