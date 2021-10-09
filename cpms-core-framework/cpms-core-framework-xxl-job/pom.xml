@@ -13,6 +13,13 @@
     <description>核心框架xxl-job分布式定时任务模块</description>
 
     <dependencies>
+        <!-- common核心框架模块-->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-core-framework-common</artifactId>
+            <version>${cpms.core.framework.version}</version>
+        </dependency>
+
         <!-- xxl-job 依赖 -->
         <dependency>
             <groupId>com.xuxueli</groupId>
