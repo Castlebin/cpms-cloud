@@ -9,15 +9,14 @@ import com.cpms.system.api.modules.sys.feign.ISysUserClient;
 import com.cpms.system.api.modules.sys.vo.SysUserLoginVO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 /**
  * @author gualng
  * @Description:  相关接口服务降级回调方法
  */
-@Component
+
 @Slf4j
-public class ISysUserClientFallback implements ISysUserClient {
+public class SysUserClientFallback implements ISysUserClient {
     @Setter
     private Throwable throwable;
 

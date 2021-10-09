@@ -7,16 +7,14 @@ import com.cpms.log.api.modules.log.dto.HandlerLogDTO;
 import com.cpms.log.api.modules.log.feign.ILogClient;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 /**
  * @description:
  * @author: gulang
  * @time: 2021/8/21 12:30
  */
-@Component
 @Slf4j
-public class ILogClientFallback  implements ILogClient {
+public class LogClientFallback implements ILogClient {
     @Setter
     private Throwable throwable;
 
