@@ -2,6 +2,7 @@ package com.cpms.system.modules.sys.controller;
 
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.utils.CsPropsUtil;
 import com.cpms.framework.common.utils.thread.ThreadPoolBuilder;
 import com.cpms.framework.redis.utils.CsRedissonUtil;
 import com.cpms.log.api.modules.log.dto.HandlerLogDTO;
@@ -34,6 +35,7 @@ public class TestController {
      */
     @GetMapping("/lock")
     public Result<Integer> lock(){
+        System.out.println(CsPropsUtil.getProperty("system.test"));
         // 已设置锁，其它线程会被阻塞，底层实现可重入锁
         CsRedissonUtil.lock("redisson-lock");
         try {

@@ -11,6 +11,10 @@ spring:
     # 给网关服务增加一个url前缀后续用nginx转发的时候，可以通过 pathPrefix 来寻址
     pathPrefix: gw-server  # 请求接口的前缀
 
+  #******** 激活自定义配置文件 ****#
+  profiles:
+    include: system
+
   cloud:
     nacos:
       #      config:

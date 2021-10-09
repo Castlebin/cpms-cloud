@@ -3,7 +3,7 @@ package com.cpms.log.api.modules.log.feign;
 import com.cpms.common.constant.AppConstant;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.log.api.modules.log.dto.HandlerLogDTO;
-import com.cpms.log.api.modules.log.feign.fallback.ILogClientFallbackFactory;
+import com.cpms.log.api.modules.log.feign.factory.LogClientFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 @FeignClient(
         value = AppConstant.APPLICATION_LOG_NAME,
-        fallbackFactory = ILogClientFallbackFactory.class,
+        fallbackFactory = LogClientFallbackFactory.class,
         path = AppConstant.LOG_API_PREFIX  // 接口前缀
 )
 public interface ILogClient {

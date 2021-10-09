@@ -15,6 +15,10 @@ spring:
       add-mappings: false
    #********以下配置为了捕获 NoHandlerFoundException 异常信息 end ****#
 
+   #******** 激活自定义配置文件 ****#
+   profiles:
+      include: system,mysql
+
    cloud:
       nacos:
          #      config:
@@ -23,19 +27,3 @@ spring:
          #        prefix: nacos
          discovery: # 服务发现注册
             server-addr: 127.0.0.1:8858
-   # 多数据源配置
-   datasource:
-      dynamic:
-         primary: master #设置默认的数据源或者数据源组,默认值即为master
-         strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候回抛出异常,不启动会使用默认数据源.
-         datasource:
-            master:
-               url: jdbc:mysql://localhost:3306/cpms-cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-               username: root
-               password: root
-               driver-class-name: com.mysql.cj.jdbc.Driver
-
-#【加载mybatis的xml映射文件】
-mybatis-plus:
-   mapper-locations: classpath:mybatis/mapper/**/*.xml  # 指定sql映射文件位置
-   config-location: classpath:mybatis/mybatis-config.xml  # 指定全局配置文件位置

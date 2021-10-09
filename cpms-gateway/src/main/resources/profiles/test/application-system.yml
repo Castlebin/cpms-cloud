@@ -3,4 +3,4 @@ system:
   url:
     # 放行API list集合
     skipUrl:
-#    - "authMicroservice/auth/**"
+#      - "authMicroservice/auth/**"

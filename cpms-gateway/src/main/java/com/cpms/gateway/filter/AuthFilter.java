@@ -1,7 +1,7 @@
 package com.cpms.gateway.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.cpms.common.constant.TokenConstant;
+import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
@@ -52,8 +52,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
         ServerHttpResponse resp = exchange.getResponse();
-        String headerToken = exchange.getRequest().getHeaders().getFirst(TokenConstant.H_TOKEN_KEY);
-        String paramToken = exchange.getRequest().getQueryParams().getFirst(TokenConstant.H_TOKEN_KEY);
+        String headerToken = exchange.getRequest().getHeaders().getFirst(CoreCommonConstant.H_TOKEN_KEY);
+        String paramToken = exchange.getRequest().getQueryParams().getFirst(CoreCommonConstant.H_TOKEN_KEY);
         if (StringUtils.isAllBlank(headerToken, paramToken)) {
             return unAuth(resp, GlobalResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getCode(),GlobalResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getMessage());
         }
@@ -66,7 +66,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
         claims.put("tokenExpire",claims.get("exp"));
         // 设置用户信息到请求头，传递到下游微服务
-        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(TokenConstant.USER_INFO, URLEncoder.encode(JSON.toJSONString(claims), "UTF-8")).build();
+        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(CoreCommonConstant.USER_INFO, URLEncoder.encode(JSON.toJSONString(claims), "UTF-8")).build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);
     }

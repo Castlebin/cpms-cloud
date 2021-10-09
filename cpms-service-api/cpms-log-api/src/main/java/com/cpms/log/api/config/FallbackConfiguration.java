@@ -1,7 +1,7 @@
 package com.cpms.log.api.config;
 
-import com.cpms.log.api.modules.log.feign.fallback.ILogClientFallback;
-import com.cpms.log.api.modules.log.feign.fallback.ILogClientFallbackFactory;
+import com.cpms.log.api.modules.log.feign.fallback.LogClientFallback;
+import com.cpms.log.api.modules.log.feign.factory.LogClientFallbackFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -16,11 +16,11 @@ public class FallbackConfiguration {
     public FallbackConfiguration() {
     }
     @Bean
-    public ILogClientFallback logClientFallback() {
-        return new ILogClientFallback();
+    public LogClientFallback logClientFallback() {
+        return new LogClientFallback();
     }
     @Bean
-    public ILogClientFallbackFactory logClientFallbackFactory(){
-        return new ILogClientFallbackFactory();
+    public LogClientFallbackFactory logClientFallbackFactory(){
+        return new LogClientFallbackFactory();
     }
 }
