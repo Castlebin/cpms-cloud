@@ -1,5 +1,6 @@
 package com.cpms.system.modules.sys.vo;
 
+import com.cpms.framework.common.core.base.BaseVO;
 import lombok.Data;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @time: 2021/8/7 20:47
  */
 @Data
-public class SysMenuVO {
+public class SysMenuVO  extends BaseVO {
     private Long menuId;
     private Long parentId;
     private List<SysMenuVO> children;

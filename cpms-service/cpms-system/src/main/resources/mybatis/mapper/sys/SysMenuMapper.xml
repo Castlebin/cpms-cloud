@@ -17,6 +17,10 @@
         <result column="del_flag" property="delFlag"/>
         <result column="icon" property="icon"/>
         <result column="component" property="component"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
     </resultMap>
 
     <select id="queryRoleMenus" resultMap="menuResultMap">
@@ -42,5 +46,42 @@
             #{item}
         </foreach>
         )
+    </select>
+
+    <select id="listMenuCount" parameterType="com.cpms.system.modules.sys.dto.ListMenuDTO" resultType="java.lang.Integer">
+        select count(1)
+        from cpms_system_menu
+        <where>
+            del_flag = 0
+            <if test="name !=null and name !=''">
+                and name like CONCAT('%',#{name},'%' )
+            </if>
+            <if test="code !=null  and code !='' ">
+                and code = #{code}
+            </if>
+            <if test="alias !=null  and alias !=''">
+                and alias = #{alias}
+            </if>
+        </where>
+    </select>
+
+    <select id="listMenu" parameterType="com.cpms.system.modules.sys.dto.ListMenuDTO" resultMap="menuResultMap">
+        select *
+        from cpms_system_menu
+        <where>
+            del_flag = 0
+            <if test="name !=null and name !=''">
+                and name like CONCAT('%',#{name},'%' )
+            </if>
+            <if test="code !=null and code !=''">
+                and code = #{code}
+            </if>
+            <if test="alias !=null and alias !=''">
+                and alias = #{alias}
+            </if>
+            <if test="type !=null">
+                and type = #{type}
+            </if>
+        </where>
     </select>
 </mapper>

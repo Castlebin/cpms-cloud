@@ -15,9 +15,7 @@ public class TokenUserInfo implements Serializable {
     private Long userId;
     private String userMobile;
     private Long deptId;
-    private String deptName;
     private Long tenantId;
-    private String tenantName;
     private int userSex;
     private List<String> roleCodes;
     private List<Long> roleIds;
@@ -25,7 +23,7 @@ public class TokenUserInfo implements Serializable {
      *  token过期截止时间，单位：秒
      */
     private Long tokenExpire;
-    private String postName;
+    private String tenantCode;
     private Long postId;
 
     public TokenUserInfo() {
@@ -71,30 +69,6 @@ public class TokenUserInfo implements Serializable {
         this.deptId = deptId;
     }
 
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public Long getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public String getTenantName() {
-        return tenantName;
-    }
-
-    public void setTenantName(String tenantName) {
-        this.tenantName = tenantName;
-    }
-
     public int getUserSex() {
         return userSex;
     }
@@ -127,13 +101,7 @@ public class TokenUserInfo implements Serializable {
         this.tokenExpire = tokenExpire;
     }
 
-    public String getPostName() {
-        return postName;
-    }
 
-    public void setPostName(String postName) {
-        this.postName = postName;
-    }
 
     public Long getPostId() {
         return postId;
@@ -141,6 +109,22 @@ public class TokenUserInfo implements Serializable {
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
+    }
+
+    public String getTenantCode() {
+        return tenantCode;
+    }
+
+    public void setTenantCode(String tenantCode) {
+        this.tenantCode = tenantCode;
     }
 
     @Override
@@ -151,14 +135,12 @@ public class TokenUserInfo implements Serializable {
                 ", userId=" + userId +
                 ", userMobile='" + userMobile + '\'' +
                 ", deptId=" + deptId +
-                ", deptName='" + deptName + '\'' +
                 ", tenantId=" + tenantId +
-                ", tenantName='" + tenantName + '\'' +
                 ", userSex=" + userSex +
                 ", roleCodes=" + roleCodes +
                 ", roleIds=" + roleIds +
                 ", tokenExpire=" + tokenExpire +
-                ", postName='" + postName + '\'' +
+                ", tenantCode='" + tenantCode + '\'' +
                 ", postId=" + postId +
                 '}';
     }

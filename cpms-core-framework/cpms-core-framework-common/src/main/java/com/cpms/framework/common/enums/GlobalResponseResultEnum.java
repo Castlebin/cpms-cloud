@@ -18,7 +18,7 @@ public enum GlobalResponseResultEnum implements IResultEnum {
     PARAM_VALID_ERROR(20005, "参数校验失败"),
     QUERY_DATA_NOT_EXIST_ERROR(20006, "查询数据不存在"),
     NO_HANDLER_FOUND_ERROR(20007, "请求资源没有被发现"),
-    HANDEL_SUCCESS(20008, "操作成功！！！"),
+    HANDEL_SUCCESS(20008, "操作成功"),
     HANDEL_FAIL(20009, "操作失败！！！"),
     TOKEN_CHECK_INVALID_ERROR(20010, "token令牌校验不合法"),
     TOKEN_EXPIRED_ERROR(20011, "token令牌已过期"),

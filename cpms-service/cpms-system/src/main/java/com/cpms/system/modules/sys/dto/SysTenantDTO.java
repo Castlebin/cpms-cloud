@@ -52,4 +52,10 @@ public class SysTenantDTO {
     @NotNull(message="accountPrefix不能为空",groups = {AddGroup.class})
     @Length(min =2,max=2,message="accountPrefix前缀必须为两个字母",groups = {AddGroup.class})
     private String accountPrefix;
+
+    @NotBlank(message="tenantCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    @NotNull(message="tenantCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private String tenantCode;
+
+    private String tenantDesc;
 }

@@ -59,11 +59,9 @@ public class PasswordAuthen implements IAuthen{
         claims.put("userId",sysUserLoginVO.getUserId());
         claims.put("userMobile",sysUserLoginVO.getUserMobile());
         claims.put("deptId",sysUserLoginVO.getDeptId());
-        claims.put("deptName",sysUserLoginVO.getDeptName());
         claims.put("tenantId",sysUserLoginVO.getTenantId());
-        claims.put("tenantName",sysUserLoginVO.getTenantName());
+        claims.put("tenantCode",sysUserLoginVO.getTenantCode());
         claims.put("postId",sysUserLoginVO.getPostId());
-        claims.put("postName",sysUserLoginVO.getPostName());
         claims.put("userSex",sysUserLoginVO.getUserSex());
         claims.put("roleCodes",sysUserLoginVO.getRoles().stream().map(SysRoleVO::getRoleCode).collect(Collectors.toList()));
         claims.put("roleIds",sysUserLoginVO.getRoles().stream().map(SysRoleVO::getRoleId).collect(Collectors.toList()));

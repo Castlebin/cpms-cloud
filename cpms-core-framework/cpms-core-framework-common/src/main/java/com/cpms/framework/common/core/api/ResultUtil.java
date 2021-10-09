@@ -40,7 +40,7 @@ public class ResultUtil implements Serializable {
     }
 
     public static <T> Result<T> success(Integer code,String message) {
-        Result<T> result = new Result(false);
+        Result<T> result = new Result(true);
         result.setDate(CsDateUtil.dateFormat(new Date()));
         result.setCode(code);
         result.setMessage(message);

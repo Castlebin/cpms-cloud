@@ -2,6 +2,7 @@ package com.cpms.framework.common.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.cpms.framework.common.constants.CoreCommonConstant;
+import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -41,7 +42,7 @@ public class CsSecureUtil {
      */
     public static boolean isSuperAdmin(){
         TokenUserInfo tokenInfo =getUser();
-        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(CoreCommonConstant.SUPER_ADMINISTRATOR));
+        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(TenantConstant.SUPER_ADMINISTRATOR));
     }
 
     /**
@@ -50,7 +51,7 @@ public class CsSecureUtil {
      */
     public static boolean isAdmin(){
         TokenUserInfo tokenInfo =getUser();
-        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(CoreCommonConstant.TENANT_ADMINISTRATOR));
+        return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(TenantConstant.TENANT_ADMINISTRATOR));
     }
 
     /**
@@ -67,5 +68,13 @@ public class CsSecureUtil {
      */
     public static Long userTenantId(){
         return getUser().getTenantId();
+    }
+
+    /**
+     * 获取用户所属租户ID
+     * @return
+     */
+    public static String  userTenantCode(){
+        return getUser().getTenantCode();
     }
 }

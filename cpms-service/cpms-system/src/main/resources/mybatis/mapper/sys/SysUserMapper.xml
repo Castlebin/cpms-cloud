@@ -20,6 +20,7 @@
           t.tenant_id,
           t.tenant_name,
           t.tenant_status,
+          t.tenant_code,
           d.dept_name,
           p.post_name,
           p.post_id

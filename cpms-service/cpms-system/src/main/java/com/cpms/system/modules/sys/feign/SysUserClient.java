@@ -3,6 +3,7 @@ package com.cpms.system.modules.sys.feign;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.ISysUserClient;
@@ -12,7 +13,6 @@ import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.entity.SysRoleEntity;
 import com.cpms.system.modules.sys.service.ISysRoleService;
 import com.cpms.system.modules.sys.service.ISysUserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,7 +59,7 @@ public class SysUserClient implements ISysUserClient {
             sysRoleVO.setRoleId(e.getRoleId());
             return sysRoleVO;
         }).collect(Collectors.toList());
-        BeanUtils.copyProperties(sysUserLoginBO,sysUserLoginVO);
+        CsBeanUtil.copyProperties(sysUserLoginBO,sysUserLoginVO);
         sysUserLoginVO.setRoles(roles);
         return ResultUtil.success(sysUserLoginVO);
     }

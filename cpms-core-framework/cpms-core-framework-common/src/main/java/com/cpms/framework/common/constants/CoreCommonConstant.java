@@ -11,6 +11,5 @@ public class CoreCommonConstant {
     public static final String CACHE_LOGIN_USER_INFO_KEY = "login:user:info:";
     public static final String PERMISSION_KEY = "permission";
     public static final String TRACE_ID  = "traceId";
-    public static final String SUPER_ADMINISTRATOR = "SUPER_ADMINISTRATOR";
-    public static final String TENANT_ADMINISTRATOR = "TENANT_ADMINISTRATOR";
+
 }

@@ -1,5 +1,6 @@
 package com.cpms.log;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 
@@ -8,6 +9,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * @author: gulang
  * @time: 2021/5/19 19:47
  */
+@MapperScan("com.cpms.**.mapper") //扫描mapper包 避免在每个mapper类上加@Mapper注解
 @SpringCloudApplication
 public class LogApplication {
     public static void main(String[] args)

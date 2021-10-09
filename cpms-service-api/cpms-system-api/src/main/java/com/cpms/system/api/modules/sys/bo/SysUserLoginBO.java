@@ -45,6 +45,11 @@ public class SysUserLoginBO extends UserLoginBase {
     private String tenantName;
 
     /**
+     * 租户编码
+     */
+    private String tenantCode;
+
+    /**
      * 用户密码
      */
     private String userPassword;
@@ -57,4 +62,6 @@ public class SysUserLoginBO extends UserLoginBase {
      * 岗位ID
      */
     private Long postId;
+
+
 }

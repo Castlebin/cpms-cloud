@@ -2,12 +2,15 @@ package com.cpms.system.modules.sys.controller;
 
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
+import com.cpms.system.modules.sys.dto.ListMenuDTO;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.service.ISysMenuService;
+import com.cpms.system.modules.sys.vo.SysMenuVO;
 import com.cpms.system.modules.sys.vo.SysRouteVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,16 @@ import javax.annotation.Resource;
 public class SysMenuController {
     @Resource
     private ISysMenuService sysMenuService;
+
+    /**
+     *  菜单树形列表
+     * @param listMenuDTO
+     * @return
+     */
+    @PostMapping("/list")
+    public Result<BasePageVO<SysMenuVO>> listMenu(@RequestBody ListMenuDTO listMenuDTO){
+        return ResultUtil.success(sysMenuService.listMenu(listMenuDTO));
+    }
 
     /**
      *  获取左侧菜单路由

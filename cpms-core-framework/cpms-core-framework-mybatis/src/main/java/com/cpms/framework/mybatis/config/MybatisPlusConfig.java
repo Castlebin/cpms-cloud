@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
  */
 @EnableTransactionManagement // 开启事务
 @Configuration
-@MapperScan("**.mapper") //扫描mapper包 避免在每个mapper类上加@Mapper注解
 public class MybatisPlusConfig implements MetaObjectHandler {
 
     /** +

@@ -1,10 +1,11 @@
 package com.cpms.system;
 
 import com.cpms.common.constant.AppConstant;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.scheduling.annotation.EnableAsync;
+
 
 /**
  * @description:
@@ -14,6 +15,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 
 @EnableFeignClients(AppConstant.BASE_PACKAGES)
+@MapperScan("com.cpms.**.mapper") //扫描mapper包 避免在每个mapper类上加@Mapper注解
 @SpringCloudApplication
 public class SystemApplication {
     public static void main(String[] args)

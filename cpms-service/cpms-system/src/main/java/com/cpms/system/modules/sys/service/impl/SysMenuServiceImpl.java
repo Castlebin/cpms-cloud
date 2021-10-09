@@ -1,10 +1,13 @@
 package com.cpms.system.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.common.constant.TokenConstant;
+import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
@@ -12,6 +15,7 @@ import com.cpms.framework.common.utils.CsDateUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
+import com.cpms.system.modules.sys.dto.ListMenuDTO;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
 import com.cpms.system.modules.sys.entity.SysTopMenuEntity;
@@ -23,8 +27,8 @@ import com.cpms.system.modules.sys.vo.SysRouteVO;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,7 +55,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
              // 根据顶部菜单ID获取对应的菜单显示
             menus = queryMenuByTopMenuId(topMenuId);
          }
-        sysRouteVO.setMenus(parseMenuTree(menus));
+        sysRouteVO.setMenus(buildMenuTree(menus,0L));
         sysRouteVO.setButtons(queryRoleButtons());
         return sysRouteVO;
     }
@@ -67,7 +71,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     public boolean updateMenu(SysMenuDTO sysMenuDTO) {
         SysMenuEntity sysMenuEntity = new SysMenuEntity();
         CsBeanUtil.copyProperties(sysMenuDTO,sysMenuEntity);
-        return this.updateById(sysMenuEntity);
+        UpdateWrapper<SysMenuEntity> updateWrapper = Wrappers.<SysMenuEntity>update();
+        updateWrapper.eq("menu_id",sysMenuDTO.getMenuId());
+        return sysMenuMapper.update(sysMenuEntity,updateWrapper) >=1 ? true : false;
     }
 
     @Override
@@ -83,6 +89,22 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         sysMenuEntity.setDelFlag(CommonConstant.DEL_FLAG_DELETED);
         sysMenuEntity.setMenuId(sysMenuDTO.getMenuId());
         return this.updateById(sysMenuEntity);
+    }
+
+    @Override
+    public BasePageVO<SysMenuVO> listMenu(ListMenuDTO listMenuDTO) {
+        BasePageVO<SysMenuVO> basePageVO = new BasePageVO();
+        List<SysMenuVO> list;
+        int count = sysMenuMapper.listMenuCount(listMenuDTO);
+        if(count == 0 ) {
+            list = Lists.newArrayList();
+        }else{
+            List<SysMenuEntity> entities = sysMenuMapper.listMenu(listMenuDTO);
+            list = buildMenuTree(entities,0L);
+        }
+        basePageVO.setTotal(count);
+        basePageVO.setList(list);
+        return basePageVO;
     }
 
     public List<String> queryRoleButtons() {
@@ -130,33 +152,26 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         return menus;
     }
 
-    public List<SysMenuVO> parseMenuTree(List<SysMenuEntity> list) {
-        List<SysMenuVO> result = new ArrayList<>();
-        //1.获取所有父节点
-        for (SysMenuEntity menu : list) {
-            if (Objects.equals(0L,menu.getParentId())) {
-                SysMenuVO vo = new SysMenuVO();
-                BeanUtils.copyProperties(menu,vo);
-                result.add(vo);
-            }
-        }
-        //2.获取递归子节点
-        result.forEach(parent->menuChild(parent, list));
-        result.sort(Comparator.comparing(SysMenuVO::getSort));
-        return result;
-    }
-
-    public void menuChild(SysMenuVO parent, List<SysMenuEntity> list) {
+    /**
+     *  菜单树形结构
+     * @param list
+     * @param parentId
+     * @return
+     */
+    public List<SysMenuVO> buildMenuTree( List<SysMenuEntity> list, Long parentId) {
+        List<SysMenuVO> nodeTree = new ArrayList<>();
         for (SysMenuEntity child : list) {
-            if (Objects.equals(parent.getMenuId(),child.getParentId())) {
-                SysMenuVO vo = new SysMenuVO();
-                BeanUtils.copyProperties(child,vo);
-                if (parent.getChildren() == null) {
-                    parent.setChildren(new ArrayList<>());
+            SysMenuVO vo = new SysMenuVO();
+            CsBeanUtil.copyProperties(child,vo);
+            if (Objects.equals(parentId,child.getParentId())) {
+                if (vo.getChildren() == null) {
+                    vo.setChildren(new ArrayList<>());
                 }
-                parent.getChildren().add(vo);
-               menuChild(vo, list);
+                List<SysMenuVO> childNodes = buildMenuTree(list, child.getMenuId());
+                vo.setChildren(childNodes);
+                nodeTree.add(vo);
             }
         }
+        return nodeTree;
     }
 }

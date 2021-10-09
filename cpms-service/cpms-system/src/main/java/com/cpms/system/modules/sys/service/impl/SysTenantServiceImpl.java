@@ -61,7 +61,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         this.save(sysTenantEntity);
         SysDeptEntity sysDeptEntity = new SysDeptEntity();
         sysDeptEntity.setTenantId(sysTenantEntity.getTenantId());
-        sysDeptEntity.setDeptName(tenantDTO.getTenantName());
+        sysDeptEntity.setDeptName(tenantDTO.getTenantName()+"总部");
         sysDeptEntity.setParentId(0L);
         // 添加部门信息
         sysDeptService.save(sysDeptEntity);

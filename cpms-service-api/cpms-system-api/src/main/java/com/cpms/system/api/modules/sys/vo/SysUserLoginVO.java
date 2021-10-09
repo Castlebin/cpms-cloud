@@ -40,6 +40,11 @@ public class SysUserLoginVO extends UserLoginBase {
     private String tenantName;
 
     /**
+     * 租户编码
+     */
+    private String tenantCode;
+
+    /**
      * 岗位名称
      */
     private String postName;
