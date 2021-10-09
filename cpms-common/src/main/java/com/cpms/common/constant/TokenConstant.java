@@ -6,18 +6,7 @@ package com.cpms.common.constant;
  * @time: 2021/7/22 15:39
  */
 public interface TokenConstant {
-    String SIGN_KEY = "Cpms";
-    String H_TOKEN_KEY = "H-Auth-Token";
-    String USER_INFO = "_user_info";
     String CACHE_LOGIN_USER_INFO_KEY = "login:user:info:";
     String PERMISSION_KEY = "permission";
-    String SUPER_ADMINISTRATOR = "SUPER_ADMINISTRATOR";
-    String ADMINISTRATOR = "ADMINISTRATOR";
-    String ACCESS_TOKEN = "access_token";
-    String REFRESH_TOKEN = "refresh_token";
-    String TOKEN_TYPE = "token_type";
-    String EXPIRES_IN = "expires_in";
-    String LICENSE = "license";
-    String LICENSE_NAME = "powered by cpms";
     String DEFAULT_AVATAR = "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
 }
