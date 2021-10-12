@@ -71,7 +71,7 @@ public class CsSecureUtil {
     }
 
     /**
-     * 获取用户所属租户ID
+     * 获取用户所属租户编码
      * @return
      */
     public static String  userTenantCode(){

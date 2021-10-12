@@ -1,6 +1,8 @@
 package com.cpms.system.api.modules.sys.vo;
 
 import com.cpms.framework.common.core.secure.UserLoginBase;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,6 +24,7 @@ public class SysUserLoginVO extends UserLoginBase {
     /**
      * 部门ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long deptId;
 
     /**
@@ -32,6 +35,7 @@ public class SysUserLoginVO extends UserLoginBase {
     /**
      * 租户ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;
 
     /**
@@ -51,5 +55,6 @@ public class SysUserLoginVO extends UserLoginBase {
     /**
      * 岗位ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long postId;
 }

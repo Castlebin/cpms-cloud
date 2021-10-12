@@ -16,9 +16,6 @@
             <if test="tenantId !=null ">
                 and d.tenant_id = #{tenantId}
             </if>
-            <if test="parentId !=null ">
-                and d.parent_id = #{parentId}
-            </if>
             <if test="tenantName !=null and tenantName !=''">
                 and t.tenant_name like CONCAT('%',#{tenantName},'%' )
             </if>
@@ -35,8 +32,8 @@
         d.update_time,
         d.create_by,
         d.update_by,
-        t.tenant_name
-        ( SELECT CASE WHEN COUNT( 1 ) > 0 THEN 1 ELSE 0 END FROM cpms_system_dept WHERE dept_id = d.parent_id ) AS "superiorDept"
+        t.tenant_name,
+        ( SELECT dept_name FROM cpms_system_dept WHERE dept_id = d.parent_id ) AS superiorDept
         FROM cpms_system_dept d INNER JOIN cpms_system_tenant t  ON  t.tenant_id = d.tenant_id
         <where>
             d.del_flag = 0
@@ -45,9 +42,6 @@
             </if>
             <if test="tenantId !=null ">
                 and d.tenant_id = #{tenantId}
-            </if>
-            <if test="parentId !=null ">
-                and d.parent_id = #{parentId}
             </if>
             <if test="tenantName !=null and tenantName !=''">
                 and t.tenant_name like CONCAT('%',#{tenantName},'%' )

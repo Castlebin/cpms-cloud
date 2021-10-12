@@ -1,5 +1,6 @@
 package com.cpms.system.modules.sys.controller;
 
+import cn.hutool.core.lang.tree.Tree;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.core.base.BasePageVO;
@@ -13,12 +14,10 @@ import com.cpms.system.modules.sys.dto.ListDeptDTO;
 import com.cpms.system.modules.sys.service.ISysDeptService;
 import com.cpms.system.modules.sys.vo.SysDeptVO;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @description:
@@ -38,6 +37,15 @@ public class SysDeptController {
     @PostMapping("/list")
     public Result<BasePageVO<SysDeptVO>> listDept(@RequestBody ListDeptDTO  listDeptDTO){
         return ResultUtil.success(sysDeptService.listDept(listDeptDTO));
+    }
+
+    /**
+     *  部门树形结构
+     * @return
+     */
+    @GetMapping("/treeDept")
+    public Result<List<Tree<String>>> treeDept(){
+        return ResultUtil.success(sysDeptService.treeDept());
     }
 
 

@@ -1,5 +1,11 @@
 package com.cpms.system.modules.sys.service.impl;
 
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNode;
+import cn.hutool.core.lang.tree.TreeNodeConfig;
+import cn.hutool.core.lang.tree.TreeUtil;
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -20,6 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -35,7 +42,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     public BasePageVO<SysDeptVO> listDept(ListDeptDTO listDeptDTO) {
         BasePageVO<SysDeptVO> basePageVO = new BasePageVO();
         List<SysDeptVO> list;
-        listDeptDTO.setTenantId(CsSecureUtil.userTenantId());
+        if(!Objects.equals(CsSecureUtil.userTenantCode(), TenantConstant.CPMS_HEADQUARTERS)) {
+            listDeptDTO.setTenantId(CsSecureUtil.userTenantId());
+        }
         int count = sysDeptMapper.listDeptCount(listDeptDTO);
         if(count ==0){
             list = Lists.newArrayList();
@@ -72,5 +81,33 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
                 .eq(SysDeptEntity::getDeptId,deptDTO.getDeptId())
                 .eq(SysDeptEntity::getTenantId,CsSecureUtil.userTenantId());
         return this.update(updateWrapper);
+    }
+
+    @Override
+    public List<Tree<String>> treeDept() {
+        QueryWrapper<SysDeptEntity> query = Wrappers.query();
+        query.select("dept_id","dept_name","parent_id");
+        query.eq("tenant_id", CsSecureUtil.userTenantId());
+        query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
+        List<SysDeptEntity> list = this.list(query);
+        List<TreeNode<String>> nodeList =  list.stream().map(e->{
+            TreeNode<String> treeNode = new TreeNode();
+            treeNode.setId(String.valueOf(e.getDeptId()));
+            treeNode.setParentId( String.valueOf(e.getParentId()));
+            treeNode.setName(e.getDeptName());
+            return  treeNode;
+        }).collect(Collectors.toList());
+
+        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
+        treeNodeConfig.setIdKey("deptId");
+        treeNodeConfig.setNameKey("deptName");
+        treeNodeConfig.setDeep(10);
+        List<Tree<String>> treeNodes = TreeUtil.build(nodeList, "0", treeNodeConfig,
+                (treeNode, tree) -> {
+                    tree.setId(treeNode.getId());
+                    tree.setParentId(treeNode.getParentId());
+                    tree.setName(treeNode.getName());
+                });
+        return treeNodes;
     }
 }

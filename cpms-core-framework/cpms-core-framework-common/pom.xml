@@ -92,6 +92,13 @@
             <artifactId>spring-security-crypto</artifactId>
             <version>5.5.2</version>
         </dependency>
+
+        <!-- hutool工具类依赖 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
     </dependencies>
 
     <!-- 插件依赖 -->

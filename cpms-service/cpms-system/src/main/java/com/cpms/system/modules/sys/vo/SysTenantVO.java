@@ -2,6 +2,8 @@ package com.cpms.system.modules.sys.vo;
 
 import com.cpms.framework.common.core.base.BaseVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class SysTenantVO extends BaseVO {
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;
     private String tenantName;
     private String contacts;

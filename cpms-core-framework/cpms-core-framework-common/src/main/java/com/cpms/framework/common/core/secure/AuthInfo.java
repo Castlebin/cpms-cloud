@@ -1,5 +1,8 @@
 package com.cpms.framework.common.core.secure;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import java.io.Serializable;
 
 /**
@@ -16,6 +19,7 @@ public class AuthInfo implements Serializable {
     /**
      * 过期时间，单位：秒
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private long expire;
 
     private UserLoginBase userInfo;

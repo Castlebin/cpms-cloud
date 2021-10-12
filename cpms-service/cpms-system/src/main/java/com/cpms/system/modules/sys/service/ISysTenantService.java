@@ -8,6 +8,8 @@ import com.cpms.system.modules.sys.entity.SysTenantEntity;
 import com.cpms.system.modules.sys.vo.InitTenantAccountVO;
 import com.cpms.system.modules.sys.vo.SysTenantVO;
 
+import java.util.List;
+
 
 /**
  * @description:
@@ -19,4 +21,5 @@ public interface ISysTenantService extends IService<SysTenantEntity> {
     boolean updateTenant(SysTenantDTO tenantDTO);
     boolean deleteTenant(SysTenantDTO tenantDTO);
     BasePageVO<SysTenantVO> listTenant(ListTenantDTO listTenantDTO);
+    List<SysTenantVO> tenants();
 }

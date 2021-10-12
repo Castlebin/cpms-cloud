@@ -1,6 +1,8 @@
 package com.cpms.system.modules.sys.vo;
 
 import com.cpms.framework.common.core.base.BaseVO;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.util.List;
@@ -12,7 +14,9 @@ import java.util.List;
  */
 @Data
 public class SysMenuVO  extends BaseVO {
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long menuId;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long parentId;
     private List<SysMenuVO> children;
     private String name;

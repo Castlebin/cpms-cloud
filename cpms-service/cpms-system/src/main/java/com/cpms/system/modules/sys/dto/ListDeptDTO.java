@@ -14,6 +14,5 @@ import lombok.EqualsAndHashCode;
 public class ListDeptDTO extends BasePageDTO {
     private String deptName;
     private Long tenantId;
-    private Long parentId;
     private String tenantName;
 }

@@ -1,18 +1,21 @@
-package com.cpms.system.api.modules.sys.vo;
+package com.cpms.system.modules.sys.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author gulang
  * @Description:
- * @time: 2021/8/7 13:15
+ * @time: 2021/10/10 18:43
  */
 @Data
-public class SysRoleVO {
+public class TreeDeptVO {
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long roleId;
-    private String roleName;
-    private String roleCode;
+    private Long deptId;
+    private String deptName;
+    private Integer parentId;
+    private List<TreeDeptVO> children;
 }

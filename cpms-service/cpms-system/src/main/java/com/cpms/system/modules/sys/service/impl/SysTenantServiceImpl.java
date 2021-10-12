@@ -1,15 +1,18 @@
 package com.cpms.system.modules.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
+import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.enums.RandomTypeEnum;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsGenerateIdUtil;
 import com.cpms.framework.common.utils.CsRandomUtil;
+import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.ListTenantDTO;
 import com.cpms.system.modules.sys.dto.SysTenantDTO;
@@ -25,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -107,7 +112,24 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         return basePageVO;
     }
 
-   private InitTenantAccountVO initAccount(SysTenantEntity sysTenantEntity,Long deptId,Long roleId){
+    @Override
+    public List<SysTenantVO> tenants() {
+        QueryWrapper<SysTenantEntity> query = Wrappers.query();
+        query.select("tenant_id","tenant_name");
+        if(!Objects.equals(CsSecureUtil.userTenantCode(), TenantConstant.CPMS_HEADQUARTERS)) {
+            query.eq("tenant_id", CsSecureUtil.userTenantId());
+        }
+        query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
+        List<SysTenantEntity> list = this.list(query);
+        return list.stream().map(e->{
+            SysTenantVO sysTenantVO = new SysTenantVO();
+            sysTenantVO.setTenantId(e.getTenantId());
+            sysTenantVO.setTenantName(e.getTenantName());
+            return  sysTenantVO;
+        }).collect(Collectors.toList());
+    }
+
+    private InitTenantAccountVO initAccount(SysTenantEntity sysTenantEntity,Long deptId,Long roleId){
        InitTenantAccountVO initTenantAccountVO = new InitTenantAccountVO();
        SysUserEntity sysUserEntity = new SysUserEntity();
        sysUserEntity.setTenantId(sysTenantEntity.getTenantId());

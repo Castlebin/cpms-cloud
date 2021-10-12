@@ -2,6 +2,8 @@ package com.cpms.system.modules.sys.vo;
 
 import com.cpms.framework.common.core.base.BaseVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class SysUserVO extends BaseVO {
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
     private String deptName;
     private String userName;
@@ -43,6 +46,7 @@ public class SysUserVO extends BaseVO {
      * 0-正常，1-已禁用
      */
     private Integer userStatus;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long postId;
     private String postName;
 }

@@ -1,5 +1,6 @@
 package com.cpms.system.modules.sys.service;
 
+import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.mybatis.groups.AddGroup;
@@ -12,6 +13,8 @@ import com.cpms.system.modules.sys.vo.SysDeptVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: gulang
@@ -22,4 +25,5 @@ public interface ISysDeptService extends IService<SysDeptEntity> {
     boolean addDept(SysDeptDTO deptDTO);
     boolean updateDept(SysDeptDTO deptDTO);
     boolean deleteDept(SysDeptDTO deptDTO);
+    List<Tree<String>> treeDept();
 }

@@ -1,6 +1,8 @@
 package com.cpms.framework.common.core.secure;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -15,6 +17,7 @@ public class UserLoginBase implements Serializable{
     /**
      * 用户userId
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
 
     /**

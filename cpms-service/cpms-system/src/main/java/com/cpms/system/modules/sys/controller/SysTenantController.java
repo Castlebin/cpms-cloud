@@ -14,12 +14,10 @@ import com.cpms.system.modules.sys.service.ISysTenantService;
 import com.cpms.system.modules.sys.vo.InitTenantAccountVO;
 import com.cpms.system.modules.sys.vo.SysTenantVO;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @description:
@@ -33,7 +31,16 @@ public class SysTenantController {
     private ISysTenantService sysTenantService;
 
     /**
-     *  添加租户
+     *  租户列表
+     * @return
+     */
+    @GetMapping("/tenants")
+    public Result<List<SysTenantVO>> tenants(){
+        return ResultUtil.success(sysTenantService.tenants());
+    }
+
+    /**
+     *  租户列表
      * @param listTenantDTO
      * @return
      */
