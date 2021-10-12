@@ -14,6 +14,12 @@ public interface AppConstant {
     String APPLICATION_NAME_PREFIX = "cpms-server-";
 
     /**
+     * demo服务
+     */
+    String APPLICATION_DEMO_NAME = APPLICATION_NAME_PREFIX+"demo";
+    String DEMO_API_PREFIX = "/demoMicroservice";
+
+    /**
      * 授权服务
      */
     String APPLICATION_AUTH_NAME = APPLICATION_NAME_PREFIX+"auth";
