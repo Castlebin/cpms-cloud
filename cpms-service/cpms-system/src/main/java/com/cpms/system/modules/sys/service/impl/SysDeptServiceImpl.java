@@ -42,9 +42,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     public BasePageVO<SysDeptVO> listDept(ListDeptDTO listDeptDTO) {
         BasePageVO<SysDeptVO> basePageVO = new BasePageVO();
         List<SysDeptVO> list;
-        if(!Objects.equals(CsSecureUtil.userTenantCode(), TenantConstant.CPMS_HEADQUARTERS)) {
-            listDeptDTO.setTenantId(CsSecureUtil.userTenantId());
-        }
+        listDeptDTO.setTenantId(CsSecureUtil.userTenantId());
         int count = sysDeptMapper.listDeptCount(listDeptDTO);
         if(count ==0){
             list = Lists.newArrayList();
@@ -97,7 +95,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
             treeNode.setName(e.getDeptName());
             return  treeNode;
         }).collect(Collectors.toList());
-
         TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
         treeNodeConfig.setIdKey("deptId");
         treeNodeConfig.setNameKey("deptName");

@@ -26,6 +26,7 @@
         SELECT
         d.dept_id,
         d.dept_name,
+        d.dept_desc,
         d.parent_id,
         d.tenant_id,
         d.create_time,
