@@ -4,17 +4,15 @@ import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
-import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
-import com.cpms.system.modules.sys.dto.ListDeptDTO;
+import com.cpms.system.modules.sys.dto.QueryDeptDTO;
 import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
 import com.cpms.system.modules.sys.mapper.SysDeptMapper;
@@ -25,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +36,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     private SysDeptMapper sysDeptMapper;
 
     @Override
-    public BasePageVO<SysDeptVO> listDept(ListDeptDTO listDeptDTO) {
+    public BasePageVO<SysDeptVO> listDept(QueryDeptDTO listDeptDTO) {
         BasePageVO<SysDeptVO> basePageVO = new BasePageVO();
         List<SysDeptVO> list;
         listDeptDTO.setTenantId(CsSecureUtil.userTenantId());
@@ -99,12 +96,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
         treeNodeConfig.setIdKey("deptId");
         treeNodeConfig.setNameKey("deptName");
         treeNodeConfig.setDeep(10);
-        List<Tree<String>> treeNodes = TreeUtil.build(nodeList, "0", treeNodeConfig,
+        return TreeUtil.build(nodeList, "0", treeNodeConfig,
                 (treeNode, tree) -> {
                     tree.setId(treeNode.getId());
                     tree.setParentId(treeNode.getParentId());
                     tree.setName(treeNode.getName());
                 });
-        return treeNodes;
     }
 }

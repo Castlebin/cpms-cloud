@@ -36,7 +36,7 @@
          AND t.del_flag = 0
     </select>
 
-    <select id="listUserCount" parameterType="com.cpms.system.modules.sys.dto.ListUserDTO" resultType="java.lang.Integer">
+    <select id="listUserCount" parameterType="com.cpms.system.modules.sys.dto.QueryUserDTO" resultType="java.lang.Integer">
         select count(1)
         from
         cpms_system_user u
@@ -67,7 +67,7 @@
         </where>
     </select>
 
-    <select id="listUser" parameterType="com.cpms.system.modules.sys.dto.ListUserDTO" resultType="com.cpms.system.modules.sys.vo.SysUserVO">
+    <select id="listUser" parameterType="com.cpms.system.modules.sys.dto.QueryUserDTO" resultType="com.cpms.system.modules.sys.vo.SysUserVO">
         select
         u.user_id,
         u.user_account,

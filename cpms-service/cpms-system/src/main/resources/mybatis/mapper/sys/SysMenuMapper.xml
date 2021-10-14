@@ -48,7 +48,7 @@
         )
     </select>
 
-    <select id="listMenuCount" parameterType="com.cpms.system.modules.sys.dto.ListMenuDTO" resultType="java.lang.Integer">
+    <select id="listMenuCount" parameterType="com.cpms.system.modules.sys.dto.QueryMenuDTO" resultType="java.lang.Integer">
         select count(1)
         from cpms_system_menu
         <where>
@@ -65,7 +65,7 @@
         </where>
     </select>
 
-    <select id="listMenu" parameterType="com.cpms.system.modules.sys.dto.ListMenuDTO" resultMap="menuResultMap">
+    <select id="listMenu" parameterType="com.cpms.system.modules.sys.dto.QueryMenuDTO" resultMap="menuResultMap">
         select *
         from cpms_system_menu
         <where>

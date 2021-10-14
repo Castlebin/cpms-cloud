@@ -8,7 +8,7 @@ import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
-import com.cpms.system.modules.sys.dto.ListTenantDTO;
+import com.cpms.system.modules.sys.dto.QueryTenantDTO;
 import com.cpms.system.modules.sys.dto.SysTenantDTO;
 import com.cpms.system.modules.sys.service.ISysTenantService;
 import com.cpms.system.modules.sys.vo.InitTenantAccountVO;
@@ -46,7 +46,7 @@ public class SysTenantController {
      */
     @PostMapping("/list")
     @PreAuth("sys_tenant_list")
-    public Result<BasePageVO<SysTenantVO>> listTenant(@RequestBody ListTenantDTO listTenantDTO){
+    public Result<BasePageVO<SysTenantVO>> listTenant(@RequestBody QueryTenantDTO listTenantDTO){
         return ResultUtil.success(sysTenantService.listTenant(listTenantDTO));
     }
 

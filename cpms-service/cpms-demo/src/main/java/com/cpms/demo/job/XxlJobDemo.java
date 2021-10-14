@@ -1,4 +1,4 @@
-package com.cpms.system.modules.sys.job;
+package com.cpms.demo.job;
 
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.XxlJob;

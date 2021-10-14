@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  * @time: 2021/9/29 9:51
  */
 @Data
-public class ListMenuDTO{
+public class QueryMenuDTO {
     private String name;
     private String code;
     private String alias;

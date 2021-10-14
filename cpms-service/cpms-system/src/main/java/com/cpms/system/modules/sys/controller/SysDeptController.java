@@ -10,7 +10,7 @@ import com.cpms.framework.mybatis.groups.DeleteGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
 import com.cpms.system.modules.sys.dto.SysDeptDTO;
-import com.cpms.system.modules.sys.dto.ListDeptDTO;
+import com.cpms.system.modules.sys.dto.QueryDeptDTO;
 import com.cpms.system.modules.sys.service.ISysDeptService;
 import com.cpms.system.modules.sys.vo.SysDeptVO;
 import org.springframework.validation.annotation.Validated;
@@ -35,7 +35,7 @@ public class SysDeptController {
      * @return
      */
     @PostMapping("/list")
-    public Result<BasePageVO<SysDeptVO>> listDept(@RequestBody ListDeptDTO  listDeptDTO){
+    public Result<BasePageVO<SysDeptVO>> listDept(@RequestBody QueryDeptDTO listDeptDTO){
         return ResultUtil.success(sysDeptService.listDept(listDeptDTO));
     }
 

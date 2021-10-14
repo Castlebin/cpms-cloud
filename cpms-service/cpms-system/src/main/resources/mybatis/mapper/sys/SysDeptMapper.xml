@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cpms.system.modules.sys.mapper.SysDeptMapper">
 
-    <select id="listDeptCount" parameterType="com.cpms.system.modules.sys.dto.ListDeptDTO" resultType="java.lang.Integer">
+    <select id="listDeptCount" parameterType="com.cpms.system.modules.sys.dto.QueryDeptDTO" resultType="java.lang.Integer">
         SELECT
         count(1)
         FROM  cpms_system_dept d INNER JOIN cpms_system_tenant t  ON  t.tenant_id = d.tenant_id
@@ -22,7 +22,7 @@
         </where>
     </select>
 
-    <select id="listDept" parameterType="com.cpms.system.modules.sys.dto.ListDeptDTO" resultType="com.cpms.system.modules.sys.vo.SysDeptVO">
+    <select id="listDept" parameterType="com.cpms.system.modules.sys.dto.QueryDeptDTO" resultType="com.cpms.system.modules.sys.vo.SysDeptVO">
         SELECT
         d.dept_id,
         d.dept_name,

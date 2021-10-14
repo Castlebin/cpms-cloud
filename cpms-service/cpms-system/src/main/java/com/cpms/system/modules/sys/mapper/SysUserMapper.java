@@ -4,7 +4,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
-import com.cpms.system.modules.sys.dto.ListUserDTO;
+import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
 import com.cpms.system.modules.sys.vo.SysUserVO;
 
@@ -24,6 +24,6 @@ public interface SysUserMapper extends BaseMapper<SysUserEntity> {
      */
     SysUserLoginBO querySysUserInfo(SysUserLginDTO sysUserLginDTO);
 
-    int listUserCount(ListUserDTO listUserDTO);
-    List<SysUserVO> listUser(ListUserDTO listUserDTO);
+    int listUserCount(QueryUserDTO listUserDTO);
+    List<SysUserVO> listUser(QueryUserDTO listUserDTO);
 }

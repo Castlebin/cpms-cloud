@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cpms.system.modules.sys.mapper.SysPostMapper">
 
-    <select id="listPostCount" parameterType="com.cpms.system.modules.sys.dto.ListPostDTO" resultType="java.lang.Integer">
+    <select id="listPostCount" parameterType="com.cpms.system.modules.sys.dto.QueryPostDTO" resultType="java.lang.Integer">
         SELECT
         count(1)
         FROM
@@ -24,7 +24,7 @@
         </where>
     </select>
 
-    <select id="listPost" parameterType="com.cpms.system.modules.sys.dto.ListPostDTO" resultType="com.cpms.system.modules.sys.vo.SysPostVO">
+    <select id="listPost" parameterType="com.cpms.system.modules.sys.dto.QueryPostDTO" resultType="com.cpms.system.modules.sys.vo.SysPostVO">
         SELECT
         p.post_id,
         p.dept_id,

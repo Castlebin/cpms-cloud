@@ -1,7 +1,6 @@
 package com.cpms.system.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,7 +14,7 @@ import com.cpms.framework.common.utils.CsDateUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
-import com.cpms.system.modules.sys.dto.ListMenuDTO;
+import com.cpms.system.modules.sys.dto.QueryMenuDTO;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
 import com.cpms.system.modules.sys.entity.SysTopMenuEntity;
@@ -92,7 +91,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     }
 
     @Override
-    public BasePageVO<SysMenuVO> listMenu(ListMenuDTO listMenuDTO) {
+    public BasePageVO<SysMenuVO> listMenu(QueryMenuDTO listMenuDTO) {
         BasePageVO<SysMenuVO> basePageVO = new BasePageVO();
         List<SysMenuVO> list;
         int count = sysMenuMapper.listMenuCount(listMenuDTO);

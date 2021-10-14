@@ -7,7 +7,7 @@ import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
-import com.cpms.system.modules.sys.dto.ListPostDTO;
+import com.cpms.system.modules.sys.dto.QueryPostDTO;
 import com.cpms.system.modules.sys.dto.SysPostDTO;
 import com.cpms.system.modules.sys.service.ISysPostService;
 import com.cpms.system.modules.sys.vo.SysPostVO;
@@ -35,7 +35,7 @@ public class SysPostController {
      * @return
      */
     @PostMapping("/list")
-    public Result<BasePageVO<SysPostVO>> listPost(@RequestBody ListPostDTO listPostDTO){
+    public Result<BasePageVO<SysPostVO>> listPost(@RequestBody QueryPostDTO listPostDTO){
         return ResultUtil.success(sysPostService.listPost(listPostDTO));
     }
 
