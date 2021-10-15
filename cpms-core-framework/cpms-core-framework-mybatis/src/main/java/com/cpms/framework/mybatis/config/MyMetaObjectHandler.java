@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.time.LocalDateTime;
 
 /**
- * @description: mybatisPlus配置
+ * @description: 自动填充字段信息配置
  * @author: gulang
  * @time: 2021/7/16 16:53
  */
 @EnableTransactionManagement // 开启事务
 @Configuration
-public class MybatisPlusConfig implements MetaObjectHandler {
+public class MyMetaObjectHandler implements MetaObjectHandler {
 
     /** +
      * 分页插件配置

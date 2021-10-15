@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.cpms.framework.mybatis.config.MybatisPlusConfig
+com.cpms.framework.mybatis.config.MyMetaObjectHandler
 
 
