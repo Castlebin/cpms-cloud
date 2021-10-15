@@ -6,7 +6,5 @@ package com.cpms.common.constant;
  * @time: 2021/7/22 15:39
  */
 public interface TokenConstant {
-    String CACHE_LOGIN_USER_INFO_KEY = "login:user:info:";
-    String PERMISSION_KEY = "permission";
     String DEFAULT_AVATAR = "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
 }

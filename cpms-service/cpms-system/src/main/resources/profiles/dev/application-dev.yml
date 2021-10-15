@@ -17,7 +17,7 @@ spring:
 
    #******** 激活自定义配置文件 ****#
    profiles:
-      include: redis,system,mysql
+      include: redis,system,jdbc
 
    cloud:
       nacos:

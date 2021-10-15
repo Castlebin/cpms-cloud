@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
-import com.cpms.common.constant.TokenConstant;
+import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import com.cpms.framework.common.exception.BizException;
@@ -110,10 +110,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         TokenUserInfo user = CsSecureUtil.getUser();
         List<String> buttons = sysMenuMapper.queryRoleButtons(user.getRoleIds());
         Map<String, Object> cacheMap = Maps.newHashMap();
-        cacheMap.put(TokenConstant.PERMISSION_KEY,StringUtils.join(buttons,","));
+        cacheMap.put(CoreCommonConstant.PERMISSION_KEY,StringUtils.join(buttons,","));
         long tokenExpire = user.getTokenExpire();
         long curTime = CsDateUtil.currentTimeStamp(CsDateUtil.TIME_STAMP_S);
-        CsRedisUtil.hmset(TokenConstant.CACHE_LOGIN_USER_INFO_KEY + user.getUserId(),cacheMap, (tokenExpire - curTime));
+        CsRedisUtil.hmset(CoreCommonConstant.CACHE_LOGIN_USER_INFO_KEY + user.getUserId(),cacheMap, (tokenExpire - curTime));
         return buttons;
     }
 

@@ -17,4 +17,6 @@ public class CoreCommonConstant {
     public static final String EXPIRES_IN = "expires_in";
     public static final String LICENSE = "license";
     public static final String LICENSE_NAME = "powered by cpms";
+    public static final String CACHE_LOGIN_USER_INFO_KEY = "login:user:info:";
+    public static final String PERMISSION_KEY = "permission";
 }
