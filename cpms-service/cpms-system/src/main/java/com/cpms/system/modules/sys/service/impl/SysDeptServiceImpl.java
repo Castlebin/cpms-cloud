@@ -12,8 +12,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
+import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.ListDeptDTO;
 import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
@@ -67,6 +69,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
         LambdaUpdateWrapper<SysDeptEntity> updateWrapper = Wrappers.<SysDeptEntity>lambdaUpdate()
                 .set(SysDeptEntity::getDeptName, deptDTO.getDeptName())
                 .set(SysDeptEntity::getParentId, deptDTO.getParentId())
+                .set(SysDeptEntity::getDeptDesc, deptDTO.getDeptDesc())
                 .eq(SysDeptEntity::getDeptId,deptDTO.getDeptId())
                 .eq(SysDeptEntity::getTenantId,CsSecureUtil.userTenantId());
         return this.update(updateWrapper);
@@ -74,6 +77,13 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
 
     @Override
     public boolean deleteDept(SysDeptDTO deptDTO) {
+        QueryWrapper<SysDeptEntity> query = Wrappers.query();
+        query.eq("parent_id",deptDTO.getDeptId());
+        query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
+        Integer count = baseMapper.selectCount(query);
+        if(count > 0){
+            throw new BizException(SystemResponseResultEnum.THERE_ARE_CHILD_NODES_ERROR);
+        }
         LambdaUpdateWrapper<SysDeptEntity> updateWrapper = Wrappers.<SysDeptEntity>lambdaUpdate()
                 .set(SysDeptEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
                 .eq(SysDeptEntity::getDeptId,deptDTO.getDeptId())

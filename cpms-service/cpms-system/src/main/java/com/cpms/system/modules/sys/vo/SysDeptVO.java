@@ -18,7 +18,8 @@ public class SysDeptVO extends BaseVO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long deptId;
     private String deptName;
-    private Integer parentId;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long parentId;
     private String tenantName;
     @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;
