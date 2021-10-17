@@ -8,7 +8,7 @@ import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
-import com.cpms.system.modules.sys.dto.ListUserDTO;
+import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
 import com.cpms.system.modules.sys.dto.SysUserDTO;
 import com.cpms.system.modules.sys.service.ISysUserService;
@@ -39,7 +39,7 @@ public class SysUserController {
      * @return
      */
     @PostMapping("/list")
-    public Result<BasePageVO<SysUserVO>> listUser(@RequestBody ListUserDTO listUserDTO){
+    public Result<BasePageVO<SysUserVO>> listUser(@RequestBody QueryUserDTO listUserDTO){
         return ResultUtil.success(sysUserService.listUser(listUserDTO));
     }
 
@@ -73,4 +73,6 @@ public class SysUserController {
     public Result<String> generateAccount(){
         return ResultUtil.success(sysUserService.generateAccount());
     }
+
+
 }

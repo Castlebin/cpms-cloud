@@ -3,12 +3,11 @@ package com.cpms.system.modules.sys.controller;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.core.base.BasePageVO;
-import com.cpms.framework.log.annotations.OperLog;
 import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
-import com.cpms.system.modules.sys.dto.ListRoleDTO;
+import com.cpms.system.modules.sys.dto.QueryRoleDTO;
 import com.cpms.system.modules.sys.dto.SysRoleDTO;
 import com.cpms.system.modules.sys.service.ISysRoleService;
 import com.cpms.system.modules.sys.vo.SysRoleVO;
@@ -35,7 +34,7 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("/list")
-    public Result<BasePageVO<SysRoleVO>> listRole(@RequestBody ListRoleDTO listRoleDTO){
+    public Result<BasePageVO<SysRoleVO>> listRole(@RequestBody QueryRoleDTO listRoleDTO){
         return ResultUtil.success(sysRoleService.listRole(listRoleDTO));
     }
 

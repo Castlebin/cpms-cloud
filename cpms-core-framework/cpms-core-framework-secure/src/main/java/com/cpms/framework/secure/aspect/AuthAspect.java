@@ -1,5 +1,6 @@
 package com.cpms.framework.secure.aspect;
 
+import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
@@ -25,8 +26,6 @@ import java.util.Arrays;
 @Aspect
 @Configuration
 public class AuthAspect {
-    private static final String CACHE_LOGIN_USER_INFO_KEY = "login:user:info:";
-    private static final String PERMISSION_KEY = "permission";
     /**
      *  execution表达式
       * @Pointcut(value = "execution(* com.cpms..controller..*.*(..)) || execution(* com.cpms..feign..*.*(..))")
@@ -95,7 +94,8 @@ public class AuthAspect {
         if(CsSecureUtil.isSuperAdmin()) {
             return  true;
         }
-        String cachePermissions = (String) CsRedisUtil.hget(CACHE_LOGIN_USER_INFO_KEY + tokenInfo.getUserId(), PERMISSION_KEY);
+        String cachePermissions = (String) CsRedisUtil.hget(CoreCommonConstant.CACHE_LOGIN_USER_INFO_KEY + tokenInfo.getUserId(),
+                CoreCommonConstant.PERMISSION_KEY);
         if(StringUtils.isBlank(cachePermissions)) {
             return false;
         }

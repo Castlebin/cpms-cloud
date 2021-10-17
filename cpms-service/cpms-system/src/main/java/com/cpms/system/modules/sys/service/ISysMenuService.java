@@ -2,7 +2,7 @@ package com.cpms.system.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cpms.framework.common.core.base.BasePageVO;
-import com.cpms.system.modules.sys.dto.ListMenuDTO;
+import com.cpms.system.modules.sys.dto.QueryMenuDTO;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
 import com.cpms.system.modules.sys.vo.SysMenuVO;
@@ -19,5 +19,5 @@ public interface ISysMenuService extends IService<SysMenuEntity> {
     boolean addMenu(SysMenuDTO sysMenuDTO);
     boolean updateMenu(SysMenuDTO sysMenuDTO);
     boolean deleteMenu(SysMenuDTO sysMenuDTO);
-    BasePageVO<SysMenuVO> listMenu(ListMenuDTO listMenuDTO);
+    BasePageVO<SysMenuVO> listMenu(QueryMenuDTO listMenuDTO);
 }

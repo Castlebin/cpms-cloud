@@ -1,12 +1,11 @@
 package com.cpms.system.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
-import com.cpms.common.constant.TokenConstant;
+import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import com.cpms.framework.common.exception.BizException;
@@ -15,7 +14,7 @@ import com.cpms.framework.common.utils.CsDateUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
-import com.cpms.system.modules.sys.dto.ListMenuDTO;
+import com.cpms.system.modules.sys.dto.QueryMenuDTO;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
 import com.cpms.system.modules.sys.entity.SysTopMenuEntity;
@@ -92,7 +91,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     }
 
     @Override
-    public BasePageVO<SysMenuVO> listMenu(ListMenuDTO listMenuDTO) {
+    public BasePageVO<SysMenuVO> listMenu(QueryMenuDTO listMenuDTO) {
         BasePageVO<SysMenuVO> basePageVO = new BasePageVO();
         List<SysMenuVO> list;
         int count = sysMenuMapper.listMenuCount(listMenuDTO);
@@ -111,10 +110,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         TokenUserInfo user = CsSecureUtil.getUser();
         List<String> buttons = sysMenuMapper.queryRoleButtons(user.getRoleIds());
         Map<String, Object> cacheMap = Maps.newHashMap();
-        cacheMap.put(TokenConstant.PERMISSION_KEY,StringUtils.join(buttons,","));
+        cacheMap.put(CoreCommonConstant.PERMISSION_KEY,StringUtils.join(buttons,","));
         long tokenExpire = user.getTokenExpire();
         long curTime = CsDateUtil.currentTimeStamp(CsDateUtil.TIME_STAMP_S);
-        CsRedisUtil.hmset(TokenConstant.CACHE_LOGIN_USER_INFO_KEY + user.getUserId(),cacheMap, (tokenExpire - curTime));
+        CsRedisUtil.hmset(CoreCommonConstant.CACHE_LOGIN_USER_INFO_KEY + user.getUserId(),cacheMap, (tokenExpire - curTime));
         return buttons;
     }
 

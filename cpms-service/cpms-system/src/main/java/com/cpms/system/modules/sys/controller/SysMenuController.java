@@ -7,7 +7,7 @@ import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
-import com.cpms.system.modules.sys.dto.ListMenuDTO;
+import com.cpms.system.modules.sys.dto.QueryMenuDTO;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.service.ISysMenuService;
 import com.cpms.system.modules.sys.vo.SysMenuVO;
@@ -33,7 +33,7 @@ public class SysMenuController {
      * @return
      */
     @PostMapping("/list")
-    public Result<BasePageVO<SysMenuVO>> listMenu(@RequestBody ListMenuDTO listMenuDTO){
+    public Result<BasePageVO<SysMenuVO>> listMenu(@RequestBody QueryMenuDTO listMenuDTO){
         return ResultUtil.success(sysMenuService.listMenu(listMenuDTO));
     }
 

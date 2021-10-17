@@ -8,7 +8,7 @@ import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
-import com.cpms.system.modules.sys.dto.ListRoleDTO;
+import com.cpms.system.modules.sys.dto.QueryRoleDTO;
 import com.cpms.system.modules.sys.dto.SysRoleDTO;
 import com.cpms.system.modules.sys.entity.SysRoleEntity;
 import com.cpms.system.modules.sys.mapper.SysRoleMapper;
@@ -36,7 +36,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     }
 
     @Override
-    public BasePageVO<SysRoleVO> listRole(ListRoleDTO listRoleDTO) {
+    public BasePageVO<SysRoleVO> listRole(QueryRoleDTO listRoleDTO) {
         BasePageVO<SysRoleVO> listRoleVO = new BasePageVO();
         List<SysRoleVO> sysRoleVoList;
         listRoleDTO.setTenantId(CsSecureUtil.userTenantId());

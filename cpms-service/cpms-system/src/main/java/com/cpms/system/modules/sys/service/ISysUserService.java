@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
-import com.cpms.system.modules.sys.dto.ListUserDTO;
+import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
 import com.cpms.system.modules.sys.dto.SysUserDTO;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
@@ -21,7 +21,7 @@ public interface ISysUserService extends IService<SysUserEntity> {
      * @param listUserDTO
      * @return
      */
-    BasePageVO<SysUserVO> listUser(ListUserDTO listUserDTO);
+    BasePageVO<SysUserVO> listUser(QueryUserDTO listUserDTO);
     /**
      *  登录用户信息查询
      * @param sysUserLginDTO

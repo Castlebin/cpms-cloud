@@ -7,7 +7,7 @@ import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
-import com.cpms.system.modules.sys.dto.ListPostDTO;
+import com.cpms.system.modules.sys.dto.QueryPostDTO;
 import com.cpms.system.modules.sys.dto.SysPostDTO;
 import com.cpms.system.modules.sys.entity.SysPostEntity;
 import com.cpms.system.modules.sys.mapper.SysPostMapper;
@@ -31,7 +31,7 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
     private SysPostMapper sysPostMapper;
 
     @Override
-    public BasePageVO<SysPostVO> listPost(ListPostDTO listPostDTO) {
+    public BasePageVO<SysPostVO> listPost(QueryPostDTO listPostDTO) {
         BasePageVO<SysPostVO> basePageVO = new BasePageVO();
         List<SysPostVO> list;
         listPostDTO.setTenantId(CsSecureUtil.userTenantId());
@@ -67,7 +67,8 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
     public boolean updatePost(SysPostDTO postDTO) {
         LambdaUpdateWrapper<SysPostEntity> updateWrapper = Wrappers.<SysPostEntity>lambdaUpdate()
                 .set(SysPostEntity::getPostName, postDTO.getPostName())
-                .set(SysPostEntity::getDeptId, postDTO.getDeptId())
+                .set(SysPostEntity::getPostCode, postDTO.getPostCode())
+                .set(SysPostEntity::getPostDesc, postDTO.getPostDesc())
                 .eq(SysPostEntity::getPostId,postDTO.getPostId())
                 .eq(SysPostEntity::getTenantId,CsSecureUtil.userTenantId());
         return this.update(updateWrapper);

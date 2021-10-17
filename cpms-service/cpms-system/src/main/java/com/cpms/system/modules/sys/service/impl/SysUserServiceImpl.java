@@ -12,7 +12,7 @@ import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
-import com.cpms.system.modules.sys.dto.ListUserDTO;
+import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
 import com.cpms.system.modules.sys.dto.SysUserDTO;
 import com.cpms.system.modules.sys.entity.SysRoleUserEntity;
@@ -50,7 +50,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     private ISysRoleUserService sysRoleUserService;
 
     @Override
-    public BasePageVO<SysUserVO> listUser(ListUserDTO listUserDTO) {
+    public BasePageVO<SysUserVO> listUser(QueryUserDTO listUserDTO) {
         BasePageVO<SysUserVO> listUserVO = new BasePageVO();
         List<SysUserVO> sysUserVoList;
         listUserDTO.setTenantId(CsSecureUtil.userTenantId());

@@ -22,5 +22,6 @@ public class SysPostEntity extends TenantEntity {
     @TableId(value = "post_id",type = IdType.ASSIGN_ID)
     private Long postId;
     private String postName;
-    private Long deptId;
+    private String postCode;
+    private String postDesc;
 }

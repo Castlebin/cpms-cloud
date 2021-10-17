@@ -14,7 +14,7 @@ import com.cpms.framework.common.utils.CsGenerateIdUtil;
 import com.cpms.framework.common.utils.CsRandomUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
-import com.cpms.system.modules.sys.dto.ListTenantDTO;
+import com.cpms.system.modules.sys.dto.QueryTenantDTO;
 import com.cpms.system.modules.sys.dto.SysTenantDTO;
 import com.cpms.system.modules.sys.entity.*;
 import com.cpms.system.modules.sys.mapper.SysTenantMapper;
@@ -73,7 +73,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         // 添加角色信息
         SysRoleEntity sysRoleEntity = new SysRoleEntity();
         sysRoleEntity.setTenantId(sysTenantEntity.getTenantId());
-        sysRoleEntity.setDeptId(sysDeptEntity.getDeptId());
         sysRoleEntity.setRoleName(CommonConstant.DEFAULT_ROLE_NAME);
         sysRoleEntity.setRoleCode(CommonConstant.DEFAULT_ROLE_CODE);
         sysRoleEntity.setRoleDesc(CommonConstant.DEFAULT_ROLE_DESC);
@@ -98,7 +97,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     }
 
     @Override
-    public BasePageVO<SysTenantVO> listTenant(ListTenantDTO listTenantDTO) {
+    public BasePageVO<SysTenantVO> listTenant(QueryTenantDTO listTenantDTO) {
         BasePageVO<SysTenantVO> basePageVO = new BasePageVO();
         List<SysTenantVO> list;
         int count = sysTenantMapper.listTenantCount(listTenantDTO);

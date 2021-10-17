@@ -7,12 +7,12 @@ import lombok.EqualsAndHashCode;
 /**
  * @description:
  * @author: gulang
- * @time: 2021/9/27 14:31
+ * @time: 2021/9/23 10:55
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ListPostDTO extends BasePageDTO {
-    private String postName;
-    private Long deptId;
+public class QueryDeptDTO extends BasePageDTO {
+    private String deptName;
     private Long tenantId;
+    private String tenantName;
 }

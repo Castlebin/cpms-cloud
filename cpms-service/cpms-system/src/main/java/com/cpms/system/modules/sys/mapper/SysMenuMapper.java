@@ -2,9 +2,8 @@ package com.cpms.system.modules.sys.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cpms.system.modules.sys.dto.ListMenuDTO;
+import com.cpms.system.modules.sys.dto.QueryMenuDTO;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
-import com.cpms.system.modules.sys.vo.SysMenuVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {
 
     List<String> queryRoleButtons(@Param("list") List<Long> roleIds);
 
-    int listMenuCount(ListMenuDTO listMenuDTO);
+    int listMenuCount(QueryMenuDTO listMenuDTO);
 
-    List<SysMenuEntity> listMenu(ListMenuDTO listMenuDTO);
+    List<SysMenuEntity> listMenu(QueryMenuDTO listMenuDTO);
 }
