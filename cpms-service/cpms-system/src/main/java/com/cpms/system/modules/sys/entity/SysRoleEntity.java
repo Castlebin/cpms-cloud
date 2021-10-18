@@ -21,7 +21,6 @@ public class SysRoleEntity extends TenantEntity {
      */
     @TableId(value = "role_id",type = IdType.ASSIGN_ID)
     private Long roleId;
-    private Long deptId;
     private String roleName;
     private String roleCode;
     private String roleDesc;

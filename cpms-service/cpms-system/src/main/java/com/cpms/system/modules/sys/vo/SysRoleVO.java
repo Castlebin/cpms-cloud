@@ -18,10 +18,11 @@ public class SysRoleVO extends BaseVO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long roleId;
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long deptId;
-    private String deptName;
+    private Long tenantId;
+    private String tenantName;
     private String roleName;
     private String roleCode;
     private String roleDesc;
+    private Integer roleSort;
 
 }

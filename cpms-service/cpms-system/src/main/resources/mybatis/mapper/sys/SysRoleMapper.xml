@@ -15,12 +15,15 @@
         count(1)
         FROM  cpms_system_role r
         LEFT JOIN
-        cpms_system_dept d
-        ON d.dept_id = r.dept_id
+        cpms_system_tenant t
+        ON t.tenant_id = r.tenant_id
         <where>
             r.del_flag = 0
-            <if test="deptId !=null">
-                and r.dept_id = #{deptId}
+            <if test="roleName !=null and roleName !=''">
+                and r.role_name like CONCAT('%',#{roleName},'%' )
+            </if>
+            <if test="roleCode !=null and roleCode !=''">
+                and r.role_code= #{roleCode}
             </if>
             <if test="tenantId !=null">
                 and r.tenant_id = #{tenantId}
@@ -34,25 +37,30 @@
          r.role_id,
          r.role_code,
          r.role_desc,
-         r.dept_id,
+         r.role_sort,
          r.create_time,
          r.update_time,
          r.create_by,
          r.update_by,
-         d.dept_name
+         t.tenant_id,
+         t.tenant_name
          FROM  cpms_system_role r
          LEFT JOIN
-         cpms_system_dept d
-         ON d.dept_id = r.dept_id
+         cpms_system_tenant t
+         ON t.tenant_id = r.tenant_id
          <where>
              r.del_flag = 0
-             <if test="deptId !=null">
-                 and r.dept_id = #{deptId}
+             <if test="roleName !=null and roleName !=''">
+                 and r.role_name like CONCAT('%',#{roleName},'%' )
+             </if>
+             <if test="roleCode !=null and roleCode !=''">
+                 and r.role_code= #{roleCode}
              </if>
              <if test="tenantId !=null">
                  and r.tenant_id = #{tenantId}
              </if>
          </where>
-         limit #{startIndex},#{pageSize}
+         ORDER BY r.role_sort ASC
+         LIMIT #{startIndex},#{pageSize}
     </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  * @time: 2021/9/22 15:04
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SysTenantVO extends BaseVO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;

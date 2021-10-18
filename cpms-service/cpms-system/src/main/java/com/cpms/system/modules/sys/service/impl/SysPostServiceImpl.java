@@ -67,7 +67,8 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
     public boolean updatePost(SysPostDTO postDTO) {
         LambdaUpdateWrapper<SysPostEntity> updateWrapper = Wrappers.<SysPostEntity>lambdaUpdate()
                 .set(SysPostEntity::getPostName, postDTO.getPostName())
-                .set(SysPostEntity::getDeptId, postDTO.getDeptId())
+                .set(SysPostEntity::getPostCode, postDTO.getPostCode())
+                .set(SysPostEntity::getPostDesc, postDTO.getPostDesc())
                 .eq(SysPostEntity::getPostId,postDTO.getPostId())
                 .eq(SysPostEntity::getTenantId,CsSecureUtil.userTenantId());
         return this.update(updateWrapper);

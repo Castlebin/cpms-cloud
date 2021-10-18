@@ -13,6 +13,5 @@ import lombok.EqualsAndHashCode;
 @Data
 public class QueryPostDTO extends BasePageDTO {
     private String postName;
-    private Long deptId;
     private Long tenantId;
 }

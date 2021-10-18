@@ -19,9 +19,6 @@ public class SysRoleDTO{
     @NotNull(message="roleId不能为空",groups = {UpdateGroup.class, DeleteGroup.class})
     private Long roleId;
 
-    @NotNull(message="deptId不能为空",groups = {UpdateGroup.class, AddGroup.class})
-    private Long deptId;
-
     @NotBlank(message="userName不能为空",groups = {UpdateGroup.class, AddGroup.class})
     @NotNull(message="userName不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private String roleName;
@@ -29,6 +26,6 @@ public class SysRoleDTO{
     @NotBlank(message="roleCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
     @NotNull(message="roleCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private String roleCode;
-
+    private Integer roleSort;
     private String roleDesc;
 }

@@ -9,8 +9,6 @@ public class CoreCommonConstant {
     public static final String H_TOKEN_KEY = "H-Auth-Token";
     public static final String USER_INFO = "_user_info";
     public static final String TRACE_ID  = "traceId";
-    public static final String SUPER_ADMINISTRATOR = "SUPER_ADMINISTRATOR";
-    public static final String TENANT_ADMINISTRATOR = "TENANT_ADMINISTRATOR";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String REFRESH_TOKEN = "refresh_token";
     public static final String TOKEN_TYPE = "token_type";

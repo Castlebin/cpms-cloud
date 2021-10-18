@@ -14,9 +14,13 @@ import lombok.EqualsAndHashCode;
 public class QueryRoleDTO extends BasePageDTO {
 
     /**
-     * 部门ID
+     * 角色名称
      */
-    private Long deptId;
+    private String roleName;
+    /**
+     * 角色编码
+     */
+    private String roleCode;
     /**
      * 租户ID
      */

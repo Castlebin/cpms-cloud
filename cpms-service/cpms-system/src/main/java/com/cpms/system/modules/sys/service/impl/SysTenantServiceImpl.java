@@ -73,7 +73,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         // 添加角色信息
         SysRoleEntity sysRoleEntity = new SysRoleEntity();
         sysRoleEntity.setTenantId(sysTenantEntity.getTenantId());
-        sysRoleEntity.setDeptId(sysDeptEntity.getDeptId());
         sysRoleEntity.setRoleName(CommonConstant.DEFAULT_ROLE_NAME);
         sysRoleEntity.setRoleCode(CommonConstant.DEFAULT_ROLE_CODE);
         sysRoleEntity.setRoleDesc(CommonConstant.DEFAULT_ROLE_DESC);

@@ -20,6 +20,8 @@ public class SysPostDTO {
     @NotBlank(message="postName不能为空",groups = {UpdateGroup.class, AddGroup.class})
     @NotNull(message="postName不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private String postName;
-    @NotNull(message="deptId不能为空",groups = {UpdateGroup.class, AddGroup.class})
-    private Long deptId;
+    @NotBlank(message="postCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    @NotNull(message="postCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private String postCode;
+    private String postDesc;
 }
