@@ -48,7 +48,6 @@ public class SysDeptController {
         return ResultUtil.success(sysDeptService.treeDept());
     }
 
-
     /**
      *  添加操作
      * @param deptDTO

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
-import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.enums.RandomTypeEnum;
 import com.cpms.framework.common.exception.BizException;
@@ -115,7 +114,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     public List<SysTenantVO> tenants() {
         QueryWrapper<SysTenantEntity> query = Wrappers.query();
         query.select("tenant_id","tenant_name");
-        if(!Objects.equals(CsSecureUtil.userTenantCode(), TenantConstant.CPMS_HEADQUARTERS)) {
+        if(!CsSecureUtil.isSuperAdmin()) {
             query.eq("tenant_id", CsSecureUtil.userTenantId());
         }
         query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);

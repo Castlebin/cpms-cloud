@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Configuration
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
-    /** +
+    /**
      * 分页插件配置
      * @return
      */

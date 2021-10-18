@@ -11,6 +11,7 @@ spring:
                     password: root
                     driver-class-name: com.mysql.cj.jdbc.Driver
 
+
 #【加载mybatis的xml映射文件】
 mybatis-plus:
     mapper-locations: classpath:mybatis/mapper/**/*.xml  # 指定sql映射文件位置

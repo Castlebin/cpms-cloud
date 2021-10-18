@@ -19,6 +19,7 @@ import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
 import com.cpms.system.modules.sys.mapper.SysDeptMapper;
 import com.cpms.system.modules.sys.service.ISysDeptService;
+import com.cpms.system.modules.sys.service.ISysTenantService;
 import com.cpms.system.modules.sys.vo.SysDeptVO;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,8 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity> implements ISysDeptService {
     @Resource
     private SysDeptMapper sysDeptMapper;
+    @Resource
+    private ISysTenantService sysTenantService;
 
     @Override
     public BasePageVO<SysDeptVO> listDept(QueryDeptDTO listDeptDTO) {
@@ -92,7 +95,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     public List<Tree<String>> treeDept() {
         QueryWrapper<SysDeptEntity> query = Wrappers.query();
         query.select("dept_id","dept_name","parent_id");
-        query.eq("tenant_id", CsSecureUtil.userTenantId());
+        if(!CsSecureUtil.isSuperAdmin()) {
+            query.eq("tenant_id", CsSecureUtil.userTenantId());
+        }
         query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
         List<SysDeptEntity> list = this.list(query);
         List<TreeNode<String>> nodeList =  list.stream().map(e->{

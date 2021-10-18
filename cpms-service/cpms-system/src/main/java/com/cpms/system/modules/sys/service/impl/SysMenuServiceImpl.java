@@ -72,7 +72,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         CsBeanUtil.copyProperties(sysMenuDTO,sysMenuEntity);
         UpdateWrapper<SysMenuEntity> updateWrapper = Wrappers.<SysMenuEntity>update();
         updateWrapper.eq("menu_id",sysMenuDTO.getMenuId());
-        return sysMenuMapper.update(sysMenuEntity,updateWrapper) >=1 ? true : false;
+        return this.update(sysMenuEntity, updateWrapper);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.cpms.framework.common.core.base.BaseVO;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @Description:
  * @time: 2021/8/7 20:47
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class SysMenuVO  extends BaseVO {
     @JsonSerialize(using = ToStringSerializer.class)

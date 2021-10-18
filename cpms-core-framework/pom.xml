@@ -31,6 +31,7 @@
         <jjwt.version>0.9.1</jjwt.version>
         <xxl-job.version>2.3.0</xxl-job.version>
         <hutool.version>5.7.12</hutool.version>
+        <jasypt.version>2.1.0</jasypt.version>
     </properties>
     <modules>
         <module>cpms-core-framework-redis</module>
