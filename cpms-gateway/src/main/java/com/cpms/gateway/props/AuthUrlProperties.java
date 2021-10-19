@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Component
-@ConfigurationProperties("system.url")
+@ConfigurationProperties(prefix="system.url")
 public class AuthUrlProperties {
     /**
      * 放行API集合

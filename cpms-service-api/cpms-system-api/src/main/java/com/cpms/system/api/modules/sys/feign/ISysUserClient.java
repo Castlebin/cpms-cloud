@@ -25,7 +25,7 @@ public interface ISysUserClient {
     /**
      * api前缀
      */
-     String API_PREFIX = "/sys-user";
+     String API_PREFIX = "/sys-user-client";
 
     /**
      *  系统后台用户登录

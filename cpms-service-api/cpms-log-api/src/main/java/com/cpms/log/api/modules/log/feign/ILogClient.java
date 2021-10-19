@@ -22,7 +22,7 @@ public interface ILogClient {
     /**
      * api前缀
      */
-    String API_PREFIX = "/log";
+    String API_PREFIX = "/sys-log-client";
     /**
      *  系统后台用户登录
      * @param handlerLogDTO
