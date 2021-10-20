@@ -12,36 +12,27 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class QueryUserDTO extends BasePageDTO {
-    /**
-     * 用户 id
-     */
-    private Long userId;
+
     /**
      * 用户账号
      */
     private String userAccount;
 
     /**
-     * 用户手机号
+     * 真实姓名
      */
-    private String userMobile;
+    private String userRealName;
 
-    /**
-     * 用户性别：0-未知，1-男，2-女
-     */
-    private Integer  userSex;
-    /**
-     * 部门ID
-     */
-    private Long deptId;
     /**
      * 租户ID
      */
     private Long tenantId;
 
     /**
-     * 岗位ID
+     * 部门ID
      */
-    private Long postId;
+    private Long deptId;
+
+
 
 }

@@ -19,12 +19,17 @@ import java.time.LocalDateTime;
 public class SysUserVO extends BaseVO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long deptId;
     private String deptName;
     private String userName;
+    private String userRealName;
     private String userLoginIp;
 
     @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
     private LocalDateTime lastLoginTime;
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
+    private LocalDateTime userBirthday;
     /**
      * 用户账号
      */
@@ -49,4 +54,10 @@ public class SysUserVO extends BaseVO {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long postId;
     private String postName;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long tenantId;
+    private String tenantName;
+    private String roleNames;
+    private String roleIds;
 }

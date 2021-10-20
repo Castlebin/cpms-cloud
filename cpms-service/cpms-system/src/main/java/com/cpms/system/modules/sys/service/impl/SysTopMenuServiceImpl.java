@@ -33,7 +33,7 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
     @Override
     public List<SysTopMenuVO> getTopMenu() {
         List<SysTopMenuEntity> sysTopMenuEntities;
-        if(CsSecureUtil.isSuperAdmin()) {
+        if(CsSecureUtil.isSysSuperAdmin()) {
             QueryWrapper<SysTopMenuEntity> wrapper=new QueryWrapper<>();
             wrapper.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
             wrapper.eq("tenant_id",CsSecureUtil.userTenantId());

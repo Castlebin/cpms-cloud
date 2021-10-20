@@ -41,28 +41,21 @@
         from
         cpms_system_user u
         LEFT JOIN cpms_system_dept d ON d.dept_id = u.dept_id
+        LEFT JOIN cpms_system_post p ON u.post_id = p.post_id
+        LEFT JOIN cpms_system_tenant t ON u.tenant_id = t.tenant_id
         <where>
             and u.del_flag = 0
             <if test="tenantId !=null">
                 and u.tenant_id = #{tenantId}
             </if>
-            <if test="userId !=null">
-                and u.user_id = #{userId}
+            <if test="userRealName !=null and userRealName !=''">
+                and u.user_real_name = #{userRealName}
             </if>
             <if test="userAccount !=null and userAccount != ''">
                 and u.user_account = #{userAccount}
             </if>
-            <if test="userMobile !=null and userMobile != ''">
-                and u.user_mobile = #{userMobile}
-            </if>
-            <if test="userSex !=null">
-                and u.user_sex = #{userSex}
-            </if>
             <if test="deptId !=null">
                 and u.dept_id = #{deptId}
-            </if>
-            <if test="postId !=null">
-                and u.post_id = #{postId}
             </if>
         </where>
     </select>
@@ -77,42 +70,42 @@
         u.user_avatar,
         u.user_sex,
         u.user_mobile,
+        u.user_birthday,
+        u.user_real_name,
         u.user_status,
         u.create_time,
         u.update_time,
         u.create_by,
         u.update_by,
         d.dept_name,
+        d.dept_id,
         p.post_name,
-        p.post_id
+        p.post_id,
+        t.tenant_name,
+        t.tenant_id,
+        (  SELECT GROUP_CONCAT(r.role_name)  FROM cpms_system_role r WHERE role_id IN ( SELECT ru.role_id FROM cpms_system_role_user ru  WHERE ru.user_id = u.user_id ) ) AS roleNames,
+        (  SELECT GROUP_CONCAT(r.role_id)  FROM cpms_system_role r WHERE role_id IN ( SELECT ru.role_id FROM cpms_system_role_user ru  WHERE ru.user_id = u.user_id ) ) AS roleIds
         from
         cpms_system_user u
         LEFT JOIN cpms_system_dept d ON d.dept_id = u.dept_id
         LEFT JOIN cpms_system_post p ON u.post_id = p.post_id
+        LEFT JOIN cpms_system_tenant t ON u.tenant_id = t.tenant_id
         <where>
             and u.del_flag = 0
             <if test="tenantId !=null">
                 and u.tenant_id = #{tenantId}
             </if>
-            <if test="userId !=null">
-                and u.user_id = #{userId}
+            <if test="userRealName !=null and userRealName !=''">
+                and u.user_real_name = #{userRealName}
             </if>
             <if test="userAccount !=null and userAccount != ''">
                 and u.user_account = #{userAccount}
             </if>
-            <if test="userMobile !=null and userMobile != ''">
-                and u.user_mobile = #{userMobile}
-            </if>
-            <if test="userSex !=null">
-                and u.user_sex = #{userSex}
-            </if>
             <if test="deptId !=null">
                 and u.dept_id = #{deptId}
             </if>
-            <if test="postId !=null">
-                and u.post_id = #{postId}
-            </if>
         </where>
+        ORDER BY u.create_time ASC
         limit #{startIndex},#{pageSize}
     </select>
 

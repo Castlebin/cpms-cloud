@@ -24,4 +24,5 @@ public class SysDeptEntity extends TenantEntity {
     private String deptName;
     private Long parentId;
     private String deptDesc;
+    private Integer deptSort;
 }

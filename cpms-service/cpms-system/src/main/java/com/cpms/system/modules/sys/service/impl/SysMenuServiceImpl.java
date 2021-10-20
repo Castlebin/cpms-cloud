@@ -141,7 +141,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
      */
     private List<SysMenuEntity> getHomePageMenuRoutes(){
         List<SysMenuEntity> menus;
-        if(CsSecureUtil.isSuperAdmin()){
+        if(CsSecureUtil.isSysSuperAdmin()){
              menus = superAdminRoutes();
         }else{
             TokenUserInfo user = CsSecureUtil.getUser();

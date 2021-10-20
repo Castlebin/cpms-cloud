@@ -91,7 +91,7 @@ public class AuthAspect {
             return false;
         }
         TokenUserInfo tokenInfo = CsSecureUtil.getUser();
-        if(CsSecureUtil.isSuperAdmin()) {
+        if(CsSecureUtil.isSysSuperAdmin()) {
             return  true;
         }
         String cachePermissions = (String) CsRedisUtil.hget(CoreCommonConstant.CACHE_LOGIN_USER_INFO_KEY + tokenInfo.getUserId(),

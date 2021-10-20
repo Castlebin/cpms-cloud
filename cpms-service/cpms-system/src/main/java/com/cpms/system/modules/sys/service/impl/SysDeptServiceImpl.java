@@ -1,9 +1,6 @@
 package com.cpms.system.modules.sys.service.impl;
 
-import cn.hutool.core.lang.tree.Tree;
-import cn.hutool.core.lang.tree.TreeNode;
-import cn.hutool.core.lang.tree.TreeNodeConfig;
-import cn.hutool.core.lang.tree.TreeUtil;
+import cn.hutool.core.lang.tree.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -25,6 +22,8 @@ import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -94,14 +93,17 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     @Override
     public List<Tree<String>> treeDept() {
         QueryWrapper<SysDeptEntity> query = Wrappers.query();
-        query.select("dept_id","dept_name","parent_id");
-        if(!CsSecureUtil.isSuperAdmin()) {
+        query.select("tenant_id","dept_id","dept_name","parent_id");
+        if(!CsSecureUtil.isSysSuperAdmin()) {
             query.eq("tenant_id", CsSecureUtil.userTenantId());
         }
         query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
         List<SysDeptEntity> list = this.list(query);
         List<TreeNode<String>> nodeList =  list.stream().map(e->{
             TreeNode<String> treeNode = new TreeNode();
+            if(e.getTenantId().equals(CsSecureUtil.userTenantId()) && e.getParentId().equals(0L)) {
+                treeNode.setWeight(1);
+            }
             treeNode.setId(String.valueOf(e.getDeptId()));
             treeNode.setParentId( String.valueOf(e.getParentId()));
             treeNode.setName(e.getDeptName());
@@ -111,11 +113,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
         treeNodeConfig.setIdKey("deptId");
         treeNodeConfig.setNameKey("deptName");
         treeNodeConfig.setDeep(10);
-        return TreeUtil.build(nodeList, "0", treeNodeConfig,
+        List<Tree<String>> treeList = TreeUtil.build(nodeList, "0", treeNodeConfig,
                 (treeNode, tree) -> {
                     tree.setId(treeNode.getId());
                     tree.setParentId(treeNode.getParentId());
                     tree.setName(treeNode.getName());
+                    tree.setWeight(treeNode.getWeight());
                 });
+        Collections.reverse(treeList);
+        return  treeList;
     }
 }

@@ -114,7 +114,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     public List<SysTenantVO> tenants() {
         QueryWrapper<SysTenantEntity> query = Wrappers.query();
         query.select("tenant_id","tenant_name");
-        if(!CsSecureUtil.isSuperAdmin()) {
+        if(!CsSecureUtil.isSysSuperAdmin()) {
             query.eq("tenant_id", CsSecureUtil.userTenantId());
         }
         query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);

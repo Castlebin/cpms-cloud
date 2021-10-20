@@ -37,19 +37,19 @@ public class CsSecureUtil {
     }
 
     /**
-     *  判断是否是超级管理员（拥有所有权限）
+     *  判断是否是系统超级管理员（拥有所有权限）
      * @return
      */
-    public static boolean isSuperAdmin(){
+    public static boolean isSysSuperAdmin(){
         TokenUserInfo tokenInfo =getUser();
         return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(TenantConstant.SUPER_ADMINISTRATOR));
     }
 
     /**
-     *  判断所属租户用户是否是管理员（拥有租户所有权限）
+     *  判断所属租户用户是否是租户管理员（拥有租户所有权限）
      * @return
      */
-    public static boolean isAdmin(){
+    public static boolean isTenantAdmin(){
         TokenUserInfo tokenInfo =getUser();
         return (!CollectionUtils.isEmpty(tokenInfo.getRoleCodes()) && tokenInfo.getRoleCodes().contains(TenantConstant.TENANT_ADMINISTRATOR));
     }

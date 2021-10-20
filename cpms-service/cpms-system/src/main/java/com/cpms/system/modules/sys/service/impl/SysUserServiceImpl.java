@@ -50,15 +50,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     private ISysRoleUserService sysRoleUserService;
 
     @Override
-    public BasePageVO<SysUserVO> listUser(QueryUserDTO listUserDTO) {
+    public BasePageVO<SysUserVO> listUser(QueryUserDTO queryUserDTO) {
         BasePageVO<SysUserVO> listUserVO = new BasePageVO();
         List<SysUserVO> sysUserVoList;
-        listUserDTO.setTenantId(CsSecureUtil.userTenantId());
-        int count = sysUserMapper.listUserCount(listUserDTO);
+        if(!CsSecureUtil.isSysSuperAdmin() || Objects.isNull(queryUserDTO.getDeptId())) {
+            queryUserDTO.setTenantId(CsSecureUtil.userTenantId());
+        }
+
+        int count = sysUserMapper.listUserCount(queryUserDTO);
         if(count == 0 ){
             sysUserVoList = Lists.newArrayList();
         }else {
-            sysUserVoList = sysUserMapper.listUser(listUserDTO);
+            sysUserVoList = sysUserMapper.listUser(queryUserDTO);
         }
         listUserVO.setTotal(count);
         listUserVO.setList(sysUserVoList);
