@@ -15,11 +15,13 @@ import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
 import com.cpms.system.modules.sys.dto.SysUserDTO;
+import com.cpms.system.modules.sys.entity.SysDeptEntity;
 import com.cpms.system.modules.sys.entity.SysRoleUserEntity;
 import com.cpms.system.modules.sys.entity.SysTenantEntity;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
 import com.cpms.system.modules.sys.mapper.SysTenantMapper;
 import com.cpms.system.modules.sys.mapper.SysUserMapper;
+import com.cpms.system.modules.sys.service.ISysDeptService;
 import com.cpms.system.modules.sys.service.ISysUserService;
 import com.cpms.system.modules.sys.service.ISysRoleUserService;
 import com.cpms.system.modules.sys.vo.SysUserVO;
@@ -48,6 +50,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     private SysTenantMapper sysTenantMapper;
     @Resource
     private ISysRoleUserService sysRoleUserService;
+    @Resource
+    private ISysDeptService sysDeptService;
 
     @Override
     public BasePageVO<SysUserVO> listUser(QueryUserDTO queryUserDTO) {
@@ -56,16 +60,32 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         if(!CsSecureUtil.isSysSuperAdmin() || Objects.isNull(queryUserDTO.getDeptId())) {
             queryUserDTO.setTenantId(CsSecureUtil.userTenantId());
         }
-
-        int count = sysUserMapper.listUserCount(queryUserDTO);
+        List<Long> allChildDepts = Lists.newArrayList();
+        if(!Objects.isNull(queryUserDTO.getDeptId())) {
+            List<SysDeptEntity> allDept = sysDeptService.findNodes(queryUserDTO.getDeptId(), queryUserDTO.getTenantId());
+            allChildDepts = findChildNodes(allDept,queryUserDTO.getDeptId());
+        }
+        allChildDepts.add(queryUserDTO.getDeptId());
+        int count = sysUserMapper.listUserCount(queryUserDTO,allChildDepts);
         if(count == 0 ){
             sysUserVoList = Lists.newArrayList();
         }else {
-            sysUserVoList = sysUserMapper.listUser(queryUserDTO);
+            sysUserVoList = sysUserMapper.listUser(queryUserDTO,allChildDepts);
         }
         listUserVO.setTotal(count);
         listUserVO.setList(sysUserVoList);
         return listUserVO;
+    }
+
+    private List<Long> findChildNodes(List<SysDeptEntity> list,Long parentId){
+        List<Long> allChildNodes = Lists.newArrayList();
+        for (SysDeptEntity sysDeptEntity : list) {
+            if (Objects.equals(parentId,sysDeptEntity.getParentId())) {
+                allChildNodes.add(sysDeptEntity.getDeptId());
+                findChildNodes(list, sysDeptEntity.getDeptId());
+            }
+        }
+        return allChildNodes;
     }
 
     @Override

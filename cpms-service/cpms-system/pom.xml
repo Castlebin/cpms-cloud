@@ -23,6 +23,10 @@
                     <artifactId>cpms-common</artifactId>
                     <groupId>com.cpms</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>cpms-core-framework-feign</artifactId>
+                    <groupId>com.cpms</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- 引入cpms-log-api依赖 -->
@@ -33,6 +37,10 @@
             <exclusions>
                 <exclusion>
                     <artifactId>cpms-common</artifactId>
+                    <groupId>com.cpms</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>cpms-core-framework-common</artifactId>
                     <groupId>com.cpms</groupId>
                 </exclusion>
             </exclusions>
@@ -59,6 +67,10 @@
                 <exclusion>
                     <artifactId>cpms-core-framework-common</artifactId>
                     <groupId>com.cpms</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

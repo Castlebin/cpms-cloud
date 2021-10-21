@@ -10,6 +10,8 @@ import com.cpms.system.modules.sys.dto.SysUserDTO;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
 import com.cpms.system.modules.sys.vo.SysUserVO;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: gulang
@@ -60,5 +62,4 @@ public interface ISysUserService extends IService<SysUserEntity> {
     int userCount(Long tenantId);
 
     String generateAccount();
-
 }

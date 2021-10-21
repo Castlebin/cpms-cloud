@@ -14,6 +14,7 @@ import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.QueryDeptDTO;
 import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
+import com.cpms.system.modules.sys.entity.SysUserEntity;
 import com.cpms.system.modules.sys.mapper.SysDeptMapper;
 import com.cpms.system.modules.sys.service.ISysDeptService;
 import com.cpms.system.modules.sys.service.ISysTenantService;
@@ -122,5 +123,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
                 });
         Collections.reverse(treeList);
         return  treeList;
+    }
+
+    @Override
+    public List<SysDeptEntity> findNodes(Long deptId,Long tenantId) {
+        return sysDeptMapper.findNodes(deptId, tenantId);
     }
 }

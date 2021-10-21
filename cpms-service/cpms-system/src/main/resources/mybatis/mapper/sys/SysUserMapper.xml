@@ -45,17 +45,20 @@
         LEFT JOIN cpms_system_tenant t ON u.tenant_id = t.tenant_id
         <where>
             and u.del_flag = 0
-            <if test="tenantId !=null">
-                and u.tenant_id = #{tenantId}
+            <if test="userDto.tenantId !=null">
+                and u.tenant_id = #{userDto.tenantId}
             </if>
-            <if test="userRealName !=null and userRealName !=''">
-                and u.user_real_name = #{userRealName}
+            <if test="userDto.userRealName !=null and userDto.userRealName !=''">
+                and u.user_real_name = #{userDto.userRealName}
             </if>
-            <if test="userAccount !=null and userAccount != ''">
-                and u.user_account = #{userAccount}
+            <if test="userDto.userAccount !=null and userDto.userAccount != ''">
+                and u.user_account = #{userDto.userAccount}
             </if>
-            <if test="deptId !=null">
-                and u.dept_id = #{deptId}
+            <if test="depts !=null and depts.size > 0">
+                and u.dept_id in
+                <foreach collection="depts" item="item" open="(" separator=","  close=")">
+                    #{item}
+                </foreach>
             </if>
         </where>
     </select>
@@ -92,21 +95,24 @@
         LEFT JOIN cpms_system_tenant t ON u.tenant_id = t.tenant_id
         <where>
             and u.del_flag = 0
-            <if test="tenantId !=null">
-                and u.tenant_id = #{tenantId}
+            <if test="userDto.tenantId !=null">
+                and u.tenant_id = #{userDto.tenantId}
             </if>
-            <if test="userRealName !=null and userRealName !=''">
-                and u.user_real_name = #{userRealName}
+            <if test="userDto.userRealName !=null and userDto.userRealName !=''">
+                and u.user_real_name = #{userDto.userRealName}
             </if>
-            <if test="userAccount !=null and userAccount != ''">
-                and u.user_account = #{userAccount}
+            <if test="userDto.userAccount !=null and userDto.userAccount != ''">
+                and u.user_account = #{userDto.userAccount}
             </if>
-            <if test="deptId !=null">
-                and u.dept_id = #{deptId}
+            <if test="depts !=null and depts.size > 0">
+                and u.dept_id in
+                <foreach collection="depts" item="item" open="(" separator=","  close=")">
+                    #{item}
+                </foreach>
             </if>
         </where>
         ORDER BY u.create_time ASC
-        limit #{startIndex},#{pageSize}
+        limit #{userDto.startIndex},#{userDto.pageSize}
     </select>
 
 </mapper>

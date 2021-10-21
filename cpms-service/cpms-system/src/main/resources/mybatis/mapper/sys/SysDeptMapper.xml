@@ -50,4 +50,24 @@
         </where>
         limit #{startIndex},#{pageSize}
     </select>
+
+    <select id="findNodes" resultType="com.cpms.system.modules.sys.entity.SysDeptEntity">
+        SELECT
+        d.dept_id,
+        d.tenant_id,
+        d.parent_id
+        FROM cpms_system_dept d
+        WHERE d.tenant_id IN (
+            SELECT d2.tenant_id FROM
+             cpms_system_dept d2
+            <where>
+                <if test="deptId !=null ">
+                    and d2.dept_id = #{deptId}
+                </if>
+                <if test="tenantId !=null ">
+                    and d2.tenant_id = #{tenantId}
+                </if>
+            </where>
+        )
+    </select>
 </mapper>

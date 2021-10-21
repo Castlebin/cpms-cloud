@@ -22,6 +22,10 @@
                     <artifactId>cpms-common</artifactId>
                     <groupId>com.cpms</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>cpms-core-framework-common</artifactId>
+                    <groupId>com.cpms</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
