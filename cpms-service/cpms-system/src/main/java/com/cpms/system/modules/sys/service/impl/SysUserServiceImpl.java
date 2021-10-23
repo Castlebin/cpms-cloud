@@ -1,11 +1,13 @@
 package com.cpms.system.modules.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
+import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsGenerateIdUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
@@ -24,6 +26,7 @@ import com.cpms.system.modules.sys.mapper.SysUserMapper;
 import com.cpms.system.modules.sys.service.ISysDeptService;
 import com.cpms.system.modules.sys.service.ISysUserService;
 import com.cpms.system.modules.sys.service.ISysRoleUserService;
+import com.cpms.system.modules.sys.vo.SysUserDetailVO;
 import com.cpms.system.modules.sys.vo.SysUserVO;
 import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
@@ -57,15 +60,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     public BasePageVO<SysUserVO> listUser(QueryUserDTO queryUserDTO) {
         BasePageVO<SysUserVO> listUserVO = new BasePageVO();
         List<SysUserVO> sysUserVoList;
-        if(!CsSecureUtil.isSysSuperAdmin() || Objects.isNull(queryUserDTO.getDeptId())) {
+        if(!CsSecureUtil.isHeadquarters() || Objects.isNull(queryUserDTO.getDeptId())) {
             queryUserDTO.setTenantId(CsSecureUtil.userTenantId());
         }
         List<Long> allChildDepts = Lists.newArrayList();
         if(!Objects.isNull(queryUserDTO.getDeptId())) {
             List<SysDeptEntity> allDept = sysDeptService.findNodes(queryUserDTO.getDeptId(), queryUserDTO.getTenantId());
-            allChildDepts = findChildNodes(allDept,queryUserDTO.getDeptId());
+            this.findChildNodes(allDept,queryUserDTO.getDeptId(),allChildDepts);
+            allChildDepts.add(queryUserDTO.getDeptId());
         }
-        allChildDepts.add(queryUserDTO.getDeptId());
         int count = sysUserMapper.listUserCount(queryUserDTO,allChildDepts);
         if(count == 0 ){
             sysUserVoList = Lists.newArrayList();
@@ -77,15 +80,27 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         return listUserVO;
     }
 
-    private List<Long> findChildNodes(List<SysDeptEntity> list,Long parentId){
-        List<Long> allChildNodes = Lists.newArrayList();
+    @Override
+    public SysUserDetailVO userDetail(SysUserDTO userDTO) {
+        QueryWrapper<SysUserEntity> query = Wrappers.query();
+        query.select("user_avatar","user_sex","user_birthday","user_mobile");
+        query.eq("user_id",userDTO.getUserId());
+        SysUserEntity sysUserEntity = sysUserMapper.selectOne(query);
+        SysUserDetailVO sysUserDetailVO = new SysUserDetailVO();
+        sysUserDetailVO.setUserAvatar(sysUserEntity.getUserAvatar());
+        sysUserDetailVO.setUserBirthday(sysUserEntity.getUserBirthday());
+        sysUserDetailVO.setUserSex(sysUserEntity.getUserSex());
+        sysUserDetailVO.setUserMobile(sysUserEntity.getUserMobile());
+        return sysUserDetailVO;
+    }
+
+    private void findChildNodes(List<SysDeptEntity> list,Long parentId,List<Long> allChildDepts){
         for (SysDeptEntity sysDeptEntity : list) {
             if (Objects.equals(parentId,sysDeptEntity.getParentId())) {
-                allChildNodes.add(sysDeptEntity.getDeptId());
-                findChildNodes(list, sysDeptEntity.getDeptId());
+                 allChildDepts.add(sysDeptEntity.getDeptId());
+                 findChildNodes(list, sysDeptEntity.getDeptId(),allChildDepts);
             }
         }
-        return allChildNodes;
     }
 
     @Override
@@ -95,10 +110,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Override
     public boolean deleteUser(SysUserDTO userDTO) {
+        Long tenantId = CsSecureUtil.userTenantId();
+        if(CsSecureUtil.isHeadquarters()) {
+            if(!Objects.isNull(userDTO.getTenantId())) {
+                tenantId = userDTO.getTenantId();
+            }
+        }
         LambdaUpdateWrapper<SysUserEntity> updateWrapper = Wrappers.<SysUserEntity>lambdaUpdate()
                 .set(SysUserEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
                 .eq(SysUserEntity::getUserId, userDTO.getUserId())
-                .eq(SysUserEntity::getTenantId, CsSecureUtil.userTenantId());
+                .eq(SysUserEntity::getTenantId,tenantId);
         return this.update(updateWrapper);
     }
 
@@ -114,9 +135,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         userDTO.setUserPassword(bCryptPasswordEncoder.encode(userDTO.getUserPassword()));
         BeanUtils.copyProperties(userDTO,sysUserEntity);
         sysUserEntity.setTenantId(CsSecureUtil.userTenantId());
+        if(CsSecureUtil.isHeadquarters()) {
+            if(!Objects.isNull(userDTO.getTenantId())) {
+                sysUserEntity.setTenantId(userDTO.getTenantId());
+            }
+        }
         this.save(sysUserEntity);
-        String[] roleIdArr = userDTO.getRoleIds().split(",");
-        List<Long> roleIdList = Arrays.stream(roleIdArr).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
+        addBatchRole(userDTO,sysUserEntity);
+        return true ;
+    }
+
+    private void addBatchRole(SysUserDTO userDTO,SysUserEntity sysUserEntity){
+        List<Long> roleIdList = userDTO.getRoleIds().stream().mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
         List<SysRoleUserEntity> roleUserEntityList = roleIdList.stream().map(e -> {
             SysRoleUserEntity sysRoleUserEntity = new SysRoleUserEntity();
             sysRoleUserEntity.setUserId(sysUserEntity.getUserId());
@@ -124,22 +154,31 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
             return sysRoleUserEntity;
         }).collect(Collectors.toList());
         sysRoleUserService.saveBatch(roleUserEntityList);
-        return true ;
     }
-
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateUser(SysUserDTO userDTO) {
         SysUserEntity sysUserEntity = new SysUserEntity();
         sysUserEntity.setDeptId(userDTO.getDeptId());
         sysUserEntity.setUserAvatar(userDTO.getUserAvatar());
         sysUserEntity.setUserName(userDTO.getUserName());
+        sysUserEntity.setUserRealName(userDTO.getUserRealName());
         sysUserEntity.setUserSex(userDTO.getUserSex());
         sysUserEntity.setUserMobile(userDTO.getUserMobile());
         sysUserEntity.setPostId(userDTO.getPostId());
+        sysUserEntity.setUserBirthday(userDTO.getUserBirthday());
+        sysUserEntity.setUserId(userDTO.getUserId());
         UpdateWrapper<SysUserEntity> updateWrapper = Wrappers.update();
         updateWrapper.eq("user_id",userDTO.getUserId());
         updateWrapper.eq("tenant_id", CsSecureUtil.userTenantId());
-        return this.update(sysUserEntity,updateWrapper);
+        this.update(sysUserEntity,updateWrapper);
+        // 删除用户所有的角色
+        LambdaUpdateWrapper<SysRoleUserEntity> delWrapper = Wrappers.<SysRoleUserEntity>lambdaUpdate()
+                .eq(SysRoleUserEntity::getUserId, userDTO.getUserId());
+        sysRoleUserService.getBaseMapper().delete(delWrapper);
+        // 重新添加更新后的角色
+        addBatchRole(userDTO,sysUserEntity);
+        return true;
     }
 
 
@@ -166,9 +205,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     }
 
     @Override
-    public String generateAccount() {
-        int count = userCount(CsSecureUtil.userTenantId());
-        SysTenantEntity sysTenantEntity = sysTenantMapper.selectById(CsSecureUtil.userTenantId());
+    public String generateAccount(SysUserDTO userDTO) {
+        if(Objects.isNull(userDTO.getTenantId())){
+            throw new BizException(GlobalResponseResultEnum.PARAM_MISS_ERROR.getCode(),"tenantId不能为空");
+        }
+        Long tenantId = CsSecureUtil.isHeadquarters() ? userDTO.getTenantId() : CsSecureUtil.userTenantId();
+        int count = userCount(tenantId);
+        SysTenantEntity sysTenantEntity = sysTenantMapper.selectById(tenantId);
         return CsGenerateIdUtil.userAccount(sysTenantEntity.getAccountPrefix(),6,count+1);
     }
 }

@@ -77,4 +77,12 @@ public class CsSecureUtil {
     public static String  userTenantCode(){
         return getUser().getTenantCode();
     }
+
+    /**
+     *  用户是否属于总部租户
+     * @return
+     */
+    public static boolean isHeadquarters (){
+        return  TenantConstant.CPMS_HEADQUARTERS.equals(userTenantCode());
+    }
 }

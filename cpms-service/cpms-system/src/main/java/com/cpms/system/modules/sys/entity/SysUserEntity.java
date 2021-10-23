@@ -26,6 +26,7 @@ public class SysUserEntity extends TenantEntity {
     private Long userId;
     private Long deptId;
     private String userName;
+    private String userRealName;
     private String userPassword;
     private String userLoginIp;
     private LocalDateTime lastLoginTime;
@@ -50,4 +51,6 @@ public class SysUserEntity extends TenantEntity {
      * 岗位ID
      */
     private Long postId;
+
+    private LocalDateTime userBirthday;
 }

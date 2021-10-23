@@ -26,6 +26,7 @@ import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -92,10 +93,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     }
 
     @Override
-    public List<Tree<String>> treeDept() {
+    public List<Tree<String>> treeDept(QueryDeptDTO queryDeptDTO) {
         QueryWrapper<SysDeptEntity> query = Wrappers.query();
         query.select("tenant_id","dept_id","dept_name","parent_id");
-        if(!CsSecureUtil.isSysSuperAdmin()) {
+        if(CsSecureUtil.isHeadquarters()) {
+            if(!Objects.isNull(queryDeptDTO.getTenantId())) {
+                query.eq("tenant_id",   queryDeptDTO.getTenantId());
+            }
+        }else{
             query.eq("tenant_id", CsSecureUtil.userTenantId());
         }
         query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);

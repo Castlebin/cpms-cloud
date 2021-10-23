@@ -47,6 +47,8 @@
             </if>
         </where>
         ORDER BY p.create_time DESC
-        limit #{startIndex},#{pageSize}
+        <if test="pagingFlag">
+            limit #{startIndex},#{pageSize}
+        </if>
     </select>
 </mapper>

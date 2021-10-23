@@ -2,11 +2,17 @@ package com.cpms.system.modules.sys.dto;
 
 import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
+import com.cpms.framework.mybatis.groups.SelectGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @description:
@@ -18,15 +24,35 @@ public class SysUserDTO {
     /**
      * 用户userId
      */
-    @NotNull(message="userId不能为空",groups = {UpdateGroup.class, DeleteGroup.class})
+    @NotNull(message="userId不能为空",groups = {UpdateGroup.class, DeleteGroup.class, SelectGroup.class})
     private Long userId;
 
     /**
-     * 用户名
+     * 所属租户
+     */
+    @NotNull(message="tenantId不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private Long tenantId;
+    /**
+     * 用户昵称
      */
     @NotBlank(message="userName不能为空",groups = {UpdateGroup.class, AddGroup.class})
     @NotNull(message="userName不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private String userName;
+
+    /**
+     * 真实姓名
+     */
+    @NotBlank(message="userRealName不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    @NotNull(message="userRealName不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private String userRealName;
+
+    /**
+     * 用户生日
+     */
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
+    @NotNull(message="userBirthday不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private LocalDateTime userBirthday;
 
     /**
      * 用户账号
@@ -49,11 +75,11 @@ public class SysUserDTO {
     private Long deptId;
 
     /**
-     * 角色ID，多个使用英文逗号分隔
+     * 角色ID集合
      */
-    @NotBlank(message="roleIds不能为空",groups = {UpdateGroup.class, AddGroup.class})
     @NotNull(message="roleIds不能为空",groups = {UpdateGroup.class, AddGroup.class})
-    private String roleIds;
+    @NotEmpty(message="roleIds不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private List<String> roleIds;
 
     /**
      * 岗位ID

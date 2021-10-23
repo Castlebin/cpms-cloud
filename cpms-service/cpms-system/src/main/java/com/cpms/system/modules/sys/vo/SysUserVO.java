@@ -24,29 +24,11 @@ public class SysUserVO extends BaseVO {
     private String deptName;
     private String userName;
     private String userRealName;
-    private String userLoginIp;
-
-    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
-    private LocalDateTime lastLoginTime;
-    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
-    private LocalDateTime userBirthday;
     /**
      * 用户账号
      */
     private String userAccount;
-    /**
-     * 用户头像
-     */
-    private String userAvatar;
 
-    /**
-     * 用户手机号
-     */
-    private String userMobile;
-    /**
-     * 用户性别：0-未知，1-男，2-女
-     */
-    private Integer  userSex;
     /**
      * 0-正常，1-已禁用
      */

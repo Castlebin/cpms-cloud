@@ -43,9 +43,9 @@ public class SysDeptController {
      *  部门树形结构
      * @return
      */
-    @GetMapping("/treeDept")
-    public Result<List<Tree<String>>> treeDept(){
-        return ResultUtil.success(sysDeptService.treeDept());
+    @PostMapping("/treeDept")
+    public Result<List<Tree<String>>> treeDept(@RequestBody QueryDeptDTO queryDeptDTO){
+        return ResultUtil.success(sysDeptService.treeDept(queryDeptDTO));
     }
 
     /**

@@ -8,6 +8,7 @@ import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
 import com.cpms.system.modules.sys.dto.SysUserDTO;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
+import com.cpms.system.modules.sys.vo.SysUserDetailVO;
 import com.cpms.system.modules.sys.vo.SysUserVO;
 
 import java.util.List;
@@ -24,6 +25,13 @@ public interface ISysUserService extends IService<SysUserEntity> {
      * @return
      */
     BasePageVO<SysUserVO> listUser(QueryUserDTO listUserDTO);
+
+    /**
+     * 查看用户详情
+     * @param userDTO
+     * @return
+     */
+    SysUserDetailVO userDetail(SysUserDTO userDTO);
     /**
      *  登录用户信息查询
      * @param sysUserLginDTO
@@ -61,5 +69,5 @@ public interface ISysUserService extends IService<SysUserEntity> {
 
     int userCount(Long tenantId);
 
-    String generateAccount();
+    String generateAccount(SysUserDTO userDTO);
 }

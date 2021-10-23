@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @description:
@@ -36,15 +37,21 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     }
 
     @Override
-    public BasePageVO<SysRoleVO> listRole(QueryRoleDTO listRoleDTO) {
+    public BasePageVO<SysRoleVO> listRole(QueryRoleDTO queryRoleDTO) {
         BasePageVO<SysRoleVO> listRoleVO = new BasePageVO();
         List<SysRoleVO> sysRoleVoList;
-        listRoleDTO.setTenantId(CsSecureUtil.userTenantId());
-        int count = sysRoleMapper.listRoleCount(listRoleDTO);
+        if(CsSecureUtil.isHeadquarters()) {
+            if(!Objects.isNull(queryRoleDTO.getTenantId())) {
+                queryRoleDTO.setTenantId(queryRoleDTO.getTenantId());
+            }
+        }else{
+            queryRoleDTO.setTenantId(CsSecureUtil.userTenantId());
+        }
+        int count = sysRoleMapper.listRoleCount(queryRoleDTO);
         if(count ==0){
             sysRoleVoList = Lists.newArrayList();
         }else{
-            sysRoleVoList = sysRoleMapper.listRole(listRoleDTO);
+            sysRoleVoList = sysRoleMapper.listRole(queryRoleDTO);
         }
         listRoleVO.setTotal(count);
         listRoleVO.setList(sysRoleVoList);

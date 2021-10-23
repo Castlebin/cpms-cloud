@@ -1,0 +1,30 @@
+package com.cpms.system.modules.sys.vo;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+/**
+ * @author gulang
+ * @Description:
+ * @time: 2021/10/21 20:37
+ */
+@Data
+public class SysUserDetailVO {
+
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
+    private LocalDateTime userBirthday;
+    /**
+     * 用户头像
+     */
+    private String userAvatar;
+    /**
+     * 用户手机号
+     */
+    private String userMobile;
+    /**
+     * 用户性别：0-未知，1-男，2-女
+     */
+    private Integer  userSex;
+}

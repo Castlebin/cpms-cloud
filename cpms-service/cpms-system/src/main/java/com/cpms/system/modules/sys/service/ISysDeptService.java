@@ -21,6 +21,6 @@ public interface ISysDeptService extends IService<SysDeptEntity> {
     boolean addDept(SysDeptDTO deptDTO);
     boolean updateDept(SysDeptDTO deptDTO);
     boolean deleteDept(SysDeptDTO deptDTO);
-    List<Tree<String>> treeDept();
+    List<Tree<String>> treeDept(QueryDeptDTO queryDeptDTO);
    List<SysDeptEntity> findNodes(Long deptId,Long tenantId);
 }

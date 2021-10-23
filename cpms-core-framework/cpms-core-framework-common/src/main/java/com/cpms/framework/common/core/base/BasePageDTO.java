@@ -1,6 +1,7 @@
 package com.cpms.framework.common.core.base;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 类描述: 分页基类
@@ -32,6 +33,11 @@ public class BasePageDTO  implements Serializable {
      *  limit 分页索引
      */
     private Integer startIndex;
+
+    /**
+     *  是否分页标识，true：分页  false：不分页
+     */
+    private Boolean pagingFlag;
 
 
     public Integer getPageNo(){
@@ -73,5 +79,16 @@ public class BasePageDTO  implements Serializable {
 
     public void setStartIndex(Integer startIndex) {
         this.startIndex = startIndex;
+    }
+
+    public Boolean getPagingFlag() {
+        if(Objects.isNull(pagingFlag)) {
+            pagingFlag = true;
+        }
+        return pagingFlag;
+    }
+
+    public void setPagingFlag(Boolean pagingFlag) {
+        this.pagingFlag = pagingFlag;
     }
 }

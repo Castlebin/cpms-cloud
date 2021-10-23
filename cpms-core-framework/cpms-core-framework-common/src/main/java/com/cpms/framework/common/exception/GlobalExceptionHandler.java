@@ -65,6 +65,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Result<Void> parameterBodyMissingExceptionHandler(HttpMessageNotReadableException e) {
+        log.error("捕获Exception异常信息:",e);
         return ResultUtil.error(GlobalResponseResultEnum.PARAMETER_BOYDY_EMPTY_ERROR);
     }
 
