@@ -11,8 +11,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author: gulang
  * @time: 2021/5/19 19:54
  */
-
-@MapperScan("com.cpms.**.mapper") //扫描mapper包 避免在每个mapper类上加@Mapper注解
 @EnableFeignClients(AppConstant.BASE_PACKAGES)
 @SpringCloudApplication
 public class DemoApplication {
