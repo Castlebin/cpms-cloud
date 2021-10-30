@@ -27,11 +27,19 @@ public interface ISysUserService extends IService<SysUserEntity> {
     BasePageVO<SysUserVO> listUser(QueryUserDTO listUserDTO);
 
     /**
-     * 查看用户详情
+     * 编辑用户详情
      * @param userDTO
      * @return
      */
     SysUserDetailVO userDetail(SysUserDTO userDTO);
+
+    /**
+     * 查看用户信息
+     * @param userDTO
+     * @return
+     */
+    SysUserDetailVO checkUserInfo(SysUserDTO userDTO);
+
     /**
      *  登录用户信息查询
      * @param sysUserLginDTO
@@ -61,13 +69,22 @@ public interface ISysUserService extends IService<SysUserEntity> {
     boolean updateUser(SysUserDTO userDTO);
 
     /**
-     * 修改密码
+     * 用户重置个人密码
      * @param resetPasswordDTO
      * @return
      */
     boolean resetPassword(ResetPasswordDTO resetPasswordDTO);
 
+    /**
+     * 管理员修改用户密码
+     * @param resetPasswordDTO
+     * @return
+     */
+    boolean modifiedPassword(ResetPasswordDTO resetPasswordDTO);
+
     int userCount(Long tenantId);
 
     String generateAccount(SysUserDTO userDTO);
+
+    boolean changeStatus(Long userId,Integer userStatus);
 }

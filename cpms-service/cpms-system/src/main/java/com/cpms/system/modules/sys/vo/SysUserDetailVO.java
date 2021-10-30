@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class SysUserDetailVO {
 
-    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")
+    @JsonFormat( pattern = "yyyy-MM-dd" ,timezone="GMT+8")
     private LocalDateTime userBirthday;
     /**
      * 用户头像
@@ -27,4 +27,6 @@ public class SysUserDetailVO {
      * 用户性别：0-未知，1-男，2-女
      */
     private Integer  userSex;
+
+    private String postName;
 }

@@ -43,14 +43,25 @@ public class SysUserController {
     }
 
     /**
-     * 查看用户详情
+     * 编辑用户详情
      * @param userDTO
      * @return
      */
     @PostMapping("/userDetail")
-    @PreAuth("sys_user_check")
+    @PreAuth("sys_user_update")
     public Result<SysUserDetailVO> userDetail(@Validated(SelectGroup.class)@RequestBody SysUserDTO userDTO){
         return ResultUtil.success(sysUserService.userDetail(userDTO));
+    }
+
+    /**
+     * 查看用户信息
+     * @param userDTO
+     * @return
+     */
+    @PostMapping("/checkUserInfo")
+    @PreAuth("sys_user_check")
+    public Result<SysUserDetailVO> checkUserInfo(@Validated(SelectGroup.class)@RequestBody SysUserDTO userDTO){
+        return ResultUtil.success(sysUserService.checkUserInfo(userDTO));
     }
 
     @PostMapping("/delete")
@@ -74,9 +85,22 @@ public class SysUserController {
         return ResultUtil.status(sysUserService.updateUser(userDTO));
     }
 
+    @GetMapping("/changeStatus")
+    @PreAuth("sys_user_update")
+    @OperLog(desc = "修改用户状态")
+    public Result<Void> changeStatus( @RequestParam Long userId,  @RequestParam Integer userStatus){
+        return ResultUtil.status(sysUserService.changeStatus(userId,userStatus));
+    }
+
+
     @PostMapping("/resetPassword")
     public Result<Void> resetPassword(@Validated(UpdateGroup.class) @RequestBody ResetPasswordDTO resetPasswordDTO){
         return ResultUtil.status(sysUserService.resetPassword(resetPasswordDTO));
+    }
+
+    @PostMapping("/modifiedPassword")
+    public Result<Void> modifiedPassword(@RequestBody ResetPasswordDTO resetPasswordDTO){
+        return ResultUtil.status(sysUserService.modifiedPassword(resetPasswordDTO));
     }
 
     @PostMapping("/generateAccount")

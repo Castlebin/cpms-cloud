@@ -32,6 +32,7 @@ public class SysUserVO extends BaseVO {
     /**
      * 0-正常，1-已禁用
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Integer userStatus;
     @JsonSerialize(using = ToStringSerializer.class)
     private Long postId;

@@ -85,13 +85,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         QueryWrapper<SysUserEntity> query = Wrappers.query();
         query.select("user_avatar","user_sex","user_birthday","user_mobile");
         query.eq("user_id",userDTO.getUserId());
+        if(!CsSecureUtil.isHeadquarters()) {
+            query.eq("tenant_id",CsSecureUtil.userTenantId());
+        }
         SysUserEntity sysUserEntity = sysUserMapper.selectOne(query);
         SysUserDetailVO sysUserDetailVO = new SysUserDetailVO();
+        if(Objects.isNull(sysUserEntity)) {
+            return sysUserDetailVO;
+        }
         sysUserDetailVO.setUserAvatar(sysUserEntity.getUserAvatar());
         sysUserDetailVO.setUserBirthday(sysUserEntity.getUserBirthday());
         sysUserDetailVO.setUserSex(sysUserEntity.getUserSex());
         sysUserDetailVO.setUserMobile(sysUserEntity.getUserMobile());
         return sysUserDetailVO;
+    }
+
+    @Override
+    public SysUserDetailVO checkUserInfo(SysUserDTO userDTO) {
+        SysUserDetailVO sysUserDetailVO = userDetail(userDTO);
+        return  sysUserDetailVO;
+
     }
 
     private void findChildNodes(List<SysDeptEntity> list,Long parentId,List<Long> allChildDepts){
@@ -200,6 +213,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     }
 
     @Override
+    public boolean modifiedPassword(ResetPasswordDTO resetPasswordDTO) {
+        if(Objects.isNull(resetPasswordDTO.getUserId()) && Objects.isNull(resetPasswordDTO.getNewPassword())) {
+            throw new BizException(GlobalResponseResultEnum.PARAM_MISS_ERROR);
+        }
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        UpdateWrapper<SysUserEntity> updateWrapper = Wrappers.update();
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setUserPassword(bCryptPasswordEncoder.encode(resetPasswordDTO.getNewPassword()));
+        updateWrapper.eq("user_id",resetPasswordDTO.getUserId());
+        if(!CsSecureUtil.isHeadquarters()) {
+            updateWrapper.eq("tenant_id", CsSecureUtil.userTenantId());
+        }
+        return this.update(sysUserEntity,updateWrapper);
+    }
+
+    @Override
     public int userCount(Long tenantId) {
         return sysUserMapper.selectCount(Wrappers.<SysUserEntity>query().lambda().eq(SysUserEntity::getTenantId, tenantId));
     }
@@ -213,5 +242,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         int count = userCount(tenantId);
         SysTenantEntity sysTenantEntity = sysTenantMapper.selectById(tenantId);
         return CsGenerateIdUtil.userAccount(sysTenantEntity.getAccountPrefix(),6,count+1);
+    }
+
+    @Override
+    public boolean changeStatus(Long userId, Integer userStatus) {
+        UpdateWrapper<SysUserEntity> updateWrapper = Wrappers.update();
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setUserStatus(userStatus);
+        updateWrapper.eq("user_id",userId);
+        if(!CsSecureUtil.isHeadquarters()) {
+            updateWrapper.eq("tenant_id", CsSecureUtil.userTenantId());
+        }
+        return this.update(sysUserEntity,updateWrapper);
     }
 }

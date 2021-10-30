@@ -53,4 +53,6 @@ public class SysUserEntity extends TenantEntity {
     private Long postId;
 
     private LocalDateTime userBirthday;
+
+    private Integer  userStatus;
 }

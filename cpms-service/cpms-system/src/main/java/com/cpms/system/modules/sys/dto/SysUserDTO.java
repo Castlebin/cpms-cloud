@@ -90,10 +90,13 @@ public class SysUserDTO {
     /**
      * 用户手机号
      */
+    @NotBlank(message="userMobile不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    @NotNull(message="userMobile不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private String userMobile;
     /**
      * 用户性别：0-未知，1-男，2-女
      */
+    @NotNull(message="userSex不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private Integer  userSex;
 
     /**
