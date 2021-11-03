@@ -20,6 +20,7 @@ public class SysTopMenuVO extends BaseVO {
     private Integer sort;
     private String path;
     private String relationMenuIds;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Integer type;
     private String icon;
 }

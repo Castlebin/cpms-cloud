@@ -69,7 +69,7 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
                 .set(SysTopMenuEntity::getTopMenuName, sysTopMenuDTO.getTopMenuName())
                 .set(SysTopMenuEntity::getPath, sysTopMenuDTO.getPath())
                 .set(SysTopMenuEntity::getSort, sysTopMenuDTO.getSort())
-                .set(SysTopMenuEntity::getRelationMenuIds, sysTopMenuDTO.getRelationMenuIds())
+                .set(SysTopMenuEntity::getIcon, sysTopMenuDTO.getIcon())
                 .eq(SysTopMenuEntity::getTenantId,CsSecureUtil.userTenantId())
                 .eq(SysTopMenuEntity::getTopMenuId,sysTopMenuDTO.getTopMenuId());
         return this.update(updateWrapper);
@@ -100,7 +100,7 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
             sysTopMenuVO.setType(e.getType());
             sysTopMenuVO.setIcon(e.getIcon());
             return  sysTopMenuVO;
-        }).sorted(Comparator.comparing(SysTopMenuVO::getSort)).collect(Collectors.toList());
+        }).sorted(Comparator.comparing(SysTopMenuVO::getSort).reversed()).collect(Collectors.toList());
         return topMenuList;
     }
 }

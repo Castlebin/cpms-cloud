@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Objects;
 
 
 /**
@@ -35,13 +34,7 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
     public BasePageVO<SysPostVO> listPost(QueryPostDTO queryPostDTO) {
         BasePageVO<SysPostVO> basePageVO = new BasePageVO();
         List<SysPostVO> list;
-        if(CsSecureUtil.isHeadquarters()) {
-            if(!Objects.isNull(queryPostDTO.getTenantId())) {
-                queryPostDTO.setTenantId(queryPostDTO.getTenantId());
-            }
-        }else{
-            queryPostDTO.setTenantId(CsSecureUtil.userTenantId());
-        }
+        queryPostDTO.setTenantId(CsSecureUtil.userTenantId());
         int count = sysPostMapper.listPostCount(queryPostDTO);
         if(count ==0){
             list = Lists.newArrayList();
@@ -76,6 +69,7 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
                 .set(SysPostEntity::getPostName, postDTO.getPostName())
                 .set(SysPostEntity::getPostCode, postDTO.getPostCode())
                 .set(SysPostEntity::getPostDesc, postDTO.getPostDesc())
+                .set(SysPostEntity::getPostSort, postDTO.getPostSort())
                 .eq(SysPostEntity::getPostId,postDTO.getPostId())
                 .eq(SysPostEntity::getTenantId,CsSecureUtil.userTenantId());
         return this.update(updateWrapper);

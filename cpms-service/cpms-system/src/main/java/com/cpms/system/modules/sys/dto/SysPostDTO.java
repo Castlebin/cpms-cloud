@@ -24,4 +24,6 @@ public class SysPostDTO {
     @NotNull(message="postCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private String postCode;
     private String postDesc;
+    @NotNull(message="postSort不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private Integer postSort;
 }

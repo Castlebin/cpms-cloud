@@ -27,6 +27,7 @@
         d.dept_id,
         d.dept_name,
         d.dept_desc,
+        d.dept_sort,
         d.parent_id,
         d.tenant_id,
         d.create_time,
@@ -48,6 +49,7 @@
                 and t.tenant_name like CONCAT('%',#{tenantName},'%' )
             </if>
         </where>
+        ORDER BY d.dept_sort DESC
         limit #{startIndex},#{pageSize}
     </select>
 

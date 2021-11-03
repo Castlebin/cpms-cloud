@@ -43,7 +43,7 @@ public class SysMenuController {
      * @return
      */
     @GetMapping("/getMenu")
-    public Result<SysRouteVO> querySysMenuRoutes(@RequestParam(name = "topMenuId",required=false) Long topMenuId){
+    public Result<SysRouteVO> querySysMenuRoutes(@RequestParam(name = "topMenuId",defaultValue ="0",required=false) Long topMenuId){
         return ResultUtil.success(sysMenuService.querySysMenuRoutes(topMenuId));
     }
 

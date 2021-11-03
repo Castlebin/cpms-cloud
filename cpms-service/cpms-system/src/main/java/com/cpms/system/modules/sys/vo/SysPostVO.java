@@ -19,7 +19,7 @@ public class SysPostVO extends BaseVO {
     private String postName;
     @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;
-    private String tenantName;
     private String postDesc;
     private String postCode;
+    private Integer postSort;
 }

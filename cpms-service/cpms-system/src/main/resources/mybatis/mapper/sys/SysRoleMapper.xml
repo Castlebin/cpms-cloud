@@ -60,7 +60,7 @@
                  and r.tenant_id = #{tenantId}
              </if>
          </where>
-         ORDER BY r.role_sort ASC
+         ORDER BY r.role_sort DESC
          LIMIT #{startIndex},#{pageSize}
     </select>
 </mapper>

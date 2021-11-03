@@ -25,4 +25,6 @@ public class SysDeptDTO {
     @NotNull(message="parentId不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private Long parentId;
     private String deptDesc;
+    @NotNull(message="deptSort不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private Integer deptSort;
 }

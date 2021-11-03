@@ -25,4 +25,5 @@ public class SysDeptVO extends BaseVO {
     private Long tenantId;
     private String superiorDept;
     private String deptDesc;
+    private Integer deptSort;
 }

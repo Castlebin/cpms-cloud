@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  * @time: 2021/7/16 16:53
  */
 @EnableTransactionManagement // 开启事务
-@MapperScan("com.cpms.**.mapper**") //扫描mapper包 避免在每个mapper类上加@Mapper注解
+@MapperScan("com.cpms.**.mapper.**") //扫描mapper包 避免在每个mapper类上加@Mapper注解
 @Configuration
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
@@ -58,15 +58,15 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("updateBy", CsSecureUtil.userAccount(),metaObject);
     }
 
-    /**
-     * sql 日志
-     *
-     * @return SqlLogInterceptor
-     */
-    @Bean
-    @ConditionalOnProperty(value = "mybatis-plus.show-sql-log", havingValue = "true")
-    public SqlLogInterceptor sqlLogInterceptor() {
-        System.out.println("打印sql日志信息");
-        return new SqlLogInterceptor();
-    }
+//    /**
+//     * sql 日志
+//     *
+//     * @return SqlLogInterceptor
+//     */
+//    @Bean
+//    @ConditionalOnProperty(value = "mybatis-plus.show-sql-log", havingValue = "true")
+//    public SqlLogInterceptor sqlLogInterceptor() {
+//        System.out.println("打印sql日志信息");
+//        return new SqlLogInterceptor();
+//    }
 }

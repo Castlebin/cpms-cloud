@@ -70,6 +70,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
         LambdaUpdateWrapper<SysDeptEntity> updateWrapper = Wrappers.<SysDeptEntity>lambdaUpdate()
                 .set(SysDeptEntity::getDeptName, deptDTO.getDeptName())
                 .set(SysDeptEntity::getParentId, deptDTO.getParentId())
+                .set(SysDeptEntity::getDeptSort, deptDTO.getDeptSort())
                 .set(SysDeptEntity::getDeptDesc, deptDTO.getDeptDesc())
                 .eq(SysDeptEntity::getDeptId,deptDTO.getDeptId())
                 .eq(SysDeptEntity::getTenantId,CsSecureUtil.userTenantId());

@@ -22,11 +22,14 @@ public class SysTopMenuDTO {
     @NotNull(message="topMenuName不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private String topMenuName;
 
-    @NotBlank(message="relationMenuIds不能为空",groups = {UpdateGroup.class, AddGroup.class})
-    @NotNull(message="relationMenuIds不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    @NotBlank(message="icon不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    @NotNull(message="icon不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private String icon;
+
     private String relationMenuIds;
 
     private String path;
 
+    @NotNull(message="sort不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private Integer sort;
 }

@@ -30,7 +30,7 @@ public class SysTopMenuController {
      *  顶部菜单列表
      * @return
      */
-    @PostMapping("/list")
+    @GetMapping("/list")
     public Result<List<SysTopMenuVO>> listTopMenu(){
         return ResultUtil.success(sysTopMenuService.listTopMenu());
     }

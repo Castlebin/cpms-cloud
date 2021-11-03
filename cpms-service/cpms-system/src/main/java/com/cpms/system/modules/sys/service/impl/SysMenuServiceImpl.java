@@ -48,7 +48,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     public SysRouteVO querySysMenuRoutes(Long topMenuId) {
          List<SysMenuEntity> menus;
         SysRouteVO sysRouteVO = new SysRouteVO();
-        if( Objects.isNull(topMenuId) || topMenuId == 0) {
+        if( topMenuId == 0) {
               menus = getHomePageMenuRoutes();
          }else{
              // 根据顶部菜单ID获取对应的菜单显示

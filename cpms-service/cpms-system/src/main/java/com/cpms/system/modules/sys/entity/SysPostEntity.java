@@ -24,4 +24,5 @@ public class SysPostEntity extends TenantEntity {
     private String postName;
     private String postCode;
     private String postDesc;
+    private Integer postSort;
 }

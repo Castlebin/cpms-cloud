@@ -40,13 +40,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     public BasePageVO<SysRoleVO> listRole(QueryRoleDTO queryRoleDTO) {
         BasePageVO<SysRoleVO> listRoleVO = new BasePageVO();
         List<SysRoleVO> sysRoleVoList;
-        if(CsSecureUtil.isHeadquarters()) {
-            if(!Objects.isNull(queryRoleDTO.getTenantId())) {
-                queryRoleDTO.setTenantId(queryRoleDTO.getTenantId());
-            }
-        }else{
-            queryRoleDTO.setTenantId(CsSecureUtil.userTenantId());
-        }
+        queryRoleDTO.setTenantId(CsSecureUtil.userTenantId());
         int count = sysRoleMapper.listRoleCount(queryRoleDTO);
         if(count ==0){
             sysRoleVoList = Lists.newArrayList();
