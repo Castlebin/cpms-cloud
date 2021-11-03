@@ -122,7 +122,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         if(!Objects.isNull(sysTopMenuEntity) && !StringUtils.isBlank(sysTopMenuEntity.getRelationMenuIds())) {
             String[] idArr = sysTopMenuEntity.getRelationMenuIds().split(",");
             List<Long> idList = Arrays.stream(idArr).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
-            return sysMenuMapper.selectBatchIds(idList);
+            List<SysMenuEntity> list = sysMenuMapper.selectBatchIds(idList);
+            list.sort(Comparator.comparing(SysMenuEntity::getSort).reversed());
+            return list;
         }
         return Lists.newArrayList();
     }
@@ -133,6 +135,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         QueryWrapper<SysMenuEntity> wrapper=new QueryWrapper<>();
         wrapper.eq("del_flag",CommonConstant.DEL_FLAG_NOT_DELETED);
         wrapper.eq("type",CommonConstant.TYPE_MENU);
+        wrapper.orderByDesc("sort");
         return sysMenuMapper.selectList(wrapper);
     }
 
@@ -172,5 +175,35 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
             }
         }
         return nodeTree;
+    }
+
+    /**
+     *  构建树形列表结构
+     * @param list 所有节点
+     * @param parentId 父ID
+     * @return
+     */
+    public List<SysMenuVO> buildTreeList( List<SysMenuEntity> list, Long parentId) {
+        return  list.stream().filter(m -> m.getParentId().equals(parentId)).map(m->{
+            SysMenuVO vo = new SysMenuVO();
+            CsBeanUtil.copyProperties(m,vo);
+            vo.setChildren(getChildrens(m,list));
+            return vo;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * 递归查询子节点
+     * @param sysMenuEntity  目标节点
+     * @param list   所有节点
+     * @return 根节点信息
+     */
+    private List<SysMenuVO> getChildrens(SysMenuEntity sysMenuEntity, List<SysMenuEntity> list) {
+        return list.stream().filter(m -> Objects.equals(m.getParentId(), sysMenuEntity.getMenuId())).map(m->{
+            SysMenuVO vo = new SysMenuVO();
+            CsBeanUtil.copyProperties(m,vo);
+            vo.setChildren(getChildrens(m,list));
+            return vo;
+        }).collect(Collectors.toList());
     }
 }

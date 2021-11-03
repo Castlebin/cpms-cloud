@@ -33,6 +33,7 @@
             #{item}
         </foreach>
          )
+         ORDER BY sort DESC
     </select>
 
     <select id="queryRoleButtons" resultType="java.lang.String">
@@ -46,6 +47,7 @@
             #{item}
         </foreach>
         )
+        ORDER BY sort DESC
     </select>
 
     <select id="listMenuCount" parameterType="com.cpms.system.modules.sys.dto.QueryMenuDTO" resultType="java.lang.Integer">
