@@ -20,7 +20,7 @@ public class NodeManager {
      * @param parentId
      * @return
      */
-    public static <T extends ITreeNode>  List<T> buildTreeNode(List<T> items, Long parentId) {
+    public static <T extends ITreeNode<T>>  List<T> buildTreeNode(List<T> items, Long parentId) {
         List<T> nodeTree = new ArrayList<>();
         items.stream().peek(e->{
             if (Objects.equals(parentId,e.getParentId())) {
