@@ -32,6 +32,7 @@
         <xxl-job.version>2.3.0</xxl-job.version>
         <hutool.version>5.7.12</hutool.version>
         <jasypt.version>2.1.0</jasypt.version>
+        <easyexcel.version>3.0.3</easyexcel.version>
     </properties>
     <modules>
         <module>cpms-core-framework-redis</module>

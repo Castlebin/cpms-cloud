@@ -16,11 +16,11 @@ public class NodeManager {
 
     /**
      *  构建树形节点
-     * @param items
-     * @param parentId
+     * @param items 所有数据项
+     * @param parentId  父节点ID
      * @return
      */
-    public static <T extends ITreeNode>  List<T> buildTreeNode(List<T> items, Long parentId) {
+    public static <T extends ITreeNode<T>>  List<T> buildTreeNode(List<T> items, Long parentId) {
         List<T> nodeTree = new ArrayList<>();
         items.stream().peek(e->{
             if (Objects.equals(parentId,e.getParentId())) {
