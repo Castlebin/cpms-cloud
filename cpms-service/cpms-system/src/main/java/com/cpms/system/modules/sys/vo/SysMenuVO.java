@@ -1,6 +1,7 @@
 package com.cpms.system.modules.sys.vo;
 
 import com.cpms.framework.common.core.base.BaseVO;
+import com.cpms.framework.common.core.node.ITreeNode;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
@@ -15,7 +16,9 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SysMenuVO  extends BaseVO {
+public class SysMenuVO  extends BaseVO  implements ITreeNode<SysMenuVO> {
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long id;
     @JsonSerialize(using = ToStringSerializer.class)
     private Long menuId;
     @JsonSerialize(using = ToStringSerializer.class)
@@ -30,5 +33,4 @@ public class SysMenuVO  extends BaseVO {
     private Integer sort;
     private Integer type;
     private Integer openFlag;
-
 }

@@ -69,6 +69,7 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
                 .set(SysTopMenuEntity::getTopMenuName, sysTopMenuDTO.getTopMenuName())
                 .set(SysTopMenuEntity::getPath, sysTopMenuDTO.getPath())
                 .set(SysTopMenuEntity::getSort, sysTopMenuDTO.getSort())
+                .set(SysTopMenuEntity::getType, sysTopMenuDTO.getType())
                 .set(SysTopMenuEntity::getIcon, sysTopMenuDTO.getIcon())
                 .eq(SysTopMenuEntity::getTenantId,CsSecureUtil.userTenantId())
                 .eq(SysTopMenuEntity::getTopMenuId,sysTopMenuDTO.getTopMenuId());

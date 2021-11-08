@@ -28,6 +28,9 @@ public class SysTopMenuDTO {
 
     private String relationMenuIds;
 
+    @NotNull(message="type不能为空",groups = {UpdateGroup.class, AddGroup.class})
+    private Integer type;
+
     private String path;
 
     @NotNull(message="sort不能为空",groups = {UpdateGroup.class, AddGroup.class})

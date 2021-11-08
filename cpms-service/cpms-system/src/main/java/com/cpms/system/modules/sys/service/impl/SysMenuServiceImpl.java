@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
+import com.cpms.framework.common.core.node.NodeManager;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
@@ -54,7 +55,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
              // 根据顶部菜单ID获取对应的菜单显示
             menus = queryMenuByTopMenuId(topMenuId);
          }
-        sysRouteVO.setMenus(buildMenuTree(menus,0L));
+        sysRouteVO.setMenus(NodeManager.buildTreeNode(convertVO(menus), 0L));
         sysRouteVO.setButtons(queryRoleButtons());
         return sysRouteVO;
     }
@@ -99,11 +100,20 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
             list = Lists.newArrayList();
         }else{
             List<SysMenuEntity> entities = sysMenuMapper.listMenu(listMenuDTO);
-            list = buildMenuTree(entities,0L);
+            list = NodeManager.buildTreeNode(convertVO(entities), 0L);
         }
         basePageVO.setTotal(count);
         basePageVO.setList(list);
         return basePageVO;
+    }
+
+    private List<SysMenuVO> convertVO(List<SysMenuEntity> entities){
+        return  entities.stream().map(e->{
+            SysMenuVO sysMenuVO = new SysMenuVO();
+            CsBeanUtil.copyProperties(e,sysMenuVO);
+            sysMenuVO.setId(e.getMenuId());
+            return  sysMenuVO;
+        }).collect(Collectors.toList());
     }
 
     public List<String> queryRoleButtons() {
@@ -152,58 +162,5 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
             menus = sysMenuMapper.queryRoleMenus(roleIds,CommonConstant.TYPE_MENU);
         }
         return menus;
-    }
-
-    /**
-     *  菜单树形结构
-     * @param list
-     * @param parentId
-     * @return
-     */
-    public List<SysMenuVO> buildMenuTree( List<SysMenuEntity> list, Long parentId) {
-        List<SysMenuVO> nodeTree = new ArrayList<>();
-        for (SysMenuEntity child : list) {
-            SysMenuVO vo = new SysMenuVO();
-            CsBeanUtil.copyProperties(child,vo);
-            if (Objects.equals(parentId,child.getParentId())) {
-                if (vo.getChildren() == null) {
-                    vo.setChildren(new ArrayList<>());
-                }
-                List<SysMenuVO> childNodes = buildMenuTree(list, child.getMenuId());
-                vo.setChildren(childNodes);
-                nodeTree.add(vo);
-            }
-        }
-        return nodeTree;
-    }
-
-    /**
-     *  构建树形列表结构
-     * @param list 所有节点
-     * @param parentId 父ID
-     * @return
-     */
-    public List<SysMenuVO> buildTreeList( List<SysMenuEntity> list, Long parentId) {
-        return  list.stream().filter(m -> m.getParentId().equals(parentId)).map(m->{
-            SysMenuVO vo = new SysMenuVO();
-            CsBeanUtil.copyProperties(m,vo);
-            vo.setChildren(getChildrens(m,list));
-            return vo;
-        }).collect(Collectors.toList());
-    }
-
-    /**
-     * 递归查询子节点
-     * @param sysMenuEntity  目标节点
-     * @param list   所有节点
-     * @return 根节点信息
-     */
-    private List<SysMenuVO> getChildrens(SysMenuEntity sysMenuEntity, List<SysMenuEntity> list) {
-        return list.stream().filter(m -> Objects.equals(m.getParentId(), sysMenuEntity.getMenuId())).map(m->{
-            SysMenuVO vo = new SysMenuVO();
-            CsBeanUtil.copyProperties(m,vo);
-            vo.setChildren(getChildrens(m,list));
-            return vo;
-        }).collect(Collectors.toList());
     }
 }

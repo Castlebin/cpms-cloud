@@ -23,7 +23,6 @@ public class SysDeptVO extends BaseVO {
     private String tenantName;
     @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;
-    private String superiorDept;
     private String deptDesc;
     private Integer deptSort;
 }

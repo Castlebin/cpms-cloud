@@ -1,9 +1,9 @@
 package com.cpms.system.modules.sys.controller;
 
-import cn.hutool.core.lang.tree.Tree;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.core.base.BasePageVO;
+import com.cpms.framework.common.core.node.BaseTreeNode;
 import com.cpms.framework.log.annotations.OperLog;
 import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
@@ -13,6 +13,7 @@ import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.dto.QueryDeptDTO;
 import com.cpms.system.modules.sys.service.ISysDeptService;
 import com.cpms.system.modules.sys.vo.SysDeptVO;
+import com.cpms.system.modules.sys.vo.DeptTreeVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,13 +41,23 @@ public class SysDeptController {
     }
 
     /**
-     *  部门树形结构
+     *  所有租户部门树形结构
      * @return
      */
-    @PostMapping("/treeDept")
-    public Result<List<Tree<String>>> treeDept(@RequestBody QueryDeptDTO queryDeptDTO){
-        return ResultUtil.success(sysDeptService.treeDept(queryDeptDTO));
+    @PostMapping("/allDeptTree")
+    public Result<List<DeptTreeVO>> allDeptTree(@RequestBody QueryDeptDTO queryDeptDTO){
+        return ResultUtil.success(sysDeptService.allDeptTree(queryDeptDTO));
     }
+
+    /**
+     *  租户部门树形结构
+     * @return
+     */
+    @GetMapping("/tenantDeptTree")
+    public Result<List<DeptTreeVO>> tenantDeptTree(){
+        return ResultUtil.success(sysDeptService.tenantDeptTree());
+    }
+
 
     /**
      *  添加操作

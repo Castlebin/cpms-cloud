@@ -1,12 +1,14 @@
 package com.cpms.system.modules.sys.service.impl;
 
-import cn.hutool.core.lang.tree.*;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
+import com.cpms.framework.common.core.node.BaseTreeNode;
+import com.cpms.framework.common.core.node.NodeManager;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
@@ -14,19 +16,16 @@ import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.QueryDeptDTO;
 import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
-import com.cpms.system.modules.sys.entity.SysUserEntity;
 import com.cpms.system.modules.sys.mapper.SysDeptMapper;
 import com.cpms.system.modules.sys.service.ISysDeptService;
 import com.cpms.system.modules.sys.service.ISysTenantService;
 import com.cpms.system.modules.sys.vo.SysDeptVO;
+import com.cpms.system.modules.sys.vo.DeptTreeVO;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -94,7 +93,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
     }
 
     @Override
-    public List<Tree<String>> treeDept(QueryDeptDTO queryDeptDTO) {
+    public List<DeptTreeVO> allDeptTree(QueryDeptDTO queryDeptDTO) {
         QueryWrapper<SysDeptEntity> query = Wrappers.query();
         query.select("tenant_id","dept_id","dept_name","parent_id");
         if(CsSecureUtil.isHeadquarters()) {
@@ -105,31 +104,32 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
             query.eq("tenant_id", CsSecureUtil.userTenantId());
         }
         query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
-        List<SysDeptEntity> list = this.list(query);
-        List<TreeNode<String>> nodeList =  list.stream().map(e->{
-            TreeNode<String> treeNode = new TreeNode();
-            if(e.getTenantId().equals(CsSecureUtil.userTenantId()) && e.getParentId().equals(0L)) {
-                treeNode.setWeight(1);
-            }
-            treeNode.setId(String.valueOf(e.getDeptId()));
-            treeNode.setParentId( String.valueOf(e.getParentId()));
-            treeNode.setName(e.getDeptName());
-            return  treeNode;
-        }).collect(Collectors.toList());
-        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
-        treeNodeConfig.setIdKey("deptId");
-        treeNodeConfig.setNameKey("deptName");
-        treeNodeConfig.setDeep(10);
-        List<Tree<String>> treeList = TreeUtil.build(nodeList, "0", treeNodeConfig,
-                (treeNode, tree) -> {
-                    tree.setId(treeNode.getId());
-                    tree.setParentId(treeNode.getParentId());
-                    tree.setName(treeNode.getName());
-                    tree.setWeight(treeNode.getWeight());
-                });
-        Collections.reverse(treeList);
-        return  treeList;
+        query.orderByAsc("create_time");
+        return buildDeptTree(this.list(query));
     }
+
+    private List<DeptTreeVO> buildDeptTree(List<SysDeptEntity> list){
+        List<DeptTreeVO> treeNodes = list.stream().map(e -> {
+            DeptTreeVO node = new DeptTreeVO();
+            node.setDeptName(e.getDeptName());
+            node.setDeptId(e.getDeptId());
+            node.setId(e.getDeptId());
+            node.setParentId(e.getParentId());
+            return node;
+        }).collect(Collectors.toList());
+        List<DeptTreeVO> deptTreeVO = NodeManager.buildTreeNode(treeNodes, 0L);
+        return  deptTreeVO;
+    }
+    @Override
+    public List<DeptTreeVO> tenantDeptTree() {
+        QueryWrapper<SysDeptEntity> query = Wrappers.query();
+        query.select("tenant_id","dept_id","dept_name","parent_id");
+        query.eq("tenant_id", CsSecureUtil.userTenantId());
+        query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
+        query.orderByDesc("dept_sort");
+        return buildDeptTree(this.list(query));
+    }
+
 
     @Override
     public List<SysDeptEntity> findNodes(Long deptId,Long tenantId) {

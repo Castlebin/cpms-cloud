@@ -1,13 +1,13 @@
 package com.cpms.system.modules.sys.service;
 
-import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cpms.framework.common.core.base.BasePageVO;
+import com.cpms.framework.common.core.node.BaseTreeNode;
 import com.cpms.system.modules.sys.dto.QueryDeptDTO;
 import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
-import com.cpms.system.modules.sys.entity.SysUserEntity;
 import com.cpms.system.modules.sys.vo.SysDeptVO;
+import com.cpms.system.modules.sys.vo.DeptTreeVO;
 
 import java.util.List;
 
@@ -21,6 +21,7 @@ public interface ISysDeptService extends IService<SysDeptEntity> {
     boolean addDept(SysDeptDTO deptDTO);
     boolean updateDept(SysDeptDTO deptDTO);
     boolean deleteDept(SysDeptDTO deptDTO);
-    List<Tree<String>> treeDept(QueryDeptDTO queryDeptDTO);
-   List<SysDeptEntity> findNodes(Long deptId,Long tenantId);
+    List<DeptTreeVO> allDeptTree(QueryDeptDTO queryDeptDTO);
+    List<DeptTreeVO> tenantDeptTree();
+    List<SysDeptEntity> findNodes(Long deptId,Long tenantId);
 }
