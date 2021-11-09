@@ -24,4 +24,5 @@ public class SysRoleEntity extends TenantEntity {
     private String roleName;
     private String roleCode;
     private String roleDesc;
+    private Integer roleSort;
 }

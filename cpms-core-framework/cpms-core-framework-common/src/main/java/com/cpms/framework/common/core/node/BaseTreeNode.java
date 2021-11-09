@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author gulang
@@ -15,6 +16,7 @@ public class BaseTreeNode<T> implements ITreeNode<T> {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long parentId;
     private List<T> children;
+    private Boolean hasChildren;
 
     @Override
     public Long getId() {
@@ -47,5 +49,16 @@ public class BaseTreeNode<T> implements ITreeNode<T> {
     @Override
     public void setChildren(List<T> children) {
         this.children = children;
+    }
+
+    public void setHasChildren(final Boolean hasChildren) {
+        this.hasChildren = hasChildren;
+    }
+    @Override
+    public Boolean getHasChildren() {
+        if (this.children == null) {
+            return  false;
+        }
+        return this.children.size() > 0 ? true : (!Objects.isNull(this.hasChildren) ? this.hasChildren:false);
     }
 }

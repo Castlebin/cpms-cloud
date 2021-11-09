@@ -21,4 +21,5 @@ public interface ISysTopMenuService extends IService<SysTopMenuEntity> {
    boolean addTopMenu(SysTopMenuDTO sysTopMenuDTO);
    boolean updateTopMenu(SysTopMenuDTO sysTopMenuDTO);
    List<SysTopMenuVO> listTopMenu();
+   boolean configTopMenu(SysTopMenuDTO sysTopMenuDTO);
 }

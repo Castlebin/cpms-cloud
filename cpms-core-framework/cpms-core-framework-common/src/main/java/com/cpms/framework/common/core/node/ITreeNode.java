@@ -20,4 +20,7 @@ public interface ITreeNode<T> extends Serializable {
     List<T> getChildren();
 
     void setChildren(List<T> children);
+    default Boolean getHasChildren() {
+        return false;
+    }
 }

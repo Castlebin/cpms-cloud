@@ -4,6 +4,7 @@ import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
+import com.cpms.framework.mybatis.groups.OtherGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
 import com.cpms.system.modules.sys.dto.SysTopMenuDTO;
@@ -76,4 +77,14 @@ public class SysTopMenuController {
         return ResultUtil.status(sysTopMenuService.deleteTopMenu(sysTopMenuDTO));
     }
 
+    /**
+     *  配置顶部菜单的下级菜单
+     * @param sysTopMenuDTO
+     * @return
+     */
+    @PostMapping("/configTopMenu")
+    @PreAuth("sys_top_menu_config")
+    public Result<Void> configTopMenu(@Validated(OtherGroup.class) @RequestBody SysTopMenuDTO sysTopMenuDTO){
+        return ResultUtil.status(sysTopMenuService.configTopMenu(sysTopMenuDTO));
+    }
 }

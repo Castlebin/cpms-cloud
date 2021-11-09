@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
+import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
@@ -18,6 +19,7 @@ import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,6 +69,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
         UpdateWrapper<SysRoleEntity> updateWrapper = Wrappers.update();
         updateWrapper.eq("role_id",sysRoleDTO.getRoleId());
         updateWrapper.eq("tenant_id", CsSecureUtil.userTenantId());
+        updateWrapper.notIn("role_code", Arrays.asList(TenantConstant.SUPER_ADMINISTRATOR,TenantConstant.TENANT_ADMINISTRATOR));
         return this.update(sysRoleEntity,updateWrapper);
     }
 
@@ -75,7 +78,8 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
         LambdaUpdateWrapper<SysRoleEntity> updateWrapper = Wrappers.<SysRoleEntity>lambdaUpdate()
                 .set(SysRoleEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
                 .eq(SysRoleEntity::getTenantId, CsSecureUtil.userTenantId())
-                .eq(SysRoleEntity::getRoleId, sysRoleDTO.getRoleId());
+                .eq(SysRoleEntity::getRoleId, sysRoleDTO.getRoleId())
+                .notIn(SysRoleEntity::getRoleCode,Arrays.asList(TenantConstant.SUPER_ADMINISTRATOR,TenantConstant.TENANT_ADMINISTRATOR));
         return this.update(updateWrapper);
     }
 }

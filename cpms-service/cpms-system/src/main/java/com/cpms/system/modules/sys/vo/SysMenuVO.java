@@ -2,12 +2,14 @@ package com.cpms.system.modules.sys.vo;
 
 import com.cpms.framework.common.core.base.BaseVO;
 import com.cpms.framework.common.core.node.ITreeNode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author gulang
@@ -33,4 +35,6 @@ public class SysMenuVO  extends BaseVO  implements ITreeNode<SysMenuVO> {
     private Integer sort;
     private Integer type;
     private Integer openFlag;
+    @JsonIgnore
+    private Boolean hasChildren;
 }

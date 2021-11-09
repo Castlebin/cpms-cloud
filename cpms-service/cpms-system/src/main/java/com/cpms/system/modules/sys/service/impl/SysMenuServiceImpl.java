@@ -138,6 +138,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         }
         return Lists.newArrayList();
     }
+
     /**
      * 超级管理员路由
      */

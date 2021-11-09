@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.List;
-
 /**
  * @author gulang
  * @Description:
@@ -19,5 +17,4 @@ public class DeptTreeVO extends BaseTreeNode<DeptTreeVO> {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long deptId;
     private String deptName;
-
 }
