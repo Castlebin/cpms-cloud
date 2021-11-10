@@ -5,6 +5,7 @@ import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
+import com.cpms.framework.mybatis.groups.OtherGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
 import com.cpms.system.modules.sys.dto.QueryRoleDTO;
@@ -71,4 +72,14 @@ public class SysRoleController {
         return ResultUtil.status(sysRoleService.deleteRole(sysRoleDTO));
     }
 
+    /**
+     *  配置角色权限
+     * @param sysRoleDTO
+     * @return
+     */
+    @PostMapping("/configRolePer")
+    @PreAuth("sys_config_role_per")
+    public Result<Void> configRolePer(@Validated(OtherGroup.class)@RequestBody SysRoleDTO sysRoleDTO){
+        return ResultUtil.status(sysRoleService.configRolePer(sysRoleDTO));
+    }
 }

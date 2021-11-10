@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 
 /**
  * @description:
@@ -19,10 +21,10 @@ public class SysRoleVO extends BaseVO {
     private Long roleId;
     @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;
-    private String tenantName;
     private String roleName;
     private String roleCode;
     private String roleDesc;
     private Integer roleSort;
+    private List<Long> menuIds;
 
 }

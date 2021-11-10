@@ -12,8 +12,10 @@ import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.system.modules.sys.dto.QueryRoleDTO;
 import com.cpms.system.modules.sys.dto.SysRoleDTO;
 import com.cpms.system.modules.sys.entity.SysRoleEntity;
+import com.cpms.system.modules.sys.entity.SysRoleMenuEntity;
 import com.cpms.system.modules.sys.mapper.SysRoleMapper;
 import com.cpms.system.modules.sys.service.ISysRoleService;
+import com.cpms.system.modules.sys.service.ISysRoleMenuService;
 import com.cpms.system.modules.sys.vo.SysRoleVO;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -32,6 +34,8 @@ import java.util.Objects;
 public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntity> implements ISysRoleService {
     @Resource
     private SysRoleMapper sysRoleMapper;
+    @Resource
+    private ISysRoleMenuService sysRoleMenuService;
 
     @Override
     public List<SysRoleEntity> queryRoleByUserId(Long userId) {
@@ -81,5 +85,18 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
                 .eq(SysRoleEntity::getRoleId, sysRoleDTO.getRoleId())
                 .notIn(SysRoleEntity::getRoleCode,Arrays.asList(TenantConstant.SUPER_ADMINISTRATOR,TenantConstant.TENANT_ADMINISTRATOR));
         return this.update(updateWrapper);
+    }
+
+    @Override
+    public boolean configRolePer(SysRoleDTO sysRoleDTO) {
+        List<Long> menuIds = Arrays.stream(sysRoleDTO.getMenuIds().split(",")).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
+        List<SysRoleMenuEntity> collect = menuIds.stream().map(e -> {
+            SysRoleMenuEntity sysRoleMenuEntity = new SysRoleMenuEntity();
+            sysRoleMenuEntity.setMenuId(e);
+            sysRoleMenuEntity.setRoleId(sysRoleDTO.getRoleId());
+            return sysRoleMenuEntity;
+        }).collect(Collectors.toList());
+        sysRoleMenuService.saveBatch(collect);
+        return true;
     }
 }

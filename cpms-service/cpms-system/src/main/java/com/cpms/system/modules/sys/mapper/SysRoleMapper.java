@@ -21,4 +21,6 @@ public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {
     int listRoleCount(QueryRoleDTO listRoleDTO);
 
     List<SysRoleVO> listRole(QueryRoleDTO listRoleDTO);
+
+    List<Long> selectMenuIdByRoleId(Long roleId);
 }
