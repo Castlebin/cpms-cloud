@@ -14,6 +14,7 @@
     <description>demo示例模块</description>
 
     <dependencies>
+
         <!-- mybatis框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
@@ -37,6 +38,14 @@
                     <artifactId>cpms-core-framework-common</artifactId>
                     <groupId>com.cpms</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -54,17 +63,17 @@
         </dependency>
 
         <!-- xxl-job定时任务框架模块-->
-        <dependency>
-            <groupId>com.cpms</groupId>
-            <artifactId>cpms-core-framework-xxl-job</artifactId>
-            <version>${cpms.core.framework.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>cpms-core-framework-common</artifactId>
-                    <groupId>com.cpms</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.cpms</groupId>-->
+<!--            <artifactId>cpms-core-framework-xxl-job</artifactId>-->
+<!--            <version>${cpms.core.framework.version}</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>cpms-core-framework-common</artifactId>-->
+<!--                    <groupId>com.cpms</groupId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
 
         <!-- 引入cpms-system-api依赖 -->
         <dependency>
@@ -87,6 +96,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <!--  排除掉重复的log4j2日志依赖 -->
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- nacos 配置中心 -->
 <!--        <dependency>-->

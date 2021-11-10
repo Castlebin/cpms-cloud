@@ -1,4 +1,4 @@
-package com.cpms.common.constant;
+package com.cpms.framework.common.constants;
 
 /**
  * @description:

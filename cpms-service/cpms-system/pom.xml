@@ -72,6 +72,10 @@
                     <artifactId>spring-boot-starter-web</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>spring-boot-starter</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 

@@ -3,6 +3,7 @@ package com.cpms.framework.log.handler;
 import com.alibaba.fastjson.JSON;
 
 import com.cpms.framework.common.constants.CoreCommonConstant;
+import com.cpms.framework.common.constants.LogTypeConstant;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.utils.CsPropsUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
@@ -32,7 +33,7 @@ import java.util.UUID;
  * @time: 2021/7/27 19:21
  */
 public class RequestHandlerLogInterceptor implements HandlerInterceptor {
-    private final Logger filterLog = LoggerFactory.getLogger("filter");
+    private final Logger filterLog = LoggerFactory.getLogger(LogTypeConstant.FILTER);
     /**
      * 请求开始时间标识
      */
