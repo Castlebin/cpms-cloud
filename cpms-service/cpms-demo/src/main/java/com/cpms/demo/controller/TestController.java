@@ -2,14 +2,21 @@ package com.cpms.demo.controller;
 
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.utils.CsFileUtil;
 import com.cpms.framework.common.utils.CsPropsUtil;
 import com.cpms.framework.common.utils.thread.ThreadPoolBuilder;
 import com.cpms.framework.redis.utils.CsRedissonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -56,5 +63,16 @@ public class TestController {
             log.info("子线程测试------"+Thread.currentThread().getName());
         });
         return ResultUtil.success();
+    }
+
+    /**
+     *  下载文件
+     * @return
+     */
+    @GetMapping("/downloadFile")
+    public Result<Void> downloadFile(HttpServletResponse response) throws IOException {
+        String fileName = "temp.xlsx";
+        String fileDir = "staticfile";
+        return CsFileUtil.downLocalFile(response, fileDir, fileName);
     }
 }

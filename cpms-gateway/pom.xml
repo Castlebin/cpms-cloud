@@ -81,25 +81,19 @@
 
         <resources>
             <resource>
-                <!--打包该目录下的配置文件 -->
+                <!--指定主资源目录 -->
                 <directory>src/main/resources</directory>
-                <includes>
-                    <include>application.yml</include>
-                    <include>mybatis/**</include>
-                    <include>META-INF/*</include>
-                </includes>
-                <!-- 启用过滤 即该资源中的变量将会被过滤器中的值替换 -->
+                <!--排除主资源目录下的指定资源-->
+                <excludes>
+                    <exclude>profiles/**</exclude>
+                </excludes>
+                <!--是否对主资源目录开启资源过滤 -->
                 <filtering>true</filtering>
             </resource>
             <resource>
-                <!-- ${profiles.active}由profile提供,打包的时候只需要打包激活的环境配置文件 -->
+                <!--指定主资源目录， ${profiles.active}由profile提供,打包的时候只需要打包激活的环境配置文件 -->
                 <directory>src/main/resources/profiles/${profiles.active}</directory>
-                <!--把对应激活的环境目录下所有的以下后缀文件都打包 -->
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.yml</include>
-                </includes>
+                <!--这里不能理解为过滤，而是开启替换，为true，表明可以使用${}变量  -->
                 <filtering>true</filtering>
             </resource>
         </resources>
