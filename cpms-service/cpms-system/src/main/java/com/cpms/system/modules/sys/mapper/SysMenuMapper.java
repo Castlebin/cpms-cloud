@@ -15,9 +15,7 @@ import java.util.List;
  */
 @DS("master")
 public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {
-    List<SysMenuEntity> queryRoleMenus(@Param("list") List<Long> roleIds,@Param("type") Integer type);
-
-    List<String> queryRoleButtons(@Param("list") List<Long> roleIds);
+    List<SysMenuEntity> queryRoleMenusOrButtons(@Param("list") List<Long> roleIds,@Param("type") Integer type);
 
     int listMenuCount(QueryMenuDTO listMenuDTO);
 

@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
+import com.cpms.framework.common.enums.GlobalResponseResultEnum;
+import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.system.modules.sys.dto.QueryRoleDTO;
@@ -18,11 +20,12 @@ import com.cpms.system.modules.sys.service.ISysRoleService;
 import com.cpms.system.modules.sys.service.ISysRoleMenuService;
 import com.cpms.system.modules.sys.vo.SysRoleVO;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -46,7 +49,11 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     public BasePageVO<SysRoleVO> listRole(QueryRoleDTO queryRoleDTO) {
         BasePageVO<SysRoleVO> listRoleVO = new BasePageVO();
         List<SysRoleVO> sysRoleVoList;
-        queryRoleDTO.setTenantId(CsSecureUtil.userTenantId());
+        if(Objects.isNull(queryRoleDTO.getTenantId())) {
+            queryRoleDTO.setTenantId(CsSecureUtil.userTenantId());
+        }else{
+            queryRoleDTO.setTenantId(queryRoleDTO.getTenantId());
+        }
         int count = sysRoleMapper.listRoleCount(queryRoleDTO);
         if(count ==0){
             sysRoleVoList = Lists.newArrayList();
@@ -61,6 +68,9 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     @Override
     public boolean addRole(SysRoleDTO sysRoleDTO) {
         SysRoleEntity sysRoleEntity = new SysRoleEntity();
+        if(sysRoleDTO.getRoleCode().equals(TenantConstant.TENANT_ADMINISTRATOR)){
+            throw new BizException(GlobalResponseResultEnum.HANDEL_FAIL.getCode(),"角色编码不被允许！！！");
+        }
         CsBeanUtil.copyProperties(sysRoleDTO,sysRoleEntity);
         sysRoleEntity.setTenantId(CsSecureUtil.userTenantId());
         return this.save(sysRoleEntity);
@@ -69,11 +79,10 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     @Override
     public boolean updateRole(SysRoleDTO sysRoleDTO) {
         SysRoleEntity sysRoleEntity = new SysRoleEntity();
-        CsBeanUtil.copyProperties(sysRoleDTO,sysRoleEntity);
+        CsBeanUtil.copyProperties(sysRoleDTO,sysRoleEntity,"roleCode");
         UpdateWrapper<SysRoleEntity> updateWrapper = Wrappers.update();
         updateWrapper.eq("role_id",sysRoleDTO.getRoleId());
         updateWrapper.eq("tenant_id", CsSecureUtil.userTenantId());
-        updateWrapper.notIn("role_code", Arrays.asList(TenantConstant.SUPER_ADMINISTRATOR,TenantConstant.TENANT_ADMINISTRATOR));
         return this.update(sysRoleEntity,updateWrapper);
     }
 
@@ -88,15 +97,32 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean configRolePer(SysRoleDTO sysRoleDTO) {
-        List<Long> menuIds = Arrays.stream(sysRoleDTO.getMenuIds().split(",")).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
-        List<SysRoleMenuEntity> collect = menuIds.stream().map(e -> {
+        saveRoleMenu(sysRoleDTO.getMenuIds(),sysRoleDTO.getRoleId());
+        return true;
+    }
+
+    /**
+     * 保存角色菜单关联数据
+     * @param menuIds 菜单id，逗号分割的字符串
+     * @param roleId  角色id
+     * @return
+     */
+    @Override
+    public boolean saveRoleMenu(String menuIds,Long roleId){
+        // 先删除role对应的数据，在重新添加
+        Map<String,Object> wrap = Maps.newHashMap();
+        wrap.put("role_id",roleId);
+        sysRoleMenuService.removeByMap(wrap);
+        List<Long> menuIdList = Arrays.stream(menuIds.split(",")).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
+        List<SysRoleMenuEntity> collect = menuIdList.stream().map(e -> {
             SysRoleMenuEntity sysRoleMenuEntity = new SysRoleMenuEntity();
             sysRoleMenuEntity.setMenuId(e);
-            sysRoleMenuEntity.setRoleId(sysRoleDTO.getRoleId());
+            sysRoleMenuEntity.setRoleId(roleId);
             return sysRoleMenuEntity;
         }).collect(Collectors.toList());
         sysRoleMenuService.saveBatch(collect);
-        return true;
+        return  true;
     }
 }

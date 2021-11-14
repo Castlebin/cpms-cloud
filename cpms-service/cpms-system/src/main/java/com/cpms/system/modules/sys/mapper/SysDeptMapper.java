@@ -20,5 +20,5 @@ public interface SysDeptMapper extends BaseMapper<SysDeptEntity> {
 
     List<SysDeptVO> listDept(QueryDeptDTO listDeptDTO);
 
-    List<SysDeptEntity> findNodes(@Param("deptId") Long deptId,@Param("tenantId") Long tenantId);
+    List<SysDeptEntity> findTenantDeptNodes(@Param("deptId") Long deptId,@Param("tenantId") Long tenantId);
 }

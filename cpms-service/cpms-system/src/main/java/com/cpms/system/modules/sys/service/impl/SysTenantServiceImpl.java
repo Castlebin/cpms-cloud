@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
+import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.enums.RandomTypeEnum;
 import com.cpms.framework.common.exception.BizException;
@@ -52,10 +53,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Transactional(rollbackFor = Exception.class)
     public InitTenantAccountVO addTenant(SysTenantDTO tenantDTO) {
         // 校验前缀是否存在
-        int count = sysTenantMapper.selectCount(
-                Wrappers.<SysTenantEntity>lambdaQuery().
-                        eq(SysTenantEntity::getAccountPrefix,
-                                tenantDTO.getAccountPrefix()));
+        int count = sysTenantMapper.selectCount(Wrappers.<SysTenantEntity>lambdaQuery().eq(SysTenantEntity::getAccountPrefix,tenantDTO.getAccountPrefix()));
         if(count > 0){
             throw new BizException(SystemResponseResultEnum.ACCOUNT_PREFIX_EXISTS_ERROR);
         }
@@ -72,9 +70,9 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         // 添加角色信息
         SysRoleEntity sysRoleEntity = new SysRoleEntity();
         sysRoleEntity.setTenantId(sysTenantEntity.getTenantId());
-        sysRoleEntity.setRoleName(CommonConstant.DEFAULT_ROLE_NAME);
-        sysRoleEntity.setRoleCode(CommonConstant.DEFAULT_ROLE_CODE);
-        sysRoleEntity.setRoleDesc(CommonConstant.DEFAULT_ROLE_DESC);
+        sysRoleEntity.setRoleName(CommonConstant.TENANT_ADMINISTRATOR_ROLE_NAME);
+        sysRoleEntity.setRoleCode(CommonConstant.TENANT_ADMINISTRATOR_ROLE_CODE);
+        sysRoleEntity.setRoleDesc(CommonConstant.TENANT_ADMINISTRATOR_ROLE_DESC);
         sysRoleEntity.setRoleSort(10000);
         sysRoleService.save(sysRoleEntity);
         // 初始化一个租户管理员账号
@@ -84,7 +82,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Override
     public boolean updateTenant(SysTenantDTO tenantDTO) {
         SysTenantEntity sysTenantEntity = new SysTenantEntity();
-        CsBeanUtil.copyProperties(tenantDTO,sysTenantEntity,"accountPrefix");
+        CsBeanUtil.copyProperties(tenantDTO,sysTenantEntity,"accountPrefix","tenantCode","tenantStatus");
         return this.updateById(sysTenantEntity);
     }
 
@@ -92,7 +90,8 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     public boolean deleteTenant(SysTenantDTO tenantDTO) {
         LambdaUpdateWrapper<SysTenantEntity> updateWrapper = Wrappers.<SysTenantEntity>lambdaUpdate()
                 .set(SysTenantEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
-                .eq(SysTenantEntity::getTenantId,tenantDTO.getTenantId());
+                .eq(SysTenantEntity::getTenantId,tenantDTO.getTenantId())
+                .notIn(SysTenantEntity::getTenantCode, TenantConstant.CPMS_HEADQUARTERS);
         return this.update(updateWrapper);
     }
 
@@ -112,7 +111,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     }
 
     @Override
-    public List<SysTenantVO> tenants() {
+    public List<SysTenantVO> dropDownTenants() {
         QueryWrapper<SysTenantEntity> query = Wrappers.query();
         query.select("tenant_id","tenant_name");
         if(!CsSecureUtil.isHeadquarters()) {
@@ -128,6 +127,26 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         }).collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean configTenantPer(SysTenantDTO tenantDTO) {
+        QueryWrapper<SysRoleEntity> query = Wrappers.query();
+        query.select("role_id");
+        query.eq("tenant_id",tenantDTO.getTenantId());
+        query.eq("role_code", TenantConstant.TENANT_ADMINISTRATOR);
+        SysRoleEntity sysRoleEntity = sysRoleService.getBaseMapper().selectOne(query);
+        return sysRoleService.saveRoleMenu(tenantDTO.getMenuIds(),sysRoleEntity.getRoleId());
+    }
+
+    @Override
+    public boolean changeTenantStatus(Long tenantId, Integer tenantStatus) {
+        LambdaUpdateWrapper<SysTenantEntity> updateWrapper = Wrappers.<SysTenantEntity>lambdaUpdate()
+                .set(SysTenantEntity::getTenantStatus, tenantStatus)
+                .eq(SysTenantEntity::getTenantId,tenantId)
+                .notIn(SysTenantEntity::getTenantCode, TenantConstant.CPMS_HEADQUARTERS);
+        return this.update(updateWrapper);
+    }
+
     private InitTenantAccountVO initAccount(SysTenantEntity sysTenantEntity,Long deptId,Long roleId){
        InitTenantAccountVO initTenantAccountVO = new InitTenantAccountVO();
        SysUserEntity sysUserEntity = new SysUserEntity();
@@ -135,6 +154,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
        sysUserEntity.setDeptId(deptId);
        sysUserEntity.setUserMobile(sysTenantEntity.getContactNumber());
        sysUserEntity.setUserName(sysTenantEntity.getContacts());
+       sysUserEntity.setSysData(CommonConstant.SYS_DATA);
        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
        String initPassword = CsRandomUtil.random(6, RandomTypeEnum.ALL);
        sysUserEntity.setUserPassword(bCryptPasswordEncoder.encode(initPassword));

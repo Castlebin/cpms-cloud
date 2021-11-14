@@ -27,7 +27,7 @@ public class SysRoleDTO{
     @NotBlank(message="roleCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
     @NotNull(message="roleCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private String roleCode;
-    @NotBlank(message="roleSort不能为空",groups = {UpdateGroup.class, AddGroup.class})
+
     @NotNull(message="roleSort不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private Integer roleSort;
     private String roleDesc;

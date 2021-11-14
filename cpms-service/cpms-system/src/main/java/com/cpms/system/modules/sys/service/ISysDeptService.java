@@ -23,5 +23,5 @@ public interface ISysDeptService extends IService<SysDeptEntity> {
     boolean deleteDept(SysDeptDTO deptDTO);
     List<DeptTreeVO> allDeptTree(QueryDeptDTO queryDeptDTO);
     List<DeptTreeVO> tenantDeptTree();
-    List<SysDeptEntity> findNodes(Long deptId,Long tenantId);
+    List<SysDeptEntity> findTenantDeptNodes(Long deptId,Long tenantId);
 }

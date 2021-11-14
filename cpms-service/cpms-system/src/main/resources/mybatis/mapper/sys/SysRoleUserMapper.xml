@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cpms.system.modules.sys.mapper.SysRoleUserMapper">
+
+    <select id="queryRoleCodeByUserId"  resultType="java.lang.String">
+        SELECT csr.role_code
+        FROM `cpms_system_role` csr
+        WHERE csr.role_id
+        IN(SELECT csru.role_id FROM `cpms_system_role_user` csru WHERE csru.user_id = #{userId})
+    </select>
+
+</mapper>

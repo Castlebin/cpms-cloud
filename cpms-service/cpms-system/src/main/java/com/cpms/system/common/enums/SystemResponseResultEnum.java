@@ -15,7 +15,6 @@ public enum SystemResponseResultEnum implements IResultEnum {
     TENANT_FORBIDDEN_ERROR(50004, "账号所属租户已禁用！！！"),
     USER_ALREADY_EXISTS_ERROR(50005, "该账号已存在！！！"),
     ORIGINAL_PASSWORD_NOT_MATCH_ERROR(50006,"原始密码不正确！！！"),
-    FORBIDDEN_CHANGE_OTHER_PEOPLE_PASSWORD_ERROR(50007,"禁止修改他人密码！！！"),
     THERE_ARE_CHILD_NODES_ERROR(50007,"该节点关联子节点不能删除！！！"),
     ACCOUNT_PREFIX_EXISTS_ERROR(50008,"账号前缀已存在！！！"),
     ;

@@ -36,6 +36,7 @@ public class SysDeptController {
      * @return
      */
     @PostMapping("/list")
+    @PreAuth("sys_dept_view")
     public Result<BasePageVO<SysDeptVO>> listDept(@RequestBody QueryDeptDTO listDeptDTO){
         return ResultUtil.success(sysDeptService.listDept(listDeptDTO));
     }
@@ -77,7 +78,7 @@ public class SysDeptController {
      * @return
      */
     @PostMapping("/update")
-    @PreAuth("sys_dept_update")
+    @PreAuth("sys_dept_edit")
     @OperLog(desc = "修改部门")
     public Result<Void> updateDept(@Validated(UpdateGroup.class)@RequestBody SysDeptDTO deptDTO){
         return ResultUtil.status(sysDeptService.updateDept(deptDTO));

@@ -17,9 +17,14 @@ import java.util.List;
  */
 public interface ISysTopMenuService extends IService<SysTopMenuEntity> {
    List<SysTopMenuVO> getTopMenu();
+
    boolean deleteTopMenu(SysTopMenuDTO sysTopMenuDTO);
+
    boolean addTopMenu(SysTopMenuDTO sysTopMenuDTO);
+
    boolean updateTopMenu(SysTopMenuDTO sysTopMenuDTO);
+
    List<SysTopMenuVO> listTopMenu();
+
    boolean configTopMenu(SysTopMenuDTO sysTopMenuDTO);
 }

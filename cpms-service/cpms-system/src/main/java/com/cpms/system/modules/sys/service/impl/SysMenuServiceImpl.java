@@ -6,11 +6,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.constants.CoreCommonConstant;
+import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.core.node.NodeManager;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
+import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
+import com.cpms.framework.common.utils.CsCollectionUtil;
 import com.cpms.framework.common.utils.CsDateUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
@@ -18,9 +21,11 @@ import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.QueryMenuDTO;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
+import com.cpms.system.modules.sys.entity.SysRoleEntity;
 import com.cpms.system.modules.sys.entity.SysTopMenuEntity;
 import com.cpms.system.modules.sys.mapper.SysMenuMapper;
 import com.cpms.system.modules.sys.service.ISysMenuService;
+import com.cpms.system.modules.sys.service.ISysRoleService;
 import com.cpms.system.modules.sys.service.ISysTopMenuService;
 import com.cpms.system.modules.sys.vo.SysMenuVO;
 import com.cpms.system.modules.sys.vo.SysRouteVO;
@@ -43,20 +48,25 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     @Resource
     private SysMenuMapper sysMenuMapper;
     @Resource
+    private ISysRoleService sysRoleService;
+    @Resource
     private ISysTopMenuService sysTopMenuService;
 
     @Override
-    public SysRouteVO querySysMenuRoutes(Long topMenuId) {
+    public SysRouteVO leftMenu(Long topMenuId) {
          List<SysMenuEntity> menus;
+         List<String> buttons = Lists.newArrayList();
         SysRouteVO sysRouteVO = new SysRouteVO();
         if( topMenuId == 0) {
               menus = getHomePageMenuRoutes();
-         }else{
+              // 点击首页会缓存权限信息
+              buttons = queryRoleButtons();
+        }else{
              // 根据顶部菜单ID获取对应的菜单显示
             menus = queryMenuByTopMenuId(topMenuId);
          }
         sysRouteVO.setMenus(NodeManager.buildTreeNode(convertVO(menus), 0L));
-        sysRouteVO.setButtons(queryRoleButtons());
+        sysRouteVO.setButtons(buttons);
         return sysRouteVO;
     }
 
@@ -107,23 +117,66 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         return basePageVO;
     }
 
+    @Override
+    public List<SysMenuVO> userOwnedMenus() {
+        TokenUserInfo user = CsSecureUtil.getUser();
+        List<SysMenuEntity> menus;
+        if(CsSecureUtil.isSysSuperAdmin()){
+            menus = allSysMenu(CommonConstant.TYPE_MENU);
+        }else{
+            menus = sysMenuMapper.queryRoleMenusOrButtons(user.getRoleIds(),CommonConstant.TYPE_MENU);
+        }
+        List<SysMenuVO> list;
+        list = NodeManager.buildTreeNode(convertVO(menus), 0L);
+        return list;
+    }
+
+    @Override
+    public List<SysMenuVO> tenantOwnedMenus(Long tenantId) {
+        List<SysMenuEntity> menus = Lists.newArrayList();
+        List<SysMenuVO> list;
+        if(Objects.isNull(tenantId)){
+            menus = allSysMenu(null);
+            list = NodeManager.buildTreeNode(convertVO(menus), 0L);
+        }else{
+            QueryWrapper<SysRoleEntity> query = Wrappers.query();
+            query.select("role_id");
+            query.eq("tenant_id",tenantId);
+            query.eq("role_code", TenantConstant.TENANT_ADMINISTRATOR);
+            SysRoleEntity sysRoleEntity = sysRoleService.getBaseMapper().selectOne(query);
+            if(!Objects.isNull(sysRoleEntity)){
+                menus = sysMenuMapper.queryRoleMenusOrButtons(Arrays.asList(sysRoleEntity.getRoleId()),null);
+            }
+            list = convertVO(menus);
+        }
+        return list;
+    }
+
     private List<SysMenuVO> convertVO(List<SysMenuEntity> entities){
-        return  entities.stream().map(e->{
-            SysMenuVO sysMenuVO = new SysMenuVO();
-            CsBeanUtil.copyProperties(e,sysMenuVO);
-            sysMenuVO.setId(e.getMenuId());
-            return  sysMenuVO;
-        }).collect(Collectors.toList());
+        List<SysMenuVO> list = Lists.newArrayList();
+        if(!CsCollectionUtil.isEmpty(entities)) {
+            list =  entities.stream().map(e->{
+                SysMenuVO sysMenuVO = new SysMenuVO();
+                CsBeanUtil.copyProperties(e,sysMenuVO);
+                sysMenuVO.setId(e.getMenuId());
+                return  sysMenuVO;
+            }).collect(Collectors.toList());
+        }
+        return list;
     }
 
     public List<String> queryRoleButtons() {
         TokenUserInfo user = CsSecureUtil.getUser();
-        List<String> buttons = sysMenuMapper.queryRoleButtons(user.getRoleIds());
-        Map<String, Object> cacheMap = Maps.newHashMap();
-        cacheMap.put(CoreCommonConstant.PERMISSION_KEY,StringUtils.join(buttons,","));
-        long tokenExpire = user.getTokenExpire();
-        long curTime = CsDateUtil.currentTimeStamp(CsDateUtil.TIME_STAMP_S);
-        CsRedisUtil.hmset(CoreCommonConstant.CACHE_LOGIN_USER_INFO_KEY + user.getUserId(),cacheMap, (tokenExpire - curTime));
+        List<String> buttons = Lists.newArrayList();
+        List<SysMenuEntity> SysMenuEntitys = sysMenuMapper.queryRoleMenusOrButtons(user.getRoleIds(),CommonConstant.TYPE_BUTTON);
+        if(!CsCollectionUtil.isEmpty(SysMenuEntitys)){
+            Map<String, Object> cacheMap = Maps.newHashMap();
+            String strButton = SysMenuEntitys.stream().map(SysMenuEntity::getCode).collect(Collectors.joining(","));
+            cacheMap.put(CoreCommonConstant.PERMISSION_KEY,strButton);
+            long tokenExpire = user.getTokenExpire();
+            long curTime = CsDateUtil.currentTimeStamp(CsDateUtil.TIME_STAMP_S);
+            CsRedisUtil.hmset(CoreCommonConstant.CACHE_LOGIN_USER_INFO_KEY + user.getUserId(),cacheMap, (tokenExpire - curTime));
+        }
         return buttons;
     }
 
@@ -140,12 +193,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     }
 
     /**
-     * 超级管理员路由
+     * 所有系统菜单
+     * @Param type 菜单类型 0：菜单 ，1：按钮 ， null:查询菜单和按钮
      */
-    private  List<SysMenuEntity> superAdminRoutes(){
+    private  List<SysMenuEntity> allSysMenu(Integer type){
         QueryWrapper<SysMenuEntity> wrapper=new QueryWrapper<>();
         wrapper.eq("del_flag",CommonConstant.DEL_FLAG_NOT_DELETED);
-        wrapper.eq("type",CommonConstant.TYPE_MENU);
+        if(!Objects.isNull(type)) {
+            wrapper.eq("type",type);
+        }
         wrapper.orderByDesc("sort");
         return sysMenuMapper.selectList(wrapper);
     }
@@ -156,11 +212,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     private List<SysMenuEntity> getHomePageMenuRoutes(){
         List<SysMenuEntity> menus;
         if(CsSecureUtil.isSysSuperAdmin()){
-             menus = superAdminRoutes();
+             menus = allSysMenu(CommonConstant.TYPE_MENU);
         }else{
             TokenUserInfo user = CsSecureUtil.getUser();
             List<Long> roleIds = user.getRoleIds();
-            menus = sysMenuMapper.queryRoleMenus(roleIds,CommonConstant.TYPE_MENU);
+            menus = sysMenuMapper.queryRoleMenusOrButtons(roleIds,CommonConstant.TYPE_MENU);
         }
         return menus;
     }

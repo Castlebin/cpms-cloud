@@ -38,19 +38,20 @@ public class SysUserController {
      * @return
      */
     @PostMapping("/list")
+    @PreAuth("sys_user_view")
     public Result<BasePageVO<SysUserVO>> listUser(@RequestBody QueryUserDTO listUserDTO){
         return ResultUtil.success(sysUserService.listUser(listUserDTO));
     }
 
     /**
-     * 编辑用户详情
+     * 获取用户详情
      * @param userDTO
      * @return
      */
-    @PostMapping("/userDetail")
-    @PreAuth("sys_user_update")
-    public Result<SysUserDetailVO> userDetail(@Validated(SelectGroup.class)@RequestBody SysUserDTO userDTO){
-        return ResultUtil.success(sysUserService.userDetail(userDTO));
+    @PostMapping("/getUserDetail")
+    @PreAuth("sys_user_edit")
+    public Result<SysUserDetailVO> getUserDetail(@Validated(SelectGroup.class)@RequestBody SysUserDTO userDTO){
+        return ResultUtil.success(sysUserService.getUserDetail(userDTO));
     }
 
     /**
@@ -59,7 +60,7 @@ public class SysUserController {
      * @return
      */
     @PostMapping("/checkUserInfo")
-    @PreAuth("sys_user_check")
+    @PreAuth("sys_user_view")
     public Result<SysUserDetailVO> checkUserInfo(@Validated(SelectGroup.class)@RequestBody SysUserDTO userDTO){
         return ResultUtil.success(sysUserService.checkUserInfo(userDTO));
     }
@@ -79,26 +80,37 @@ public class SysUserController {
     }
 
     @PostMapping("/update")
-    @PreAuth("sys_user_update")
+    @PreAuth("sys_user_edit")
     @OperLog(desc = "修改用户")
     public Result<Void> updateUser(@Validated(UpdateGroup.class) @RequestBody SysUserDTO userDTO){
         return ResultUtil.status(sysUserService.updateUser(userDTO));
     }
 
-    @GetMapping("/changeStatus")
-    @PreAuth("sys_user_update")
+    @GetMapping("/changeUserStatus")
+    @PreAuth("sys_user_edit")
     @OperLog(desc = "修改用户状态")
     public Result<Void> changeStatus( @RequestParam Long userId,  @RequestParam Integer userStatus){
-        return ResultUtil.status(sysUserService.changeStatus(userId,userStatus));
+        return ResultUtil.status(sysUserService.changeUserStatus(userId,userStatus));
     }
 
-
+    /**
+     * 重置个人密码
+     * @param resetPasswordDTO
+     * @return
+     */
     @PostMapping("/resetPassword")
     public Result<Void> resetPassword(@Validated(UpdateGroup.class) @RequestBody ResetPasswordDTO resetPasswordDTO){
         return ResultUtil.status(sysUserService.resetPassword(resetPasswordDTO));
     }
 
+    /**
+     * 修改用户密码
+     * @param resetPasswordDTO
+     * @return
+     */
     @PostMapping("/modifiedPassword")
+    @PreAuth("sys_user_modified_pwd")
+    @OperLog(desc = "修改用户密码")
     public Result<Void> modifiedPassword(@RequestBody ResetPasswordDTO resetPasswordDTO){
         return ResultUtil.status(sysUserService.modifiedPassword(resetPasswordDTO));
     }

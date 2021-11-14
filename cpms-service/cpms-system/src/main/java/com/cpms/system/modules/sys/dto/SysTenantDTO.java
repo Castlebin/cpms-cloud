@@ -2,6 +2,7 @@ package com.cpms.system.modules.sys.dto;
 
 import com.cpms.framework.mybatis.groups.AddGroup;
 import com.cpms.framework.mybatis.groups.DeleteGroup;
+import com.cpms.framework.mybatis.groups.OtherGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class SysTenantDTO {
-    @NotNull(message="tenantId不能为空",groups = {UpdateGroup.class, DeleteGroup.class})
+    @NotNull(message="tenantId不能为空",groups = {UpdateGroup.class, DeleteGroup.class,OtherGroup.class})
     private Long tenantId;
 
     @NotBlank(message="tenantName不能为空",groups = {UpdateGroup.class, AddGroup.class})
@@ -57,5 +58,14 @@ public class SysTenantDTO {
     @NotNull(message="tenantCode不能为空",groups = {UpdateGroup.class, AddGroup.class})
     private String tenantCode;
 
+    private Integer tenantStatus;
+
     private String tenantDesc;
+
+    /**
+     * 租户菜单权限ID
+     */
+    @NotBlank(message="menuIds不能为空",groups = {OtherGroup.class})
+    @NotNull(message="menuIds不能为空",groups = {OtherGroup.class})
+    private String menuIds;
 }

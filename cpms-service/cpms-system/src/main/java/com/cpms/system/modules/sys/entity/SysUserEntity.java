@@ -55,4 +55,8 @@ public class SysUserEntity extends TenantEntity {
     private LocalDateTime userBirthday;
 
     private Integer  userStatus;
+    /**
+     * 是否系统数据: 0-不是，1-是
+     */
+    private Integer  sysData;
 }

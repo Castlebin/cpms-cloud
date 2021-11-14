@@ -22,5 +22,5 @@ public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {
 
     List<SysRoleVO> listRole(QueryRoleDTO listRoleDTO);
 
-    List<Long> selectMenuIdByRoleId(Long roleId);
+    String selectMenuIdByRoleId(Long roleId);
 }

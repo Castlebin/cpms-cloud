@@ -35,6 +35,7 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("/list")
+    @PreAuth("sys_role_view")
     public Result<BasePageVO<SysRoleVO>> listRole(@RequestBody QueryRoleDTO listRoleDTO){
         return ResultUtil.success(sysRoleService.listRole(listRoleDTO));
     }
@@ -56,7 +57,7 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("/updateRole")
-    @PreAuth("sys_role_update")
+    @PreAuth("sys_role_edit")
     public Result<Void> updateRole(@Validated(UpdateGroup.class) @RequestBody SysRoleDTO sysRoleDTO){
         return ResultUtil.status(sysRoleService.updateRole(sysRoleDTO));
     }
@@ -78,7 +79,7 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("/configRolePer")
-    @PreAuth("sys_config_role_per")
+    @PreAuth("sys_role_config_per")
     public Result<Void> configRolePer(@Validated(OtherGroup.class)@RequestBody SysRoleDTO sysRoleDTO){
         return ResultUtil.status(sysRoleService.configRolePer(sysRoleDTO));
     }

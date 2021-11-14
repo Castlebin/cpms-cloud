@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -34,7 +35,11 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
     public BasePageVO<SysPostVO> listPost(QueryPostDTO queryPostDTO) {
         BasePageVO<SysPostVO> basePageVO = new BasePageVO();
         List<SysPostVO> list;
-        queryPostDTO.setTenantId(CsSecureUtil.userTenantId());
+        if(Objects.isNull(queryPostDTO.getTenantId())) {
+            queryPostDTO.setTenantId(CsSecureUtil.userTenantId());
+        }else{
+            queryPostDTO.setTenantId(queryPostDTO.getTenantId());
+        }
         int count = sysPostMapper.listPostCount(queryPostDTO);
         if(count ==0){
             list = Lists.newArrayList();
@@ -72,6 +77,6 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
                 .set(SysPostEntity::getPostSort, postDTO.getPostSort())
                 .eq(SysPostEntity::getPostId,postDTO.getPostId())
                 .eq(SysPostEntity::getTenantId,CsSecureUtil.userTenantId());
-        return this.update(updateWrapper);
+        return this.update(new SysPostEntity(),updateWrapper);
     }
 }

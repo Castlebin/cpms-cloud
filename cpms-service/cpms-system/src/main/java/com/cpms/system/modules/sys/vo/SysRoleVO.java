@@ -25,6 +25,6 @@ public class SysRoleVO extends BaseVO {
     private String roleCode;
     private String roleDesc;
     private Integer roleSort;
-    private List<Long> menuIds;
+    private String menuIds;
 
 }

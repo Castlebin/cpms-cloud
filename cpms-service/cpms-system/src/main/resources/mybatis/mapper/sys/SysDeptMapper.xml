@@ -48,7 +48,7 @@
         limit #{startIndex},#{pageSize}
     </select>
 
-    <select id="findNodes" resultType="com.cpms.system.modules.sys.entity.SysDeptEntity">
+    <select id="findTenantDeptNodes" resultType="com.cpms.system.modules.sys.entity.SysDeptEntity">
         SELECT
         d.dept_id,
         d.tenant_id,

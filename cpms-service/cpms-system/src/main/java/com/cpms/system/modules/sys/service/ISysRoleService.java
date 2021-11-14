@@ -22,4 +22,5 @@ public interface ISysRoleService extends IService<SysRoleEntity> {
     boolean updateRole(SysRoleDTO sysRoleDTO);
     boolean deleteRole(SysRoleDTO sysRoleDTO);
     boolean configRolePer(SysRoleDTO sysRoleDTO);
+    boolean saveRoleMenu(String menuIds,Long roleId);
 }

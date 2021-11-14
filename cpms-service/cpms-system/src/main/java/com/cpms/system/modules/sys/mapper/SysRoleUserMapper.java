@@ -4,6 +4,8 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cpms.system.modules.sys.entity.SysRoleUserEntity;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: gulang
@@ -11,4 +13,5 @@ import com.cpms.system.modules.sys.entity.SysRoleUserEntity;
  */
 @DS("master")
 public interface SysRoleUserMapper extends BaseMapper<SysRoleUserEntity> {
+    List<String> queryRoleCodeByUserId(Long userId);
 }

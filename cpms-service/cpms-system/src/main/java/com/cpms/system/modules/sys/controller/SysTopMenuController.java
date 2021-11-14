@@ -50,7 +50,6 @@ public class SysTopMenuController {
      * @return
      */
     @PostMapping("/add")
-    @PreAuth("sys_top_menu_add")
     public Result<Void> addTopMenu(@Validated(AddGroup.class) @RequestBody SysTopMenuDTO sysTopMenuDTO){
         return ResultUtil.status(sysTopMenuService.addTopMenu(sysTopMenuDTO));
     }
@@ -61,7 +60,6 @@ public class SysTopMenuController {
      * @return
      */
     @PostMapping("/update")
-    @PreAuth("sys_top_menu_update")
     public Result<Void> updateTopMenu(@Validated(UpdateGroup.class) @RequestBody SysTopMenuDTO sysTopMenuDTO){
         return ResultUtil.status(sysTopMenuService.updateTopMenu(sysTopMenuDTO));
     }
@@ -72,7 +70,6 @@ public class SysTopMenuController {
      * @return
      */
     @PostMapping("/delete")
-    @PreAuth("sys_top_menu_delete")
     public Result<Void> deleteTopMenu(@Validated(DeleteGroup.class) @RequestBody SysTopMenuDTO sysTopMenuDTO){
         return ResultUtil.status(sysTopMenuService.deleteTopMenu(sysTopMenuDTO));
     }
@@ -83,7 +80,6 @@ public class SysTopMenuController {
      * @return
      */
     @PostMapping("/configTopMenu")
-    @PreAuth("sys_top_menu_config")
     public Result<Void> configTopMenu(@Validated(OtherGroup.class) @RequestBody SysTopMenuDTO sysTopMenuDTO){
         return ResultUtil.status(sysTopMenuService.configTopMenu(sysTopMenuDTO));
     }

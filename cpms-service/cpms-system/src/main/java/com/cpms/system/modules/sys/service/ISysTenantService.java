@@ -21,5 +21,7 @@ public interface ISysTenantService extends IService<SysTenantEntity> {
     boolean updateTenant(SysTenantDTO tenantDTO);
     boolean deleteTenant(SysTenantDTO tenantDTO);
     BasePageVO<SysTenantVO> listTenant(QueryTenantDTO listTenantDTO);
-    List<SysTenantVO> tenants();
+    List<SysTenantVO> dropDownTenants();
+    boolean configTenantPer(SysTenantDTO tenantDTO);
+    boolean changeTenantStatus(Long tenantId,Integer tenantStatus);
 }

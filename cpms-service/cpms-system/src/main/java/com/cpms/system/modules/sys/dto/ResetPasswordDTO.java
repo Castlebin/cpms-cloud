@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class ResetPasswordDTO {
-    @NotNull(message="userId不能为空",groups = {UpdateGroup.class})
     private Long userId;
 
     @NotBlank(message="oldPassword不能为空",groups = {UpdateGroup.class})

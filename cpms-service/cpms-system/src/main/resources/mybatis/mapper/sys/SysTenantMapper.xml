@@ -70,7 +70,7 @@
                 and t.account_prefix = #{accountPrefix}
             </if>
         </where>
-        ORDER BY create_time DESC
+        ORDER BY create_time ASC
         limit #{startIndex},#{pageSize}
     </select>
 </mapper>

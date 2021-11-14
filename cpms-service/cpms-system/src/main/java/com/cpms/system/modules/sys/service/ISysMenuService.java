@@ -8,6 +8,8 @@ import com.cpms.system.modules.sys.entity.SysMenuEntity;
 import com.cpms.system.modules.sys.vo.SysMenuVO;
 import com.cpms.system.modules.sys.vo.SysRouteVO;
 
+import java.util.List;
+
 
 /**
  * @author gulang
@@ -15,9 +17,16 @@ import com.cpms.system.modules.sys.vo.SysRouteVO;
  * @time: 2021/8/7 20:51
  */
 public interface ISysMenuService extends IService<SysMenuEntity> {
-    SysRouteVO querySysMenuRoutes(Long topMenuId);
+    SysRouteVO leftMenu(Long topMenuId);
+
     boolean addMenu(SysMenuDTO sysMenuDTO);
+
     boolean updateMenu(SysMenuDTO sysMenuDTO);
+
     boolean deleteMenu(SysMenuDTO sysMenuDTO);
+
     BasePageVO<SysMenuVO> listMenu(QueryMenuDTO listMenuDTO);
+
+    List<SysMenuVO> userOwnedMenus();
+    List<SysMenuVO> tenantOwnedMenus(Long tenantId);
 }

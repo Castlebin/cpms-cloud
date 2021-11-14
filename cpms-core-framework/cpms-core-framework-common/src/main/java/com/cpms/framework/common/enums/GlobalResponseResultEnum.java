@@ -24,7 +24,8 @@ public enum GlobalResponseResultEnum implements IResultEnum {
     TOKEN_EXPIRED_ERROR(20011, "token令牌已过期"),
     PARAMETER_BOYDY_EMPTY_ERROR(20012,"参数体解析异常"),
     FILE_DOWNLOAD_ERROR(20013,"文件下载异常"),
-    FILE_NOT_EXIST_ERROR(20013,"文件不存在"),
+    FILE_NOT_EXIST_ERROR(20014,"文件不存在"),
+    OPERATING_SYS_DATA_CANNOT_ERROR(20015,"不能操作系统数据"),
     INTERNAL_SERVER_BUSY_ERROR(50000, "系统繁忙，请稍后再试！！！"),
     INTERNAL_SERVER_EXCEPTION_ERROR(50001, "系统异常！！！"),
     ;

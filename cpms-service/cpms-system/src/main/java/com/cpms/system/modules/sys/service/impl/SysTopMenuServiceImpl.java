@@ -32,25 +32,14 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
 
     @Override
     public List<SysTopMenuVO> getTopMenu() {
-        List<SysTopMenuEntity> sysTopMenuEntities;
-        if( CsSecureUtil.isSysSuperAdmin() || CsSecureUtil.isTenantAdmin()) {
-            QueryWrapper<SysTopMenuEntity> wrapper=new QueryWrapper<>();
-            wrapper.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
-            wrapper.eq("tenant_id",CsSecureUtil.userTenantId());
-            sysTopMenuEntities = sysTopMenuMapper.selectList(wrapper);
-        }else{
-            TokenUserInfo user = CsSecureUtil.getUser();
-            List<Long> roleIds = user.getRoleIds();
-            sysTopMenuEntities = sysTopMenuMapper.queryRoleTopMenus(roleIds);
-        }
-        return convertTopMenuToVo(sysTopMenuEntities);
+        return listTopMenu();
     }
 
     @Override
     public boolean deleteTopMenu(SysTopMenuDTO sysTopMenuDTO) {
         LambdaUpdateWrapper<SysTopMenuEntity> updateWrapper = Wrappers.<SysTopMenuEntity>lambdaUpdate()
                 .set(SysTopMenuEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
-                .eq(SysTopMenuEntity::getTenantId,CsSecureUtil.userTenantId())
+                .eq(SysTopMenuEntity::getUserId,CsSecureUtil.getUser().getUserId())
                 .eq(SysTopMenuEntity::getTopMenuId,sysTopMenuDTO.getTopMenuId());
         return this.update(updateWrapper);
     }
@@ -59,7 +48,7 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
     public boolean addTopMenu(SysTopMenuDTO sysTopMenuDTO) {
         SysTopMenuEntity sysTopMenuEntity = new SysTopMenuEntity();
         CsBeanUtil.copyProperties(sysTopMenuDTO,sysTopMenuEntity);
-        sysTopMenuEntity.setTenantId(CsSecureUtil.userTenantId());
+        sysTopMenuEntity.setUserId(CsSecureUtil.getUser().getUserId());
         return this.save(sysTopMenuEntity);
     }
 
@@ -71,16 +60,16 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
                 .set(SysTopMenuEntity::getSort, sysTopMenuDTO.getSort())
                 .set(SysTopMenuEntity::getType, sysTopMenuDTO.getType())
                 .set(SysTopMenuEntity::getIcon, sysTopMenuDTO.getIcon())
-                .eq(SysTopMenuEntity::getTenantId,CsSecureUtil.userTenantId())
+                .eq(SysTopMenuEntity::getUserId,CsSecureUtil.getUser().getUserId())
                 .eq(SysTopMenuEntity::getTopMenuId,sysTopMenuDTO.getTopMenuId());
-        return this.update(updateWrapper);
+        return this.update(new SysTopMenuEntity(),updateWrapper);
     }
 
     @Override
     public List<SysTopMenuVO> listTopMenu() {
         QueryWrapper<SysTopMenuEntity> wrapper=new QueryWrapper<>();
         wrapper.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
-        wrapper.eq("tenant_id",CsSecureUtil.userTenantId());
+        wrapper.eq("user_id",CsSecureUtil.getUser().getUserId());
         List<SysTopMenuEntity> sysTopMenuEntities = sysTopMenuMapper.selectList(wrapper);
         return convertTopMenuToVo(sysTopMenuEntities);
     }
@@ -89,7 +78,7 @@ public class SysTopMenuServiceImpl extends ServiceImpl<SysTopMenuMapper, SysTopM
     public boolean configTopMenu(SysTopMenuDTO sysTopMenuDTO) {
         LambdaUpdateWrapper<SysTopMenuEntity> updateWrapper = Wrappers.<SysTopMenuEntity>lambdaUpdate()
                 .set(SysTopMenuEntity::getRelationMenuIds, sysTopMenuDTO.getRelationMenuIds())
-                .eq(SysTopMenuEntity::getTenantId,CsSecureUtil.userTenantId())
+                .eq(SysTopMenuEntity::getUserId,CsSecureUtil.getUser().getUserId())
                 .eq(SysTopMenuEntity::getTopMenuId,sysTopMenuDTO.getTopMenuId());
         return this.update(updateWrapper);
     }

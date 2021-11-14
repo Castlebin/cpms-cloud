@@ -43,4 +43,8 @@ public class SysUserVO extends BaseVO {
     private String tenantName;
     private String roleNames;
     private String roleIds;
+    /**
+     * 是否系统数据: 0-不是，1-是
+     */
+    private Integer  sysData;
 }

@@ -35,6 +35,7 @@ public class SysPostController {
      * @return
      */
     @PostMapping("/list")
+    @PreAuth("sys_post_view")
     public Result<BasePageVO<SysPostVO>> listPost(@RequestBody QueryPostDTO listPostDTO){
         return ResultUtil.success(sysPostService.listPost(listPostDTO));
     }
@@ -57,7 +58,7 @@ public class SysPostController {
      * @return
      */
     @PostMapping("/update")
-    @PreAuth("sys_post_update")
+    @PreAuth("sys_post_edit")
     public Result<Void> updatePost(@Validated(UpdateGroup.class)@RequestBody SysPostDTO postDTO){
         return ResultUtil.status(sysPostService.updatePost(postDTO));
     }

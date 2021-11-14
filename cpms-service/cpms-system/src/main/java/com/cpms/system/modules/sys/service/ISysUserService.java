@@ -27,11 +27,11 @@ public interface ISysUserService extends IService<SysUserEntity> {
     BasePageVO<SysUserVO> listUser(QueryUserDTO listUserDTO);
 
     /**
-     * 编辑用户详情
+     * 获取用户详情
      * @param userDTO
      * @return
      */
-    SysUserDetailVO userDetail(SysUserDTO userDTO);
+    SysUserDetailVO getUserDetail(SysUserDTO userDTO);
 
     /**
      * 查看用户信息
@@ -86,5 +86,5 @@ public interface ISysUserService extends IService<SysUserEntity> {
 
     String generateAccount(SysUserDTO userDTO);
 
-    boolean changeStatus(Long userId,Integer userStatus);
+    boolean changeUserStatus(Long userId,Integer userStatus);
 }

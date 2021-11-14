@@ -16,7 +16,6 @@ import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
 import com.cpms.system.modules.sys.mapper.SysDeptMapper;
 import com.cpms.system.modules.sys.service.ISysDeptService;
-import com.cpms.system.modules.sys.service.ISysTenantService;
 import com.cpms.system.modules.sys.vo.SysDeptVO;
 import com.cpms.system.modules.sys.vo.DeptTreeVO;
 import com.google.common.collect.Lists;
@@ -35,8 +34,6 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity> implements ISysDeptService {
     @Resource
     private SysDeptMapper sysDeptMapper;
-    @Resource
-    private ISysTenantService sysTenantService;
 
     @Override
     public BasePageVO<SysDeptVO> listDept(QueryDeptDTO listDeptDTO) {
@@ -71,7 +68,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
                 .set(SysDeptEntity::getDeptDesc, deptDTO.getDeptDesc())
                 .eq(SysDeptEntity::getDeptId,deptDTO.getDeptId())
                 .eq(SysDeptEntity::getTenantId,CsSecureUtil.userTenantId());
-        return this.update(updateWrapper);
+        return this.update(new SysDeptEntity(),updateWrapper);
     }
 
     @Override
@@ -86,7 +83,8 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
         LambdaUpdateWrapper<SysDeptEntity> updateWrapper = Wrappers.<SysDeptEntity>lambdaUpdate()
                 .set(SysDeptEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)
                 .eq(SysDeptEntity::getDeptId,deptDTO.getDeptId())
-                .eq(SysDeptEntity::getTenantId,CsSecureUtil.userTenantId());
+                .eq(SysDeptEntity::getTenantId,CsSecureUtil.userTenantId())
+                .ne(SysDeptEntity::getParentId,0);
         return this.update(updateWrapper);
     }
 
@@ -130,7 +128,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
 
 
     @Override
-    public List<SysDeptEntity> findNodes(Long deptId,Long tenantId) {
-        return sysDeptMapper.findNodes(deptId, tenantId);
+    public List<SysDeptEntity> findTenantDeptNodes(Long deptId,Long tenantId) {
+        return sysDeptMapper.findTenantDeptNodes(deptId, tenantId);
     }
 }

@@ -23,31 +23,22 @@
         <result column="update_by" property="updateBy"/>
     </resultMap>
 
-    <select id="queryRoleMenus" resultMap="menuResultMap">
+    <select id="queryRoleMenusOrButtons" resultMap="menuResultMap">
         select *
         from cpms_system_menu
-        where del_flag = 0 and type =#{type}
-        and menu_id IN
-        ( SELECT menu_id FROM cpms_system_role_menu WHERE type = 0 and  role_id IN
-        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-         )
+        <where>
+            del_flag = 0
+            <if test="type !=null">
+                and type = #{type}
+            </if>
+            and menu_id IN
+            ( SELECT menu_id FROM cpms_system_role_menu WHERE  role_id IN
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            )
+        </where>
          ORDER BY sort DESC
-    </select>
-
-    <select id="queryRoleButtons" resultType="java.lang.String">
-        SELECT code
-        FROM cpms_system_menu
-        WHERE del_flag = 0 AND  TYPE = 1
-        AND menu_id
-        IN (
-        SELECT menu_id FROM cpms_system_role_menu WHERE type = 0 and role_id IN
-        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-        )
-        ORDER BY sort DESC
     </select>
 
     <select id="listMenuCount" parameterType="com.cpms.system.modules.sys.dto.QueryMenuDTO" resultType="java.lang.Integer">
@@ -55,14 +46,8 @@
         from cpms_system_menu
         <where>
             del_flag = 0
-            <if test="name !=null and name !=''">
-                and name like CONCAT('%',#{name},'%' )
-            </if>
-            <if test="code !=null  and code !='' ">
-                and code = #{code}
-            </if>
-            <if test="alias !=null  and alias !=''">
-                and alias = #{alias}
+            <if test="type !=null">
+                and type = #{type}
             </if>
         </where>
     </select>
@@ -72,18 +57,10 @@
         from cpms_system_menu
         <where>
             del_flag = 0
-            <if test="name !=null and name !=''">
-                and name like CONCAT('%',#{name},'%' )
-            </if>
-            <if test="code !=null and code !=''">
-                and code = #{code}
-            </if>
-            <if test="alias !=null and alias !=''">
-                and alias = #{alias}
-            </if>
             <if test="type !=null">
                 and type = #{type}
             </if>
         </where>
+        ORDER BY sort DESC
     </select>
 </mapper>

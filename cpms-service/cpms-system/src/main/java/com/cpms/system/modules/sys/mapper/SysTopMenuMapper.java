@@ -14,5 +14,4 @@ import java.util.List;
  */
 @DS("master")
 public interface SysTopMenuMapper extends BaseMapper<SysTopMenuEntity> {
-    List<SysTopMenuEntity> queryRoleTopMenus(@Param("list") List<Long> roleIds);
 }

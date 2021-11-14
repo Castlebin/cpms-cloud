@@ -33,7 +33,7 @@
         <result column="role_name" property="roleName"  jdbcType="VARCHAR" />
         <result column="role_code" property="roleCode"    jdbcType="VARCHAR" />
         <result column="role_desc"    property="roleDesc"    jdbcType="VARCHAR" />
-        <collection property="menuIds" javaType="java.util.ArrayList" ofType="java.lang.Long"
+        <collection property="menuIds"
                     select="com.cpms.system.modules.sys.mapper.SysRoleMapper.selectMenuIdByRoleId" column="{roleId=role_id}" />
         <!-- roleId是入参的变量名, role_id是主表的字段role_id,
         先查出主表的结果, 然后主表记录数是几 就执行几次 collection 的select,
@@ -42,8 +42,8 @@
         column作为select语句的参数传入,如果只传一个参数id可以简写: column="id" -->
     </resultMap>
 
-    <select id="selectMenuIdByRoleId"  resultType="java.lang.Long">
-        select menu_id from cpms_system_role_menu where role_id = #{roleId,jdbcType=BIGINT}
+    <select id="selectMenuIdByRoleId"  resultType="java.lang.String">
+        select GROUP_CONCAT(menu_id) menuIds from cpms_system_role_menu where role_id = #{roleId,jdbcType=BIGINT} GROUP BY role_id
     </select>
 
     <select id="listRole" parameterType="com.cpms.system.modules.sys.dto.QueryRoleDTO" resultMap="RoleMenuResultMap">
@@ -71,6 +71,8 @@
              </if>
          </where>
          ORDER BY r.role_sort DESC
-         LIMIT #{startIndex},#{pageSize}
+        <if test="pagingFlag">
+            limit #{startIndex},#{pageSize}
+        </if>
     </select>
 </mapper>

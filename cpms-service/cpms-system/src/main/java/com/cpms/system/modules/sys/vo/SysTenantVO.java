@@ -24,6 +24,10 @@ public class SysTenantVO extends BaseVO {
     private String contacts;
     private String contactNumber;
     private String address;
+    /**
+     * 0-正常，1-已禁用
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Integer tenantStatus;
     private String tenantCode;
     private String accountPrefix;
