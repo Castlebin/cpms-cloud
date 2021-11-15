@@ -9,10 +9,12 @@ import com.cpms.framework.redis.utils.CsRedissonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,7 +34,7 @@ public class TestController {
      */
     @GetMapping("/lock")
     public Result<Integer> lock(){
-        System.out.println(CsPropsUtil.getProperty("system.test"));
+        System.out.println(CsPropsUtil.getString("system.test"));
         // 已设置锁，其它线程会被阻塞，底层实现可重入锁
         CsRedissonUtil.lock("redisson-lock");
         try {
@@ -66,9 +68,19 @@ public class TestController {
      * @return
      */
     @GetMapping("/downloadFile")
-    public Result<Void> downloadFile(HttpServletResponse response) throws IOException {
-        String fileName = "temp.xlsx";
+    public void downloadFile(HttpServletResponse response){
+        String fileName = "temp2.xlsx";
         String fileDir = "staticfile";
-        return CsFileUtil.downLocalFile(response, fileDir, fileName);
+        CsFileUtil.downLocalFile(response, fileDir, fileName);
+    }
+
+    /**
+     *  下载文件
+     * @return
+     */
+    @PostMapping("/uploadFile")
+    public void uploadFile(MultipartFile uploadFile){
+        String os = System.getProperty("os.name");
+        System.out.println(os);
     }
 }

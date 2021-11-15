@@ -1,6 +1,8 @@
 package com.cpms.framework.common.utils;
 import org.springframework.core.env.Environment;
 
+import java.util.Objects;
+
 
 /**
  * @description: 在非spring环境中获取配置文件属性工具类
@@ -18,5 +20,25 @@ public class CsPropsUtil {
      */
     public static Object getProperty(String propertyKey){
         return ENVIRONMENT.getProperty(propertyKey);
+    }
+
+    public static Object getObject(String propertyKey){
+        return getProperty(propertyKey);
+    }
+
+    public static boolean getBoolean(String propertyKey){
+        Object propertyVal = getProperty(propertyKey);
+        if(Objects.isNull(propertyVal)) {
+            return  false;
+        }
+        return Boolean.parseBoolean(propertyVal.toString());
+    }
+
+    public static String getString(String propertyKey){
+        Object propertyVal = getProperty(propertyKey);
+        if(Objects.isNull(propertyVal)) {
+            return  "";
+        }
+        return  String.valueOf(propertyVal);
     }
 }

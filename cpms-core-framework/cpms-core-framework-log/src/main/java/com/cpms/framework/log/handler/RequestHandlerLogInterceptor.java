@@ -58,7 +58,7 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         //获取方法名
         String methodName = ((HandlerMethod) handler).getMethod().getName();
         LogDTO logDTO = new LogDTO();
-        logDTO.setServiceName((String) CsPropsUtil.getProperty("spring.application.name"));
+        logDTO.setServiceName(CsPropsUtil.getString("spring.application.name"));
         logDTO.setHandleIp(CsWebUtil.getIpAddr());
         logDTO.setReqMethod(request.getMethod().toUpperCase());
         logDTO.setReqParams(getArgs(request));
@@ -83,7 +83,12 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         LogDTO logDTO = (LogDTO)request.getAttribute(LOGGER_ENTITY);
         String resultJson = String.valueOf(request.getAttribute(ResponseIntercept.RESPONSE_JSON));
         Result resultVO = JSON.parseObject(resultJson, Result.class);
-        resultVO.setObj(null);
+        boolean property = CsPropsUtil.getBoolean("print-request-result");
+        if(!Objects.isNull(resultVO)) {
+            if(!property) {
+                resultVO.setObj(null);
+            }
+        }
         logDTO.setResultMsg(JSON.toJSONString(resultVO));
         StringBuilder builderFilterLog = new StringBuilder();
         //结束时间

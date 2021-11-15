@@ -39,7 +39,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
         Map<String, Object> customErrorAttributes = new LinkedHashMap(16);
         customErrorAttributes.put("success",false);
         customErrorAttributes.put("code", errorAttributes.get("status"));
-        customErrorAttributes.put("applicationName", CsPropsUtil.getProperty("spring.application.name"));
+        customErrorAttributes.put("applicationName", CsPropsUtil.getString("spring.application.name"));
         customErrorAttributes.put("message",buildMessage(request,error));
         customErrorAttributes.put("date", CsDateUtil.dateFormat(new Date()));
         customErrorAttributes.put("obj",null);
