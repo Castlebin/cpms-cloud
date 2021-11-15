@@ -79,13 +79,11 @@
                 <excludes>
                     <exclude>profiles/**</exclude>
                 </excludes>
-                <!--是否对主资源目录开启资源过滤 -->
-                <filtering>true</filtering>
             </resource>
             <resource>
-                <!--指定主资源目录， ${profiles.active}由profile提供,打包的时候只需要打包激活的环境配置文件 -->
+                <!--指定主资源目录，${profiles.active}由profile定义标签名称的提供,打包的时候只需要打包激活的环境配置文件 -->
                 <directory>src/main/resources/profiles/${profiles.active}</directory>
-                <!--这里不能理解为过滤，而是开启替换，为true，表明可以使用${}变量  -->
+                <!--这里不能理解为过滤，而是开启替换，为true，表明可以替换掉yaml文件中使用${}或@@的变量  -->
                 <filtering>true</filtering>
             </resource>
         </resources>

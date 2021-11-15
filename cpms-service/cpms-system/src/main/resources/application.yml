@@ -1,3 +1,0 @@
-spring:
-   profiles:
-      active: ${profiles.active}  # 激活对应的环境配置,${profiles.active}对应pom.xml中的变量值

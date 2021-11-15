@@ -17,6 +17,7 @@ spring:
 
    #******** 激活自定义配置文件 ****#
    profiles:
+      active: @profiles.active@
       include: system,jdbc,redis
 
    cloud:

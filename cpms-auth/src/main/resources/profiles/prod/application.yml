@@ -17,14 +17,15 @@ spring:
 
   #******** 激活自定义配置文件 ****#
   profiles:
-    include: system,redis
+    active: @profiles.active@
+    include: redis,system
 
   cloud:
     nacos:
-#      config:
-#        server-addr: 120.0.0.1:8848
-#        file-extension: yaml
-#        prefix: nacos
+      #      config:
+      #        server-addr: 120.0.0.1:8848
+      #        file-extension: yaml
+      #        prefix: nacos
       discovery: # 服务发现注册
         server-addr: 127.0.0.1:8858
 
