@@ -40,11 +40,11 @@ public class CsFileUtil {
 
     public static void initUploadPath() {
         String winPath = CsPropsUtil.getString(FILE_UPLOAD_PATH_WIN_PROP);
-        if(!CsStringUtil.isEmpty(winPath)) {
+        if(!CsStringUtil.isBlank(winPath)) {
             WIN_FILE_UPLOAD_PATH = winPath;
         }
         String linuxPath = CsPropsUtil.getString(FILE_UPLOAD_PATH_LINUX_PROP);
-        if(!CsStringUtil.isEmpty(linuxPath)) {
+        if(!CsStringUtil.isBlank(linuxPath)) {
             LINUX_FILE_UPLOAD_PATH = linuxPath;
         }
     }
@@ -119,7 +119,7 @@ public class CsFileUtil {
      */
     public static FileR saveFileUpload(String savePath, MultipartFile file) {
         FileR saveFileR = new FileR();
-        if (CsStringUtil.isEmpty(savePath)){
+        if (CsStringUtil.isBlank(savePath)){
             logger.info("savePath is null");
             saveFileR.setSuccess(false);
             saveFileR.setErrorMessage("savePath is null");
@@ -135,7 +135,7 @@ public class CsFileUtil {
             StringBuilder fileName = new StringBuilder(CsDateUtil.dateFormat(new Date(),CsDateUtil.YYYYMMDDHHMMSSSSS));
             fileName.append((int)((Math.random() * 9+1)*100));
             String originFilename = file.getOriginalFilename();
-            if(!CsStringUtil.isEmpty(originFilename)) {
+            if(!CsStringUtil.isBlank(originFilename)) {
                 fileName.append(originFilename);
             }
             String fullPath = savePath+File.separator+ fileName;
@@ -201,7 +201,7 @@ public class CsFileUtil {
      * @return
      */
     private static String createPath(String rootPath, String parentPath,String fileOwner) {
-        if(CsStringUtil.isEmpty(rootPath)) {
+        if(CsStringUtil.isBlank(rootPath)) {
             rootPath = getDefaultRootPath();
         }
         StringBuilder path = new StringBuilder(rootPath);
@@ -214,7 +214,7 @@ public class CsFileUtil {
         path.append(File.separator);
         path.append(CsDateUtil.getCurrentDay());
         path.append(File.separator);
-        if(!CsStringUtil.isEmpty(fileOwner)) {
+        if(!CsStringUtil.isBlank(fileOwner)) {
             path.append(fileOwner);
             path.append(File.separator);
         }

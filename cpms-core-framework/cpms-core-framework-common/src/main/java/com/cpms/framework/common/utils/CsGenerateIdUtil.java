@@ -14,7 +14,7 @@ public class CsGenerateIdUtil {
      * @return
      */
     public static String userAccount(String accountPrefix,int len,int seed){
-        if(CsStringUtil.isEmpty(accountPrefix)) {
+        if(CsStringUtil.isBlank(accountPrefix)) {
             accountPrefix = "CS";
         }
        return accountPrefix +String.format("%0"+len+"d", seed);
