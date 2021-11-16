@@ -2,6 +2,7 @@ package com.cpms.demo.controller;
 
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
+import com.cpms.framework.common.core.domain.FileR;
 import com.cpms.framework.common.utils.CsFileUtil;
 import com.cpms.framework.common.utils.CsPropsUtil;
 import com.cpms.framework.common.utils.thread.ThreadPoolBuilder;
@@ -69,18 +70,18 @@ public class TestController {
      */
     @GetMapping("/downloadFile")
     public void downloadFile(HttpServletResponse response){
-        String fileName = "temp2.xlsx";
+        String fileName = "temp.xlsx";
         String fileDir = "staticfile";
         CsFileUtil.downLocalFile(response, fileDir, fileName);
     }
 
     /**
-     *  下载文件
+     *  上传文件
      * @return
      */
     @PostMapping("/uploadFile")
     public void uploadFile(MultipartFile uploadFile){
-        String os = System.getProperty("os.name");
-        System.out.println(os);
+        FileR fileR = CsFileUtil.saveFileUpload("excel", "CS777777",uploadFile);
+        System.out.println(fileR);
     }
 }

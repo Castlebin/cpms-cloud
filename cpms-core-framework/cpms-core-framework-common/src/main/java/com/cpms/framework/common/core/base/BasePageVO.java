@@ -3,7 +3,7 @@ package com.cpms.framework.common.core.base;
 import java.util.List;
 
 /**
- * 类描述: 公共的分页返回分装
+ * 类描述: 公共的分页返回封装
  *
  * @author gulang
  * @date 2021/03/31 16:17

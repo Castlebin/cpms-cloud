@@ -15,7 +15,7 @@ public class Result<T> implements Serializable {
     private boolean success = false;
     private Integer code;
     private String message;
-    private String applicationName = (String) CsPropsUtil.getProperty("spring.application.name");
+    private String applicationName = CsPropsUtil.getString("spring.application.name");
     private String date;
     private T obj;
     public Result() {

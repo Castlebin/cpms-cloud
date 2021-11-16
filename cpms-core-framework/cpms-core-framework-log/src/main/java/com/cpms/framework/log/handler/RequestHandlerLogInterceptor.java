@@ -83,7 +83,7 @@ public class RequestHandlerLogInterceptor implements HandlerInterceptor {
         LogDTO logDTO = (LogDTO)request.getAttribute(LOGGER_ENTITY);
         String resultJson = String.valueOf(request.getAttribute(ResponseIntercept.RESPONSE_JSON));
         Result resultVO = JSON.parseObject(resultJson, Result.class);
-        boolean property = CsPropsUtil.getBoolean("print-request-result");
+        boolean property = CsPropsUtil.getBoolean("cpms.print-request-result");
         if(!Objects.isNull(resultVO)) {
             if(!property) {
                 resultVO.setObj(null);
