@@ -2,13 +2,11 @@ package com.cpms.log.modules.log.feign;
 
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
-import com.cpms.framework.common.core.secure.TokenUserInfo;
-import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.log.api.modules.log.dto.HandlerLogDTO;
 import com.cpms.log.api.modules.log.feign.ILogClient;
 import com.cpms.log.modules.log.entity.SysLogEntity;
 import com.cpms.log.modules.log.service.ISysLogService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +26,7 @@ public class LogClient implements ILogClient {
     @PostMapping(API_PREFIX+"/record-handler-log")
     public Result<Void> recordHandlerLog(HandlerLogDTO handlerLogDTO) {
         SysLogEntity sysLogEntity = new SysLogEntity();
-        BeanUtils.copyProperties(handlerLogDTO,sysLogEntity);
+        CsBeanUtil.copyProperties(handlerLogDTO,sysLogEntity);
         sysLogService.save(sysLogEntity);
         return ResultUtil.success();
     }

@@ -109,6 +109,8 @@
 <!--            <groupId>com.alibaba.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
 <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+
     </dependencies>
 
     <!-- 插件依赖 -->

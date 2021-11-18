@@ -3,7 +3,7 @@ package com.cpms.log.modules.log.controller;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.core.base.BasePageVO;
-import com.cpms.log.modules.log.dto.ListLogDTO;
+import com.cpms.log.modules.log.dto.QueryLogDTO;
 import com.cpms.log.modules.log.service.ISysLogService;
 import com.cpms.log.modules.log.vo.SysLogVO;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class SysLogController {
      * @return
      */
     @PostMapping("/list")
-    public Result<BasePageVO<SysLogVO>> listLog(@RequestBody ListLogDTO listLogDTO){
+    public Result<BasePageVO<SysLogVO>> listLog(@RequestBody QueryLogDTO listLogDTO){
         return ResultUtil.success(sysLogService.listLog(listLogDTO));
     }
 

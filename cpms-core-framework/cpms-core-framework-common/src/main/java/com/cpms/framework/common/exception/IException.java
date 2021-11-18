@@ -5,7 +5,7 @@ package com.cpms.framework.common.exception;
  * @author: gulang
  * @time: 2021/7/9 17:26
  */
-public interface IBizException {
+public interface IException {
     /**
      * 返回状态码
      * @return

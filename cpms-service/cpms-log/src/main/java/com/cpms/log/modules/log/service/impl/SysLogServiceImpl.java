@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsSecureUtil;
-import com.cpms.log.common.constants.SystemConstant;
-import com.cpms.log.modules.log.dto.ListLogDTO;
+import com.cpms.log.modules.log.dto.QueryLogDTO;
 import com.cpms.log.modules.log.entity.SysLogEntity;
 import com.cpms.log.modules.log.mapper.SysLogMapper;
 import com.cpms.log.modules.log.service.ISysLogService;
@@ -29,7 +28,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> i
     private  SysLogMapper sysLogMapper;
 
     @Override
-    public BasePageVO<SysLogVO> listLog(ListLogDTO listLogDTO) {
+    public BasePageVO<SysLogVO> listLog(QueryLogDTO listLogDTO) {
         BasePageVO<SysLogVO> basePageVO = new BasePageVO();
         List<SysLogVO> list;
         int count = sysLogMapper.listLogCount(listLogDTO);

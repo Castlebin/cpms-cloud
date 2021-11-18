@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ListLogDTO extends BasePageDTO {
+public class QueryLogDTO extends BasePageDTO {
     private String title;
     private String serviceName;
     private String handleIp;
