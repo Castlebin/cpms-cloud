@@ -10,11 +10,13 @@ import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
+import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsGenerateIdUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
+import com.cpms.system.modules.sys.dto.PersonalInfoDTO;
 import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
 import com.cpms.system.modules.sys.dto.SysUserDTO;
@@ -84,7 +86,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
     @Override
     public SysUserDetailVO getUserDetail(SysUserDTO userDTO) {
         QueryWrapper<SysUserEntity> query = Wrappers.query();
-        query.select("user_avatar","user_sex","user_birthday","user_mobile");
+        query.select("user_avatar","user_sex","user_birthday","user_mobile","user_real_name","user_name");
         query.eq("user_id",userDTO.getUserId());
         if(!CsSecureUtil.isHeadquarters()) {
             query.eq("tenant_id",CsSecureUtil.userTenantId());
@@ -94,10 +96,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         if(Objects.isNull(sysUserEntity)) {
             return sysUserDetailVO;
         }
-        sysUserDetailVO.setUserAvatar(sysUserEntity.getUserAvatar());
-        sysUserDetailVO.setUserBirthday(sysUserEntity.getUserBirthday());
-        sysUserDetailVO.setUserSex(sysUserEntity.getUserSex());
-        sysUserDetailVO.setUserMobile(sysUserEntity.getUserMobile());
+        CsBeanUtil.copyProperties(sysUserEntity,sysUserDetailVO);
         return sysUserDetailVO;
     }
 
@@ -287,5 +286,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
             updateWrapper.eq("tenant_id", CsSecureUtil.userTenantId());
         }
         return this.update(sysUserEntity,updateWrapper);
+    }
+
+    @Override
+    public boolean modifiedPersonalInfo(PersonalInfoDTO personalInfoDTO) {
+        LambdaUpdateWrapper<SysUserEntity> updateWrapper = Wrappers.<SysUserEntity>lambdaUpdate()
+                .set(SysUserEntity::getUserName,personalInfoDTO.getUserName())
+                .set(SysUserEntity::getUserRealName,personalInfoDTO.getUserRealName())
+                .set(SysUserEntity::getUserBirthday,personalInfoDTO.getUserBirthday())
+                .set(SysUserEntity::getUserSex,personalInfoDTO.getUserSex())
+                .set(SysUserEntity::getUserMobile,personalInfoDTO.getUserMobile())
+                .eq(SysUserEntity::getUserId, CsSecureUtil.getUser().getUserId());
+        return this.update(updateWrapper);
     }
 }

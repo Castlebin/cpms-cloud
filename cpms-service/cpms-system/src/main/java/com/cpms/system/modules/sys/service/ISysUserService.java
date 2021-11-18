@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
+import com.cpms.system.modules.sys.dto.PersonalInfoDTO;
 import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
 import com.cpms.system.modules.sys.dto.SysUserDTO;
@@ -87,4 +88,5 @@ public interface ISysUserService extends IService<SysUserEntity> {
     String generateAccount(SysUserDTO userDTO);
 
     boolean changeUserStatus(Long userId,Integer userStatus);
+    boolean modifiedPersonalInfo(PersonalInfoDTO personalInfoDTO);
 }

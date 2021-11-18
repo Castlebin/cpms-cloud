@@ -9,6 +9,7 @@ import com.cpms.framework.mybatis.groups.DeleteGroup;
 import com.cpms.framework.mybatis.groups.SelectGroup;
 import com.cpms.framework.mybatis.groups.UpdateGroup;
 import com.cpms.framework.secure.annotations.PreAuth;
+import com.cpms.system.modules.sys.dto.PersonalInfoDTO;
 import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
 import com.cpms.system.modules.sys.dto.SysUserDTO;
@@ -49,7 +50,6 @@ public class SysUserController {
      * @return
      */
     @PostMapping("/getUserDetail")
-    @PreAuth("sys_user_edit")
     public Result<SysUserDetailVO> getUserDetail(@Validated(SelectGroup.class)@RequestBody SysUserDTO userDTO){
         return ResultUtil.success(sysUserService.getUserDetail(userDTO));
     }
@@ -93,6 +93,10 @@ public class SysUserController {
         return ResultUtil.status(sysUserService.changeUserStatus(userId,userStatus));
     }
 
+    @PostMapping("/modifiedPersonalInfo")
+    public Result<Void> modifiedPersonalInfo(@Validated(UpdateGroup.class) @RequestBody PersonalInfoDTO personalInfoDTO){
+        return ResultUtil.status(sysUserService.modifiedPersonalInfo(personalInfoDTO));
+    }
     /**
      * 重置个人密码
      * @param resetPasswordDTO

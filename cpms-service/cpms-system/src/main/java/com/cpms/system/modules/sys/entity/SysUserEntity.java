@@ -7,6 +7,7 @@ import com.cpms.framework.mybatis.entity.TenantEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -52,7 +53,7 @@ public class SysUserEntity extends TenantEntity {
      */
     private Long postId;
 
-    private LocalDateTime userBirthday;
+    private LocalDate userBirthday;
 
     private Integer  userStatus;
     /**

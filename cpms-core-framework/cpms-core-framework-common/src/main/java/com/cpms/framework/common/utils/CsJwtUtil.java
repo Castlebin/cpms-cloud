@@ -3,6 +3,7 @@ package com.cpms.framework.common.utils;
 import com.cpms.framework.common.core.secure.TokenInfo;
 import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
+import com.cpms.framework.common.exception.CheckJwtException;
 import com.google.common.base.Charsets;
 import io.jsonwebtoken.*;
 
@@ -75,9 +76,9 @@ public class CsJwtUtil {
         try {
             return Jwts.parser().setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY)).parseClaimsJws(jsonWebToken).getBody();
         }catch (ExpiredJwtException expired){
-            throw new BizException(GlobalResponseResultEnum.TOKEN_EXPIRED_ERROR);
+            throw new CheckJwtException(GlobalResponseResultEnum.TOKEN_EXPIRED_ERROR);
         }catch (Exception e){
-            throw new BizException(GlobalResponseResultEnum.TOKEN_CHECK_INVALID_ERROR);
+            throw new CheckJwtException(GlobalResponseResultEnum.TOKEN_CHECK_INVALID_ERROR);
         }
     }
 }
