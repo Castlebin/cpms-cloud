@@ -4,16 +4,21 @@ import com.alibaba.excel.util.FileUtils;
 import com.cpms.framework.common.core.domain.FileR;
 import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -50,12 +55,10 @@ public class CsFileUtil {
     }
 
     public static void downLocalFile(HttpServletResponse response, File file, String fileName){
-        OutputStream responseStream = null;
-        try {
-            if(file == null || !file.exists()){
-                throw new BizException(GlobalResponseResultEnum.FILE_NOT_EXIST_ERROR);
-            }
-            responseStream = response.getOutputStream();
+        if(file == null || !file.exists()){
+            throw new BizException(GlobalResponseResultEnum.FILE_NOT_EXIST_ERROR);
+        }
+        try(OutputStream responseStream = response.getOutputStream()) {
             byte[] resultBytes = FileUtils.readFileToByteArray(file);
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             response.setContentType("application/octet-stream");
@@ -72,13 +75,6 @@ public class CsFileUtil {
             response.flushBuffer();
         } catch (Exception e) {
             logger.error("File Download Exception", e);
-            if (null != responseStream) {
-                try {
-                    responseStream.close();
-                } catch (IOException ignored) {
-                    logger.error("Close File Stream Exception", e);
-                }
-            }
         }
     }
 
@@ -125,14 +121,14 @@ public class CsFileUtil {
             saveFileR.setErrorMessage("savePath is null");
             return saveFileR;
         }
-        if(Objects.isNull(file)){
+        if(file == null || CsStringUtil.isBlank(file.getOriginalFilename()) || file.getSize() <= 0){
             logger.info("file is null");
             saveFileR.setSuccess(false);
             saveFileR.setErrorMessage("file is null");
             return saveFileR;
         }
         try {
-            StringBuilder fileName = new StringBuilder(CsDateUtil.dateFormat(new Date(),CsDateUtil.YYYYMMDDHHMMSSSSS));
+            StringBuilder fileName = new StringBuilder(CsDateUtil.dateFormat(new Date(),CsDateUtil.HHMMSSSSS));
             fileName.append((int)((Math.random() * 9+1)*100));
             String originFilename = file.getOriginalFilename();
             if(!CsStringUtil.isBlank(originFilename)) {
@@ -183,14 +179,18 @@ public class CsFileUtil {
      * @param fileOwner  文件归属者 e.g:用户工号
      * @return
      */
-    public static String getResourceSaveFilePath(String fileParent,String fileOwner) {
+    public static String getResourcePath(String fileParent,String fileOwner) {
+        return createPath(getResourcePath(),fileParent,fileOwner);
+    }
+
+    public static String getResourcePath() {
         String resourceRootPath = null;
         try {
             resourceRootPath = ResourceUtils.getURL("classpath:").getPath();
         } catch (FileNotFoundException e) {
             logger.error("Get Resource Path Exception", e);
         }
-        return createPath(resourceRootPath,fileParent,fileOwner);
+        return resourceRootPath;
     }
 
     /**
@@ -219,9 +219,101 @@ public class CsFileUtil {
             path.append(File.separator);
         }
         File destFile = new File(path.toString());
+        boolean b = true;
         if (!destFile.exists()) {
-            destFile.mkdirs();
+            b = destFile.mkdirs();
         }
-        return path.toString();
+        if(b){
+            return path.toString();
+        }
+        return "";
+    }
+
+    /**
+     * 校验文件类型
+     * @param file
+     * @return
+     */
+    public static boolean checkFileType(MultipartFile file, List<String> allowTypes){
+        if(file == null || CsStringUtil.isBlank(file.getOriginalFilename()) || file.getSize() <= 0) {
+            return false;
+        }
+        if(CsCollectionUtil.isEmpty(allowTypes)) {
+            return false;
+        }
+        String originFilename = file.getOriginalFilename();
+        if(CsStringUtil.isBlank(originFilename)) {
+            return false;
+        }
+        // 获取后缀名
+        String fileSuffix = originFilename.substring(originFilename.lastIndexOf(".")+1);
+        return CsStringUtil.isBlank(fileSuffix) || allowTypes.contains(fileSuffix);
+    }
+
+    /**
+     * MultipartFile 转 File
+     * @param file  MultipartFile
+     * @return toFile
+     */
+    public static File multipartFileToFile(MultipartFile file){
+        File toFile = null;
+        if (file == null || CsStringUtil.isBlank(file.getOriginalFilename()) || file.getSize() <= 0) {
+            return null;
+        }
+        try(InputStream ins = file.getInputStream()){
+            toFile = new File(file.getOriginalFilename());
+            inputStreamToFile(ins, toFile);
+        }catch (Exception e){
+            logger.error("MultipartFile To File Exception", e);
+        }
+        return toFile;
+    }
+
+    /**
+     * 获取流文件
+     * @param ins
+     * @param file
+     */
+    private static void inputStreamToFile(InputStream ins, File file) {
+        try (OutputStream os = new FileOutputStream(file)){
+            int bytesRead = 0;
+            byte[] buffer = new byte[8192];
+            while ((bytesRead = ins.read(buffer, 0, 8192)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+        } catch (Exception e) {
+            logger.error("Input Stream To File Exception",e);
+        }
+    }
+
+    /**
+     * 创建FileItem
+     * @param file
+     * @param fieldName
+     * @return
+     */
+    public static FileItem createFileItem(File file, String fieldName) {
+        FileItemFactory factory = new DiskFileItemFactory(16, null);
+        FileItem item = factory.createItem(fieldName, "text/plain", true, file.getName());
+        int bytesRead = 0;
+        byte[] buffer = new byte[8192];
+        try (FileInputStream fis = new FileInputStream(file);
+             OutputStream os = item.getOutputStream()){
+            while ((bytesRead = fis.read(buffer, 0, 8192)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            logger.error("Create FileItem Exception",e);
+        }
+        return item;
+    }
+
+    /**
+     *  File 转 MultipartFile
+     * @param file  File
+     */
+    public static MultipartFile fileToMultipartFile(File file){
+        FileItem fileItem = createFileItem(file, file.getName());
+        return new CommonsMultipartFile(fileItem);
     }
 }

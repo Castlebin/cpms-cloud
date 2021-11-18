@@ -17,6 +17,7 @@ public enum SystemResponseResultEnum implements IResultEnum {
     ORIGINAL_PASSWORD_NOT_MATCH_ERROR(50006,"原始密码不正确！！！"),
     THERE_ARE_CHILD_NODES_ERROR(50007,"该节点关联子节点不能删除！！！"),
     ACCOUNT_PREFIX_EXISTS_ERROR(50008,"账号前缀已存在！！！"),
+    ACCOUNT_IS_NOT_EXISTS_ERROR(50009,"账号不存在！！！"),
     ;
 
     final Integer code;

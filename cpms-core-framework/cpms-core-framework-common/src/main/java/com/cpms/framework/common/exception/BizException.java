@@ -8,7 +8,7 @@ import com.cpms.framework.common.enums.GlobalResponseResultEnum;
  * @author: gulang
  * @time: 2021/6/23 17:42
  */
-public class BizException extends RuntimeException implements IBizException{
+public class BizException extends RuntimeException implements IException {
     private Integer code;
     private String message;
     private String applicationName;

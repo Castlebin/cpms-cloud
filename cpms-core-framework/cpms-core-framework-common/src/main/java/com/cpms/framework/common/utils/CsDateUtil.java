@@ -20,6 +20,8 @@ public class CsDateUtil extends DateFormatUtils {
     public static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
     public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
     public static final String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
+    public static final String HHMMSSSSS = "HHmmssSSS";
+    public static final String HHMMSS = "HH:mm:ss";
 
     public static String dateFormat(Date date){
        return FastDateFormat.getInstance(DEFAULT_PATTERN).format(date);

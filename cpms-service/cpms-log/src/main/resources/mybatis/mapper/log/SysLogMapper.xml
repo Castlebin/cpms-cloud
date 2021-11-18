@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cpms.log.modules.log.mapper.SysLogMapper">
 
-    <select id="listLogCount" parameterType="com.cpms.log.modules.log.dto.ListLogDTO" resultType="java.lang.Integer">
+    <select id="listLogCount" parameterType="com.cpms.log.modules.log.dto.QueryLogDTO" resultType="java.lang.Integer">
         SELECT
         count(1)
         FROM
@@ -29,7 +29,7 @@
         </where>
     </select>
 
-    <select id="listLog" parameterType="com.cpms.log.modules.log.dto.ListLogDTO" resultType="com.cpms.log.modules.log.vo.SysLogVO">
+    <select id="listLog" parameterType="com.cpms.log.modules.log.dto.QueryLogDTO" resultType="com.cpms.log.modules.log.vo.SysLogVO">
         SELECT
         log_id,
         tenant_id,

@@ -1,6 +1,8 @@
 package com.cpms.log.modules.log.vo;
 
 import com.cpms.framework.common.core.base.BaseVO;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +14,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class SysLogVO extends BaseVO {
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long logId;
     private String title;
     private String serviceName;
@@ -19,7 +22,9 @@ public class SysLogVO extends BaseVO {
     private String reqUrl;
     private String reqMethod;
     private String reqParams;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long   exeTime;
     private String resultMsg;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;
 }
