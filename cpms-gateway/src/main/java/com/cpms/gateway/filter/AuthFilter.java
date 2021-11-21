@@ -4,18 +4,19 @@ import com.alibaba.fastjson.JSON;
 import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.enums.GlobalResponseResultEnum;
-import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.exception.CheckJwtException;
 import com.cpms.framework.common.utils.CsJwtUtil;
 import com.cpms.gateway.common.constants.SystemConstant;
 import com.cpms.gateway.props.AuthUrlProperties;
 import com.cpms.gateway.props.DefaultUrlProperties;
+import com.cpms.gateway.utils.IpUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -31,6 +32,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 /**
  * @description: 鉴权过滤器
@@ -49,8 +51,15 @@ public class AuthFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
+        // 不需要登录校验的直接跳过
         if (isSkip(path)) {
-            return chain.filter(exchange);
+            // 设置用户信息到请求头，传递到下游微服务
+            ServerHttpRequest mutableReq = exchange.getRequest().mutate()
+                    .header(CoreCommonConstant.CLIENT_IP_ADDR,IpUtil.getClientIp(exchange.getRequest()))
+                    .header(CoreCommonConstant.TRACE_ID,getTraceId())
+                    .build();
+            ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
+            return chain.filter(mutableExchange);
         }
         ServerHttpResponse resp = exchange.getResponse();
         String headerToken = exchange.getRequest().getHeaders().getFirst(CoreCommonConstant.H_TOKEN_KEY);
@@ -67,7 +76,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
         claims.put("tokenExpire",claims.get("exp"));
         // 设置用户信息到请求头，传递到下游微服务
-        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(CoreCommonConstant.USER_INFO, URLEncoder.encode(JSON.toJSONString(claims), "UTF-8")).build();
+        ServerHttpRequest mutableReq = exchange.getRequest().mutate()
+                .header(CoreCommonConstant.USER_INFO, URLEncoder.encode(JSON.toJSONString(claims), "UTF-8"))
+                .header(CoreCommonConstant.CLIENT_IP_ADDR,IpUtil.getClientIp(exchange.getRequest()))
+                .header(CoreCommonConstant.TRACE_ID,getTraceId())
+                .build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);
     }
@@ -96,4 +109,12 @@ public class AuthFilter implements GlobalFilter, Ordered {
         return -100;
     }
 
+    /**
+     * 获取traceId传递到下游服务
+     */
+    private String getTraceId() {
+        String traceId = UUID.randomUUID().toString().replace("-", "");
+        MDC.put(CoreCommonConstant.TRACE_ID, traceId);
+        return traceId;
+    }
 }

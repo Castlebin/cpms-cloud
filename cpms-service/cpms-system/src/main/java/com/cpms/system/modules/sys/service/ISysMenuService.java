@@ -25,8 +25,9 @@ public interface ISysMenuService extends IService<SysMenuEntity> {
 
     boolean deleteMenu(SysMenuDTO sysMenuDTO);
 
-    BasePageVO<SysMenuVO> listMenu(QueryMenuDTO listMenuDTO);
+    List<SysMenuVO> listMenu(QueryMenuDTO listMenuDTO);
 
     List<SysMenuVO> userOwnedMenus();
-    List<SysMenuVO> tenantOwnedMenus(Long tenantId);
+    List<SysMenuVO> tenantOwnedMenus();
+    List<SysMenuVO> selectMenuByTenantId(Long tenantId);
 }

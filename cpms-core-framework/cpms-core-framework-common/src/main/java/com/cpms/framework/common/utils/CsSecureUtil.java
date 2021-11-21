@@ -25,7 +25,7 @@ public class CsSecureUtil {
         HttpServletRequest request = CsWebUtil.getRequest();
         if(!Objects.isNull(request)) {
             String header = request.getHeader(CoreCommonConstant.USER_INFO);
-            if(StringUtils.isNotBlank(header)){
+            if(CsStringUtil.isNotBlank(header)){
                 try {
                     tokenUserInfo = JSON.parseObject(URLDecoder.decode(header, "UTF-8"), TokenUserInfo.class);
                 }catch (UnsupportedEncodingException un) {

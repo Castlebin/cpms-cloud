@@ -102,6 +102,7 @@ public class SysTenantController {
         return ResultUtil.status(sysTenantService.configTenantPer(tenantDTO));
     }
 
+
     /**
      *  改变租户状态
      * @param tenantId

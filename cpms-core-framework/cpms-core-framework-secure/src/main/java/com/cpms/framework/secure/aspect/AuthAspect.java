@@ -4,7 +4,10 @@ import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
+import com.cpms.framework.common.exception.ForbiddenException;
+import com.cpms.framework.common.utils.CsCollectionUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.framework.common.utils.CsStringPool;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.framework.secure.annotations.PreAuth;
 import org.apache.commons.lang3.StringUtils;
@@ -14,9 +17,9 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.Configuration;
-
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @description: 授权注解拦截切面
@@ -35,7 +38,6 @@ public class AuthAspect {
       * ”..*“：表示当前包及子孙包所有的类
       * .*(..)：表示类中任何方法名，括号表示参数，两个点表示任何参数类型
       *
-      *  !Note:服务内部通过feign远程调用接口时也会被拦截
      */
 
     /**
@@ -77,7 +79,7 @@ public class AuthAspect {
             throw new BizException(GlobalResponseResultEnum.INTERNAL_SERVER_EXCEPTION_ERROR);
         }
         if(!hasPermission(auth.value())) {
-            throw new BizException(GlobalResponseResultEnum.REQ_UNAUTHORIZED_ERROR);
+            throw new ForbiddenException(GlobalResponseResultEnum.REQ_FORBIDDEN_ERROR);
         }
     }
 
@@ -99,6 +101,8 @@ public class AuthAspect {
         if(StringUtils.isBlank(cachePermissions)) {
             return false;
         }
-        return Arrays.asList(cachePermissions.split(",")).contains(permission);
+        List<String> methodPer = Arrays.asList(permission.split(CsStringPool.COMMA));
+        List<String> ownerPer = Arrays.asList(cachePermissions.split(CsStringPool.COMMA));
+        return CsCollectionUtil.containsAny(methodPer,ownerPer);
     }
 }

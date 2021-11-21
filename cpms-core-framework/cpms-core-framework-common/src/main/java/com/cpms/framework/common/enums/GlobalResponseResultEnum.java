@@ -13,7 +13,7 @@ public enum GlobalResponseResultEnum implements IResultEnum {
     SUCCESS(20000, "响应成功"),
     LOSE_AUTH_TOKEN_ERROR(20001, "缺失token令牌,登录鉴权失败"),
     METHOD_NOT_SUPPORTED_ERROR(20002, "不支持当前请求方式"),
-    REQ_UNAUTHORIZED_ERROR(20003, "请求未授权"),
+    REQ_FORBIDDEN_ERROR(20003, "请求未授权"),
     PARAM_MISS_ERROR(20004, "缺少必传的请求参数"),
     PARAM_VALID_ERROR(20005, "参数校验失败"),
     QUERY_DATA_NOT_EXIST_ERROR(20006, "查询数据不存在"),

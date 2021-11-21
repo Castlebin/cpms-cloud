@@ -11,8 +11,17 @@ import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 public class BizException extends RuntimeException implements IException {
     private Integer code;
     private String message;
-    private String applicationName;
+    private String traceId;
     private Object obj;
+
+    @Override
+    public String getTraceId() {
+        return traceId;
+    }
+
+    public void setTraceId(String traceId) {
+        this.traceId = traceId;
+    }
 
     @Override
     public Integer getCode() {
@@ -24,10 +33,6 @@ public class BizException extends RuntimeException implements IException {
         return message;
     }
 
-    @Override
-    public String getApplicationName() {
-        return applicationName;
-    }
 
     @Override
     public Object getObj() {
@@ -41,12 +46,6 @@ public class BizException extends RuntimeException implements IException {
     public void setMessage(String message) {
         this.message = message;
     }
-
-    public void setApplicationName(String applicationName) {
-        this.applicationName = applicationName;
-    }
-
-
 
     public void setObj(Object obj) {
         this.obj = obj;
@@ -92,7 +91,7 @@ public class BizException extends RuntimeException implements IException {
     public BizException(Result result) {
         this.code=result.getCode();
         this.message=result.getMessage();
-        this.applicationName=result.getApplicationName();
+        this.traceId=result.getTraceId();
         this.obj=result.getObj();
     }
 }

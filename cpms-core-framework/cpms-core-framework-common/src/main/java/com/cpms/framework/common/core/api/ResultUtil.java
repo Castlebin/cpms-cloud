@@ -97,9 +97,6 @@ public class ResultUtil implements Serializable {
      */
     public static <T> Result<T> error(Integer code,String message,String applicationName,T obj) {
         Result<T> result = error(code,message);
-        if(Objects.nonNull(applicationName)) {
-            result.setApplicationName(applicationName);
-        }
         result.setObj(obj);
         return result;
     }

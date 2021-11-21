@@ -34,10 +34,12 @@ public class SysMenuController {
      * @return
      */
     @PostMapping("/list")
-    @PreAuth("sys_menu_view")
-    public Result<BasePageVO<SysMenuVO>> listMenu(@RequestBody QueryMenuDTO listMenuDTO){
+    @PreAuth("sys_menu_view,sys_tenant_view")
+    public Result<List<SysMenuVO>> listMenu(@RequestBody QueryMenuDTO listMenuDTO){
         return ResultUtil.success(sysMenuService.listMenu(listMenuDTO));
     }
+
+
 
     /**
      *  获取左侧菜单路由
@@ -63,10 +65,19 @@ public class SysMenuController {
      * @return
      */
     @GetMapping("/tenantOwnedMenus")
-    public Result<List<SysMenuVO>> tenantOwnedMenus(@RequestParam(name = "tenantId",required=false) Long tenantId){
-        return ResultUtil.success(sysMenuService.tenantOwnedMenus(tenantId));
+    public Result<List<SysMenuVO>> tenantOwnedMenus(){
+        return ResultUtil.success(sysMenuService.tenantOwnedMenus());
     }
 
+    /**
+     *  通过租户ID查询拥有的菜单（包含按钮）
+     * @return
+     */
+    @GetMapping("/selectMenuByTenantId")
+    @PreAuth("sys_tenant_config_per")
+    public Result<List<SysMenuVO>> selectMenuByTenantId(@RequestParam(name = "tenantId") Long tenantId){
+        return ResultUtil.success(sysMenuService.selectMenuByTenantId(tenantId));
+    }
 
     /**
      *  添加菜单

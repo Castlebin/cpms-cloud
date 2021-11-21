@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BizException.class)
     public Result<Object> bizExceptionHandler(BizException e) {
-        return ResultUtil.error(e.getCode(),e.getMessage(),e.getApplicationName(),e.getObj());
+        return ResultUtil.error(e.getCode(),e.getMessage(),e.getTraceId(),e.getObj());
     }
 
     /**
@@ -65,8 +65,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Result<Void> parameterBodyMissingExceptionHandler(HttpMessageNotReadableException e) {
-        log.error("捕获Exception异常信息:",e);
+        log.error("捕获HttpMessageNotReadableException异常信息:",e);
         return ResultUtil.error(GlobalResponseResultEnum.PARAMETER_BOYDY_EMPTY_ERROR);
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(ForbiddenException.class)
+    public Result<Void> ForbiddenExceptionHandler(ForbiddenException e) {
+        return ResultUtil.error(GlobalResponseResultEnum.REQ_FORBIDDEN_ERROR);
     }
 
 }

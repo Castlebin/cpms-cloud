@@ -14,5 +14,5 @@ public class QueryMenuDTO {
     private String name;
     private String code;
     private String alias;
-    private String type;
+    private Integer type;
 }

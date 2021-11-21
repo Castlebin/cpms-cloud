@@ -9,7 +9,6 @@
           u.user_id,
           u.user_account,
           u.user_name,
-          u.user_login_ip,
           u.last_login_time,
           u.user_avatar,
           u.user_sex,

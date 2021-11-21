@@ -1,5 +1,8 @@
 package com.cpms.framework.common.core.secure;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,18 +15,23 @@ public class TokenUserInfo implements Serializable {
     private static final long serialVersionUID = 1L;
     private String userAccount;
     private String userName;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
     private String userMobile;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long deptId;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long tenantId;
     private int userSex;
     private List<String> roleCodes;
+    @JsonSerialize(using = ToStringSerializer.class)
     private List<Long> roleIds;
     /**
      *  token过期截止时间，单位：秒
      */
     private Long tokenExpire;
     private String tenantCode;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long postId;
 
     public TokenUserInfo() {

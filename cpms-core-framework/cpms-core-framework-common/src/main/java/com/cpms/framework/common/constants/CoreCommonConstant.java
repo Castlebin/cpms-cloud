@@ -8,6 +8,7 @@ package com.cpms.framework.common.constants;
 public class CoreCommonConstant {
     public static final String H_TOKEN_KEY = "H-Auth-Token";
     public static final String USER_INFO = "_user_info";
+    public static final String CLIENT_IP_ADDR = "_client_ip_addr";
     public static final String TRACE_ID  = "traceId";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String REFRESH_TOKEN = "refresh_token";

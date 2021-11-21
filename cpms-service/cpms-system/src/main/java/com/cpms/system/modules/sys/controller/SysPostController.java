@@ -35,7 +35,7 @@ public class SysPostController {
      * @return
      */
     @PostMapping("/list")
-    @PreAuth("sys_post_view")
+    @PreAuth("sys_post_view,sys_user_add,sys_user_edit")
     public Result<BasePageVO<SysPostVO>> listPost(@RequestBody QueryPostDTO listPostDTO){
         return ResultUtil.success(sysPostService.listPost(listPostDTO));
     }

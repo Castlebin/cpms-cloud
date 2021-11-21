@@ -9,10 +9,7 @@ import com.cpms.framework.common.constants.TenantConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.enums.RandomTypeEnum;
 import com.cpms.framework.common.exception.BizException;
-import com.cpms.framework.common.utils.CsBeanUtil;
-import com.cpms.framework.common.utils.CsGenerateIdUtil;
-import com.cpms.framework.common.utils.CsRandomUtil;
-import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.framework.common.utils.*;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.QueryTenantDTO;
 import com.cpms.system.modules.sys.dto.SysTenantDTO;
@@ -27,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -48,6 +46,8 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     private ISysRoleUserService sysRoleUserService;
     @Resource
     private ISysUserService sysUserService;
+    @Resource
+    private ISysRoleMenuService sysRoleMenuService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -130,12 +130,26 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean configTenantPer(SysTenantDTO tenantDTO) {
-        QueryWrapper<SysRoleEntity> query = Wrappers.query();
-        query.select("role_id");
-        query.eq("tenant_id",tenantDTO.getTenantId());
-        query.eq("role_code", TenantConstant.TENANT_ADMINISTRATOR);
-        SysRoleEntity sysRoleEntity = sysRoleService.getBaseMapper().selectOne(query);
-        return sysRoleService.saveRoleMenu(tenantDTO.getMenuIds(),sysRoleEntity.getRoleId());
+        QueryWrapper<SysRoleEntity> queryRole = Wrappers.query();
+        queryRole.select("role_id","role_code");
+        queryRole.eq("tenant_id",tenantDTO.getTenantId());
+        List<SysRoleEntity> tenantAllRole = sysRoleService.list(queryRole);
+        SysRoleEntity tenantAdminRole = tenantAllRole.stream().filter(
+                e -> TenantConstant.TENANT_ADMINISTRATOR.equals(e.getRoleCode())).findFirst().get();
+        // 查询租户之前所拥有的所有权限
+        List<SysRoleMenuEntity> oldPres = sysRoleMenuService.list(Wrappers.<SysRoleMenuEntity>lambdaQuery().eq(SysRoleMenuEntity::getRoleId, tenantAdminRole.getRoleId()));
+        // [1,2]
+        List<Long> oldMenuIds = oldPres.stream().map(SysRoleMenuEntity::getMenuId).collect(Collectors.toList());
+        // [3,4,5]
+        List<Long> newMenuIds = Arrays.stream(tenantDTO.getMenuIds().split(",")).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
+        // 找出被删除的权限ID
+        List<Long> diffMenus = oldMenuIds.stream().filter(e -> !newMenuIds.contains(e)).collect(Collectors.toList());
+        if(!CsCollectionUtil.isEmpty(diffMenus)) {
+            List<Long> allRoleId = tenantAllRole.stream().map(SysRoleEntity::getRoleId).collect(Collectors.toList());
+            sysRoleMenuService.remove(Wrappers.<SysRoleMenuEntity>lambdaQuery().in(SysRoleMenuEntity::getMenuId,diffMenus).in(SysRoleMenuEntity::getRoleId,allRoleId));
+        }
+        sysRoleService.saveRoleMenu(tenantDTO.getMenuIds(),tenantAdminRole.getRoleId());
+        return true;
     }
 
     @Override

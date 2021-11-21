@@ -1,5 +1,6 @@
 package com.cpms.framework.common.utils;
 
+import com.cpms.framework.common.constants.CoreCommonConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
@@ -22,6 +23,21 @@ public class CsWebUtil {
         return requestAttributes == null ? null : ((ServletRequestAttributes)requestAttributes).getRequest();
     }
 
+    /**
+     * 获取客户端IP
+     * @return
+     */
+    public static String getClientIp() {
+        HttpServletRequest request = getRequest();
+        String ipAddr="";
+        if(!Objects.isNull(request)) {
+            ipAddr = request.getHeader(CoreCommonConstant.CLIENT_IP_ADDR);
+            if(CsStringUtil.isBlank(ipAddr)){
+                ipAddr = "";
+            }
+        }
+        return ipAddr;
+    }
 
     public static String getIpAddr() {
         return getIpAddr(getRequest());

@@ -1,6 +1,8 @@
 package com.cpms.framework.common.core.api;
 
+import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.utils.CsPropsUtil;
+import org.slf4j.MDC;
 
 import java.io.Serializable;
 
@@ -15,7 +17,7 @@ public class Result<T> implements Serializable {
     private boolean success = false;
     private Integer code;
     private String message;
-    private String applicationName = CsPropsUtil.getString("spring.application.name");
+    private String traceId = MDC.get(CoreCommonConstant.TRACE_ID);
     private String date;
     private T obj;
     public Result() {
@@ -44,14 +46,6 @@ public class Result<T> implements Serializable {
         this.code = code;
     }
 
-    public String getApplicationName() {
-        return applicationName;
-    }
-
-    public void setApplicationName(String applicationName) {
-        this.applicationName = applicationName;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -76,13 +70,21 @@ public class Result<T> implements Serializable {
         this.obj = obj;
     }
 
+    public String getTraceId() {
+        return traceId;
+    }
+
+    public void setTraceId(String traceId) {
+        this.traceId = traceId;
+    }
+
     @Override
     public String toString() {
         return "Result{" +
                 "success=" + success +
                 ", code=" + code +
                 ", message='" + message + '\'' +
-                ", applicationName='" + applicationName + '\'' +
+                ", traceId='" + traceId + '\'' +
                 ", date='" + date + '\'' +
                 ", obj=" + obj +
                 '}';

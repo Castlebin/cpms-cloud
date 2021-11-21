@@ -13,5 +13,9 @@ import java.lang.annotation.*;
 @Inherited
 @Documented
 public @interface PreAuth {
+    /**
+     *  多个权限，使用英文逗号分割，只要满足其中一个则表示拥有权限
+     * @return
+     */
     String value();
 }

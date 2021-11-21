@@ -16,10 +16,8 @@
             <if test="tenantStatus !=null">
                 and t.tenant_status = #{tenantStatus}
             </if>
-            <if test="leaseTimeStart !=null">
+            <if test="leaseTimeStart !=null and leaseTimeEnd !=null">
                 and t.lease_time_start <![CDATA[>=]]> #{leaseTimeStart}
-            </if>
-            <if test="leaseTimeEnd !=null">
                 and t.lease_time_end <![CDATA[<=]]> #{leaseTimeEnd}
             </if>
             <if test="tenantCode !=null and tenantCode !=''">

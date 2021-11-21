@@ -4,10 +4,10 @@ import com.cpms.framework.common.core.api.IResultEnum;
 
 /**
  * @author gulang
- * @Description: 校验jwt异常类
- * @time: 2021/11/17 19:18
+ * @Description: 无权限访问异常
+ * @time: 2021/11/18 20:09
  */
-public class CheckJwtException extends RuntimeException implements IException{
+public class ForbiddenException extends RuntimeException implements IException{
     private Integer code;
     private String message;
     private String traceId;
@@ -21,7 +21,14 @@ public class CheckJwtException extends RuntimeException implements IException{
         this.message = message;
     }
 
+    @Override
+    public String getTraceId() {
+        return traceId;
+    }
 
+    public void setTraceId(String traceId) {
+        this.traceId = traceId;
+    }
 
     public void setObj(Object obj) {
         this.obj = obj;
@@ -38,27 +45,18 @@ public class CheckJwtException extends RuntimeException implements IException{
     }
 
     @Override
-    public String getTraceId() {
-        return traceId;
-    }
-
-    public void setTraceId(String traceId) {
-        this.traceId = traceId;
-    }
-
-    @Override
     public Object getObj() {
         return obj;
     }
 
-    public CheckJwtException() {
+    public ForbiddenException() {
     }
 
     /**
      *  枚举自定义异常信息
      * @param error
      */
-    public CheckJwtException(IResultEnum error) {
+    public ForbiddenException(IResultEnum error) {
         this.code=error.getCode();
         this.message=error.getMessage();
     }

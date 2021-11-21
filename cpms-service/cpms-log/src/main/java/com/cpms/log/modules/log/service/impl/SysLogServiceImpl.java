@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author gulang
@@ -31,6 +32,9 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> i
     public BasePageVO<SysLogVO> listLog(QueryLogDTO listLogDTO) {
         BasePageVO<SysLogVO> basePageVO = new BasePageVO();
         List<SysLogVO> list;
+        if(Objects.isNull(listLogDTO.getTenantId())) {
+            listLogDTO.setTenantId(CsSecureUtil.userTenantId());
+        }
         int count = sysLogMapper.listLogCount(listLogDTO);
         if(count == 0){
             list = Lists.newArrayList();

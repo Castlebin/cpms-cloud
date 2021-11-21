@@ -8,6 +8,7 @@ import com.cpms.framework.common.core.secure.AuthInfo;
 import com.cpms.framework.common.core.secure.TokenInfo;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsJwtUtil;
+import com.cpms.framework.common.utils.CsWebUtil;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.ISysUserClient;
 import com.cpms.system.api.modules.sys.vo.SysRoleVO;
@@ -35,6 +36,7 @@ public class PasswordAuthen implements IAuthen{
         SysUserLginDTO sysUserLginDTO = new SysUserLginDTO();
         sysUserLginDTO.setUserAccount(userLoginDTO.getAccount());
         sysUserLginDTO.setUserPassword(userLoginDTO.getPassword());
+        String clientIp = CsWebUtil.getClientIp();
         Result<SysUserLoginVO> sysUserLoginBoResult = sysUserClient.sysUserLogin(sysUserLginDTO);
         if(!sysUserLoginBoResult.isSuccess()) {
             throw new BizException(sysUserLoginBoResult);

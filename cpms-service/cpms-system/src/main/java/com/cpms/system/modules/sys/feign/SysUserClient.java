@@ -6,7 +6,6 @@ import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.utils.CsBeanUtil;
-import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.common.utils.CsWebUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
@@ -23,9 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -59,9 +56,11 @@ public class SysUserClient implements ISysUserClient {
         if(sysUserLoginBO.getTenantStatus() == CommonConstant.DATA_STATUS_FORBIDDEN){
             return ResultUtil.error(SystemResponseResultEnum.TENANT_FORBIDDEN_ERROR);
         }
+        String ipAddr = CsWebUtil.getClientIp();
+        sysUserLoginBO.setUserLoginIp(ipAddr);
         LambdaUpdateWrapper<SysUserEntity> updateWrapper = Wrappers.<SysUserEntity>lambdaUpdate()
                 .set(SysUserEntity::getLastLoginTime, LocalDateTime.now())
-                .set(SysUserEntity::getUserLoginIp, CsWebUtil.getIpAddr())
+                .set(SysUserEntity::getUserLoginIp, ipAddr)
                 .eq(SysUserEntity::getUserId, sysUserLoginBO.getUserId());
         sysUserService.update(updateWrapper);
 

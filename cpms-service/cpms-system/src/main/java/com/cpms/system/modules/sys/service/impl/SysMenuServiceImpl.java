@@ -12,10 +12,7 @@ import com.cpms.framework.common.core.node.NodeManager;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
 import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
-import com.cpms.framework.common.utils.CsBeanUtil;
-import com.cpms.framework.common.utils.CsCollectionUtil;
-import com.cpms.framework.common.utils.CsDateUtil;
-import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.framework.common.utils.*;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.QueryMenuDTO;
@@ -86,6 +83,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         return this.update(sysMenuEntity, updateWrapper);
     }
 
+
     @Override
     public boolean deleteMenu(SysMenuDTO sysMenuDTO) {
         QueryWrapper<SysMenuEntity> query = Wrappers.query();
@@ -102,19 +100,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     }
 
     @Override
-    public BasePageVO<SysMenuVO> listMenu(QueryMenuDTO listMenuDTO) {
-        BasePageVO<SysMenuVO> basePageVO = new BasePageVO();
+    public List<SysMenuVO> listMenu(QueryMenuDTO queryMenuDTO) {
+        List<SysMenuEntity> menus;
         List<SysMenuVO> list;
-        int count = sysMenuMapper.listMenuCount(listMenuDTO);
-        if(count == 0 ) {
-            list = Lists.newArrayList();
-        }else{
-            List<SysMenuEntity> entities = sysMenuMapper.listMenu(listMenuDTO);
-            list = NodeManager.buildTreeNode(convertVO(entities), 0L);
-        }
-        basePageVO.setTotal(count);
-        basePageVO.setList(list);
-        return basePageVO;
+        menus = allSysMenu(queryMenuDTO.getType());
+        list = NodeManager.buildTreeNode(convertVO(menus), 0L);
+        return list;
     }
 
     @Override
@@ -132,23 +123,37 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     }
 
     @Override
-    public List<SysMenuVO> tenantOwnedMenus(Long tenantId) {
-        List<SysMenuEntity> menus = Lists.newArrayList();
+    public List<SysMenuVO> tenantOwnedMenus() {
+        List<SysMenuEntity> menus;
         List<SysMenuVO> list;
-        if(Objects.isNull(tenantId)){
+        if(CsSecureUtil.isHeadquarters()) {
             menus = allSysMenu(null);
-            list = NodeManager.buildTreeNode(convertVO(menus), 0L);
         }else{
-            QueryWrapper<SysRoleEntity> query = Wrappers.query();
-            query.select("role_id");
-            query.eq("tenant_id",tenantId);
-            query.eq("role_code", TenantConstant.TENANT_ADMINISTRATOR);
-            SysRoleEntity sysRoleEntity = sysRoleService.getBaseMapper().selectOne(query);
-            if(!Objects.isNull(sysRoleEntity)){
-                menus = sysMenuMapper.queryRoleMenusOrButtons(Arrays.asList(sysRoleEntity.getRoleId()),null);
-            }
-            list = convertVO(menus);
+            menus = getTenantMenuAndButton(CsSecureUtil.userTenantId());
         }
+        list =  NodeManager.buildTreeNode(convertVO(menus), 0L);
+        return list;
+    }
+
+    private List<SysMenuEntity> getTenantMenuAndButton(Long tenantId){
+        List<SysMenuEntity> menus = Lists.newArrayList();
+        QueryWrapper<SysRoleEntity> query = Wrappers.query();
+        query.select("role_id");
+        query.eq("tenant_id",tenantId);
+        query.eq("role_code", TenantConstant.TENANT_ADMINISTRATOR);
+        SysRoleEntity sysRoleEntity = sysRoleService.getBaseMapper().selectOne(query);
+        if(!Objects.isNull(sysRoleEntity)){
+            menus = sysMenuMapper.queryRoleMenusOrButtons(Arrays.asList(sysRoleEntity.getRoleId()),null);
+        }
+        return menus;
+    }
+
+
+    @Override
+    public List<SysMenuVO> selectMenuByTenantId(Long tenantId) {
+        List<SysMenuVO> list;
+        List<SysMenuEntity> menus = getTenantMenuAndButton(tenantId);
+        list = convertVO(menus);
         return list;
     }
 
@@ -165,13 +170,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         return list;
     }
 
-    public List<String> queryRoleButtons() {
+    private List<String> queryRoleButtons() {
         TokenUserInfo user = CsSecureUtil.getUser();
         List<String> buttons = Lists.newArrayList();
         List<SysMenuEntity> SysMenuEntitys = sysMenuMapper.queryRoleMenusOrButtons(user.getRoleIds(),CommonConstant.TYPE_BUTTON);
         if(!CsCollectionUtil.isEmpty(SysMenuEntitys)){
             Map<String, Object> cacheMap = Maps.newHashMap();
-            String strButton = SysMenuEntitys.stream().map(SysMenuEntity::getCode).collect(Collectors.joining(","));
+            buttons = SysMenuEntitys.stream().map(SysMenuEntity::getCode).collect(Collectors.toList());
+            String strButton = CsStringUtil.join(buttons,",");
             cacheMap.put(CoreCommonConstant.PERMISSION_KEY,strButton);
             long tokenExpire = user.getTokenExpire();
             long curTime = CsDateUtil.currentTimeStamp(CsDateUtil.TIME_STAMP_S);
@@ -181,15 +187,23 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     }
 
     public List<SysMenuEntity> queryMenuByTopMenuId(Long topMenuId){
+        List<SysMenuEntity> list = Lists.newArrayList();
         SysTopMenuEntity sysTopMenuEntity = sysTopMenuService.getBaseMapper().selectById(topMenuId);
         if(!Objects.isNull(sysTopMenuEntity) && !StringUtils.isBlank(sysTopMenuEntity.getRelationMenuIds())) {
-            String[] idArr = sysTopMenuEntity.getRelationMenuIds().split(",");
-            List<Long> idList = Arrays.stream(idArr).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
-            List<SysMenuEntity> list = sysMenuMapper.selectBatchIds(idList);
-            list.sort(Comparator.comparing(SysMenuEntity::getSort).reversed());
-            return list;
+            List<Long> idList = Arrays.stream(sysTopMenuEntity.getRelationMenuIds().split(",")).mapToLong(Long::parseLong).boxed().collect(Collectors.toList());
+            List<Long> topMenuIds = idList;
+            if(!CsSecureUtil.isSysSuperAdmin()) {
+                // 获取当前用户所属角色拥有的实际权限，排除掉权限之外顶部对应的菜单
+                List<SysMenuEntity> roleMenus = sysMenuMapper.queryRoleMenusOrButtons(CsSecureUtil.getUser().getRoleIds(),CommonConstant.TYPE_MENU);
+                List<Long> roleMenuIds = roleMenus.stream().map(SysMenuEntity::getMenuId).collect(Collectors.toList());
+                topMenuIds = idList.stream().filter(e -> roleMenuIds.contains(e)).collect(Collectors.toList());
+            }
+            if(!CsCollectionUtil.isEmpty(topMenuIds)) {
+                list = sysMenuMapper.selectBatchIds(topMenuIds);
+                list.sort(Comparator.comparing(SysMenuEntity::getSort).reversed());
+            }
         }
-        return Lists.newArrayList();
+        return list;
     }
 
     /**
@@ -197,7 +211,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
      * @Param type 菜单类型 0：菜单 ，1：按钮 ， null:查询菜单和按钮
      */
     private  List<SysMenuEntity> allSysMenu(Integer type){
-        QueryWrapper<SysMenuEntity> wrapper=new QueryWrapper<>();
+        QueryWrapper<SysMenuEntity> wrapper = new QueryWrapper<>();
         wrapper.eq("del_flag",CommonConstant.DEL_FLAG_NOT_DELETED);
         if(!Objects.isNull(type)) {
             wrapper.eq("type",type);

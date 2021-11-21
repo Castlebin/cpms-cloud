@@ -22,7 +22,7 @@ public interface IException {
      * 所属服务名称
      * @return
      */
-     String getApplicationName();
+     String getTraceId();
 
     /**
      *  返回数据

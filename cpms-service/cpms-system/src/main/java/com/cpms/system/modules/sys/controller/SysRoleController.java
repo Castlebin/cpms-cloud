@@ -35,7 +35,7 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("/list")
-    @PreAuth("sys_role_view")
+    @PreAuth("sys_role_view,sys_user_add,sys_user_edit")
     public Result<BasePageVO<SysRoleVO>> listRole(@RequestBody QueryRoleDTO listRoleDTO){
         return ResultUtil.success(sysRoleService.listRole(listRoleDTO));
     }

@@ -1,9 +1,11 @@
 package com.cpms.gateway.exception;
 
 import com.alibaba.fastjson.JSON;
+import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.utils.CsDateUtil;
 import com.cpms.framework.common.utils.CsPropsUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
@@ -39,7 +41,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
         Map<String, Object> customErrorAttributes = new LinkedHashMap(16);
         customErrorAttributes.put("success",false);
         customErrorAttributes.put("code", errorAttributes.get("status"));
-        customErrorAttributes.put("applicationName", CsPropsUtil.getString("spring.application.name"));
+        customErrorAttributes.put(CoreCommonConstant.TRACE_ID, MDC.get(CoreCommonConstant.TRACE_ID));
         customErrorAttributes.put("message",buildMessage(request,error));
         customErrorAttributes.put("date", CsDateUtil.dateFormat(new Date()));
         customErrorAttributes.put("obj",null);
@@ -65,7 +67,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
      * @return
      */
     private String buildMessage(ServerRequest request, Throwable ex) {
-        StringBuilder message = new StringBuilder("Failed to handle request [");
+        StringBuilder message = new StringBuilder("Gateway service Processing Request Exception [");
         message.append(request.methodName());
         message.append(" ");
         message.append(request.uri());
