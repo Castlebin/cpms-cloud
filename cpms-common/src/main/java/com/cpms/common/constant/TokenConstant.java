@@ -6,5 +6,5 @@ package com.cpms.common.constant;
  * @time: 2021/7/22 15:39
  */
 public interface TokenConstant {
-    String DEFAULT_AVATAR = "https://iconfont.alicdn.com/t/bf9d641b-268e-4edb-b265-9e8c522b18df.png";
+    String DEFAULT_AVATAR = "https://iconfont.alicdn.com/t/9abd4acd-0b67-4b63-9163-205238a6aab4.png";
 }

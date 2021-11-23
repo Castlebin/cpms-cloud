@@ -18,7 +18,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @time: 2021/7/7 14:49
  */
 @Slf4j
-@RestControllerAdvice
 public class AuthExceptionHandler extends GlobalExceptionHandler {
 
     /**

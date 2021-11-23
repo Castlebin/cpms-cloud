@@ -10,8 +10,7 @@ import com.cpms.framework.common.core.api.IResultEnum;
  */
 public enum AuthResponseResultEnum implements IResultEnum {
     /** 授权服务响应枚举类 */
-    ACCOUNT_NOT_EXIST_ERROR(10000, "授权异常"),
-    PASSWORD_VERIFICATION_ERROR(10001, "****"),
+     CAPTCHA_VERIFICATION_EEROR(10000, "验证码不正确"),
     ;
 
     final Integer code;
@@ -19,12 +18,12 @@ public enum AuthResponseResultEnum implements IResultEnum {
 
     @Override
     public Integer getCode() {
-        return null;
+        return code;
     }
 
     @Override
     public String getMessage() {
-        return null;
+        return message;
     }
 
     AuthResponseResultEnum(Integer code, String message) {
