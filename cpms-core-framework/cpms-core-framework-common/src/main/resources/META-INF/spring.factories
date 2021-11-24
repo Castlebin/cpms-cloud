@@ -1,5 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.cpms.framework.common.config.CoreCommonConfiguration
-
-
-

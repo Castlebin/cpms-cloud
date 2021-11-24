@@ -1,6 +1,8 @@
 package com.cpms.auth.authen;
 
 
+import com.cpms.auth.common.constants.RedisKeyConstant;
+import com.cpms.auth.common.enums.AuthResponseResultEnum;
 import com.cpms.auth.dto.UserLoginDTO;
 import com.cpms.common.constant.TokenConstant;
 import com.cpms.framework.common.core.api.Result;
@@ -8,7 +10,8 @@ import com.cpms.framework.common.core.secure.AuthInfo;
 import com.cpms.framework.common.core.secure.TokenInfo;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsJwtUtil;
-import com.cpms.framework.common.utils.CsWebUtil;
+import com.cpms.framework.common.utils.CsStringUtil;
+import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.ISysUserClient;
 import com.cpms.system.api.modules.sys.vo.SysRoleVO;
@@ -18,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -33,10 +37,13 @@ public class PasswordAuthen implements IAuthen{
     public static final String GRANT_TYPE = "password";
     @Override
     public AuthInfo authentication(UserLoginDTO userLoginDTO) {
+        if(!userLoginDTO.getCaptcha().equalsIgnoreCase(
+                CsRedisUtil.get(String.format(RedisKeyConstant.UserLogin.CAPTCHA_KEY, userLoginDTO.getCodeKey())))){
+            throw new BizException(AuthResponseResultEnum.CAPTCHA_VERIFICATION_EEROR);
+        }
         SysUserLginDTO sysUserLginDTO = new SysUserLginDTO();
         sysUserLginDTO.setUserAccount(userLoginDTO.getAccount());
         sysUserLginDTO.setUserPassword(userLoginDTO.getPassword());
-        String clientIp = CsWebUtil.getClientIp();
         Result<SysUserLoginVO> sysUserLoginBoResult = sysUserClient.sysUserLogin(sysUserLginDTO);
         if(!sysUserLoginBoResult.isSuccess()) {
             throw new BizException(sysUserLoginBoResult);

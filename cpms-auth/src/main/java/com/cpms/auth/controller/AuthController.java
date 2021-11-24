@@ -42,10 +42,12 @@ public class AuthController {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String verCode = specCaptcha.text().toLowerCase();
         String key = UUID.randomUUID().toString().replaceAll("-","");
-        // 存入redis并设置过期时间为30分钟
+        // 存入redis并设置过期时间为60秒
         CsRedisUtil.set(String.format(RedisKeyConstant.UserLogin.CAPTCHA_KEY, key), verCode, 60, TimeUnit.SECONDS);
         // 将key和base64返回给前端
-        Map<String,String> map = new HashMap(1);
+        Map<String,String> map = new HashMap(2);
+        map.put("code", verCode);
+        map.put("codeKey", key);
         map.put("image", specCaptcha.toBase64());
         return ResultUtil.success(map);
     }
