@@ -19,7 +19,6 @@
         <module>cpms-gateway</module>
         <module>cpms-service</module>
         <module>cpms-service-api</module>
-        <module>cpms-core-framework</module>
     </modules>
     <properties>
         <cpms.project.version>1.0.0</cpms.project.version>
@@ -33,6 +32,7 @@
         <spring-boot.version>2.2.7.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+        <lombok.version>1.18.12</lombok.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -72,9 +72,11 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
     <!--阿里云仓库-->
     <repositories>
         <repository>

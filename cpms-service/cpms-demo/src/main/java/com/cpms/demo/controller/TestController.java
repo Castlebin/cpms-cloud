@@ -1,24 +1,21 @@
 package com.cpms.demo.controller;
 
+import com.cpms.demo.dto.TestDTO;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
-import com.cpms.framework.common.core.domain.FileR;
 import com.cpms.framework.common.utils.CsFileUtil;
 import com.cpms.framework.common.utils.CsPropsUtil;
 import com.cpms.framework.common.utils.thread.ThreadPoolBuilder;
+import com.cpms.framework.redis.annotations.RepeatSubmit;
+import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.framework.redis.utils.CsRedissonUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.fileupload.FileItem;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 
 import java.util.concurrent.TimeUnit;
 
@@ -60,7 +57,7 @@ public class TestController {
      * @return
      */
     @GetMapping("/thread")
-    public Result<Void> thread(){
+    public Result<Void> thread(HttpServletRequest request){
         log.info("main线程测试------"+Thread.currentThread().getName());
         ThreadPoolTaskExecutor executor = ThreadPoolBuilder.buildThreadPool(32);
         executor.execute(()-> {
@@ -87,11 +84,17 @@ public class TestController {
     @PostMapping("/uploadFile")
     public void uploadFile(MultipartFile uploadFile){
         CsFileUtil.saveFileUpload("img","8888",uploadFile);
-//        File fileR = CsFileUtil.multipartFileToFile(uploadFile);
-//
-//        File file = new File("E:\\developCode\\test\\MMMM\\cpms-cloud\\cpms-service\\cpms-demo\\target\\classes\\staticfile\\temp.xlsx");
-//        MultipartFile multipartFile = CsFileUtil.fileToMultipartFile(file);
+    }
 
-//        System.out.println(fileR.isFile());
+    /**
+     *  防重提交
+     * @return
+     */
+    @PostMapping("/repeatSubmit")
+    @RepeatSubmit(expire = 30,fields = {"userId","userName"})
+    public Result<Boolean> repeatSubmit(@RequestBody TestDTO testDTO){
+//        boolean lock = CsRedisUtil.lock("TEST-001", "12", 60);
+        System.out.println(testDTO.toString());
+        return ResultUtil.success();
     }
 }
