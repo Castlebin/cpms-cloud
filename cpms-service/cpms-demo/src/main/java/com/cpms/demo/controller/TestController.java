@@ -8,6 +8,7 @@ import com.cpms.framework.common.utils.thread.ThreadPoolBuilder;
 import com.cpms.framework.redis.annotations.DistributedLock;
 import com.cpms.framework.redis.annotations.RepeatSubmit;
 import com.cpms.framework.redis.utils.CsRedissonUtil;
+import com.cpms.framework.secure.annotations.PreAuth;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.*;
@@ -102,5 +103,17 @@ public class TestController {
     public Result<Boolean> repeatSubmit(@RequestBody TestDTO testDTO) {
         System.out.println("执行方法业务....");
         return ResultUtil.success();
+    }
+
+    /**
+     *  spel表达式
+     * @return
+     */
+    @GetMapping("/spel")
+    @PreAuth("@cpmsTest.hasPermission('admin')")
+    public void spel(HttpServletResponse response){
+        String fileName = "temp.xlsx";
+        String fileDir = "staticfile";
+        CsFileUtil.downLocalFile(response, fileDir, fileName);
     }
 }
