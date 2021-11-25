@@ -4,10 +4,9 @@ import com.cpms.demo.dto.TestDTO;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.utils.CsFileUtil;
-import com.cpms.framework.common.utils.CsPropsUtil;
 import com.cpms.framework.common.utils.thread.ThreadPoolBuilder;
+import com.cpms.framework.redis.annotations.DistributedLock;
 import com.cpms.framework.redis.annotations.RepeatSubmit;
-import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.framework.redis.utils.CsRedissonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -36,28 +35,36 @@ public class TestController {
      * @return
      */
     @GetMapping("/lock")
-    public Result<Integer> lock(){
-        System.out.println(CsPropsUtil.getString("system.test"));
+    @DistributedLock(value ="userName",prefixKey = "test",waitTime = 2)
+    public Result<Integer> lock() throws InterruptedException {
         // 已设置锁，其它线程会被阻塞，底层实现可重入锁
-        CsRedissonUtil.lock("redisson-lock");
-        try {
-            TimeUnit.SECONDS.sleep(4);
-            a++;
-            System.out.println("------a="+a);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }finally {
-            CsRedissonUtil.unlock("redisson-lock");
-        }
-        return ResultUtil.success(a);
+        String key = "redisson-lock";
+//        if(CsRedissonUtil.isLocked(key)) {
+//            return ResultUtil.error(1000,"稍后再试");
+//        }
+//        CsRedissonUtil.lock(key);
+//
+//        if(!CsRedissonUtil.tryLock(key,TimeUnit.SECONDS,5)) {
+//            return ResultUtil.error(1000,"稍后再试");
+//        }
+//        try {
+//            TimeUnit.SECONDS.sleep(60);
+//            a++;
+//            System.out.println("------a="+a);
+//        } finally {
+//            System.out.println("释放锁....");
+//            CsRedissonUtil.unlock("redisson-lock");
+//        }
+        System.out.println("执行业务方法.....");
+        return ResultUtil.success();
     }
 
     /**
      *  线程池测试
      * @return
      */
-    @GetMapping("/thread")
-    public Result<Void> thread(HttpServletRequest request){
+    @GetMapping("/threadPool")
+    public Result<Void> threadPool(HttpServletRequest request){
         log.info("main线程测试------"+Thread.currentThread().getName());
         ThreadPoolTaskExecutor executor = ThreadPoolBuilder.buildThreadPool(32);
         executor.execute(()-> {
@@ -91,10 +98,9 @@ public class TestController {
      * @return
      */
     @PostMapping("/repeatSubmit")
-    @RepeatSubmit(expire = 30,fields = {"userId","userName"})
-    public Result<Boolean> repeatSubmit(@RequestBody TestDTO testDTO){
-//        boolean lock = CsRedisUtil.lock("TEST-001", "12", 60);
-        System.out.println(testDTO.toString());
+    @RepeatSubmit(expire = 10,fields = {"userId","userName"},delLock = false)
+    public Result<Boolean> repeatSubmit(@RequestBody TestDTO testDTO) {
+        System.out.println("执行方法业务....");
         return ResultUtil.success();
     }
 }
