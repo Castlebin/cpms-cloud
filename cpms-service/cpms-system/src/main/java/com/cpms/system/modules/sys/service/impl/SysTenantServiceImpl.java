@@ -168,6 +168,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
        sysUserEntity.setDeptId(deptId);
        sysUserEntity.setUserMobile(sysTenantEntity.getContactNumber());
        sysUserEntity.setUserName(sysTenantEntity.getContacts());
+       sysUserEntity.setUserRealName(sysTenantEntity.getContacts());
        sysUserEntity.setSysData(CommonConstant.SYS_DATA);
        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
        String initPassword = CsRandomUtil.random(6, RandomTypeEnum.ALL);
