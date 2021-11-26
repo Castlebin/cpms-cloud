@@ -10,7 +10,6 @@ import com.cpms.framework.common.core.secure.AuthInfo;
 import com.cpms.framework.common.core.secure.TokenInfo;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsJwtUtil;
-import com.cpms.framework.common.utils.CsStringUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.ISysUserClient;
@@ -21,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**

@@ -3,6 +3,8 @@ package com.cpms.log.api.modules.log.dto;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * @description:
  * @author: gulang
@@ -10,7 +12,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class HandlerLogDTO {
+public class HandlerLogDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String title;
     private Long   tenantId;

@@ -1,13 +1,12 @@
 package com.cpms.system.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.log.dto.LogDTO;
 import com.cpms.framework.log.event.LogEvent;
 import com.cpms.log.api.modules.log.dto.HandlerLogDTO;
 import com.cpms.log.api.modules.log.feign.ILogClient;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
-import org.springframework.beans.BeanUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -22,12 +21,12 @@ import javax.annotation.Resource;
 @Slf4j
 @Component
 @EnableAsync
-public class EventHandler {
+public class AsyncEventHandler {
     @Resource
     private ILogClient logClient;
     /**
      * 一般监听的事件常常采用异步执行方式,必须加上@Async注解，入口类必须要加 @EnableAsync 注解开启异步处理
-     *  defaultAsyncTaskPool 指定线程池
+     *  指定线程池 defaultAsyncTaskPool
      * @param event
      */
     @Async("defaultAsyncTaskPool")
@@ -36,7 +35,7 @@ public class EventHandler {
         log.info("[onHandlerLogEvent] 监听操作日志事件....LogEvent={},source={}", JSON.toJSONString(event),JSON.toJSONString(event.getSource()));
         LogDTO eventData = event.getEventData();
         HandlerLogDTO handlerLogDTO = new HandlerLogDTO();
-        BeanUtils.copyProperties(eventData,handlerLogDTO);
+        CsBeanUtil.copyProperties(eventData,handlerLogDTO);
         logClient.recordHandlerLog(handlerLogDTO);
     }
 }

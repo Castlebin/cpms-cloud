@@ -10,10 +10,6 @@ import com.cpms.framework.common.core.api.IResultEnum;
  */
 public enum LogResponseResultEnum implements IResultEnum {
     /**日志服务响应枚举**/
-    ACCOUNT_NOT_EXIST_ERROR(30000, "账号不存在"),
-    PASSWORD_VERIFICATION_ERROR(30001, "密码校验错误"),
-
-
     ;
     final Integer code;
     final String message;
