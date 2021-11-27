@@ -35,10 +35,8 @@
         <lombok.version>1.18.12</lombok.version>
     </properties>
 
-    <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
-            <!-- SpringCloud 微服务 -->
             <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-dependencies</artifactId>
@@ -47,7 +45,6 @@
             <scope>import</scope>
             </dependency>
 
-            <!-- SpringCloud Alibaba 微服务 -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -55,8 +52,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <!-- SpringBoot相关的依赖项 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -66,8 +61,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <!--lombok依赖，所有模块都需要，放父pom.xml下。编译时需要的依赖-->
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -76,8 +69,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
-    <!--阿里云仓库-->
     <repositories>
         <repository>
             <id>nexus-aliyun</id>
@@ -87,16 +78,8 @@
     </repositories>
 
     <build>
-        <!--特别注意：
-        直接在parent的build部分做了插件配置和运行定义。
-        但是实际项目中需要把这些定义具体放到spring boot模块项目（可优化使用pluginManagement形式），避免干扰其他util、common等模块项目
-        -->
         <pluginManagement>
             <plugins>
-                <!--
-                spring-boot-maven-plugin该插件会把应用打成一个可执行的jar包，然后把这个jar打到另外一个jar包中，同时把原来的jar增加后缀.original
-                使用这个插件打包方式还是一样，在Lifecycle下点击package打包。在target目录下会看到有两个文件
-                -->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
@@ -112,7 +95,6 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!--java编译插件，告诉maven在编译Java文件时使用什么版本的jre-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>

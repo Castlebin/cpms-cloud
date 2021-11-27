@@ -1,28 +1,17 @@
-#服务器端口
 server:
    port: 8005
    servlet:
-      context-path: /logMicroservice  # 请求接口的前缀
-# Spring
+      context-path: /logMicroservice
 spring:
    application:
-      # 应用名称
       name: cpms-server-log
-
    mvc:
-      ## 配置为了捕获 NoHandlerFoundException 异常信息
       throw-exception-if-no-handler-found: true
-
-   #******** 激活自定义配置文件 ****#
    profiles:
       active: @profiles.active@
       include: jdbc,system
 
    cloud:
       nacos:
-         #      config:
-         #        server-addr: 120.0.0.1:8848
-         #        file-extension: yaml
-         #        prefix: nacos
-         discovery: # 服务发现注册
+         discovery:
             server-addr: 127.0.0.1:8858

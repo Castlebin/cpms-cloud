@@ -1,4 +1,3 @@
 # 自定义业务属性
 system:
-    # 测试属性
     test: biz-test-log

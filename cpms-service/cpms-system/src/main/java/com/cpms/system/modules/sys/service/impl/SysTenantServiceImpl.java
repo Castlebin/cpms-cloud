@@ -53,6 +53,8 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Transactional(rollbackFor = Exception.class)
     public InitTenantAccountVO addTenant(SysTenantDTO tenantDTO) {
         // 校验前缀是否存在
+        tenantDTO.setAccountPrefix(tenantDTO.getAccountPrefix().toUpperCase());
+        tenantDTO.setTenantCode(tenantDTO.getTenantCode().toUpperCase());
         int count = sysTenantMapper.selectCount(Wrappers.<SysTenantEntity>lambdaQuery().eq(SysTenantEntity::getAccountPrefix,tenantDTO.getAccountPrefix()));
         if(count > 0){
             throw new BizException(SystemResponseResultEnum.ACCOUNT_PREFIX_EXISTS_ERROR);

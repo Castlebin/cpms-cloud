@@ -14,7 +14,6 @@
     <description>授权认证微服务</description>
 
     <dependencies>
-        <!-- common核心框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-common</artifactId>
@@ -26,8 +25,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- 公共模块-->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-common</artifactId>
@@ -46,8 +43,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- spring MVC -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -58,7 +53,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- 引入cpms-system-api依赖 -->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-system-api</artifactId>
@@ -74,19 +68,15 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--nacos服务注册发现-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-
-        <!-- Captcha 验证码 -->
         <dependency>
             <groupId>com.github.whvcse</groupId>
             <artifactId>easy-captcha</artifactId>
             <version>1.6.2</version>
         </dependency>
-        <!-- redis模块 -->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-redis</artifactId>
@@ -121,7 +111,6 @@
     </dependencies>
 
     <build>
-        <!--定义jar包名称-->
         <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
@@ -136,17 +125,13 @@
 
         <resources>
             <resource>
-                <!--指定主资源目录 -->
                 <directory>src/main/resources</directory>
-                <!--排除主资源目录下的指定资源-->
                 <excludes>
                     <exclude>profiles/**</exclude>
                 </excludes>
             </resource>
             <resource>
-                <!--指定主资源目录，${profiles.active}由profile定义标签名称的提供,打包的时候只需要打包激活的环境配置文件 -->
                 <directory>src/main/resources/profiles/${profiles.active}</directory>
-                <!--这里不能理解为过滤，而是开启替换，为true，表明可以替换掉yaml文件中使用${}或@@的变量 -->
                 <filtering>true</filtering>
             </resource>
         </resources>

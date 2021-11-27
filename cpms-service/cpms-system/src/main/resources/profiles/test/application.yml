@@ -1,62 +1,41 @@
-#服务器端口
 server:
   port: 8001
   servlet:
-    context-path: /systemMicroservice  # 请求接口的前缀
-# Spring
+    context-path: /systemMicroservice
 spring:
   application:
-    # 应用名称
     name: cpms-server-system
-
   mvc:
-    ## 配置为了捕获 NoHandlerFoundException 异常信息
     throw-exception-if-no-handler-found: true
-
-  #******** 激活自定义配置文件 ****#
   profiles:
     active: @profiles.active@
     include: jdbc,redis,system
 
   cloud:
     nacos:
-      #      config:
-      #        server-addr: 120.0.0.1:8848
-      #        file-extension: yaml
-      #        prefix: nacos
-      discovery: # 服务发现注册
+      discovery:
         server-addr: 127.0.0.1:8858
 
 feign:
   hystrix:
-    enabled: true # 开启全局hystrix熔断
+    enabled: true
 
-#【注：接口调用时间超过ribbon或者hystrix配置的超时时间都会触发熔断，一般设置ribbon的超时时间需要大于hystrix配置的超时时间，
-#  这样的话我们可以针对具体的接口做超时熔断限制，否则的话所有的接口都会根据ribbon的设置触发熔断】
-
-#ribbon配置 【ribbon超时设置，接口需要通过feign调用才会生效，否则超时配置无效】
-#Ribbon超时和Hystrix超时将会以两个中小的为最终超时时间
 ribbon:
-  #对所有操作请求都进行重试,默认false
-  OkToRetryOnAllOperations: false  # 默认关闭
-  #两个服务建立连接后，本地服务等待接收远程服务返回数据时的超时时间，业务程序会影响接收时间，同时这个设置也是触发熔断的时间设置
-  ReadTimeout:  5000  #本地服务等待接收远程服务返回数据最大所用时间，默认值5000
-  #表示两个服务建立起http网络服务连接的时间，此过程一般是很快的，业务程序不会影响连接时间
-  ConnectTimeout: 2000  #ribbon请求连接的超时时间，默认值2000
-  MaxAutoRetries: 0    #对当前实例的重试次数，默认0
-  MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
-  # 如果不添加 ribbon.http.client.enabled=true，那么 ribbon 的默认配置不会生效
+  OkToRetryOnAllOperations: false
+  ReadTimeout:  5000
+  ConnectTimeout: 2000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
   http:
     client:
       enabled: true
 
-#hystrix降级熔断配置，必须要有熔断回调方法，否则超时配置不会生效,不会触发熔断
 hystrix:
   command:
-    default: # default全局有效
+    default:
       execution:
         isolation:
-          strategy: SEMAPHORE #切换隔离等级，避免上下文丢失
+          strategy: SEMAPHORE
           thread:
-            timeoutInMilliseconds: 5000  # 这个超时针对所有的接口做超时熔断处理
-  shareSecurityContext: true  #线程间传递上下文,不开启，切换线程获取不到上下文信息
+            timeoutInMilliseconds: 5000
+  shareSecurityContext: true 

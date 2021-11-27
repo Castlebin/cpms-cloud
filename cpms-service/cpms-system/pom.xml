@@ -13,7 +13,6 @@
     <name>${project.artifactId}</name>
     <description>system微服务提供后台菜单、权限、等操作功能</description>
     <dependencies>
-        <!-- 引入cpms-system-api依赖 -->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-system-api</artifactId>
@@ -29,7 +28,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- 引入cpms-log-api依赖 -->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-log-api</artifactId>
@@ -45,7 +43,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- mybatis框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-mybatis</artifactId>
@@ -58,7 +55,6 @@
             </exclusions>
         </dependency>
 
-        <!-- secure框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-secure</artifactId>
@@ -79,7 +75,6 @@
             </exclusions>
         </dependency>
 
-        <!-- log框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-log</artifactId>
@@ -110,17 +105,13 @@
 
         <resources>
             <resource>
-                <!--指定主资源目录 -->
                 <directory>src/main/resources</directory>
-                <!--排除主资源目录下的指定资源-->
                 <excludes>
                     <exclude>profiles/**</exclude>
                 </excludes>
             </resource>
             <resource>
-                <!-- 指定主资源目录，${profiles.active}由profile定义标签名称的提供,打包的时候只需要打包激活的环境配置文件 -->
                 <directory>src/main/resources/profiles/${profiles.active}</directory>
-                <!--这里不能理解为过滤，而是开启替换，为true，表明可以替换掉yaml文件中使用${}或@@的变量  -->
                 <filtering>true</filtering>
             </resource>
         </resources>

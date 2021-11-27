@@ -14,7 +14,6 @@
     <description>网关微服务</description>
 
     <dependencies>
-        <!-- common核心框架模块-->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-core-framework-common</artifactId>
@@ -26,37 +25,29 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- 公共模块-->
         <dependency>
             <groupId>com.cpms</groupId>
             <artifactId>cpms-common</artifactId>
             <version>${cpms.project.version}</version>
         </dependency>
-
-        <!-- SpringCloud Gateway -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
             <exclusions>
-                <exclusion><!-- 排除掉Logback日志框架的依赖 -->
+                <exclusion>
                     <artifactId>spring-boot-starter-logging</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!--nacos服务注册发现-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
-
-        <!--spring-cloud Hoxton.SR5版本，gateway需要引入spring-webmvc，要不然启动会报错-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -64,9 +55,7 @@
     </dependencies>
 
 
-    <!-- 插件依赖 -->
     <build>
-        <!--定义jar包名称-->
         <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
@@ -81,17 +70,13 @@
 
         <resources>
             <resource>
-                <!--指定主资源目录 -->
                 <directory>src/main/resources</directory>
-                <!--排除主资源目录下的指定资源-->
                 <excludes>
                     <exclude>profiles/**</exclude>
                 </excludes>
             </resource>
             <resource>
-                <!--指定主资源目录，${profiles.active}由profile定义标签名称的提供,打包的时候只需要打包激活的环境配置文件 -->
                 <directory>src/main/resources/profiles/${profiles.active}</directory>
-                <!--这里不能理解为过滤，而是开启替换，为true，表明可以替换掉yaml文件中使用${}或@@的变量 -->
                 <filtering>true</filtering>
             </resource>
         </resources>

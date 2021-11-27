@@ -68,6 +68,7 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
     @Override
     public boolean addRole(SysRoleDTO sysRoleDTO) {
         SysRoleEntity sysRoleEntity = new SysRoleEntity();
+        sysRoleDTO.setRoleCode(sysRoleDTO.getRoleCode().toUpperCase());
         if(sysRoleDTO.getRoleCode().equals(TenantConstant.TENANT_ADMINISTRATOR)){
             throw new BizException(GlobalResponseResultEnum.HANDEL_FAIL.getCode(),"角色编码不被允许！！！");
         }

@@ -1,6 +1,2 @@
 # 自定义业务属性
 system:
-  url:
-    # 放行API list集合
-    skipUrl:
-#      - "authMicroservice/auth/**"

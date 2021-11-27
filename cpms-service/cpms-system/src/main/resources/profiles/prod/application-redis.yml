@@ -22,15 +22,10 @@ spring:
                 address: 127.0.0.1:6379
             cluster:
                 node-hosts:
-                    - Ma1873Gq-1.cachesit.sfcloud.local:8080
-                    - Ma1873Gq-2.cachesit.sfcloud.local:8080
-                    - Ma1873Gq-3.cachesit.sfcloud.local:8080
-                    - Ma1873Gq-4.cachesit.sfcloud.local:8080
-                    - Ma1873Gq-5.cachesit.sfcloud.local:8080
-                    - Ma1873Gq-6.cachesit.sfcloud.local:8080
+                    - 127.0.0.1:6379
+                    - 127.0.0.1:6379
             sentinel:
-                master-name: ESG_CEMP_CORE_REDIS_Af82B47j_01
+                master-name: TEST-MASTER
                 node-hosts:
-                    - Af82B47j-1.cachesit.sfcloud.local:8001
-                    - Af82B47j-2.cachesit.sfcloud.local:8001
-                    - Af82B47j-3.cachesit.sfcloud.local:8001
+                    - 127.0.0.1:6379
+                    - 127.0.0.1:6379

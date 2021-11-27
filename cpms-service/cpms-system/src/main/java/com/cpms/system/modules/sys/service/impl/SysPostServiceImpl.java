@@ -54,6 +54,7 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
     @Override
     public boolean addPost(SysPostDTO postDTO) {
         SysPostEntity sysPostEntity = new SysPostEntity();
+        postDTO.setPostCode(postDTO.getPostCode().toUpperCase());
         CsBeanUtil.copyProperties(postDTO,sysPostEntity);
         sysPostEntity.setTenantId(CsSecureUtil.userTenantId());
         return this.save(sysPostEntity);
@@ -72,7 +73,7 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
     public boolean updatePost(SysPostDTO postDTO) {
         LambdaUpdateWrapper<SysPostEntity> updateWrapper = Wrappers.<SysPostEntity>lambdaUpdate()
                 .set(SysPostEntity::getPostName, postDTO.getPostName())
-                .set(SysPostEntity::getPostCode, postDTO.getPostCode())
+                .set(SysPostEntity::getPostCode, postDTO.getPostCode().toUpperCase())
                 .set(SysPostEntity::getPostDesc, postDTO.getPostDesc())
                 .set(SysPostEntity::getPostSort, postDTO.getPostSort())
                 .eq(SysPostEntity::getPostId,postDTO.getPostId())

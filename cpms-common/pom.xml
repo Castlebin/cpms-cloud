@@ -13,9 +13,7 @@
     <name>${project.artifactId}</name>
     <description>公共代码</description>
 
-    <!-- 插件依赖 -->
     <build>
-        <!--定义jar包名称-->
         <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
