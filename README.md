@@ -1,7 +1,7 @@
 #### 介绍
 > 项目名：cpms 是Concise practical management system 的首字母缩写，意思是：简洁实用的后台管理系统
 
-cpms-cloud是基于微服务框架spring-cloud-alibaba搭建的一套多租户后台管理系统脚手架，采用前后端分离架构。
+cpms-cloud是基于微服务框架spring-cloud-alibaba搭建的一套多租户后台管理系统脚手架，采用前后端分离架构，前端使用vue2.0和element-ui2.0开发。
 
 该脚手架是一套通用且可快速进行二次开发的后台微服务框架。已经集成了管理系统最基础的后台模块，包括：菜单管理、用户管理、租户管理、角色管理、部门管理、权限管理以及后台操作日志管理等模块。
 
