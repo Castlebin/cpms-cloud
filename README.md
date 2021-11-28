@@ -86,6 +86,7 @@ cpms-cloud
 
 cpms-vue单体架构：https://gitee.com/gldcty/cpms-vue
 
+cpms-core-framework核心组件库:https://gitee.com/gldcty/cpms-core-framework
 
 #### 后台界面预览图
 
