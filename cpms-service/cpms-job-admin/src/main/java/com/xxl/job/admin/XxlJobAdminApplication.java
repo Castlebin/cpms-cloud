@@ -11,7 +11,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class XxlJobAdminApplication {
 
 	public static void main(String[] args) {
-        SpringApplication.run(XxlJobAdminApplication.class, args);
+		try {
+			SpringApplication.run(XxlJobAdminApplication.class, args);
+			System.out.println("(♥◠‿◠)ﾉﾞ  xxl-job服务启动成功   ლ(´ڡ`ლ)ﾞ");
+		}catch(Throwable e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
