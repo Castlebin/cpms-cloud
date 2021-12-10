@@ -5,7 +5,6 @@
   <img src="https://img.shields.io/badge/JDK-11-informational.svg" alt="Coverage Status">
   <img src="https://img.shields.io/badge/mysql-5.7+-informational.svg" alt="Downloads">
   <img src="https://img.shields.io/badge/mybatis%20plus-3.4.3-yellow.svg" alt="Downloads">
-<img src="https://img.shields.io/badge/redisson-3.16.0-critical.svg" alt="Downloads">
  <a target="_blank" href="https://www.cpms.vip">
    <img src="https://img.shields.io/badge/Copyright-@cpms-success.svg" alt="Downloads">
  </a>
