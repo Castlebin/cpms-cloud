@@ -96,6 +96,9 @@ cpms-cloud
 | ......     |        |                        |
 
 
+#### 交流
+<img src="https://gitee.com/gldcty/cpms-cloud/raw/master/doc/img/qq-qun-01.png"/>
+
 相关项目：
 
 cpms-vue单体架构：https://gitee.com/gldcty/cpms-vue
