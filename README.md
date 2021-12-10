@@ -5,6 +5,17 @@
   <img src="https://img.shields.io/badge/JDK-11-informational.svg" alt="Coverage Status">
   <img src="https://img.shields.io/badge/mysql-5.7+-informational.svg" alt="Downloads">
   <img src="https://img.shields.io/badge/mybatis%20plus-3.4.3-yellow.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/redission-3.16.0+-important.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/openfeign-2.2.3.RELEASE-yellowgreen.svg" alt="Downloads">
+ <img src="https://img.shields.io/badge/xxl%20job-2.3.0-blue.svg" alt="Downloads">
+<img src="https://img.shields.io/badge/lombok-1.18.12-green.svg" alt="Downloads">
+<img src="https://img.shields.io/badge/fastjson-1.2.75-green.svg" alt="Downloads">
+<img src="https://img.shields.io/badge/guava-30.1.1%20jre-informational.svg" alt="Downloads">
+
+<a target="_blank" href="https://gitee.com/gldcty/cpms-core-framework">
+  <img src="https://img.shields.io/badge/cpms%20core%20framework-1.0.0-blue.svg" alt="Downloads">
+ </a>
+
  <a target="_blank" href="https://www.cpms.vip">
    <img src="https://img.shields.io/badge/Copyright-@cpms-success.svg" alt="Downloads">
  </a>
