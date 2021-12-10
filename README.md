@@ -1,13 +1,13 @@
  <p align="center">
-      <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR5-green.svg" alt="Downloads">
-      <img src="https://img.shields.io/badge/SpringBoot-2.2.7.RELEASE-brightgreen.svg" alt="Build Status">
+  <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR5-green.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/SpringBoot-2.2.7.RELEASE-brightgreen.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/spring%20cloud%20alibaba-2.2.1.RELEASE-red.svg" alt="Build Status">
-   <img src="https://img.shields.io/badge/JDK-11-informational.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/mysql-5.7+-informational.svg" alt="Downloads">
-   <img src="https://img.shields.io/badge/mybatis%20plus-3.4.3-yellow.svg" alt="Downloads">
- </a>
- <a target="_blank" href="https://bladex.vip">
-   <img src="https://img.shields.io/badge/Copyright%20-@BladeX-%23ff3f59.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/JDK-11-informational.svg" alt="Coverage Status">
+  <img src="https://img.shields.io/badge/mysql-5.7+-informational.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/mybatis%20plus-3.4.3-yellow.svg" alt="Downloads">
+<img src="https://img.shields.io/badge/redisson-3.16.0-critical.svg" alt="Downloads">
+ <a target="_blank" href="https://www.cpms.vip">
+   <img src="https://img.shields.io/badge/Copyright-@cpms-success.svg" alt="Downloads">
  </a>
  </p>  
 #### 介绍
