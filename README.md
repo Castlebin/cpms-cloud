@@ -31,6 +31,8 @@ cpms-cloud是基于微服务框架spring-cloud-alibaba搭建的一套多租户�
 
 后续会不断添加新的功能模块~~~~~~
 
+#### 部署架构图
+ <img src="https://gitee.com/gldcty/cpms-cloud/raw/master/doc/img/cpms-cloud.drawio.png">
 
 #### 工程目录结构
 
