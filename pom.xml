@@ -7,12 +7,7 @@
     <artifactId>cpms-cloud</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <!--
-      聚合工程打包，需要在父工程pom下，把modules注释掉，然后运行:
-      1.clean
-      2.install
-      注：目的是把jar打在本地仓库，如果不这么做其它模块依赖子模块本地仓库没有就会区中央仓库找，这样就会报错
-    -->
+
     <modules>
         <module>cpms-auth</module>
         <module>cpms-common</module>
@@ -26,9 +21,9 @@
         <file_encoding>UTF-8</file_encoding>
         <project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${file_encoding}</project.reporting.outputEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring-boot.version>2.2.7.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>

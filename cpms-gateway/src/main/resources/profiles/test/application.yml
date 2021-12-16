@@ -73,3 +73,7 @@ hystrix:
           thread:
             timeoutInMilliseconds: 10000
   shareSecurityContext: true
+
+cpms:
+  jwt-secretKey: cpms
+  jwt-token-expire: 3600*2*1000  # token有效期，单位：毫秒
