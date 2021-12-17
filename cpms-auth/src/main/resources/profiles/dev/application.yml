@@ -50,5 +50,5 @@ hystrix:
 
 cpms:
   jwt-secretKey: cpms
-  jwt-token-expire: 3600*2*1000  # token有效期，单位：毫秒
+  jwt-token-expire: 7200000  # token有效期，单位：毫秒
 
