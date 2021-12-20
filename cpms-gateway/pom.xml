@@ -12,24 +12,12 @@
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>网关微服务</description>
-
+    <properties>
+        <jjwt.version>0.9.1</jjwt.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <log4j2.version>2.16.0</log4j2.version>
+    </properties>
     <dependencies>
-        <dependency>
-            <groupId>com.cpms</groupId>
-            <artifactId>cpms-core-framework-common</artifactId>
-            <version>${cpms.core.framework.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.cpms</groupId>
-            <artifactId>cpms-common</artifactId>
-            <version>${cpms.project.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
@@ -51,6 +39,29 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <!-- jjwt工具类 -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <!-- Apache Lang3 工具类 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <!-- 混合同步或异步日志依赖(Log4j2中的AsyncLogger的内部使用了Disruptor框架) -->
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.4.2</version>
         </dependency>
     </dependencies>
 

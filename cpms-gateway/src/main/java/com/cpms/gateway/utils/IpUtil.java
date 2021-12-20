@@ -1,6 +1,6 @@
 package com.cpms.gateway.utils;
 
-import com.cpms.framework.common.utils.CsStringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -34,14 +34,14 @@ public class IpUtil {
         try {
             // 1.根据常见的代理服务器转发的请求ip存放协议，从请求头获取原始请求ip。值类似于203.98.182.163, 203.98.182.163
             ipAddress = serverHttpRequest.getHeaders().getFirst(HEADER_X_FORWARDED_FOR);
-            if (CsStringUtil.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
+            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
                 ipAddress = serverHttpRequest.getHeaders().getFirst(HEADER_PROXY_CLIENT_IP);
             }
-            if (CsStringUtil.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
+            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
                 ipAddress = serverHttpRequest.getHeaders().getFirst(HEADER_WL_PROXY_CLIENT_IP);
             }
             // 2.如果没有转发的ip，则取当前通信的请求端的ip
-            if (CsStringUtil.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
+            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
                 InetSocketAddress inetSocketAddress = serverHttpRequest.getRemoteAddress();
                 if(inetSocketAddress != null) {
                     ipAddress = inetSocketAddress.getAddress().getHostAddress();

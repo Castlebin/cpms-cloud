@@ -1,17 +1,17 @@
 package com.cpms.gateway.common.enums;
 
 
-import com.cpms.framework.common.core.api.IResultEnum;
-
 /**
  * @description:
  * @author: gulang
  * @time: 2021/5/25 15:49
  */
-public enum GatewayResponseResultEnum implements IResultEnum {
+public enum GatewayResponseResultEnum{
     /**网关服务响应枚举**/
-    GATEWAY_SERVER_ERROR(40000, "网关服务异常"),
-
+    INTERNAL_SERVER_BUSY_ERROR(40000, "系统繁忙，请稍后再试！！！"),
+    LOSE_AUTH_TOKEN_ERROR(40001, "缺失token令牌,登录鉴权失败"),
+    TOKEN_CHECK_INVALID_ERROR(40002, "token令牌校验不合法"),
+    TOKEN_EXPIRED_ERROR(40003, "token令牌已过期"),
     ;
     final Integer code;
     final String message;
@@ -23,12 +23,12 @@ public enum GatewayResponseResultEnum implements IResultEnum {
         this.message = message;
     }
 
-    @Override
+
     public Integer getCode() {
         return code;
     }
 
-    @Override
+
     public String getMessage() {
         return message;
     }

@@ -1,15 +1,14 @@
 package com.cpms.gateway.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.cpms.framework.common.constants.CoreCommonConstant;
-import com.cpms.framework.common.core.api.ResultUtil;
-import com.cpms.framework.common.enums.GlobalResponseResultEnum;
-import com.cpms.framework.common.exception.CheckJwtException;
-import com.cpms.framework.common.utils.CsJwtUtil;
 import com.cpms.gateway.common.constants.SystemConstant;
+import com.cpms.gateway.common.enums.GatewayResponseResultEnum;
+import com.cpms.gateway.exception.CheckJwtException;
 import com.cpms.gateway.props.AuthUrlProperties;
+import com.cpms.gateway.props.CpmsProperties;
 import com.cpms.gateway.props.DefaultUrlProperties;
 import com.cpms.gateway.utils.IpUtil;
+import com.cpms.gateway.utils.JwtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -30,8 +29,11 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -46,40 +48,45 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private AuthUrlProperties authUrlProperties;
     @Autowired
     private ObjectMapper objectMapper;
+    @Resource
+    private CpmsProperties cpmsProperties;
 
     @SneakyThrows
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
+        String traceId = getTraceId();
         // 不需要登录校验的直接跳过
         if (isSkip(path)) {
             // 设置用户信息到请求头，传递到下游微服务
             ServerHttpRequest mutableReq = exchange.getRequest().mutate()
-                    .header(CoreCommonConstant.CLIENT_IP_ADDR,IpUtil.getClientIp(exchange.getRequest()))
-                    .header(CoreCommonConstant.TRACE_ID,getTraceId())
+                    .header(SystemConstant.CLIENT_IP_ADDR,IpUtil.getClientIp(exchange.getRequest()))
+                    .header(SystemConstant.TRACE_ID,traceId)
+                    .header(SystemConstant.GATEWAY_REQUEST_URL,path)
                     .build();
             ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
             return chain.filter(mutableExchange);
         }
         ServerHttpResponse resp = exchange.getResponse();
-        String headerToken = exchange.getRequest().getHeaders().getFirst(CoreCommonConstant.H_TOKEN_KEY);
-        String paramToken = exchange.getRequest().getQueryParams().getFirst(CoreCommonConstant.H_TOKEN_KEY);
+        String headerToken = exchange.getRequest().getHeaders().getFirst(SystemConstant.H_TOKEN_KEY);
+        String paramToken = exchange.getRequest().getQueryParams().getFirst(SystemConstant.H_TOKEN_KEY);
         if (StringUtils.isAllBlank(headerToken, paramToken)) {
-            return unAuth(resp, GlobalResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getCode(),GlobalResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getMessage());
+            return unAuth(resp, GatewayResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getCode(),GatewayResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getMessage());
         }
         String token = StringUtils.isBlank(headerToken) ? paramToken : headerToken;
         Claims claims;
         try{
-            claims = CsJwtUtil.parseJwt(token);
+            claims = JwtUtil.parseJwt(token,cpmsProperties.getJwtSecretKey());
         }catch (CheckJwtException e){
             return unAuth(resp, e.getCode(),e.getMessage());
         }
-        claims.put("tokenExpire",claims.get("exp"));
+        claims.put(SystemConstant.TOKEN_EXPIRE,claims.get("exp"));
         // 设置用户信息到请求头，传递到下游微服务
         ServerHttpRequest mutableReq = exchange.getRequest().mutate()
-                .header(CoreCommonConstant.USER_INFO, URLEncoder.encode(JSON.toJSONString(claims), "UTF-8"))
-                .header(CoreCommonConstant.CLIENT_IP_ADDR,IpUtil.getClientIp(exchange.getRequest()))
-                .header(CoreCommonConstant.TRACE_ID,getTraceId())
+                .header(SystemConstant.USER_INFO, URLEncoder.encode(JSON.toJSONString(claims), "UTF-8"))
+                .header(SystemConstant.CLIENT_IP_ADDR,IpUtil.getClientIp(exchange.getRequest()))
+                .header(SystemConstant.TRACE_ID,traceId)
+                .header(SystemConstant.GATEWAY_REQUEST_URL,path)
                 .build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);
@@ -95,11 +102,17 @@ public class AuthFilter implements GlobalFilter, Ordered {
         resp.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
         String result = "";
         try {
-            result = objectMapper.writeValueAsString(ResultUtil.error(code,message,null));
+            Map<String, Object> map = new HashMap<>(16);
+            map.put("code", code);
+            map.put("msg", message);
+            map.put("data", null);
+            map.put(SystemConstant.TRACE_ID, MDC.get(SystemConstant.TRACE_ID));
+            result = objectMapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
         }
         DataBuffer buffer = resp.bufferFactory().wrap(result.getBytes(StandardCharsets.UTF_8));
+        MDC.clear();
         return resp.writeWith(Flux.just(buffer));
     }
 
@@ -114,7 +127,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
      */
     private String getTraceId() {
         String traceId = UUID.randomUUID().toString().replace("-", "");
-        MDC.put(CoreCommonConstant.TRACE_ID, traceId);
+        MDC.put(SystemConstant.TRACE_ID, traceId);
         return traceId;
     }
 }

@@ -1,10 +1,9 @@
 package com.cpms.gateway.exception;
 
 import com.alibaba.fastjson.JSON;
-import com.cpms.framework.common.constants.CoreCommonConstant;
-import com.cpms.framework.common.utils.CsDateUtil;
-import com.cpms.framework.common.utils.CsPropsUtil;
+import com.cpms.gateway.common.constants.SystemConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
@@ -41,9 +40,9 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
         Map<String, Object> customErrorAttributes = new LinkedHashMap(16);
         customErrorAttributes.put("success",false);
         customErrorAttributes.put("code", errorAttributes.get("status"));
-        customErrorAttributes.put(CoreCommonConstant.TRACE_ID, MDC.get(CoreCommonConstant.TRACE_ID));
+        customErrorAttributes.put(SystemConstant.TRACE_ID, MDC.get(SystemConstant.TRACE_ID));
         customErrorAttributes.put("message",buildMessage(request,error));
-        customErrorAttributes.put("date", CsDateUtil.dateFormat(new Date()));
+        customErrorAttributes.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
         customErrorAttributes.put("obj",null);
         return customErrorAttributes;
     }
