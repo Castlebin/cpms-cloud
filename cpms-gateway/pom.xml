@@ -65,6 +65,7 @@
         </dependency>
 
         <!--
+           【解决jdk1.8之后的版本报错问题】
            java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter
            这个错误的依赖包
        -->
@@ -88,6 +89,7 @@
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
         </dependency>
+
     </dependencies>
 
 
