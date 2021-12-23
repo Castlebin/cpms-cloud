@@ -109,7 +109,7 @@ cpms-cloud
 | ......     |        |                        |
 
 
-#### 交流
+#### QQ交流群
 <img src="https://gitee.com/gldcty/cpms-cloud/raw/master/doc/img/qq-qun-01.png"/>
 
 相关项目：
