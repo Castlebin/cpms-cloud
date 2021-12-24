@@ -71,6 +71,9 @@ cpms-cloud
 
 9. 持续更新新模块......
 
+#### 在线演示
+  cpms-vue单体应用-基于vue：[https://www.cpms.vip/](https://www.cpms.vip/)
+
 #### 后端技术栈
 
 | 框架                       | 版本号        | 描述                                                         |
