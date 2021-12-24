@@ -42,12 +42,13 @@ cpms-cloud
 ├── cpms-common -- 常用公共模块
 ├── cpms-gateway -- Spring Cloud gateway 网关层
 ├── cpms-service -- 微服务业务模块
-    ├    ├── cpms-job-admin -- xxl-job后台管理服务
-    ├    ├── cpms-log -- 日志模块，主要记录系统操作日志
+    ├    ├── cpms-log -- 日志模块，
     └──  └── cpms-system -- 系统模块（包含：菜单、用户、权限管理等模块）
 ├── cpms-service-api -- 微服务通过feign相互调用api模块
     ├    ├── cpms-system-api -- 系统api 
-└── └──  └── cpms-log-api -- 日志api 
+    └──  └── cpms-log-api -- 日志api 
+├── cpms-visual -- 控制台视图层
+    ├    ├── cpms-job-admin -- xxl-job-admin 控制台管理
 ```
 
 #### 功能模块
