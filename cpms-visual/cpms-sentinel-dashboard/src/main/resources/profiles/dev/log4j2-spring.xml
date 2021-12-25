@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="INFO" monitorInterval="120">
+    <!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+
+    <!--变量配置-->
+    <Properties>
+        <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+        <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
+        <!-- %L 表示行号 -->
+        <Property name="CONSOLE_PATTERN" value=" %d{yyyy-MM-dd HH:mm:ss.SSS}[%t] %highlight{%C{1}.%M(%L)} %highlight{%-5level} [%X{traceId}] :%msg%n"/>
+        <Property name="FILE_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}] [%t] [%C{1}:%L][%p] [%X{traceId}] -[%m]%n"/>
+        <property name="FILE_PATH" value="applogs/" />
+        <property name="FILE_NAME" value="cpms-logs" />
+        <Property name="TIME_BASED_INTERVAL" value="1"/>
+        <Property name="LOG_MAX_SIZE" value="10MB"/>
+        <Property name="LOG_FILE_NUM" value="20"/>
+        <Property name="KEEP_TIME" value="2d"/>
+    </Properties>
+
+    <appenders>
+        <console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+        </console>
+        <RollingRandomAccessFile name="RollingFileFilter" fileName="${FILE_PATH}/filter/filter.log"
+                                 filePattern="${FILE_PATH}/filter/${FILE_NAME}-FILTER-%d{yyyy-MM-dd}_%i.log">
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}">
+                <Delete basePath="${FILE_PATH}/" maxDepth="1">
+                    <IfFileName glob="*/${FILE_NAME}-*.log"/>
+                    <IfLastModified age="${KEEP_TIME}">
+                    </IfLastModified>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+
+        <RollingRandomAccessFile name="RollingFileInfo" fileName="${FILE_PATH}/info/info.log"
+                                 filePattern="${FILE_PATH}/info/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log">
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}">
+                <Delete basePath="${FILE_PATH}/" maxDepth="1">
+                    <IfFileName glob="*/${FILE_NAME}-*.log"/>
+                    <IfLastModified age="${KEEP_TIME}">
+                    </IfLastModified>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+
+        <RollingRandomAccessFile name="RollingFileWarn" fileName="${FILE_PATH}/warn/warn.log"
+                                 filePattern="${FILE_PATH}/warn/${FILE_NAME}-WARN-%d{yyyy-MM-dd}_%i.log">
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}">
+                <Delete basePath="${FILE_PATH}/" maxDepth="1">
+                    <IfFileName glob="*/${FILE_NAME}-*.log"/>
+                    <IfLastModified age="${KEEP_TIME}">
+                    </IfLastModified>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+
+        <RollingRandomAccessFile name="RollingFileError" fileName="${FILE_PATH}/error/error.log"
+                                 filePattern="${FILE_PATH}/error/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log">
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}">
+                <Delete basePath="${FILE_PATH}/" maxDepth="1">
+                    <IfFileName glob="*/${FILE_NAME}-*.log"/>
+                    <IfLastModified age="${KEEP_TIME}">
+                    </IfLastModified>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </appenders>
+
+    <loggers>
+        <AsyncLogger additivity="false" name="com.mybatis" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="java.sql.Connection" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="java.sql.Statement" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="java.sql.PreparedStatement" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="java.sql.ResultSet" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="org.redisson.connection" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger name="filter" level="info" additivity="false" includeLocation="true">
+            <AppenderRef ref="Console"/>
+        </AsyncLogger>
+        <asyncRoot level="info" includeLocation="true">
+            <AppenderRef ref="Console"/>
+        </asyncRoot>
+    </loggers>
+
+</configuration>

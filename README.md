@@ -48,7 +48,9 @@ cpms-cloud
     ├    ├── cpms-system-api -- 系统api 
     └──  └── cpms-log-api -- 日志api 
 ├── cpms-visual -- 控制台视图层
+    ├    ├── cpms-sentinel-dashboard -- sentinel-dashboard 控制台管理
     ├    ├── cpms-job-admin -- xxl-job-admin 控制台管理
+    
 ```
 
 #### 功能模块

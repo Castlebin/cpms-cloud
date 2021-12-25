@@ -1,0 +1,29 @@
+server:
+  port: 5001
+  servlet:
+    context-path: /sentinel-dashboard
+    session:
+      cookie:
+        name: sentinel_dashboard_cookie
+spring:
+  profiles:
+    active: @profiles.active@
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+auth:
+  filter:
+    exclude-url-suffixes: htm,html,js,css,map,ico,ttf,woff,png
+    exclude-urls: /,/auth/login,/auth/logout,/registry/machine,/version
+  password: sentinel
+  username: sentinel
+
+
+sentinel:
+  dashboard:
+    version: '@project.version@'
+
+

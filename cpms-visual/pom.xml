@@ -14,6 +14,7 @@
 
     <modules>
         <module>cpms-xxl-job-admin</module>
+        <module>cpms-sentinel-dashboard</module>
     </modules>
 
 </project>
