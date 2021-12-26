@@ -1,7 +1,7 @@
 server:
   port: 5001
   servlet:
-    context-path: /sentinel-dashboard
+    context-path: /
     session:
       cookie:
         name: sentinel_dashboard_cookie
