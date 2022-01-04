@@ -10,6 +10,7 @@ import com.cpms.framework.common.core.secure.AuthInfo;
 import com.cpms.framework.common.utils.CsGenerateIdUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.wf.captcha.SpecCaptcha;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,9 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+    @Value("${system.test1}")
+    private String systemTest;
+
     @PostMapping("/token")
     public Result<AuthInfo> token(@Validated @RequestBody UserLoginDTO userLoginDTO) {
         IAuthen authenType = UserAuthenBuilder.getGrantType(userLoginDTO.getGrantType());

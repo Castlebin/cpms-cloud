@@ -3,21 +3,17 @@ server:
   servlet:
     context-path: /authMicroservice
 spring:
-  application:
-    name: cpms-server-auth
   mvc:
     throw-exception-if-no-handler-found: true
+    hiddenmethod:
+      filter:
+        enabled: true
   profiles:
-    active: @profiles.active@
     include: redis,system
 
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8858
 
 feign:
-  hystrix:
+  sentinel:
     enabled: true
 
 ribbon:
@@ -30,24 +26,8 @@ ribbon:
     client:
       enabled: true
 
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE
-          thread:
-            timeoutInMilliseconds: 5000
-    ISysUserClient#sysUserLogin(SysUserLginDTO):
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          strategy: SEMAPHORE
-          thread:
-            timeoutInMilliseconds: 5000
-  shareSecurityContext: true
 
 cpms:
   jwt-secretKey: cpms
   jwt-token-expire: 7200000  # token有效期，单位：毫秒
+

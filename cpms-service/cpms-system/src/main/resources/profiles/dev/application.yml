@@ -3,21 +3,13 @@ server:
    servlet:
       context-path: /systemMicroservice
 spring:
-   application:
-      name: cpms-server-system
    mvc:
       throw-exception-if-no-handler-found: true
    profiles:
-      active: @profiles.active@
       include: jdbc,redis,system
 
-   cloud:
-      nacos:
-         discovery:
-            server-addr: 127.0.0.1:8858
-
 feign:
-   hystrix:
+   sentinel:
       enabled: true
 
 ribbon:

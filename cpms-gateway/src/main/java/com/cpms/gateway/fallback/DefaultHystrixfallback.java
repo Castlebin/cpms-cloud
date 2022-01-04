@@ -3,12 +3,14 @@ package com.cpms.gateway.fallback;
 import com.cpms.gateway.common.constants.SystemConstant;
 import com.cpms.gateway.common.enums.GatewayResponseResultEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.slf4j.MDC;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +33,8 @@ public class DefaultHystrixfallback {
         Map<String, Object> map = new HashMap<>(16);
         map.put("code", GatewayResponseResultEnum.INTERNAL_SERVER_BUSY_ERROR.getCode());
         map.put("msg", GatewayResponseResultEnum.INTERNAL_SERVER_BUSY_ERROR.getMessage());
-        map.put("data", null);
+        map.put("obj", null);
+        map.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
         map.put(SystemConstant.TRACE_ID, traceId);
         MDC.clear();
         return map;

@@ -44,6 +44,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
         customErrorAttributes.put("message",buildMessage(request,error));
         customErrorAttributes.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
         customErrorAttributes.put("obj",null);
+        MDC.clear();
         return customErrorAttributes;
     }
 

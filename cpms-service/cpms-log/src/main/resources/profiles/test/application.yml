@@ -3,15 +3,7 @@ server:
    servlet:
       context-path: /logMicroservice
 spring:
-   application:
-      name: cpms-server-log
    mvc:
       throw-exception-if-no-handler-found: true
    profiles:
-      active: @profiles.active@
       include: jdbc,system
-
-   cloud:
-      nacos:
-         discovery:
-            server-addr: 127.0.0.1:8858

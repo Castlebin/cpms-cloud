@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: cpms-server-gateway
+    pathPrefix: gw-server
+  profiles:
+    active: dev
+
+  cloud:
+    nacos:
+      discovery: # 服务发现注册
+        server-addr: localhost:8858
+      config:
+        enabled: true
+        server-addr: localhost:8858
+        file-extension: yml
+        shared-configs[0]:
+          data-id: common-config-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+          group: ${spring.application.name}
+          refresh: true
+
+    sentinel:
+      transport:
+        eager: true
+        dashboard: localhost:5001
+        heartbeat-interval-ms: 5000
+      enabled: true
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8858
+            dataId: ${spring.application.name}-${spring.profiles.active}-gw-flow
+            groupId: ${spring.application.name}
+            data‐type: json
+            rule‐type: gw-flow
+        ds2:
+          nacos:
+            server-addr: localhost:8858
+            dataId: ${spring.application.name}-${spring.profiles.active}-gw-api-group
+            groupId: ${spring.application.name}
+            data‐type: json
+            rule‐type: gw-api-group
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: cpms-server-auth
+          uri: lb://cpms-server-auth
+          order: 1
+          predicates:
+            - Path=/${spring.application.pathPrefix}/authMicroservice/**
+          filters:
+            - StripPrefix=1
+        - id: cpms-server-system
+          uri: lb://cpms-server-system
+          order: 2
+          predicates:
+            - Path=/${spring.application.pathPrefix}/systemMicroservice/**
+          filters:
+            - StripPrefix=1
+        - id: cpms-server-log
+          uri: lb://cpms-server-log
+          order: 3
+          predicates:
+            - Path=/${spring.application.pathPrefix}/logMicroservice/**
+          filters:
+            - StripPrefix=1

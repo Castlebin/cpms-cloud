@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: cpms-server-log
+  profiles:
+    active: dev
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8858
+      config:
+        enabled: true
+        server-addr: localhost:8858
+        file-extension: yml
+        shared-configs[0]:
+          data-id: common-config-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+          group: ${spring.application.name}
+          refresh: true

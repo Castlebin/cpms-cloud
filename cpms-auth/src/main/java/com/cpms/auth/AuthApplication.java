@@ -5,7 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
  * @description:
@@ -25,5 +27,13 @@ public class AuthApplication {
         }catch(Throwable e) {
             e.printStackTrace();
         }
+    }
+
+    // 设置@Value注解取值不到忽略（不报错）
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer c = new PropertySourcesPlaceholderConfigurer();
+        c.setIgnoreUnresolvablePlaceholders(true);
+        return c;
     }
 }

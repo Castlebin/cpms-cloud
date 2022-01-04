@@ -2,55 +2,8 @@ server:
   port: 7001
 
 spring:
-  application:
-    name: cpms-server-gateway
-    pathPrefix: gw-server
   profiles:
-    active: @profiles.active@
     include: system
-
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8858
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      routes:
-        - id: cpms-server-auth
-          uri: lb://cpms-server-auth
-          order: 1
-          predicates:
-            - Path=/${spring.application.pathPrefix}/authMicroservice/**
-          filters:
-            - StripPrefix=1
-            - name: Hystrix
-              args:
-                name: defaultfallback
-                fallbackUri: 'forward:/defaultfallback'
-        - id: cpms-server-system
-          uri: lb://cpms-server-system
-          order: 2
-          predicates:
-            - Path=/${spring.application.pathPrefix}/systemMicroservice/**
-          filters:
-            - StripPrefix=1
-            - name: Hystrix
-              args:
-                name: defaultfallback
-                fallbackUri: 'forward:/defaultfallback'
-        - id: cpms-server-log
-          uri: lb://cpms-server-log
-          order: 3
-          predicates:
-            - Path=/${spring.application.pathPrefix}/logMicroservice/**
-          filters:
-            - StripPrefix=1
-            - name: Hystrix
-              args:
-                name: defaultfallback
-                fallbackUri: 'forward:/defaultfallback'
 
 ribbon:
   OkToRetryOnAllOperations: false
@@ -61,18 +14,6 @@ ribbon:
   http:
     client:
       enabled: true
-
-hystrix:
-  command:
-    default:
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          strategy: SEMAPHORE
-          thread:
-            timeoutInMilliseconds: 10000
-  shareSecurityContext: true
 
 cpms:
   jwt-secretKey: cpms

@@ -15,8 +15,10 @@ import io.jsonwebtoken.Claims;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -32,6 +34,7 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -50,7 +53,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private ObjectMapper objectMapper;
     @Resource
     private CpmsProperties cpmsProperties;
-
+    @Value("${system.test1}")
+    private String systemTest;
     @SneakyThrows
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -105,7 +109,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
             Map<String, Object> map = new HashMap<>(16);
             map.put("code", code);
             map.put("msg", message);
-            map.put("data", null);
+            map.put("obj", null);
+            map.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
             map.put(SystemConstant.TRACE_ID, MDC.get(SystemConstant.TRACE_ID));
             result = objectMapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {

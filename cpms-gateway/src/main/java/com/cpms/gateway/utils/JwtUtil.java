@@ -40,7 +40,7 @@ public class JwtUtil {
         }catch (ExpiredJwtException expired){
             throw new CheckJwtException(GatewayResponseResultEnum.TOKEN_EXPIRED_ERROR.getCode(),GatewayResponseResultEnum.TOKEN_EXPIRED_ERROR.getMessage());
         }catch (Exception e){
-            throw new CheckJwtException(GatewayResponseResultEnum.TOKEN_EXPIRED_ERROR.getCode(),GatewayResponseResultEnum.TOKEN_EXPIRED_ERROR.getMessage());
+            throw new CheckJwtException(GatewayResponseResultEnum.TOKEN_CHECK_INVALID_ERROR.getCode(),GatewayResponseResultEnum.TOKEN_EXPIRED_ERROR.getMessage());
         }
     }
 }

@@ -117,6 +117,8 @@
         </AsyncLogger>
         <AsyncLogger additivity="false" name="org.redisson.connection" level="DEBUG" includeLocation="true">
         </AsyncLogger>
+        <AsyncLogger additivity="false" name="com.alibaba.nacos.client.config.impl.ClientWorker" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
         <AsyncLogger name="filter" level="info" additivity="false" includeLocation="true">
             <AppenderRef ref="Console"/>
         </AsyncLogger>

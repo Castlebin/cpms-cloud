@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: cpms-server-auth
+  profiles:
+    active: prod
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8858
+      config:
+        enabled: true
+        server-addr: localhost:8858
+        file-extension: yml
+        shared-configs[0]:
+          data-id: common-config-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+          group: ${spring.application.name}
+          refresh: true
+
+    sentinel:
+      transport:
+        eager: true
+        dashboard: localhost:5001
+        heartbeat-interval-ms: 5000
+      enabled: true
+      datasource:
+        ds:
+          nacos:
+            server-addr: localhost:8858
+            dataId: ${spring.application.name}-${spring.profiles.active}-flow-rules
+            groupId: ${spring.application.name}
+            data‐type: json
+            rule‐type: flow

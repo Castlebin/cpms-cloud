@@ -15,6 +15,7 @@
     <properties>
         <jjwt.version>0.9.1</jjwt.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
+        <fastjson.version>1.2.75</fastjson.version>
     </properties>
     <dependencies>
         <dependency>
@@ -30,10 +31,12 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-lang3</artifactId>
+                    <groupId>org.apache.commons</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -87,6 +90,42 @@
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
+        </dependency>
+
+        <!-- nacos 配置中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!-- sentinel-gateway 网关限流组件 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
+        </dependency>
+
+        <!-- sentinel 限流 -->
+        <dependency>
+            <groupId>com.cpms</groupId>
+            <artifactId>cpms-core-framework-sentinel</artifactId>
+            <version>${cpms.core.framework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>cpms-core-framework-common</artifactId>
+                    <groupId>com.cpms</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>fastjson</artifactId>
+                    <groupId>com.alibaba</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- alibaba JSON 解析器和生成器 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
 
     </dependencies>
