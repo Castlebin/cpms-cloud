@@ -53,8 +53,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private ObjectMapper objectMapper;
     @Resource
     private CpmsProperties cpmsProperties;
-    @Value("${system.test1}")
-    private String systemTest;
+
     @SneakyThrows
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
