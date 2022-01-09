@@ -1,0 +1,33 @@
+#服务器端口
+server:
+   port: 5003
+   servlet:
+      context-path: /monitorService  # 请求接口的前缀
+
+# Spring
+spring:
+   application:
+      # 应用名称
+      name: cpms-service-monitor
+   mvc:
+      ## 配置为了捕获 NoHandlerFoundException 异常信息
+      throw-exception-if-no-handler-found: true
+
+   #******** 激活自定义配置文件 ****#
+   profiles:
+      active: test
+
+   cloud:
+      nacos:
+         discovery: # 服务发现注册
+            server-addr: localhost:8858
+
+
+management:
+   endpoints:
+      web:
+         exposure:
+            include: '*'
+   endpoint:
+      health:
+         show-details: always

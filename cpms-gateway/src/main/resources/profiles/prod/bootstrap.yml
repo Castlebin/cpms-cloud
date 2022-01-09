@@ -3,7 +3,7 @@ spring:
     name: cpms-server-gateway
     pathPrefix: gw-server
   profiles:
-    active: dev
+    active: prod
 
   cloud:
     nacos:
@@ -66,3 +66,20 @@ spring:
             - Path=/${spring.application.pathPrefix}/logMicroservice/**
           filters:
             - StripPrefix=1
+
+# 暴露pspringboot-admin监控的端点
+management:
+  health:
+    redis:
+      enabled: false
+    sentinel:
+      enabled: false
+    ldap:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

@@ -10,7 +10,7 @@
         <Property name="CONSOLE_PATTERN" value=" %d{yyyy-MM-dd HH:mm:ss.SSS}[%t] %highlight{%C{1}.%M(%L)} %highlight{%-5level} [%X{traceId}] :%msg%n"/>
         <Property name="FILE_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}] [%t] [%C{1}:%L][%p] [%X{traceId}] -[%m]%n"/>
         <property name="FILE_PATH" value="applogs/" />
-        <property name="FILE_NAME" value="cpms-logs" />
+        <property name="FILE_NAME" value="cpms-job" />
         <Property name="TIME_BASED_INTERVAL" value="1"/>
         <Property name="LOG_MAX_SIZE" value="500MB"/>
         <Property name="LOG_FILE_NUM" value="20"/>
