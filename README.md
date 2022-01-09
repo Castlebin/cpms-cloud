@@ -48,6 +48,7 @@ cpms-cloud
     ├    ├── cpms-system-api -- 系统api 
     └──  └── cpms-log-api -- 日志api 
 ├── cpms-visual -- 控制台视图层
+    ├    ├── cpms-monitor-admin -- spring-boot-admin监控管理
     ├    ├── cpms-sentinel-dashboard -- sentinel-dashboard 控制台管理
     ├    ├── cpms-job-admin -- xxl-job-admin 控制台管理
     
@@ -85,6 +86,7 @@ cpms-cloud
 | spring-boot                | 2.2.7.RELEASE |                                                              |
 | openfeign                  | 2.2.3.RELEASE | 微服务接口调用组件                                           |
 | hystrix                    | 2.2.3.RELEASE | 熔断降级组件                                                 |
+| sentinel                   | 2.2.1.RELEASE | sentinel 熔断限流组件                                               |
 | lombok                     | 1.18.12       |                                                              |
 | mybatis-plus               | 3.4.3         |                                                              |
 | dynamic-datasource         | 3.3.2         | 多数据源组件                                                 |
