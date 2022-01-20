@@ -50,6 +50,12 @@
             </exclusions>
         </dependency>
 
+        <!-- nacos 配置中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
         <!--健康检查-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
