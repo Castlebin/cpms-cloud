@@ -13,6 +13,7 @@ import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsGenerateIdUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.framework.mybatis.utils.CsPageRespUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
@@ -61,8 +62,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
     @Override
     public BasePageVO<SysUserVO> listUser(QueryUserDTO queryUserDTO) {
-        BasePageVO<SysUserVO> listUserVO = new BasePageVO();
-        List<SysUserVO> sysUserVoList;
+        List<SysUserVO> list = Lists.newArrayList();
         if(!CsSecureUtil.isHeadquarters() || Objects.isNull(queryUserDTO.getDeptId())) {
             queryUserDTO.setTenantId(CsSecureUtil.userTenantId());
         }
@@ -73,14 +73,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
             allChildDepts.add(queryUserDTO.getDeptId());
         }
         int count = sysUserMapper.listUserCount(queryUserDTO,allChildDepts);
-        if(count == 0 ){
-            sysUserVoList = Lists.newArrayList();
-        }else {
-            sysUserVoList = sysUserMapper.listUser(queryUserDTO,allChildDepts);
+        if(count > 0 ){
+            list = sysUserMapper.listUser(queryUserDTO,allChildDepts);
         }
-        listUserVO.setTotal(count);
-        listUserVO.setList(sysUserVoList);
-        return listUserVO;
+        return CsPageRespUtil.buildPageResult(list,count,SysUserVO.class);
     }
 
     @Override

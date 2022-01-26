@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.framework.mybatis.utils.CsPageRespUtil;
 import com.cpms.log.modules.log.dto.QueryLogDTO;
 import com.cpms.log.modules.log.entity.SysLogEntity;
 import com.cpms.log.modules.log.mapper.SysLogMapper;
@@ -30,20 +31,15 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> i
 
     @Override
     public BasePageVO<SysLogVO> listLog(QueryLogDTO listLogDTO) {
-        BasePageVO<SysLogVO> basePageVO = new BasePageVO();
-        List<SysLogVO> list;
+        List<SysLogVO> list = Lists.newArrayList();
         if(Objects.isNull(listLogDTO.getTenantId())) {
             listLogDTO.setTenantId(CsSecureUtil.userTenantId());
         }
         int count = sysLogMapper.listLogCount(listLogDTO);
-        if(count == 0){
-            list = Lists.newArrayList();
-        }else{
+        if(count > 0){
             list = sysLogMapper.listLog(listLogDTO);
         }
-        basePageVO.setTotal(count);
-        basePageVO.setList(list);
-        return basePageVO;
+        return CsPageRespUtil.buildPageResult(list,count,SysLogVO.class);
     }
 
     @Override

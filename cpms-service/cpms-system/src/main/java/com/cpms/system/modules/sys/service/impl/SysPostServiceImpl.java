@@ -7,6 +7,7 @@ import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.framework.mybatis.utils.CsPageRespUtil;
 import com.cpms.system.modules.sys.dto.QueryPostDTO;
 import com.cpms.system.modules.sys.dto.SysPostDTO;
 import com.cpms.system.modules.sys.entity.SysPostEntity;
@@ -33,22 +34,17 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPostEntity
 
     @Override
     public BasePageVO<SysPostVO> listPost(QueryPostDTO queryPostDTO) {
-        BasePageVO<SysPostVO> basePageVO = new BasePageVO();
-        List<SysPostVO> list;
+        List<SysPostVO> list = Lists.newArrayList();
         if(Objects.isNull(queryPostDTO.getTenantId())) {
             queryPostDTO.setTenantId(CsSecureUtil.userTenantId());
         }else{
             queryPostDTO.setTenantId(queryPostDTO.getTenantId());
         }
         int count = sysPostMapper.listPostCount(queryPostDTO);
-        if(count ==0){
-            list = Lists.newArrayList();
-        }else{
+        if(count > 0){
             list = sysPostMapper.listPost(queryPostDTO);
         }
-        basePageVO.setTotal(count);
-        basePageVO.setList(list);
-        return basePageVO;
+        return CsPageRespUtil.buildPageResult(list,count, SysPostVO.class);
     }
 
     @Override

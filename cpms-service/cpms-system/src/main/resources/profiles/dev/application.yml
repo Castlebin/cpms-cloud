@@ -18,12 +18,3 @@ ribbon:
       client:
          enabled: true
 
-hystrix:
-   command:
-      default:
-         execution:
-            isolation:
-               strategy: SEMAPHORE
-               thread:
-                  timeoutInMilliseconds: 5000
-   shareSecurityContext: true

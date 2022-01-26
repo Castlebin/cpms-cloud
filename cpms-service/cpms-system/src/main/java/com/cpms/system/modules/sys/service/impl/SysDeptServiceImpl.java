@@ -10,6 +10,7 @@ import com.cpms.framework.common.core.node.NodeManager;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.framework.mybatis.utils.CsPageRespUtil;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.QueryDeptDTO;
 import com.cpms.system.modules.sys.dto.SysDeptDTO;
@@ -37,18 +38,13 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
 
     @Override
     public BasePageVO<SysDeptVO> listDept(QueryDeptDTO listDeptDTO) {
-        BasePageVO<SysDeptVO> basePageVO = new BasePageVO();
-        List<SysDeptVO> list;
+        List<SysDeptVO> list = Lists.newArrayList();
         listDeptDTO.setTenantId(CsSecureUtil.userTenantId());
         int count = sysDeptMapper.listDeptCount(listDeptDTO);
-        if(count ==0){
-            list = Lists.newArrayList();
-        }else{
+        if(count > 0){
             list = sysDeptMapper.listDept(listDeptDTO);
         }
-        basePageVO.setTotal(count);
-        basePageVO.setList(list);
-        return basePageVO;
+        return CsPageRespUtil.buildPageResult(list,count,SysDeptVO.class);
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.enums.RandomTypeEnum;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.*;
+import com.cpms.framework.mybatis.utils.CsPageRespUtil;
 import com.cpms.system.common.enums.SystemResponseResultEnum;
 import com.cpms.system.modules.sys.dto.QueryTenantDTO;
 import com.cpms.system.modules.sys.dto.SysTenantDTO;
@@ -99,17 +100,12 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
 
     @Override
     public BasePageVO<SysTenantVO> listTenant(QueryTenantDTO listTenantDTO) {
-        BasePageVO<SysTenantVO> basePageVO = new BasePageVO();
-        List<SysTenantVO> list;
+        List<SysTenantVO> list = Lists.newArrayList();
         int count = sysTenantMapper.listTenantCount(listTenantDTO);
-        if(count == 0){
-            list = Lists.newArrayList();
-        }else{
+        if(count > 0){
             list = sysTenantMapper.listTenant(listTenantDTO);
         }
-        basePageVO.setTotal(count);
-        basePageVO.setList(list);
-        return basePageVO;
+        return CsPageRespUtil.buildPageResult(list,count,SysTenantVO.class);
     }
 
     @Override

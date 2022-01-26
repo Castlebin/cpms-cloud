@@ -11,6 +11,7 @@ import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
+import com.cpms.framework.mybatis.utils.CsPageRespUtil;
 import com.cpms.system.modules.sys.dto.QueryRoleDTO;
 import com.cpms.system.modules.sys.dto.SysRoleDTO;
 import com.cpms.system.modules.sys.entity.SysRoleEntity;
@@ -47,22 +48,17 @@ public class SysRoleServiceImpl  extends ServiceImpl<SysRoleMapper, SysRoleEntit
 
     @Override
     public BasePageVO<SysRoleVO> listRole(QueryRoleDTO queryRoleDTO) {
-        BasePageVO<SysRoleVO> listRoleVO = new BasePageVO();
-        List<SysRoleVO> sysRoleVoList;
+        List<SysRoleVO> list = Lists.newArrayList();
         if(Objects.isNull(queryRoleDTO.getTenantId())) {
             queryRoleDTO.setTenantId(CsSecureUtil.userTenantId());
         }else{
             queryRoleDTO.setTenantId(queryRoleDTO.getTenantId());
         }
         int count = sysRoleMapper.listRoleCount(queryRoleDTO);
-        if(count ==0){
-            sysRoleVoList = Lists.newArrayList();
-        }else{
-            sysRoleVoList = sysRoleMapper.listRole(queryRoleDTO);
+        if(count > 0){
+            list = sysRoleMapper.listRole(queryRoleDTO);
         }
-        listRoleVO.setTotal(count);
-        listRoleVO.setList(sysRoleVoList);
-        return listRoleVO;
+        return CsPageRespUtil.buildPageResult(list,count,SysRoleVO.class);
     }
 
     @Override
