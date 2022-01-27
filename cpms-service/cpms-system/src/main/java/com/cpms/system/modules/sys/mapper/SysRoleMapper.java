@@ -1,6 +1,5 @@
 package com.cpms.system.modules.sys.mapper;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cpms.system.modules.sys.dto.QueryRoleDTO;
 import com.cpms.system.modules.sys.entity.SysRoleEntity;
@@ -14,7 +13,6 @@ import java.util.List;
  * @author: gulang
  * @time: 2021/8/6 17:10
  */
-@DS("master")
 public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {
     List<SysRoleEntity> queryRoleByUserId(@Param("userId") Long userId);
 

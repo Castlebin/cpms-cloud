@@ -1,6 +1,5 @@
 package com.cpms.system.modules.sys.mapper;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cpms.system.modules.sys.dto.QueryTenantDTO;
 import com.cpms.system.modules.sys.entity.SysTenantEntity;
@@ -13,7 +12,6 @@ import java.util.List;
  * @author: gulang
  * @time: 2021/9/22 11:26
  */
-@DS("master")
 public interface SysTenantMapper extends BaseMapper<SysTenantEntity> {
     int listTenantCount(QueryTenantDTO listTenantDTO);
 

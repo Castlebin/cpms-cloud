@@ -1,6 +1,5 @@
 package com.cpms.log.modules.log.mapper;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cpms.log.modules.log.dto.QueryLogDTO;
 import com.cpms.log.modules.log.entity.SysLogEntity;
@@ -13,7 +12,6 @@ import java.util.List;
  * @Description:
  * @time: 2021/8/21 16:09
  */
-@DS("master")
 public interface SysLogMapper extends BaseMapper<SysLogEntity> {
      int listLogCount(QueryLogDTO listLogDTO);
      List<SysLogVO> listLog(QueryLogDTO listLogDTO);
