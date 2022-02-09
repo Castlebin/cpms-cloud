@@ -130,7 +130,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
      * 获取traceId传递到下游服务
      */
     private String getTraceId() {
-        String traceId = UUID.randomUUID().toString().replace("-", "");
+        String traceId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
         MDC.put(SystemConstant.TRACE_ID, traceId);
         return traceId;
     }
