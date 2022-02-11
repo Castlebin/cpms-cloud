@@ -39,7 +39,7 @@ public class SentinelGatewayConfig {
             String result = "";
             Map<String, Object> map = new HashMap<>(16);
             map.put("code", GatewayResponseResultEnum.SENTINEL_BLOCK_ERROR.getCode());
-            map.put("msg", GatewayResponseResultEnum.SENTINEL_BLOCK_ERROR.getMessage());
+            map.put("message", GatewayResponseResultEnum.SENTINEL_BLOCK_ERROR.getMessage());
             map.put("obj", null);
             map.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
             map.put(SystemConstant.TRACE_ID, MDC.get(SystemConstant.TRACE_ID));

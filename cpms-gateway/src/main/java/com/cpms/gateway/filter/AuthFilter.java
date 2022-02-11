@@ -107,7 +107,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         try {
             Map<String, Object> map = new HashMap<>(16);
             map.put("code", code);
-            map.put("msg", message);
+            map.put("message", message);
             map.put("obj", null);
             map.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
             map.put(SystemConstant.TRACE_ID, MDC.get(SystemConstant.TRACE_ID));
