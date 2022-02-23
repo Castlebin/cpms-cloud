@@ -44,7 +44,7 @@ cpms-cloud
 ├── cpms-service -- 微服务业务模块
     ├    ├── cpms-log -- 日志模块，
     ├    ├── cpms-lowcode -- 低代码生成器模块，
-    └─  └── cpms-system -- 系统模块（包含：菜单、用户、权限管理等模块）
+    └──  └── cpms-system -- 系统模块（包含：菜单、用户、权限管理等模块）
 ├── cpms-service-api -- 微服务通过feign相互调用api模块
     ├    ├── cpms-system-api -- 系统api 
     └──  └── cpms-log-api -- 日志api 
