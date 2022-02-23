@@ -66,6 +66,13 @@ spring:
             - Path=/${spring.application.pathPrefix}/logMicroservice/**
           filters:
             - StripPrefix=1
+        - id: cpms-server-lowcode
+          uri: lb://cpms-server-lowcode
+          order: 4
+          predicates:
+            - Path=/${spring.application.pathPrefix}/lowCodeMicroservice/**
+          filters:
+            - StripPrefix=1
 
 # 暴露pspringboot-admin监控的端点
 management:

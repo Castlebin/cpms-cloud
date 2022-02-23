@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出-->
+<!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
+<configuration status="INFO" monitorInterval="120">
+    <!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+
+    <!--变量配置-->
+    <Properties>
+        <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+        <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
+        <!-- %L 表示行号 -->
+        <Property name="CONSOLE_PATTERN" value=" %d{yyyy-MM-dd HH:mm:ss.SSS}[%t] %highlight{%C{1}.%M(%L)} %highlight{%-5level} [%X{traceId}] :%msg%n"/>
+        <Property name="FILE_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}] [%t] [%C{1}:%L][%p] [%X{traceId}] -[%m]%n"/>
+        <!-- 定义日志存储的路径，不要配置相对路径 -->
+        <property name="FILE_PATH" value="applogs/" />
+        <!-- 定义项目名 -->
+        <property name="FILE_NAME" value="cpms-low-code" />
+        <!--基于时间触发日志滚动（生成新日志文件），单位：以filePattern设置时间精确值为准，如：yyyy-MM-dd（天），yyyy-MM-dd HH （小时）-->
+        <Property name="TIME_BASED_INTERVAL" value="1"/>
+        <!--基于日志文件大小触发日志滚动（生成新日志文件），测试10MB ,生产 500MB -->
+        <Property name="LOG_MAX_SIZE" value="500MB"/>
+        <!-- 存放的最大文件数，大于此值会删除旧的日志文件-->
+        <Property name="LOG_FILE_NUM" value="20"/>
+        <!-- 文件保存时间-->
+        <Property name="KEEP_TIME" value="2d"/>
+    </Properties>
+
+    <appenders>
+        <!--*********************控制台日志（日志会打印在控制台）***********************-->
+        <console name="Console" target="SYSTEM_OUT">
+            <!--设置日志格式-->
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+        </console>
+
+        <!--********文件日志（以下配置的日志规则会打印在指定的日志文件中，细化到每个级别都有专属的日志文件）*********-->
+
+        <!-- 自定义filter日志级别打印规则 （一般用于打印特定的日志信息，比如：打印接口入参和响应信息）  -->
+        <RollingRandomAccessFile name="RollingFileFilter" fileName="${FILE_PATH}/filter/filter.log"
+                                 filePattern="${FILE_PATH}/filter/${FILE_NAME}-FILTER-%d{yyyy-MM-dd}_%i.log">
+            <!--
+                【onMatch：该级别及以上级别（包含）   onMismatch：该级别以下级别】
+                onMatch="ACCEPT" 表示匹配该级别及以上
+                onMatch="DENY" 表示不匹配该级别及以上
+                onMatch="NEUTRAL" 表示该级别及以上的，由下一个ThresholdFilter处理，如果当前是最后一个，则表示匹配该级别及以上
+
+                onMismatch="ACCEPT" 表示匹配该级别以下
+                onMismatch="DENY" 表示不匹配该级别以下的
+                onMismatch="NEUTRAL" 表示该级别及以下的，由下一个ThresholdFilter处理，如果当前是最后一个，则不匹配该级别以下的
+            -->
+            <Filters>
+                <!-- 该匹配只会打印info日志-->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <!--Policy是用来控制日志文件何时(When)进行滚动的；Strategy是用来控制日志文件如何(How)进行滚动的。-->
+            <Policies>
+                <!-- 指定多久触发滚动，生成新的日志文件，单位：以filePattern设置时间精确值为准，如：yyyy-MM-dd（天），yyyy-MM-dd HH （小时）-->
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <!-- 指定当文件体积大于size时，触发滚动，生成一个新文件 -->
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <!-- 当文件个数达到10个的时候会循环覆盖前面已归档的1-10个文件。若不设置该参数，默认为7-->
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}">
+                <Delete basePath="${FILE_PATH}/" maxDepth="1">
+                    <IfFileName glob="*/${FILE_NAME}-*.log"/>
+                    <!--!Note: 这里的age必须和filePattern %d{yyyy-MM-dd}协调 ,如果后者是精确到HH, 这里就要写成xH, xd就不起作用
+                    另外, 数字最好>2, 否则可能造成删除的时候, 最近的文件还处于被占用状态,导致删除不成功!-->
+                    <IfLastModified age="${KEEP_TIME}">
+                    </IfLastModified>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <!-- info日志级别打印规则(一般记录业务代码中打印的info日志，以便查找生产问题提供关键信息)-->
+        <RollingRandomAccessFile name="RollingFileInfo" fileName="${FILE_PATH}/info/info.log"
+                                 filePattern="${FILE_PATH}/info/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log">
+            <Filters>
+                <!-- 该匹配只会打印info日志-->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}">
+                <Delete basePath="${FILE_PATH}/" maxDepth="1">
+                    <IfFileName glob="*/${FILE_NAME}-*.log"/>
+                    <!--!Note: 这里的age必须和filePattern协调, 后者是精确到HH, 这里就要写成xH, xd就不起作用
+                    另外, 数字最好>2, 否则可能造成删除的时候, 最近的文件还处于被占用状态,导致删除不成功!-->
+                    <IfLastModified age="${KEEP_TIME}">
+                    </IfLastModified>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <!-- warn日志级别打印规则-->
+        <RollingRandomAccessFile name="RollingFileWarn" fileName="${FILE_PATH}/warn/warn.log"
+                                 filePattern="${FILE_PATH}/warn/${FILE_NAME}-WARN-%d{yyyy-MM-dd}_%i.log">
+            <Filters>
+                <!-- 该匹配只会打印warn日志-->
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}">
+                <Delete basePath="${FILE_PATH}/" maxDepth="1">
+                    <IfFileName glob="*/${FILE_NAME}-*.log"/>
+                    <!--!Note: 这里的age必须和filePattern %d{yyyy-MM-dd}协调 ,如果后者是精确到HH, 这里就要写成xH, xd就不起作用
+                    另外, 数字最好>2, 否则可能造成删除的时候, 最近的文件还处于被占用状态,导致删除不成功!-->
+                    <IfLastModified age="${KEEP_TIME}">
+                    </IfLastModified>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <!--error日志级别打印规则-->
+        <RollingRandomAccessFile name="RollingFileError" fileName="${FILE_PATH}/error/error.log"
+                                 filePattern="${FILE_PATH}/error/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log">
+            <Filters>
+                <!--该匹配会打印 OFF、 FATAL 、 ERROR 三个级别的日志信息 -->
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIME_BASED_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_FILE_NUM}">
+                <Delete basePath="${FILE_PATH}/" maxDepth="1">
+                    <IfFileName glob="*/${FILE_NAME}-*.log"/>
+                    <!--!Note: 这里的age必须和filePattern %d{yyyy-MM-dd}协调 ,如果后者是精确到HH, 这里就要写成xH, xd就不起作用
+                    另外, 数字最好>2, 否则可能造成删除的时候, 最近的文件还处于被占用状态,导致删除不成功!-->
+                    <IfLastModified age="${KEEP_TIME}">
+                    </IfLastModified>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </appenders>
+
+    <!--*************然后定义loggers，只有定义了logger节点/root节点，并引入的appender，appender才会生效**************-->
+    <loggers>
+        <!--************Logger指定不同包的日志级别，以及指定使用哪个日志规则，不指定默认使用root配置的规则***********-->
+        <!--生产环境要求屏蔽  在looger中配置了additivity="false"，就不会反馈到root中 -->
+
+        <!--,includeLocation="true" 才会输出行号和类名 -->
+        <AsyncLogger additivity="false" name="com.mybatis" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="java.sql.Connection" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="java.sql.Statement" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="java.sql.PreparedStatement" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="java.sql.ResultSet" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <AsyncLogger additivity="false" name="org.redisson.connection" level="DEBUG" includeLocation="true">
+        </AsyncLogger>
+        <!--************自定义filter日志级别，并指定使用RollingFileFilter日志打印规则***********-->
+        <!--这里的name="filter" 的filter要与 private final Logger log = LoggerFactory.getLogger("filter"); 保持一致-->
+        <AsyncLogger name="filter" level="info" additivity="false" includeLocation="true">
+            <AppenderRef ref="RollingFileFilter"/>
+        </AsyncLogger>
+
+        <!-- 设置根日志级别打印info及更高级别的日志，DEBUG > TRACE > ALL 将不会打印 -->
+        <asyncRoot level="info" includeLocation="true">
+            <!-- 将需要打印的根日志级别信息匹配到如下日志规则里 -->
+            <AppenderRef ref="RollingFileInfo"/>
+            <AppenderRef ref="RollingFileWarn"/>
+            <AppenderRef ref="RollingFileError"/>
+        </asyncRoot>
+    </loggers>
+
+</configuration>

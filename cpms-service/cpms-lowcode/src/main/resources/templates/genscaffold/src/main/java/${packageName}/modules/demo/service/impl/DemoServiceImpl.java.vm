@@ -1,0 +1,19 @@
+package ${packageName}.modules.demo.service.impl;
+
+import ${packageName}.modules.demo.service.IDemoService;
+import org.springframework.stereotype.Service;
+
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+@Service
+public class DemoServiceImpl implements IDemoService {
+    @Override
+    public boolean test() {
+        return true;
+    }
+
+}

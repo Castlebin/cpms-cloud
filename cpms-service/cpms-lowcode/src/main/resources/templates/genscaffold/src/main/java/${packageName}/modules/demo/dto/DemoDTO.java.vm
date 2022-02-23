@@ -1,0 +1,15 @@
+package ${packageName}.modules.demo.dto;
+
+import lombok.Data;
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+@Data
+public class DemoDTO {
+    private String author;
+    private String packageName;
+    private String moduleName;
+}

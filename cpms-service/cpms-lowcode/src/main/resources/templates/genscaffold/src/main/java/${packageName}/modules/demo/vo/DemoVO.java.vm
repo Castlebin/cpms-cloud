@@ -1,0 +1,15 @@
+package ${packageName}.modules.demo.vo;
+
+import lombok.Data;
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+@Data
+public class DemoVO {
+    private String author;
+    private String packageName;
+    private String moduleName;
+}

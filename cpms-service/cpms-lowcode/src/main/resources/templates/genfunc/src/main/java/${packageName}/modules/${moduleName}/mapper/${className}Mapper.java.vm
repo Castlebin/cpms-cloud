@@ -1,0 +1,13 @@
+package ${packageName}.modules.${moduleName}.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import ${packageName}.modules.${moduleName}.entity.${className}Entity;
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+*/
+public interface ${className}Mapper extends BaseMapper<${className}Entity> {
+
+}

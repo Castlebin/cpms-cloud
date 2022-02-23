@@ -1,0 +1,22 @@
+#服务器端口
+server:
+   port: 8004
+   servlet:
+      context-path: /lowCodeMicroservice  # 请求接口的前缀
+
+# Spring
+spring:
+   application:
+      # 应用名称
+      name: cpms-server-lowcode
+
+   #******** 激活自定义配置文件 ****#
+   profiles:
+      active: dev
+      include: jdbc,system
+
+   cloud:
+      nacos:
+         discovery: # 服务发现注册
+            server-addr: localhost:8858
+

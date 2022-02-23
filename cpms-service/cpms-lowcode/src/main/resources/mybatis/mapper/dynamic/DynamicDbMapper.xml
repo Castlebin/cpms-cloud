@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cpms.lowcode.modules.dynamic.mapper.DynamicDbMapper">
+
+    <!-- 查询指定库中所有表 mysql -->
+    <select id="selectInformationTables" parameterType="string" resultType="com.cpms.lowcode.modules.dynamic.vo.DbTableVO">
+        select TABLE_NAME,TABLE_COMMENT
+        from information_schema.tables
+        where
+            table_schema = #{dbName}
+        ORDER BY
+            create_time DESC
+    </select>
+
+    <select id="queryTableFields" parameterType="com.cpms.lowcode.modules.dynamic.dto.QueryTableFieldDTO"
+    resultType="com.cpms.lowcode.modules.dynamic.dto.TableFieldDTO">
+        SELECT TABLE_NAME,COLUMN_NAME,COLUMN_KEY,EXTRA,DATA_TYPE,COLUMN_COMMENT
+        FROM information_schema.COLUMNS
+        WHERE  table_schema = #{dbName} and
+        table_name IN
+        <foreach collection="tableNames" item="table" open="(" close=")" separator=",">
+            #{table}
+        </foreach>
+
+    </select>
+</mapper>

@@ -1,0 +1,11 @@
+package ${packageName}.modules.demo.service;
+
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+public interface IDemoService {
+    boolean test();
+}

@@ -1,0 +1,35 @@
+package ${packageName}.modules.${moduleName}.vo;
+
+import com.cpms.framework.common.core.base.BaseVO;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+*/
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class ${className}VO extends BaseVO {
+#set($arr=["updateTime","createTime","updateBy","createBy","delFlag"])
+#foreach ($column in $columnList)
+#if (${column.javaType} == 'Long')
+    /**
+     *  ${column.columnComment}
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
+    private ${column.javaType} ${column.javaField};
+#elseif(!$arr.contains(${column.javaField}))
+    /**
+     *  ${column.columnComment}
+     */
+    private ${column.javaType} ${column.javaField};
+#end
+#end
+
+}

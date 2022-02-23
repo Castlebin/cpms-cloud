@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cpms.lowcode.modules.gen.mapper.ProjectMapper">
+    <resultMap type="com.cpms.lowcode.modules.gen.vo.ProjectDetailVO" id="resultMap">
+        <id property="projectId" column="project_id"/>
+        <collection property="dbDto"
+                        select="com.cpms.lowcode.modules.gen.mapper.ProjectMapper.selectProjectDbByProjectId" column="{projectId=project_id}" />
+    </resultMap>
+    <sql id="Base_Column_List">
+		del_flag, create_time, update_time, create_by, update_by
+	</sql>
+    <select id="listProjectCount" parameterType="com.cpms.lowcode.modules.gen.dto.QueryProjectDTO" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM  cpms_code_project
+        <where>
+            del_flag = 0
+            <if test="projectName !=null and projectName !=''">
+                and project_name like CONCAT('%',#{projectName},'%' )
+            </if>
+        </where>
+    </select>
+
+    <select id="listProject" parameterType="com.cpms.lowcode.modules.gen.dto.QueryProjectDTO" resultMap="resultMap">
+        SELECT
+        project_id,
+        project_name,
+        package_name,
+        file_encoding,
+        jdk_version,
+        project_port,
+        context_path,
+        group_id,
+        artifact_id,
+        version,
+        project_desc,
+        team_name,
+        leader,
+        <include refid="Base_Column_List" />
+        FROM cpms_code_project
+        <where>
+            del_flag = 0
+            <if test="projectName !=null and projectName !=''">
+                and project_name like CONCAT('%',#{projectName},'%' )
+            </if>
+        </where>
+        ORDER BY project_id DESC
+        <if test="pagingFlag">
+            limit #{startIndex},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectProjectDbByProjectId" resultType="com.cpms.lowcode.modules.gen.vo.ProjectDbVO">
+       select
+       db_id,
+       project_id,
+       db_driver_class,
+       db_ip,
+       db_port,
+       db_name,
+       db_user,
+       db_password,
+       db_primary
+       from cpms_code_project_db where project_id = #{projectId}
+    </select>
+</mapper>

@@ -1,0 +1,16 @@
+package ${packageName}.config;
+
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+@Component
+@Slf4j
+public class DemoConfig {
+
+}

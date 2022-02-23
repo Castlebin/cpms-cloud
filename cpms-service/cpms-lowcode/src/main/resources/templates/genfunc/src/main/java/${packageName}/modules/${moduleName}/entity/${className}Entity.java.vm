@@ -1,0 +1,41 @@
+package ${packageName}.modules.${moduleName}.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.cpms.framework.mybatis.entity.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+*/
+@EqualsAndHashCode(callSuper = true)
+@Data
+@TableName("${tableName}")
+public class ${className}Entity extends BaseEntity {
+#set($arr=["updateTime","createTime","updateBy","createBy","delFlag"])
+#foreach ($column in $columnList)
+#if (${column.ifPk} == 1)
+    /**
+    *  ${column.columnComment}
+    */
+#if (${column.ifIncrement} == 1 )
+    @TableId(value = "${column.columnName}",type = IdType.AUTO)
+#else
+    @TableId(value = "${column.columnName}",type = IdType.ASSIGN_ID)
+#end
+    private ${column.javaType} ${column.javaField};
+#elseif(!$arr.contains(${column.javaField}))
+    /**
+     *  ${column.columnComment}
+     */
+    private ${column.javaType} ${column.javaField};
+#end
+#end
+
+
+}

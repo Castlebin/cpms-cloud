@@ -1,0 +1,68 @@
+package ${packageName}.modules.${moduleName}.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import ${packageName}.common.constants.SystemConstant;
+import com.cpms.framework.common.utils.CsBeanUtil;
+import com.cpms.framework.common.core.base.BasePageVO;
+import com.cpms.framework.mybatis.utils.CsPageRespUtil;
+import ${packageName}.modules.${moduleName}.entity.${className}Entity;
+import ${packageName}.modules.${moduleName}.vo.${className}VO;
+import ${packageName}.modules.${moduleName}.dto.Query${className}DTO;
+import ${packageName}.modules.${moduleName}.dto.${className}DTO;
+import ${packageName}.modules.${moduleName}.mapper.${className}Mapper;
+import ${packageName}.modules.${moduleName}.service.I${className}Service;
+import org.apache.commons.compress.utils.Lists;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+@Service
+public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}Entity> implements I${className}Service {
+
+    @Override
+    public BasePageVO<${className}VO> list(Query${className}DTO query${className}Dto) {
+        List<${className}Entity> list = Lists.newArrayList();
+        LambdaQueryWrapper<${className}Entity> queryWrapper = Wrappers.<${className}Entity>lambdaQuery();
+        queryWrapper.eq(${className}Entity::getDelFlag,SystemConstant.DEL_FLAG_NOT_DELETED);
+        Integer count = getBaseMapper().selectCount(queryWrapper);
+        if(count > 0){
+            if(query${className}Dto.getPagingFlag()){
+                queryWrapper.last("limit "+query${className}Dto.getStartIndex()+","+query${className}Dto.getPageSize());
+            }
+            list = getBaseMapper().selectList(queryWrapper);
+        }
+        return CsPageRespUtil.buildPageResult(list, count,${className}VO.class);
+    }
+
+    @Override
+    public boolean add(${className}DTO  ${classAlias}Dto){
+        ${className}Entity ${classAlias}Entity = new ${className}Entity();
+        CsBeanUtil.copyProperties(${classAlias}Dto,${classAlias}Entity);
+        this.save(${classAlias}Entity);
+        return true;
+    }
+
+    @Override
+    public boolean update(${className}DTO  ${classAlias}Dto) {
+        ${className}Entity ${classAlias}Entity = new ${className}Entity();
+        CsBeanUtil.copyProperties(${classAlias}Dto,${classAlias}Entity);
+        this.updateById(${classAlias}Entity);
+        return true;
+    }
+
+    @Override
+    public boolean del(${className}DTO ${classAlias}Dto){
+        ${className}Entity ${classAlias}Entity = new ${className}Entity();
+        CsBeanUtil.copyProperties(${classAlias}Dto,${classAlias}Entity);
+        ${classAlias}Entity.setDelFlag(SystemConstant.DEL_FLAG_DELETED);
+        this.updateById(${classAlias}Entity);
+        return true;
+    }
+}

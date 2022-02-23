@@ -7,7 +7,7 @@ import com.cpms.auth.dto.UserLoginDTO;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.common.core.secure.AuthInfo;
-import com.cpms.framework.common.utils.CsGenerateIdUtil;
+import com.cpms.framework.common.utils.CsRandomUtil;
 import com.cpms.framework.redis.utils.CsRedisUtil;
 import com.wf.captcha.SpecCaptcha;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +45,7 @@ public class AuthController {
     public Result<Object> captcha() {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
         String verCode = specCaptcha.text().toLowerCase();
-        String key = CsGenerateIdUtil.getUUID(true);
+        String key = CsRandomUtil.randomUUID(true,true);
         // 存入redis并设置过期时间为60秒
         CsRedisUtil.set(String.format(RedisKeyConstant.UserLogin.CAPTCHA_KEY, key), verCode, 60, TimeUnit.SECONDS);
         // 将key和base64返回给前端

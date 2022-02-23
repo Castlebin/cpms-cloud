@@ -1,0 +1,25 @@
+package ${packageName}.modules.${moduleName}.service;
+
+import com.cpms.framework.common.core.base.BasePageVO;
+import com.baomidou.mybatisplus.extension.service.IService;
+import ${packageName}.modules.${moduleName}.entity.${className}Entity;
+import ${packageName}.modules.${moduleName}.vo.${className}VO;
+import ${packageName}.modules.${moduleName}.dto.Query${className}DTO;
+import ${packageName}.modules.${moduleName}.dto.${className}DTO;
+
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+public interface I${className}Service extends IService<${className}Entity> {
+
+    BasePageVO<${className}VO> list(Query${className}DTO query${className}Dto);
+
+    boolean add(${className}DTO  ${classAlias}Dto);
+
+    boolean update(${className}DTO  ${classAlias}Dto);
+
+    boolean del(${className}DTO ${classAlias}Dto);
+}

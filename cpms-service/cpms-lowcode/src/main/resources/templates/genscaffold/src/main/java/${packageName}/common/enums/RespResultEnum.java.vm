@@ -1,0 +1,33 @@
+package ${packageName}.common.enums;
+
+
+import com.cpms.framework.common.core.api.IResultEnum;
+
+/**
+ * @description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+public enum RespResultEnum implements IResultEnum {
+    /** 服务响应枚举类 */
+    SUCCESS(20000, "响应成功"),
+    ;
+
+    final Integer code;
+    final String message;
+
+    @Override
+    public Integer getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    RespResultEnum(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+}

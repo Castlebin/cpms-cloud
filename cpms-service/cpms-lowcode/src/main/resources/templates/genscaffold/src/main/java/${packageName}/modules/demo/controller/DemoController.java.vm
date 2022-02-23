@@ -1,0 +1,33 @@
+package ${packageName}.modules.demo.controller;
+
+import com.cpms.framework.common.core.api.Result;
+import com.cpms.framework.common.core.api.ResultUtil;
+import ${packageName}.modules.demo.service.IDemoService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+
+
+/**
+ * @Description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+@RestController
+@RequestMapping("/demo")
+@Slf4j
+public class DemoController {
+    @Resource
+    private IDemoService demoService;
+
+    /**
+     * demo测试
+     */
+    @PostMapping("/test")
+    public Result<Void> test(){
+        return ResultUtil.status(demoService.test());
+    }
+
+
+}

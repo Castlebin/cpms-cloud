@@ -1,0 +1,16 @@
+package ${packageName}.exception;
+
+import com.cpms.framework.common.exception.GlobalExceptionHandler;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+/**
+ * @Description:
+ * @author: ${author}
+ * @time: ${genDate}
+ */
+
+@Slf4j
+@RestControllerAdvice
+public class LocalExceptionHandler extends GlobalExceptionHandler {
+}

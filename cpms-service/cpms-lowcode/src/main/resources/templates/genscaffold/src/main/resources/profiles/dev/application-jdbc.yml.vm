@@ -1,0 +1,34 @@
+spring:
+    # 多数据源配置
+    datasource:
+        dynamic:
+            # HikariCp全局参数配置
+            hikari:
+                driver-class-name: com.mysql.cj.jdbc.Driver
+                auto-commit: true
+                connection-test-query: SELECT 1
+                connection-timeout: 10000
+                idle-timeout: 30000
+                max-lifetime: 900000
+                maximum-pool-size: 30
+                minimum-idle: 10
+                pool-name: HikariCP
+                validation-timeout: 1000
+#foreach ($dbInfo in $dbList)
+#if (${dbInfo.dbPrimary} == 1)
+            primary: ${dbInfo.dbName} #设置默认的数据源或者数据源组,默认值即为master
+#end
+#end
+            strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候回抛出异常,不启动会使用默认数据源.
+            datasource:
+#foreach ($dbInfo in $dbList)
+                ${dbInfo.dbName}:
+                    url: ${dbInfo.dbUrl}
+                    username: ${dbInfo.userName}
+                    password: ${dbInfo.password}
+#end
+
+#【加载mybatis的xml映射文件】
+mybatis-plus:
+    mapper-locations: classpath:mybatis/mapper/**/*.xml  # 指定sql映射文件位置
+    config-location: classpath:mybatis/mybatis-config.xml  # 指定全局配置文件位置
