@@ -78,10 +78,16 @@ cpms-cloud
 10.持续更新新模块......
 
 #### 前端UI
-基于vue2.0+elementui: [https://gitee.com/gldcty/cpms-cloud-ui](https://gitee.com/gldcty/cpms-cloud-ui) 
+基于vue2.0+elementui: [https://gitee.com/gldcty/cpms-cloud-vue-ui](https://gitee.com/gldcty/cpms-cloud-vue-ui) 
 
 #### 在线演示
-  cpms-vue单体应用-基于vue：[https://www.cpms.vip/](https://www.cpms.vip/)
+  演示地址：[https://www.cpms.vip/](https://www.cpms.vip/)
+
+#### 相关项目
+
+cpms-vue单体架构：https://gitee.com/gldcty/cpms-vue
+
+cpms-core-framework核心组件库:https://gitee.com/gldcty/cpms-core-framework
 
 #### 后端技术栈
 
@@ -125,11 +131,6 @@ cpms-cloud
 #### QQ交流群
 <img src="https://gitee.com/gldcty/cpms-cloud/raw/master/doc/img/qq-qun-01.png"/>
 
-相关项目：
-
-cpms-vue单体架构：https://gitee.com/gldcty/cpms-vue
-
-cpms-core-framework核心组件库:https://gitee.com/gldcty/cpms-core-framework
 
 #### 后台界面预览图
 
