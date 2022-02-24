@@ -44,7 +44,7 @@ cpms-cloud
 ├── cpms-service -- 微服务业务模块
     ├    ├── cpms-log -- 日志模块，
     ├    ├── cpms-lowcode -- 低代码生成器模块，
-    └─  └── cpms-system -- 系统模块（包含：菜单、用户、权限管理等模块）
+    └──  └── cpms-system -- 系统模块（包含：菜单、用户、权限管理等模块）
 ├── cpms-service-api -- 微服务通过feign相互调用api模块
     ├    ├── cpms-system-api -- 系统api 
     └──  └── cpms-log-api -- 日志api 
@@ -73,7 +73,12 @@ cpms-cloud
 
 8. 租户管理：添加租户信息，并生成租户管理员账号信息，添加租户权限
 
-9. 持续更新新模块......
+9. 开发工具：代码生成器，生成项目脚手架和表增删改查业务代码
+
+10.持续更新新模块......
+
+#### 前端UI
+基于vue2.0+elementui: [https://gitee.com/gldcty/cpms-cloud-ui](https://gitee.com/gldcty/cpms-cloud-ui) 
 
 #### 在线演示
   cpms-vue单体应用-基于vue：[https://www.cpms.vip/](https://www.cpms.vip/)
