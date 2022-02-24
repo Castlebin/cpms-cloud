@@ -77,6 +77,9 @@ cpms-cloud
 
 10.持续更新新模块......
 
+#### 前端UI
+基于vue2.0+elementui: [https://gitee.com/gldcty/cpms-cloud-ui](https://gitee.com/gldcty/cpms-cloud-ui) 
+
 #### 在线演示
   cpms-vue单体应用-基于vue：[https://www.cpms.vip/](https://www.cpms.vip/)
 
