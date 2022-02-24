@@ -5,7 +5,7 @@ import com.cpms.framework.common.core.api.IResultEnum;
 
 /**
  * @description:
- * @author: 01396003
+ * @author: gulang
  * @time: 2021/5/25 15:49
  */
 public enum RespResultEnum implements IResultEnum {

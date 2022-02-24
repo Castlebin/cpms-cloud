@@ -11,7 +11,7 @@ import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.CsBeanUtil;
 import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.mybatis.utils.CsPageRespUtil;
-import com.cpms.system.common.enums.SystemResponseResultEnum;
+import com.cpms.system.common.enums.RespResultEnum;
 import com.cpms.system.modules.sys.dto.QueryDeptDTO;
 import com.cpms.system.modules.sys.dto.SysDeptDTO;
 import com.cpms.system.modules.sys.entity.SysDeptEntity;
@@ -74,7 +74,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptEntity
         query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
         Integer count = baseMapper.selectCount(query);
         if(count > 0){
-            throw new BizException(SystemResponseResultEnum.THERE_ARE_CHILD_NODES_ERROR);
+            throw new BizException(RespResultEnum.THERE_ARE_CHILD_NODES_ERROR);
         }
         LambdaUpdateWrapper<SysDeptEntity> updateWrapper = Wrappers.<SysDeptEntity>lambdaUpdate()
                 .set(SysDeptEntity::getDelFlag, CommonConstant.DEL_FLAG_DELETED)

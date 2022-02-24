@@ -12,7 +12,7 @@ import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
 import com.cpms.system.api.modules.sys.feign.ISysUserClient;
 import com.cpms.system.api.modules.sys.vo.SysRoleVO;
 import com.cpms.system.api.modules.sys.vo.SysUserLoginVO;
-import com.cpms.system.common.enums.SystemResponseResultEnum;
+import com.cpms.system.common.enums.RespResultEnum;
 import com.cpms.system.modules.sys.entity.SysRoleEntity;
 import com.cpms.system.modules.sys.entity.SysUserEntity;
 import com.cpms.system.modules.sys.service.ISysRoleService;
@@ -45,16 +45,16 @@ public class SysUserClient implements ISysUserClient {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         SysUserLoginBO sysUserLoginBO = sysUserService.querySysUserInfo(sysUserLginDTO);
         if(Objects.isNull(sysUserLoginBO)) {
-            return ResultUtil.error(SystemResponseResultEnum.ACCOUNT_IS_NOT_EXISTS_ERROR);
+            return ResultUtil.error(RespResultEnum.ACCOUNT_IS_NOT_EXISTS_ERROR);
         }
         if(!bCryptPasswordEncoder.matches(sysUserLginDTO.getUserPassword(),sysUserLoginBO.getUserPassword())) {
-            return ResultUtil.error(SystemResponseResultEnum.ACCOUNT_OR_PASSWORD_CHECK_FAILED_ERROR);
+            return ResultUtil.error(RespResultEnum.ACCOUNT_OR_PASSWORD_CHECK_FAILED_ERROR);
         }
         if(sysUserLoginBO.getUserStarus() == CommonConstant.DATA_STATUS_FORBIDDEN){
-            return ResultUtil.error(SystemResponseResultEnum.ACCOUNT_FORBIDDEN_ERROR);
+            return ResultUtil.error(RespResultEnum.ACCOUNT_FORBIDDEN_ERROR);
         }
         if(sysUserLoginBO.getTenantStatus() == CommonConstant.DATA_STATUS_FORBIDDEN){
-            return ResultUtil.error(SystemResponseResultEnum.TENANT_FORBIDDEN_ERROR);
+            return ResultUtil.error(RespResultEnum.TENANT_FORBIDDEN_ERROR);
         }
         String ipAddr = CsWebUtil.getClientIp();
         sysUserLoginBO.setUserLoginIp(ipAddr);

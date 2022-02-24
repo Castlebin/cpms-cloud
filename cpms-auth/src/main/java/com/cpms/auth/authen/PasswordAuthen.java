@@ -2,7 +2,7 @@ package com.cpms.auth.authen;
 
 
 import com.cpms.auth.common.constants.RedisKeyConstant;
-import com.cpms.auth.common.enums.AuthResponseResultEnum;
+import com.cpms.auth.common.enums.RespResultEnum;
 import com.cpms.auth.dto.UserLoginDTO;
 import com.cpms.common.constant.TokenConstant;
 import com.cpms.framework.common.core.api.Result;
@@ -37,7 +37,7 @@ public class PasswordAuthen implements IAuthen{
     public AuthInfo authentication(UserLoginDTO userLoginDTO) {
         if(!userLoginDTO.getCaptcha().equalsIgnoreCase(
                 CsRedisUtil.get(String.format(RedisKeyConstant.UserLogin.CAPTCHA_KEY, userLoginDTO.getCodeKey())))){
-            throw new BizException(AuthResponseResultEnum.CAPTCHA_VERIFICATION_EEROR);
+            throw new BizException(RespResultEnum.CAPTCHA_VERIFICATION_EEROR);
         }
         SysUserLginDTO sysUserLginDTO = new SysUserLginDTO();
         sysUserLginDTO.setUserAccount(userLoginDTO.getAccount());

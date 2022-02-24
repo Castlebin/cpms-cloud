@@ -16,7 +16,7 @@ import com.cpms.framework.common.utils.CsSecureUtil;
 import com.cpms.framework.mybatis.utils.CsPageRespUtil;
 import com.cpms.system.api.modules.sys.bo.SysUserLoginBO;
 import com.cpms.system.api.modules.sys.dto.SysUserLginDTO;
-import com.cpms.system.common.enums.SystemResponseResultEnum;
+import com.cpms.system.common.enums.RespResultEnum;
 import com.cpms.system.modules.sys.dto.PersonalInfoDTO;
 import com.cpms.system.modules.sys.dto.QueryUserDTO;
 import com.cpms.system.modules.sys.dto.ResetPasswordDTO;
@@ -37,7 +37,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -142,7 +141,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         Integer count = sysUserMapper.selectCount(Wrappers.<SysUserEntity>query().lambda()
                 .eq(SysUserEntity::getUserAccount, userDTO.getUserAccount()));
         if( count > 0){
-            throw new BizException(SystemResponseResultEnum.USER_ALREADY_EXISTS_ERROR);
+            throw new BizException(RespResultEnum.USER_ALREADY_EXISTS_ERROR);
         }
         SysUserEntity sysUserEntity = new SysUserEntity();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -216,7 +215,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         SysUserEntity sysUserEntity = sysUserMapper.selectOne(Wrappers.<SysUserEntity>query().lambda().eq(SysUserEntity::getUserId, userId));
         if(!bCryptPasswordEncoder.matches(resetPasswordDTO.getOldPassword(),sysUserEntity.getUserPassword())) {
-            throw new BizException(SystemResponseResultEnum.ORIGINAL_PASSWORD_NOT_MATCH_ERROR);
+            throw new BizException(RespResultEnum.ORIGINAL_PASSWORD_NOT_MATCH_ERROR);
         }
         LambdaUpdateWrapper<SysUserEntity> updateWrapper = Wrappers.<SysUserEntity>lambdaUpdate()
                 .set(SysUserEntity::getUserPassword, bCryptPasswordEncoder.encode(resetPasswordDTO.getNewPassword()))

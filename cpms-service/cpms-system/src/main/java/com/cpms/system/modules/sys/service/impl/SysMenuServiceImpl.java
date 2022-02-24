@@ -7,14 +7,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cpms.common.constant.CommonConstant;
 import com.cpms.framework.common.constants.CoreCommonConstant;
 import com.cpms.framework.common.constants.TenantConstant;
-import com.cpms.framework.common.core.base.BasePageVO;
 import com.cpms.framework.common.core.node.NodeManager;
 import com.cpms.framework.common.core.secure.TokenUserInfo;
-import com.cpms.framework.common.enums.GlobalResponseResultEnum;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.*;
 import com.cpms.framework.redis.utils.CsRedisUtil;
-import com.cpms.system.common.enums.SystemResponseResultEnum;
+import com.cpms.system.common.enums.RespResultEnum;
 import com.cpms.system.modules.sys.dto.QueryMenuDTO;
 import com.cpms.system.modules.sys.dto.SysMenuDTO;
 import com.cpms.system.modules.sys.entity.SysMenuEntity;
@@ -91,7 +89,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         query.eq("del_flag", CommonConstant.DEL_FLAG_NOT_DELETED);
         Integer count = sysMenuMapper.selectCount(query);
         if(count > 0){
-            throw new BizException(SystemResponseResultEnum.THERE_ARE_CHILD_NODES_ERROR);
+            throw new BizException(RespResultEnum.THERE_ARE_CHILD_NODES_ERROR);
         }
         SysMenuEntity sysMenuEntity = new SysMenuEntity();
         sysMenuEntity.setDelFlag(CommonConstant.DEL_FLAG_DELETED);

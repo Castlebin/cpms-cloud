@@ -1,4 +1,4 @@
-package com.cpms.auth.common.enums;
+package com.cpms.log.common.enums;
 
 
 import com.cpms.framework.common.core.api.IResultEnum;
@@ -8,11 +8,9 @@ import com.cpms.framework.common.core.api.IResultEnum;
  * @author: gulang
  * @time: 2021/5/25 15:49
  */
-public enum AuthResponseResultEnum implements IResultEnum {
-    /** 授权服务响应枚举类 */
-     CAPTCHA_VERIFICATION_EEROR(10000, "验证码不正确"),
+public enum RespResultEnum implements IResultEnum {
+    /**日志服务响应枚举**/
     ;
-
     final Integer code;
     final String message;
 
@@ -26,7 +24,7 @@ public enum AuthResponseResultEnum implements IResultEnum {
         return message;
     }
 
-    AuthResponseResultEnum(Integer code, String message) {
+    RespResultEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

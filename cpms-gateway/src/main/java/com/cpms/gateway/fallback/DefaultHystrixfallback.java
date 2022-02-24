@@ -1,7 +1,7 @@
 package com.cpms.gateway.fallback;
 
 import com.cpms.gateway.common.constants.SystemConstant;
-import com.cpms.gateway.common.enums.GatewayResponseResultEnum;
+import com.cpms.gateway.common.enums.RespResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.slf4j.MDC;
@@ -31,8 +31,8 @@ public class DefaultHystrixfallback {
         Exception exception = exchange.getAttribute(ServerWebExchangeUtils.HYSTRIX_EXECUTION_EXCEPTION_ATTR);
         log.error("[defaultfallback]触发网关层熔断降级默认回调方法,url={}",exchange.getRequest().getHeaders().getFirst(SystemConstant.GATEWAY_REQUEST_URL), exception);
         Map<String, Object> map = new HashMap<>(16);
-        map.put("code", GatewayResponseResultEnum.INTERNAL_SERVER_BUSY_ERROR.getCode());
-        map.put("msg", GatewayResponseResultEnum.INTERNAL_SERVER_BUSY_ERROR.getMessage());
+        map.put("code", RespResultEnum.INTERNAL_SERVER_BUSY_ERROR.getCode());
+        map.put("msg", RespResultEnum.INTERNAL_SERVER_BUSY_ERROR.getMessage());
         map.put("obj", null);
         map.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
         map.put(SystemConstant.TRACE_ID, traceId);

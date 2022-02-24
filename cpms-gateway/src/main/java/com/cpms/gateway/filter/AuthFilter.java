@@ -2,7 +2,7 @@ package com.cpms.gateway.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.cpms.gateway.common.constants.SystemConstant;
-import com.cpms.gateway.common.enums.GatewayResponseResultEnum;
+import com.cpms.gateway.common.enums.RespResultEnum;
 import com.cpms.gateway.exception.CheckJwtException;
 import com.cpms.gateway.props.AuthUrlProperties;
 import com.cpms.gateway.props.CpmsProperties;
@@ -73,7 +73,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         String headerToken = exchange.getRequest().getHeaders().getFirst(SystemConstant.H_TOKEN_KEY);
         String paramToken = exchange.getRequest().getQueryParams().getFirst(SystemConstant.H_TOKEN_KEY);
         if (StringUtils.isAllBlank(headerToken, paramToken)) {
-            return unAuth(resp, GatewayResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getCode(),GatewayResponseResultEnum.LOSE_AUTH_TOKEN_ERROR.getMessage());
+            return unAuth(resp, RespResultEnum.LOSE_AUTH_TOKEN_ERROR.getCode(), RespResultEnum.LOSE_AUTH_TOKEN_ERROR.getMessage());
         }
         String token = StringUtils.isBlank(headerToken) ? paramToken : headerToken;
         Claims claims;

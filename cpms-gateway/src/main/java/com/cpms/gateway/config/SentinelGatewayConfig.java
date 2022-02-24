@@ -2,7 +2,7 @@ package com.cpms.gateway.config;
 
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
 import com.cpms.gateway.common.constants.SystemConstant;
-import com.cpms.gateway.common.enums.GatewayResponseResultEnum;
+import com.cpms.gateway.common.enums.RespResultEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -38,8 +38,8 @@ public class SentinelGatewayConfig {
             serverHttpResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
             String result = "";
             Map<String, Object> map = new HashMap<>(16);
-            map.put("code", GatewayResponseResultEnum.SENTINEL_BLOCK_ERROR.getCode());
-            map.put("message", GatewayResponseResultEnum.SENTINEL_BLOCK_ERROR.getMessage());
+            map.put("code", RespResultEnum.SENTINEL_BLOCK_ERROR.getCode());
+            map.put("message", RespResultEnum.SENTINEL_BLOCK_ERROR.getMessage());
             map.put("obj", null);
             map.put("date", FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date()));
             map.put(SystemConstant.TRACE_ID, MDC.get(SystemConstant.TRACE_ID));

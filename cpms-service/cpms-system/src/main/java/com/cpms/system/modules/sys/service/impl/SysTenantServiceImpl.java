@@ -11,7 +11,7 @@ import com.cpms.framework.common.enums.RandomTypeEnum;
 import com.cpms.framework.common.exception.BizException;
 import com.cpms.framework.common.utils.*;
 import com.cpms.framework.mybatis.utils.CsPageRespUtil;
-import com.cpms.system.common.enums.SystemResponseResultEnum;
+import com.cpms.system.common.enums.RespResultEnum;
 import com.cpms.system.modules.sys.dto.QueryTenantDTO;
 import com.cpms.system.modules.sys.dto.SysTenantDTO;
 import com.cpms.system.modules.sys.entity.*;
@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -58,7 +57,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         tenantDTO.setTenantCode(tenantDTO.getTenantCode().toUpperCase());
         int count = sysTenantMapper.selectCount(Wrappers.<SysTenantEntity>lambdaQuery().eq(SysTenantEntity::getAccountPrefix,tenantDTO.getAccountPrefix()));
         if(count > 0){
-            throw new BizException(SystemResponseResultEnum.ACCOUNT_PREFIX_EXISTS_ERROR);
+            throw new BizException(RespResultEnum.ACCOUNT_PREFIX_EXISTS_ERROR);
         }
         SysTenantEntity sysTenantEntity = new SysTenantEntity();
         CsBeanUtil.copyProperties(tenantDTO,sysTenantEntity);
