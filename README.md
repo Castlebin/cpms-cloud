@@ -83,9 +83,10 @@ cpms-cloud
 #### 在线演示
   cpms-vue单体应用-基于vue：[https://www.cpms.vip/](https://www.cpms.vip/)
 
-#### 相关项目：
+#### 相关项目
 
 cpms-vue单体架构：https://gitee.com/gldcty/cpms-vue
+
 cpms-core-framework核心组件库:https://gitee.com/gldcty/cpms-core-framework
 
 #### 后端技术栈
