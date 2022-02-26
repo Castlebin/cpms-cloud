@@ -74,8 +74,8 @@ cpms-cloud
 8. 租户管理：添加租户信息，并生成租户管理员账号信息，添加租户权限
 
 9. 开发工具：代码生成器，生成项目脚手架和表增删改查业务代码
+10. 持续更新新模块......
 
-10.持续更新新模块......
 
 #### 前端UI
 基于vue2.0+elementui: [https://gitee.com/gldcty/cpms-cloud-vue-ui](https://gitee.com/gldcty/cpms-cloud-vue-ui) 
@@ -85,7 +85,7 @@ cpms-cloud
 
 #### 相关项目
 
-cpms-vue单体架构：https://gitee.com/gldcty/cpms-vue
+cpms单体架构：https://gitee.com/gldcty/cpms
 
 cpms-core-framework核心组件库:https://gitee.com/gldcty/cpms-core-framework
 
