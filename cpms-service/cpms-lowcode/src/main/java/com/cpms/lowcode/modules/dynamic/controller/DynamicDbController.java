@@ -4,7 +4,6 @@ package com.cpms.lowcode.modules.dynamic.controller;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.mybatis.groups.ValidatorGroup;
-import com.cpms.lowcode.modules.dynamic.dto.DbTableDTO;
 import com.cpms.lowcode.modules.dynamic.dto.DynamicDbDTO;
 import com.cpms.lowcode.modules.dynamic.service.IDynamicDbService;
 import com.cpms.lowcode.modules.dynamic.vo.DbTableVO;

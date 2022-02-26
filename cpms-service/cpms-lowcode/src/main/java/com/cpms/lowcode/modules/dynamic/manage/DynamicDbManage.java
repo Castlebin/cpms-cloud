@@ -1,7 +1,6 @@
 package com.cpms.lowcode.modules.dynamic.manage;
 
 import com.cpms.lowcode.modules.dynamic.bo.DynamicDbInfoBO;
-import com.cpms.lowcode.modules.dynamic.dto.DbTableDTO;
 import com.cpms.lowcode.modules.dynamic.dto.QueryTableFieldDTO;
 import com.cpms.lowcode.modules.dynamic.dto.TableFieldDTO;
 import com.cpms.lowcode.modules.dynamic.mapper.DynamicDbMapper;

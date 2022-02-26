@@ -3,17 +3,15 @@ package com.cpms.lowcode.modules.gen.controller;
 import com.cpms.framework.common.core.api.Result;
 import com.cpms.framework.common.core.api.ResultUtil;
 import com.cpms.framework.mybatis.groups.ValidatorGroup;
-import com.cpms.lowcode.modules.dynamic.dto.DbTableDTO;
 import com.cpms.lowcode.modules.gen.dto.GenFuncDTO;
 import com.cpms.lowcode.modules.gen.dto.SyncFieldDTO;
 import com.cpms.lowcode.modules.gen.service.IGenCodeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
+
 
 
 /**
