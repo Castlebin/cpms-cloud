@@ -1,5 +1,6 @@
 package com.cpms.lowcode.config;
 
+import com.cpms.framework.common.utils.CsCollectionUtil;
 import com.cpms.framework.common.utils.CsFileUtil;
 import com.cpms.lowcode.common.enums.TplGenParamEnum;
 import com.google.common.collect.Maps;
@@ -39,11 +40,23 @@ public class TplCacheManageConfig {
 
     @SneakyThrows
     private void initCacheTplFile(TplGenParamEnum.TemplateTypeEnum templateTypeEnum){
-        String tplPath = CsFileUtil.getResourcePath()+FILE_SEP+"templates"+FILE_SEP+templateTypeEnum.getCode();
-        List<File> files = CsFileUtil.loopFiles(tplPath);
-        for (File file : files) {
-            String filePath = file.getAbsolutePath().substring(tplPath.length()+1);
-            templateTypeEnum.getTplFilePathMap().put(filePath,file);
+        String basePath = FILE_SEP+"templates"+FILE_SEP+templateTypeEnum.getCode();
+        String tplPath = null;
+        List<File> files;
+        String os = System.getProperty("os.name");
+        if (os != null && os.toLowerCase().startsWith("windows")) {
+            tplPath = System.getProperty("user.dir") + FILE_SEP + "src"+ FILE_SEP+"main"+ FILE_SEP+"resources" + basePath;
+        } else if (os != null && os.toLowerCase().startsWith("linux")) {
+            tplPath = basePath;
+        }
+        log.info("下模板根路径：tplPath={}", tplPath);
+        files = CsFileUtil.loopFiles(tplPath);
+        if(!CsCollectionUtil.isEmpty(files)) {
+            for (File file : files) {
+                int index = file.getAbsolutePath().lastIndexOf(templateTypeEnum.getCode());
+                String filePath = file.getAbsolutePath().substring(index+templateTypeEnum.getCode().length() + 1);
+                templateTypeEnum.getTplFilePathMap().put(filePath,file);
+            }
         }
     }
 }

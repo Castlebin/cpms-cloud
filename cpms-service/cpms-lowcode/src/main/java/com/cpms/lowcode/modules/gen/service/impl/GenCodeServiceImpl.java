@@ -76,7 +76,7 @@ public class GenCodeServiceImpl implements IGenCodeService {
         genScaffoldParamDTO.setContextPath(genScaffoldParamDTO.getContextPath().startsWith("/")
                 ? genScaffoldParamDTO.getContextPath() : "/"+genScaffoldParamDTO.getContextPath());
         genScaffoldParamDTO.setStartupName(CsConvertUtil.formatClassName(genScaffoldParamDTO.getProjectName()));
-        downloadWithZip(genScaffoldParamDTO,1,genScaffoldParamDTO.getProjectName(),response);
+        downloadWithZip(genScaffoldParamDTO,1,genScaffoldParamDTO.getArtifactId(),response);
     }
 
     private void downloadWithZip(Object paramDTO,Integer type,String zipName,HttpServletResponse response){
@@ -127,9 +127,8 @@ public class GenCodeServiceImpl implements IGenCodeService {
     }
 
     private String replaceFileNameParam(String replaceTpl,Map<String, String> replaceMap){
-        Map<String, String> replaceValue = Maps.newHashMap();
         String packageName = replaceMap.get("packageName").replaceAll("\\." , Matcher.quoteReplacement(File.separator));
-        replaceValue.put("packageName",packageName);
+        replaceMap.put("packageName",packageName);
         return CsStringUtil.removeEnd(CsStringUtil.strSubReplace(replaceMap,replaceTpl), ".vm");
     }
 
@@ -172,7 +171,7 @@ public class GenCodeServiceImpl implements IGenCodeService {
             genTableFunDTO.setColumnList(CsBeanUtil.copyList(tableColumnMap.get(e.getTableId()),TableColumnDTO.class));
             return genTableFunDTO;
         }).collect(Collectors.toList());
-        downloadWithZip(genTableFunDTOS,2,projectEntity.getProjectName(),response);
+        downloadWithZip(genTableFunDTOS,2,projectEntity.getArtifactId(),response);
     }
 
     private void saveTableField(GenFuncDTO genFuncDTO){
