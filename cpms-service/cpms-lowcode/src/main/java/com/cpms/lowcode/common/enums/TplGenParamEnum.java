@@ -19,8 +19,8 @@ public class TplGenParamEnum {
     @Getter
     @AllArgsConstructor
     public enum TemplateTypeEnum{
-        BOOTNEW("genscaffold", "初始化项目脚手架模板",1, TplCacheManageConfig.genProjectTplFile),
-        BOOTDFUNC("genfunc", "生成数据表单功能模板",2, TplCacheManageConfig.genFunTplFile),
+        GENSCAFFOLD("genscaffold", "初始化项目脚手架模板",1, TplCacheManageConfig.genProjectTplFile),
+        GENFUNC("genfunc", "生成数据表单功能模板",2, TplCacheManageConfig.genFunTplFile),
         ;
         private String code;
 
